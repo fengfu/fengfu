@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>宁静.致远</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://fengfu.io/"/>
+  <updated>2016-02-27T13:48:38.573Z</updated>
+  <id>http://fengfu.io/</id>
+  
+  <author>
+    <name>Fengfu.Qu</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>你若懂我，该有多好</title>
+    <link href="http://fengfu.io/2016/02/28/%E4%BD%A0%E8%8B%A5%E6%87%82%E6%88%91%E8%AF%A5%E6%9C%89%E5%A4%9A%E5%A5%BD/"/>
+    <id>http://fengfu.io/2016/02/28/你若懂我该有多好/</id>
+    <published>2016-02-27T23:38:00.000Z</published>
+    <updated>2016-02-27T13:48:38.573Z</updated>
+    
+    <content type="html">&lt;p&gt;每个人都有一个死角，&lt;br&gt;自己走不出来，&lt;br&gt;别人也闯不进去。&lt;br&gt;我把最深沉的秘密放在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一道伤口，&lt;br&gt;或深或浅，&lt;br&gt;盖上布，&lt;br&gt;以为不存在。&lt;br&gt;我把最殷红的血涂在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一场爱恋，&lt;br&gt;用心，用情，用力，&lt;br&gt;感动也感伤。&lt;br&gt;我把最炙热的心情藏在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一行泪，&lt;br&gt;喝下冰冷的水，&lt;br&gt;酝酿成的热泪。&lt;br&gt;我把最辛酸的委屈汇在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一段告白，&lt;br&gt;忐忑，不安，&lt;br&gt;却包含真心和勇气。&lt;br&gt;我把最抒情的语言用在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;你永远也看不见我最爱你的时候，&lt;br&gt;因为我只有在看不见你的时候，&lt;br&gt;才最爱你。&lt;/p&gt;
+&lt;p&gt;同样，你永远也看不见我最寂寞的时候，&lt;br&gt;因为我只有在你看不见我的时候，&lt;br&gt;才最寂寞。&lt;/p&gt;
+&lt;p&gt;也许，我太会隐藏自己的悲伤，&lt;br&gt;也许，我太会安慰自己的伤痕。&lt;br&gt;从阴雨走到艳阳，&lt;br&gt;我路过泥泞，路过风。&lt;/p&gt;
+&lt;p&gt;一路走来，&lt;br&gt;你若懂我，&lt;br&gt;该有多好。&lt;/p&gt;
+&lt;p&gt;(作者：莫言)&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;每个人都有一个死角，&lt;br&gt;自己走不出来，&lt;br&gt;别人也闯不进去。&lt;br&gt;我把最深沉的秘密放在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一道伤口，&lt;br&gt;或深或浅，&lt;br&gt;盖上布，&lt;br&gt;以为不存在。&lt;br&gt;我把最殷红的血涂在那里，&lt;br&gt;你不懂我，我不怪
+    
+    </summary>
+    
+    
+      <category term="人生" scheme="http://fengfu.io/tags/%E4%BA%BA%E7%94%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ATPCO项目总结-管理篇</title>
+    <link href="http://fengfu.io/2015/12/29/ATPCO%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93-%E7%AE%A1%E7%90%86%E7%AF%87/"/>
+    <id>http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/</id>
+    <published>2015-12-29T12:41:09.000Z</published>
+    <updated>2016-02-27T13:50:58.409Z</updated>
+    
+    <content type="html">&lt;p&gt;ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。&lt;/p&gt;
+&lt;p&gt;ATPCO项目经历的这接近1年的时间里，有很多的感触，写出来做个总结吧。今天写的是管理方面。&lt;/p&gt;
+&lt;h2 id=&quot;1-反应速度&quot;&gt;&lt;a href=&quot;#1-反应速度&quot; class=&quot;headerlink&quot; title=&quot;1. 反应速度&quot;&gt;&lt;/a&gt;1. 反应速度&lt;/h2&gt;&lt;p&gt;项目启动最初，由于与ATPCO的商务合同没有签订，项目只投入了一个人进行研究，推动缓慢。加之团队对公布运价业务不熟悉，给了其他团队切入的机会，并最终导致了2个团队持续竞争的局面。虽然从公司的角度，一个重要的项目由2个团队做是降低风险的举措，但是由此带来的内部消耗也是比较大的，这也导致了后面的核心员工离职。&lt;br&gt;从这件事情来讲，对于任何事情，都要保持足够的敏感度和反应速度。互联网行业竞争激烈，需要快速反应。qunar内部的狼性文化也要求团队能够快速响应、灵活机动，这样才能更快地响应形势的变化。&lt;/p&gt;
+&lt;h2 id=&quot;2-团队组建&quot;&gt;&lt;a href=&quot;#2-团队组建&quot; class=&quot;headerlink&quot; title=&quot;2. 团队组建&quot;&gt;&lt;/a&gt;2. 团队组建&lt;/h2&gt;&lt;p&gt;从团队组建上，有2点做得比较好，1点做得不好。&lt;br&gt;先说说做得好的地方：&lt;br&gt;1)在项目初期就把产品经理、技术拉到一个会议室封闭，这样带来的好处是沟通效率很高，项目有问题的时候大家在屋里吼一嗓子就能很快解决问题。当然弊端是十几个人在一个屋子里面，有的时候3、4组人一起说话的时候，那感觉就跟菜市场一样了。&lt;br&gt;2)投入精兵强将。项目开始封闭时，项目人员短缺，无奈之下，把部门里面6个TL中的4个拉了进来。此举起到了很好的效果，不仅解决了人力的问题，而且每个人都在自己负责的事情上做出了很好的成绩。这也应了那句话：兵不在多，在于精。&lt;br&gt;再说说做得不好的地方：&lt;br&gt;1)添油战术不可取：ATPCO项目专业性很强，新人的学习门槛很高，所以在往团队增加人手的时候，最好一次性给够。添油战术对这个项目最大的弊端就是新人需要花很久去学习（最少1个月时间入门），如果每个新来的人都要经历一个学习过程，那么所带来的成本和消耗就比较大了。&lt;/p&gt;
+&lt;h2 id=&quot;3-沟通&quot;&gt;&lt;a href=&quot;#3-沟通&quot; class=&quot;headerlink&quot; title=&quot;3. 沟通&quot;&gt;&lt;/a&gt;3. 沟通&lt;/h2&gt;&lt;p&gt;再来说说沟通，沟通一直是管理工作中非常重要的一环，沟通做不好，工作难以开展不说，也会造成人员流失。&lt;br&gt;1）内部沟通&lt;br&gt;先说说内部沟通。&lt;br&gt;团队中每一个人都是一个独立的个体，具备不同的性格和不同的处事方式，每个人的诉求也是不一样的，所以对待每个人的方式也应该因人而异。但是，无论对谁，首先应该了解他的诉求。每个人来到公司都是有自己的诉求的，比如有的人比较关心技术积累、有的人关心成长空间、有的人关心薪水、有的人关心关系简单……如果不了解每个人的需求，那么可能就无法投其所好，给其所要。久而久之，如果这个人不主动跟你沟通，你又不能及时发现问题，那么久而久之，欲求不满的他可能就会闪人了。&lt;br&gt;2）外部沟通&lt;br&gt;下面的这些话不展开了说，说得太明白没意思。&lt;br&gt;有人的地方就有江湖，&lt;br&gt;有人的地方就有利益，&lt;br&gt;看不明白的就看利益。&lt;/p&gt;
+&lt;p&gt;你不可能只靠自己和团队，还需要外围的资源的支持，讲利益互换。你对别人有利，你才有机会，此处省略一万字……&lt;/p&gt;
+&lt;p&gt;公司大了，就像一个社会，你会遇到形形色色的人，你喜欢的，你讨厌的；你佩服的，你无视的……无论遇到什么样的人，都应该平和对待。一花一世界，一叶一菩提，每个人都值得尊重。&lt;/p&gt;
+&lt;h2 id=&quot;4-用人&quot;&gt;&lt;a href=&quot;#4-用人&quot; class=&quot;headerlink&quot; title=&quot;4. 用人&quot;&gt;&lt;/a&gt;4. 用人&lt;/h2&gt;&lt;p&gt;管理就是把合适的人用在合适的位置上，不合适的人要尽快替换，让合适的人顶上去。&lt;br&gt;这里要说的是招聘，不同的项目，对人的要求是不一样的。针对项目的招聘工作，一定要清楚需要什么样的人，严格按照要求招聘。如果招到的人不合适，不仅浪费时间浪费资源，对项目、对应聘者都会产生不利影响。ATPCO是一个专业性很强的项目，学习门槛很高，对人的学习、理解、沟通能力要求都很高，甚至心理素质。项目组成立半年多以来，项目组成员几进几出。有的人适应不了环境自己离职，有的人则是胜任不了被淘汰，这其实都是损失。&lt;/p&gt;
+&lt;h2 id=&quot;5-分工&quot;&gt;&lt;a href=&quot;#5-分工&quot; class=&quot;headerlink&quot; title=&quot;5. 分工&quot;&gt;&lt;/a&gt;5. 分工&lt;/h2&gt;&lt;p&gt;首先是将系统拆分，每个人负责独立的事情。在系统建设初期，可以采用服务化的方式将功能拆分，以加快开发速度。但是到了项目后期，系统稳定后，可以再把服务聚合起来。&lt;/p&gt;
+&lt;p&gt;其次是要把合适的人放在合适的位置上。那怎么知道这个人适合这个位置呢？前面说到我们已经做了系统拆分，那么根据拆分后的系统来分析各系统需要什么样的能力？比如航路引擎需要对算法比较熟悉，规则系统需要很强的学习能力和技术功底，搜索引擎需要对分布式和性能优化比较熟悉。明确了各个位置需要的能力后，就可以去找相应的人了。&lt;/p&gt;
+&lt;p&gt;第三是要能够做好backup，如果你不希望在关键时刻因为关键人物不在而导致业务受影响，那么就尽量避免出现单点。如果人手短缺万不得已，那么TL可以加强团队代码review，熟悉每个子系统的逻辑，这样能够确保在关键时刻其他人能够顶上，同时也能够帮助团队提升技术能力。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。&lt;/p&gt;
+&lt;p&gt;ATPCO项目经历的
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ATPCO项目总结-技术篇</title>
+    <link href="http://fengfu.io/2015/12/28/ATPCO%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93--%E6%8A%80%E6%9C%AF%E7%AF%87/"/>
+    <id>http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/</id>
+    <published>2015-12-28T12:41:09.000Z</published>
+    <updated>2016-02-27T13:50:52.397Z</updated>
+    
+    <content type="html">&lt;p&gt;接着上篇写，这一篇从技术方面来总结一下ATPCO项目。&lt;/p&gt;
+&lt;h1 id=&quot;1-项目特点&quot;&gt;&lt;a href=&quot;#1-项目特点&quot; class=&quot;headerlink&quot; title=&quot;1.项目特点&quot;&gt;&lt;/a&gt;1.项目特点&lt;/h1&gt;&lt;p&gt;ATPCO是一个业务性非常强的项目，主要体现在以下几点：&lt;/p&gt;
+&lt;h2 id=&quot;1）规则复杂&quot;&gt;&lt;a href=&quot;#1）规则复杂&quot; class=&quot;headerlink&quot; title=&quot;1）规则复杂&quot;&gt;&lt;/a&gt;1）规则复杂&lt;/h2&gt;&lt;p&gt;ATPCO提供的数据主要分为：Fares、Rules、Routings三类数据。其中Fare与Rules、Routings存在强关联。Rules中包含了8类Record数据，即Record1-Record8。其中Record3中又划分成35项Category。每一个Category分别表示一类运价规则，如Cat1表示乘客类型的规则，Cat2表示适用航班的规则，Cat3表示淡旺季规则……&lt;/p&gt;
+&lt;h2 id=&quot;2）计算量大&quot;&gt;&lt;a href=&quot;#2）计算量大&quot; class=&quot;headerlink&quot; title=&quot;2）计算量大&quot;&gt;&lt;/a&gt;2）计算量大&lt;/h2&gt;&lt;p&gt;ATPCO中公布运价数据有9000万条，Rules数据有1亿多条，每个Fare平均关联20多条Rules数据。Fare不仅需要与Rules、Routings进行匹配，还需要与Av（此AV指航班可用座位，不是那个AV）进行匹配。用户一次搜索可能会引起几十万的计算量，如果在短时间内快速计算出结果？可以肯定的一点是：普通的单机计算是行不通的。&lt;/p&gt;
+&lt;h2 id=&quot;3）算法复杂&quot;&gt;&lt;a href=&quot;#3）算法复杂&quot; class=&quot;headerlink&quot; title=&quot;3）算法复杂&quot;&gt;&lt;/a&gt;3）算法复杂&lt;/h2&gt;&lt;p&gt;这里说的算法复杂主要集中在航路规划方面。目前全球有4000多城市，5000多机场。理论上两个机场都是可以到达的。那么我们可以想象从一个城市到另外一个城市的路径图就是这个样子了：&lt;br&gt;&lt;img src=&quot;http://i.imgur.com/SweamdD.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;是不是很晕？晕就对了，我们在这个坑里面已经1年了，估计航信、携程的同学更能感同身受吧。&lt;/p&gt;
+&lt;h1 id=&quot;2-业务抽象&quot;&gt;&lt;a href=&quot;#2-业务抽象&quot; class=&quot;headerlink&quot; title=&quot;2.业务抽象&quot;&gt;&lt;/a&gt;2.业务抽象&lt;/h1&gt;&lt;p&gt;上面已经提到，ATPCO的规则比较复杂，那么相应的转换到技术层面，其业务抽象也会比较有挑战。好在我们有Carl de Marcken（ITA创始人，后被Google收购）这位大牛，他写的几篇专利文章为我们提供了极大的帮助，在此再度膜拜一下。参考Carl的专利，我们抽象出了Itinerary、Journey、Pricing Unit、Fare Component几个关键模型，并根据这些模型搭建了整个系统的框架和接口。&lt;br&gt;在其他方面的抽象，我们做得其实不太好。比如搜索条件，我们的业务抽象并不能适应所有的场景，比如多程、缺口程。一方面是我们对业务的理解不够深入，另外一方面也是在设计方面，我们做得还不够好。有时间需要补一下DDD(领域驱动设计)的知识并加以实践了。&lt;/p&gt;
+&lt;h1 id=&quot;3-技术框架&quot;&gt;&lt;a href=&quot;#3-技术框架&quot; class=&quot;headerlink&quot; title=&quot;3.技术框架&quot;&gt;&lt;/a&gt;3.技术框架&lt;/h1&gt;&lt;h2 id=&quot;空间换时间之殇&quot;&gt;&lt;a href=&quot;#空间换时间之殇&quot; class=&quot;headerlink&quot; title=&quot;空间换时间之殇&quot;&gt;&lt;/a&gt;空间换时间之殇&lt;/h2&gt;&lt;p&gt;从技术框架的层面，应该是这篇总结里面需要长篇叙述的了，因为这个层面踩过的坑还是很多的。&lt;br&gt;在项目初期，考虑到ATPCO涉及的数据量和计算量比较大，我们决定采用空间换时间的方式，即事先把数据组装好，在搜索的时候直接使用事先计算好的数据以减少响应时间。这种方式后来被证明是错误的，因为事先组装数据的方式意味着一旦数据有变化，事先生成的数据就需要重新生成，而在我们对ATPCO规则理解不断深入的情况下，这种情况是非常频繁的。另一方面，如果需要调整计算模型，或者系统有bug，那么所有数据就需要重跑。在这种机制下，整个系统好比一艘航空母舰，庞大、笨重，如果需要转身，我们只能默默地等待……&lt;/p&gt;
+&lt;h2 id=&quot;简单为美&quot;&gt;&lt;a href=&quot;#简单为美&quot; class=&quot;headerlink&quot; title=&quot;简单为美&quot;&gt;&lt;/a&gt;简单为美&lt;/h2&gt;&lt;p&gt;因为历史原因，我们在接手ATPCO的同事，还负责维护另外一个比较老的公布运价系统。为了兼容老的系统，我们在收到用户请求后，分别调用老系统、新系统，收到结果后进行合并，并返回给调用端。这样的好处是能够保证新、老系统互不影响，一个系统出问题的时候，另外一个系统依然能够提供服务。但是这样的设计也有弊端，因为增加了请求分发、数据合并的环节，中间环节变多，势必导致复杂性升高，同时效率降低，势必也会导致响应时间变长。&lt;/p&gt;
+&lt;p&gt;很多时候，简单跟高效是成正比的。就像AK47一样，因为设计简单，其结果就是很少出故障，而且维护简单。比如在越战时期，很多美军士兵宁可使用捡到的AK47步枪，也不愿使用自己的M16，因为M16结构复杂而且容易卡壳，在战场上枪支卡壳那可是丢性命的事情……&lt;/p&gt;
+&lt;p&gt;由此引申出来的问题就是，不管是做系统架构设计、还是模块设计，都应该遵循简单为美的原则。只有简单，系统才容易理解，才容易维护，才会高效运转。所以当我们头脑中有方案的时候，要多问问自己，这是否已经是最简单高效的方案了。&lt;/p&gt;
+&lt;h2 id=&quot;优雅的服务化&quot;&gt;&lt;a href=&quot;#优雅的服务化&quot; class=&quot;headerlink&quot; title=&quot;优雅的服务化&quot;&gt;&lt;/a&gt;优雅的服务化&lt;/h2&gt;&lt;p&gt;在构建一个复杂系统的时候，如果系统内部功能彼此独立，那么可以考虑采用服务化的方式：即各子系统之间协商好服务接口，彼此通过服务的方式进行调用。这样的好处是各系统之间互相独立，互不影响。这样能够提高系统自身的扩展性、可维护性，并降低系统间的耦合性。ATPCO系统按照功能特点，划分成了Processor、Planner、Searcher、Engine四个子系统，系统与系统之间通过dubbo的方式进行调用。这种方式使得开发人员只关注自己的业务逻辑实现即可，因此能够提升自身的开发效率。当然这种方式的弊端就是服务之间调用时的沟通、联调、排错成本相对较高，但是相比因此带来的整体效率提升，这点成本还是可以接受的。&lt;/p&gt;
+&lt;p&gt;目前在互联网行业，服务化的理念已经深入人心，包括现在逐渐流行的微服务。在此借鉴著名SOA专家Thomas Erl的归纳的服务设计原则：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;标准化的服务契约 Standardized service contract&lt;/li&gt;
+&lt;li&gt;服务的松耦合 Service loose coupling&lt;/li&gt;
+&lt;li&gt;服务的抽象 Service abstraction&lt;/li&gt;
+&lt;li&gt;服务的可重用性 Service reusability&lt;/li&gt;
+&lt;li&gt;服务的自治性 Service autonomy&lt;/li&gt;
+&lt;li&gt;服务的无状态性 Service statelessness&lt;/li&gt;
+&lt;li&gt;服务的可发现性 Service discoverability&lt;/li&gt;
+&lt;li&gt;服务的可组合性 Service composability&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当然如果如果一个系统中有很多同质化的服务或子系统，那么在系统稳定后，可以考虑将这些服务合并，以降低维护成本。我曾经听一个同事讲过他维护的一个与外部航司交互的接口群，每个接口都是一个子系统，一共有20多个子系统。这种系统维护的时候就比较麻烦，因为某些业务策略的修改可能要修改所有的子系统，这种情况下就可以考虑将服务合并，以降低维护的成本。&lt;/p&gt;
+&lt;h2 id=&quot;分布式的挑战&quot;&gt;&lt;a href=&quot;#分布式的挑战&quot; class=&quot;headerlink&quot; title=&quot;分布式的挑战&quot;&gt;&lt;/a&gt;分布式的挑战&lt;/h2&gt;&lt;p&gt;ATPCO系统是一个计算密集型的系统，一个用户请求可能会产生几十万次的计算。在这种情况下，单机的计算能力将会成为整个系统的瓶颈，因此必须采用分布式计算的方式将巨大的计算量拆分到不同的机器上进行处理，最终将结果合并。这里所说的分布式计算有2种方式：一种是采用MapReduce的方式，即将数据分发到不同的机器上进行处理；另外一种方式就是RDD(Resilient Distributed Dataset)的方式，即将算法分发到不同的机器上，由各自己自行读取数据进行处理。&lt;/p&gt;
+&lt;p&gt;在ATPCO系统中，我们计划采用第二种方式实现分布式计算。之所以说计划，是因为目前只是制定了方案，但并没有投入应用，相信这不会太久。&lt;/p&gt;
+&lt;p&gt;分布式的另外一个应用方向就是对于ATPCO文件的处理。ATPCO每个小时都会给我们推送新的数据，如果我们的系统有问题的时候，很有可能需要从最初的文件重新处理。如果堆积了几个月的文件需要重跑，那么这将是一个灾难。于是我们采用了分布式处理的方式，即由多台机器按发布航司分别处理数据，这样系统的处理能力可以成倍增加，比如我用10台机器重新处理数据，那么其速度将是以前单机处理时的10倍。这样的话，我们就再也不用担心重跑数据了，O(∩_∩)O哈哈~&lt;/p&gt;
+&lt;h2 id=&quot;4-技术管理&quot;&gt;&lt;a href=&quot;#4-技术管理&quot; class=&quot;headerlink&quot; title=&quot;4.技术管理&quot;&gt;&lt;/a&gt;4.技术管理&lt;/h2&gt;&lt;p&gt;技术管理这个事情可以新开一篇blog来总结了，在此只说关键的几点吧：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;招聘，人才是最重要的，创意人才(来自谷歌的《重新定义公司》一书)更重要！&lt;/li&gt;
+&lt;li&gt;技术路线/框架制定，并根据反馈适时调整&lt;/li&gt;
+&lt;li&gt;参与关键技术问题的攻克&lt;/li&gt;
+&lt;li&gt;代码review，这一点很重要，但是也很容易忽略&lt;/li&gt;
+&lt;li&gt;团队激励，将团队捏合成一个整体，团队协同，群策群力才能成功&lt;/li&gt;
+&lt;li&gt;技术创新，科技是第一生产力&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;接着上篇写，这一篇从技术方面来总结一下ATPCO项目。&lt;/p&gt;
+&lt;h1 id=&quot;1-项目特点&quot;&gt;&lt;a href=&quot;#1-项目特点&quot; class=&quot;headerlink&quot; title=&quot;1.项目特点&quot;&gt;&lt;/a&gt;1.项目特点&lt;/h1&gt;&lt;p&gt;ATPCO是一个业务性非常强的项目，主
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>23种设计模式</title>
+    <link href="http://fengfu.io/2015/03/08/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://fengfu.io/2015/03/08/23种设计模式/</id>
+    <published>2015-03-08T12:41:09.000Z</published>
+    <updated>2016-02-27T13:51:07.274Z</updated>
+    
+    <content type="html">&lt;p&gt;设计模式分为3大类（创建型、结构型、行为型），共23种。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建型模式：单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;结构型模式：适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模式；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;行为型模式：模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式；&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;设计模式分为3大类（创建型、结构型、行为型），共23种。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建型模式：单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;结构型模式：适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模
+    
+    </summary>
+    
+    
+      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Intellij Idea快捷键大全</title>
+    <link href="http://fengfu.io/2015/02/21/Intellij%20Idea%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%A4%A7%E5%85%A8/"/>
+    <id>http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/</id>
+    <published>2015-02-21T11:41:09.000Z</published>
+    <updated>2016-02-27T13:50:26.468Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h2&gt;&lt;p&gt;IntelliJ IDEA 的便捷操作性，快捷键的功劳占了一大半，对于各个快捷键组合请认真对待。IntelliJ IDEA 本身的设计思维是提倡键盘优先于鼠标的，所以各种快捷键组合层出不穷，对于快捷键设置也有各种支持，对于其他 IDE 的快捷键组合也有预设模板进行支持。&lt;/p&gt;
+&lt;p&gt;关于各个快捷键的频率分类上可能每个人都有各自的看法，下面的整理也只是已我个人的使用习惯来划分的，而我应该是可以代表某一部分小众人员。但是我个人还是建议你可以在我的基础上整理一份属于的快捷键目录，本篇文章也只是起到一个工具和引子的作用。&lt;/p&gt;
+&lt;p&gt;对于下面各个快捷键的使介绍描述也许用我个人语言翻译起来不够准确或是不全面，且在不同的文件类型上按出来的效果也可能结果不太一样,所以 &lt;strong&gt;强烈建议&lt;/strong&gt; 你自己把各个快捷键都亲自操作下体会下各个快捷键的实际用法。&lt;/p&gt;
+&lt;h2 id=&quot;前提&quot;&gt;&lt;a href=&quot;#前提&quot; class=&quot;headerlink&quot; title=&quot;前提&quot;&gt;&lt;/a&gt;前提&lt;/h2&gt;&lt;p&gt;由于文化的不同，我们使用的电脑必备一个软件就是中文输入法，而目前大多数人都使用搜狗拼音输入法或是其他类似的。而这些输入法跟 IntelliJ IDEA 有一个万恶的冲突永恒不变：快捷键冲突。所以为了配合 IntelliJ IDEA，我们要去掉这些输入法下的所有快捷键。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/xxvii-c-keymap-premise-1.jpg&quot; alt=&quot;前提&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;如上图红色圈住内容所示，默认是 &lt;code&gt;逗号&lt;/code&gt; 我改为了 ESC 键下的 &lt;code&gt;波浪号&lt;/code&gt;，&lt;code&gt;Ctrl + 逗号&lt;/code&gt; 这个快捷键适合做智能提示用，下面的快捷键列表会讲。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;images/xxvii-c-keymap-premise-2.jpg&quot; alt=&quot;前提&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;如上图红色圈住内容所示，这些快捷键很容易跟 IntelliJ IDEA 快捷键冲突，需要全部去掉。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;images/xxvii-c-keymap-premise-3.jpg&quot; alt=&quot;前提&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;如上图红色圈住内容所示，QQ 这些快捷键也很容易跟 IntelliJ IDEA 快捷键冲突，需要全部去掉，最多保持一个截图功能即可。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可能还有其他一些软件，比如网易云音乐、有道词典等等这些软件都可能存在快捷键冲突，所以为了 IntelliJ IDEA 这些软件的快捷键都是值得舍弃的，如果你在开发的时候。&lt;/p&gt;
+&lt;h2 id=&quot;Ctrl&quot;&gt;&lt;a href=&quot;#Ctrl&quot; class=&quot;headerlink&quot; title=&quot;Ctrl&quot;&gt;&lt;/a&gt;Ctrl&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在当前文件进行文本查找 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + R&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在当前文件进行文本替换 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Z&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;撤销 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Y&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;删除光标所在行 或 删除选中的行 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + X&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;剪切光标所在行 或 剪切选择内容&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + C&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;复制光标所在行 或 复制选择内容&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + D&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;复制光标所在行 或 复制选择内容，并把复制内容插入光标位置下面 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + W&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;递进式选择代码块。可选中光标所在的单词或段落，连续按会在原有选中的基础上再扩展选中范围 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + E&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示最近打开的文件记录列表&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + N&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;根据输入的 &lt;strong&gt;类名&lt;/strong&gt; 查找类文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + G&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在当前文件跳转到指定行处&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + J&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;插入自定义动态代码模板&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + P&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;方法参数提示显示&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Q&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;光标所在的变量 / 类名 / 方法名等上面（也可以在提示补充的时候按），显示文档内容&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + U&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;前往当前光标所在的方法的父类的方法 / 接口定义&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + B&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;进入光标所在的方法/变量的接口或是定义出，等效于 &lt;code&gt;Ctrl + 左键单击&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + K&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;版本控制提交项目，需要此项目有加入到版本控制才可用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + T&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;版本控制更新项目，需要此项目有加入到版本控制才可用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + H&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示当前类的层次结构&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + O&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选择可重写的方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + I&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选择可继承的方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + +&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;展开代码&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + -&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;折叠代码&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + /&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;注释光标所在行代码，会根据当前不同文件类型使用不同的注释符号 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + [&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;移动光标到当前所在代码的花括号开始位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + ]&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;移动光标到当前所在代码的花括号结束位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F1&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在光标所在的错误代码出显示错误信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F3&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;调转到所选中的词的下一个引用位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F4&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;关闭当前编辑文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F8&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，设置光标当前行为断点，如果当前已经是断点则去掉断点&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;执行 Make Project 操作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F11&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选中文件 / 文件夹，使用助记符设定 / 取消书签&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + F12&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出当前文件结构层，可以在弹出的层上直接输入，进行筛选&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Tab&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;编辑窗口切换，如果在切换的过程又加按上delete，则是关闭对应选中的窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Enter&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;智能分隔行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + End&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;跳到文件尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Home&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;跳到文件头&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Space&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;基础代码补全，默认在 Windows 系统上被输入法占用，需要进行修改，建议修改为 &lt;code&gt;Ctrl + 逗号&lt;/code&gt; &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Delete&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;删除光标后面的单词或是中文句&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + BackSpace&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;删除光标前面的单词或是中文句&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + 1,2,3…9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;定位到对应数值的书签位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + 左键单击&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在打开的文件标题上，弹出该文件路径&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + 光标定位&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;按 Ctrl 不要松开，会显示光标所在的类信息摘要&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + 左方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;光标跳转到当前单词 / 中文句的左侧开头位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + 右方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;光标跳转到当前单词 / 中文句的右侧开头位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + 前方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;等效于鼠标滚轮向前效果&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + 后方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;等效于鼠标滚轮向后效果&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;Alt&quot;&gt;&lt;a href=&quot;#Alt&quot; class=&quot;headerlink&quot; title=&quot;Alt&quot;&gt;&lt;/a&gt;Alt&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + `&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示版本控制常用操作菜单弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Q&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出一个提示，显示当前类的声明 / 上下文信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + F1&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示当前文件选择目标弹出层，弹出层中有很多目标可以进行选择&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + F2&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;对于前面页面，显示各类浏览器打开目标选择弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + F3&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选中文本，逐个往下查找相同文本，并高亮显示&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + F7&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;查找光标所在的方法 / 变量 / 类被调用的地方&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + F8&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 的状态下，选中对象，弹出可输入计算表达式调试框，查看该输入内容的调试结果&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Home&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;定位 / 显示到当前文件的 &lt;code&gt;Navigation Bar&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Enter&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;IntelliJ IDEA 根据光标所在问题，提供快速修复选择，光标放在的位置不同提示的结果也不同 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Insert&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;代码自动生成，如生成对象的 set / get 方法，构造函数，toString() 等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + 左方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;按左方向切换当前已打开的文件视图&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + 右方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;按右方向切换当前已打开的文件视图&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + 前方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;当前光标跳转到当前文件的前一个方法名位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + 后方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;当前光标跳转到当前文件的后一个方法名位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + 1,2,3…9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示对应数值的选项卡，其中 1 是 Project 用得最多&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;Shift&quot;&gt;&lt;a href=&quot;#Shift&quot; class=&quot;headerlink&quot; title=&quot;Shift&quot;&gt;&lt;/a&gt;Shift&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F1&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;如果有外部文档可以连接外部文档&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F2&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;跳转到上一个高亮错误 或 警告位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F3&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在查找模式下，查找匹配上一个&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F4&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;对当前打开的文件，使用新Windows窗口打开，旧窗口保留&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F6&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;对文件 / 文件夹 重命名&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F7&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，智能步入。断点所在行上有多个方法调用，会弹出进入哪个方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F8&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，跳出，表现出来的效果跟 &lt;code&gt;F9&lt;/code&gt; 一样&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;等效于点击工具栏的 &lt;code&gt;Debug&lt;/code&gt; 按钮&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F10&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;等效于点击工具栏的 &lt;code&gt;Run&lt;/code&gt; 按钮&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + F11&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出书签显示层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + Tab&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;取消缩进&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + ESC&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;隐藏当前 或 最后一个激活的工具窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + End&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选中光标到当前行尾位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + Home&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选中光标到当前行头位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + Enter&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;开始新一行。光标所在行下空出一行，光标定位到新行位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + 左键单击&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在打开的文件名上按此快捷键，可以关闭当前打开文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Shift + 滚轮前后滚动&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;当前文件的横向滚动轴滚动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;Ctrl-Alt&quot;&gt;&lt;a href=&quot;#Ctrl-Alt&quot; class=&quot;headerlink&quot; title=&quot;Ctrl + Alt&quot;&gt;&lt;/a&gt;Ctrl + Alt&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + L&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;格式化代码，可以对当前文件和整个包目录使用 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + O&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;优化导入的类，可以对当前文件和整个包目录使用 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + I&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;光标所在行 或 选中部分进行自动代码缩进，有点类似格式化&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + T&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;对选中的代码弹出环绕选项弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + J&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出模板选择窗口，讲选定的代码加入动态模板中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + H&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;调用层次&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + B&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在某个调用的方法名上使用会跳到具体的实现处，可以跳过接口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + V&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;快速引进变量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + Y&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;同步、刷新&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + S&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;打开 IntelliJ IDEA 系统设置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + F7&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示使用的地方。寻找被该类或是变量被调用的地方，用弹出框的方式找出来&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + F11&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;切换全屏模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + Enter&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;光标所在行上空出一行，光标定位到新行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + Home&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出跟当前文件有关联的文件弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + Space&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;类名自动完成&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + 左方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;退回到上一个操作的地方 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + 右方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;前进到上一个操作的地方 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + 前方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在查找模式下，跳到上个查找的文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Alt + 后方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在查找模式下，跳到下个查找的文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;Ctrl-Shift&quot;&gt;&lt;a href=&quot;#Ctrl-Shift&quot; class=&quot;headerlink&quot; title=&quot;Ctrl + Shift&quot;&gt;&lt;/a&gt;Ctrl + Shift&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + F&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;根据输入内容查找整个项目 或 指定目录内文件 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + R&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;根据输入内容替换对应内容，范围为整个项目 或 指定目录内文件 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + J&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;自动将下一行合并到当前行末尾 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Z&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;取消撤销 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + W&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;递进式取消选择代码块。可选中光标所在的单词或段落，连续按会在原有选中的基础上再扩展取消选中范围 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + N&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;通过文件名定位 / 打开文件 / 目录，打开目录需要在输入的内容后面多加一个正斜杠 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + U&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;对选中的代码进行大 / 小写轮流转换 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + T&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;对当前类生成单元测试类，如果已经存在的单元测试类则可以进行选择&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + C&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;复制当前文件磁盘路径到剪贴板&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + V&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出缓存的最近拷贝的内容管理器弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + E&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示最近修改的文件列表的弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + H&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示方法层次结构&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + B&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;跳转到类型声明处&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + I&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;快速查看光标所在的方法 或 类的定义&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + A&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;查找动作 / 设置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + /&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;代码块注释 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + [&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选中从光标所在位置到它的顶部中括号位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + ]&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选中从光标所在位置到它的底部中括号位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + +&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;展开所有代码&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + -&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;折叠所有代码&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + F7&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;高亮显示所有该选中文本，按Esc高亮消失&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + F8&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，指定断点进入条件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + F9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;编译选中的文件 / 包 / Module&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + F12&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;编辑器最大化&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Space&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;智能代码提示&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Enter&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;自动结束代码，行末自动添加分号 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Backspace&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;退回到上次修改的地方&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + 1,2,3…9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;快速添加指定数值的书签&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + 左方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在代码文件上，光标跳转到当前单词 / 中文句的左侧开头位置，同时选中该单词 / 中文句&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + 右方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在代码文件上，光标跳转到当前单词 / 中文句的右侧开头位置，同时选中该单词 / 中文句&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + 左方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在光标焦点是在工具选项卡上，缩小选项卡区域&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + 右方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在光标焦点是在工具选项卡上，扩大选项卡区域&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + 前方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;光标放在方法名上，将方法移动到上一个方法前面，调整方法排序&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + 后方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;光标放在方法名上，将方法移动到下一个方法前面，调整方法排序&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;Alt-Shift&quot;&gt;&lt;a href=&quot;#Alt-Shift&quot; class=&quot;headerlink&quot; title=&quot;Alt + Shift&quot;&gt;&lt;/a&gt;Alt + Shift&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + N&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选择 / 添加 task&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + F&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;显示添加到收藏夹弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + C&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;查看最近操作项目的变化情况列表&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + F&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;添加到收藏夹&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + I&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;查看项目当前文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + F7&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，下一步，进入当前方法体内，如果方法体还有方法，则会进入该内嵌的方法中，依此循环进入&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + F9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出 &lt;code&gt;Debug&lt;/code&gt;  的可选择菜单&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + F10&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出 &lt;code&gt;Run&lt;/code&gt;  的可选择菜单&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + 左键双击&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;选择被双击的单词 / 中文句，按住不放，可以同时选择其他单词 / 中文句&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + 前方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;移动光标所在行向上移动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Alt + Shift + 后方向键&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;移动光标所在行向下移动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;Ctrl-Shift-Alt&quot;&gt;&lt;a href=&quot;#Ctrl-Shift-Alt&quot; class=&quot;headerlink&quot; title=&quot;Ctrl + Shift + Alt&quot;&gt;&lt;/a&gt;Ctrl + Shift + Alt&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Alt + V&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;无格式黏贴&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Alt + N&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;前往指定的变量 / 方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Alt + S&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;打开当前项目设置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Ctrl + Shift + Alt + C&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;复制参考信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;其他&quot;&gt;&lt;a href=&quot;#其他&quot; class=&quot;headerlink&quot; title=&quot;其他&quot;&gt;&lt;/a&gt;其他&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;介绍&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F2&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;跳转到下一个高亮错误 或 警告位置 &lt;code&gt;（必备）&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F3&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在查找模式下，定位到下一个匹配处&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F4&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;编辑源&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F7&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，进入下一步，如果当前行断点是一个方法，则进入当前方法体内，如果该方法体还有方法，则不会进入该内嵌的方法中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F8&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，进入下一步，如果当前行断点是一个方法，则不进入当前方法体内&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F9&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;在 Debug 模式下，恢复程序运行，但是如果该断点下面代码还有断点则停在下一个断点上&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F11&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;添加书签&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;F12&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;回到前一个工具窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Tab&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;缩进&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;ESC&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;从工具窗口进入代码文件窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;连按两次Shift&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;弹出 &lt;code&gt;Search Everywhere&lt;/code&gt; 弹出层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;官网快捷键资料&quot;&gt;&lt;a href=&quot;#官网快捷键资料&quot; class=&quot;headerlink&quot; title=&quot;官网快捷键资料&quot;&gt;&lt;/a&gt;官网快捷键资料&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows / Linux：&lt;a href=&quot;https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Mac OS X：&lt;a href=&quot;https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard_Mac.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard_Mac.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;第三方快捷键资料&quot;&gt;&lt;a href=&quot;#第三方快捷键资料&quot; class=&quot;headerlink&quot; title=&quot;第三方快捷键资料&quot;&gt;&lt;/a&gt;第三方快捷键资料&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;来自 eta02913：&lt;a href=&quot;http://xinyuwu.iteye.com/blog/1005454&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xinyuwu.iteye.com/blog/1005454&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;快捷键修改&quot;&gt;&lt;a href=&quot;#快捷键修改&quot; class=&quot;headerlink&quot; title=&quot;快捷键修改&quot;&gt;&lt;/a&gt;快捷键修改&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;images/xxvii-a-keymap-setting-1.jpg&quot; alt=&quot;修改快捷键&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;按 &lt;code&gt;Ctrl + Alt + S&lt;/code&gt; 弹出 IDE 设置，如上图选择左侧的 &lt;code&gt;Keymap&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;IntelliJ IDEA 支持两种方式来筛选我们要找的快捷键，一种是上图标注 1 所示的，通过输入快捷键描述内容；一种是上图标注 2 所示的，通过 &lt;strong&gt;按&lt;/strong&gt; 指定快捷键快捷键，这里需要再次强调的是，这个输入框是自动监听你当前按下的按键，而不是用来输入的。&lt;/li&gt;
+&lt;li&gt;上图标注 3 所示，初安装的 IntelliJ IDEA 使用的是 &lt;code&gt;Default&lt;/code&gt; 的快捷键模板，IntelliJ IDEA 默认的快捷键模板都是不可修改的。如果你直接修改，当前这个位置 IntelliJ IDEA 会自动变成 &lt;code&gt;Default Copy&lt;/code&gt;，建议你养成习惯，修改之前先点击 &lt;code&gt;Copy&lt;/code&gt;，拷贝一套快捷键模板，然后输入自己的命名。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;images/xxvii-a-keymap-setting-2.jpg&quot; alt=&quot;修改快捷键&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;IntelliJ IDEA 是支持一个操作命令同时设置多个快捷键组合，就如上图的 &lt;code&gt;Backspace&lt;/code&gt;，同时支持 &lt;code&gt;Backspace&lt;/code&gt; 和 &lt;code&gt;Shift + Backspace&lt;/code&gt; 两组快捷键。&lt;/li&gt;
+&lt;li&gt;要修改某个快捷键，选中快捷键介绍内容，右键，就会弹出如上图标注 1 所示操作选择。&lt;/li&gt;
+&lt;li&gt;命令 &lt;code&gt;Add Keyboard Shortcut&lt;/code&gt; 用来添加新纯键盘快捷键组合。&lt;/li&gt;
+&lt;li&gt;命令 &lt;code&gt;Add Mouse Shortcut&lt;/code&gt; 用来添加新 &lt;code&gt;键盘 + 鼠标&lt;/code&gt; 快捷键组合，比如设置 &lt;code&gt;Ctrl + 左键单击&lt;/code&gt; 这类快捷组合。其中在弹出的添加面板中 &lt;code&gt;Click Pad&lt;/code&gt; 是用来监听当前鼠标是左键单击还是右键单击。&lt;/li&gt;
+&lt;li&gt;命令 &lt;code&gt;Add Abbreviation&lt;/code&gt; 根据 IntelliJ IDEA 的版本文档解释，添加简称主要是为了方便 &lt;code&gt;Search Everywhere&lt;/code&gt; 中使用，但是我尝试之后发现没办法根据我设置的简称搜索，暂时无法了解其作用。 &lt;/li&gt;
+&lt;li&gt;命令 &lt;code&gt;Remove 快捷键&lt;/code&gt; 移出当前操作命令已设置的快捷键组合，由于 IntelliJ IDEA 默认就占用了很多快捷键组合，所以如果你要修改某个快捷键，建议还是删除掉旧的。 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;images/xxvii-a-keymap-setting-3.jpg&quot; alt=&quot;修改快捷键&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;IntelliJ IDEA 对其他 IDE 用户很友好，比如如上图对于其他主流的 IDE，快捷键上已经默认了有其过度快捷键模板了，但是我还是建议你专心使用 IntelliJ IDEA 的默认。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;其他-1&quot;&gt;&lt;a href=&quot;#其他-1&quot; class=&quot;headerlink&quot; title=&quot;其他&quot;&gt;&lt;/a&gt;其他&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;images/xxvii-b-ideavim-1.jpg&quot; alt=&quot;vim插件推荐&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;如果你是一个 Vim 粉，IntelliJ IDEA 也为你准备了一个方案：如上图安装 IdeaVim 插件即可。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h2&gt;&lt;p&gt;IntelliJ IDEA 的便捷操作性，快捷键的功劳占了一大半，对于各个快捷键组合请认真对待。IntelliJ IDEA 本身的设计思维是
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java的SPI机制</title>
+    <link href="http://fengfu.io/2015/02/21/Java%E7%9A%84SPI%E6%9C%BA%E5%88%B6/"/>
+    <id>http://fengfu.io/2015/02/21/Java的SPI机制/</id>
+    <published>2015-02-21T11:35:09.000Z</published>
+    <updated>2016-02-27T13:50:17.243Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;什么是SPI&quot;&gt;&lt;a href=&quot;#什么是SPI&quot; class=&quot;headerlink&quot; title=&quot;什么是SPI&quot;&gt;&lt;/a&gt;什么是SPI&lt;/h2&gt;&lt;p&gt;SPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，SPI是面向服务提供者的。也就是说，有人定义了接口，那么围绕该接口提供服务的第三方则针对接口提供自己的服务。说到这里，最典型的应该是我们常用的日志框架，比如common-logging、jdbc Driver。&lt;/p&gt;
+&lt;h2 id=&quot;SPI的优点&quot;&gt;&lt;a href=&quot;#SPI的优点&quot; class=&quot;headerlink&quot; title=&quot;SPI的优点&quot;&gt;&lt;/a&gt;SPI的优点&lt;/h2&gt;&lt;p&gt;基于SPI机制，我们可以很方便地构建出易于扩展的应用。我们使用的很多应用框架，比如dubbo，其中的extension就是基于SPI构建的。&lt;/p&gt;
+&lt;h2 id=&quot;Java-SPI规范&quot;&gt;&lt;a href=&quot;#Java-SPI规范&quot; class=&quot;headerlink&quot; title=&quot;Java SPI规范&quot;&gt;&lt;/a&gt;Java SPI规范&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;在META-INF/services/目录下创建以接口全名命名的文件,该文件内容为接口具体实现类的全名;如我有一个实现类io.fengfu.learning.spi.HelloWorldServiceBB8Impl，实现了io.fengfu.learning.spi.HelloWorldService接口，那么就需要在META-INF/services目录下创建一个名称为io.fengfu.learning.spi.HelloWorldService的文件，文件的内容为io.fengfu.learning.spi.HelloWorldServiceBB8Impl。如果我有很多个实现类，那么只需要将实现类全名按行编写即可;&lt;/li&gt;
+&lt;li&gt;接口具体实现类必须有一个不带参数的构造方法;&lt;/li&gt;
+&lt;li&gt;使用ServiceLoader类动态加载META-INF中的实现类;&lt;/li&gt;
+&lt;li&gt;如SPI的实现类为Jar则需要放在主程序classPath中;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;SPI示例&quot;&gt;&lt;a href=&quot;#SPI示例&quot; class=&quot;headerlink&quot; title=&quot;SPI示例&quot;&gt;&lt;/a&gt;SPI示例&lt;/h2&gt;&lt;p&gt;1,定义一个接口&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public interface HelloService {
+    public String sayHello(String name);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2, 实现之：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public class HelloServiceR2D2Impl implements HelloService {
+    public String sayHello(String name) {
+        return &amp;quot;Hello, &amp;quot; + name + &amp;quot;, I&amp;apos;m R2D2.&amp;quot;;
+    }
+}
+
+package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public class HelloServiceC3poImpl implements HelloService {
+    public String sayHello(String name) {
+        return &amp;quot;Hello, &amp;quot; + name + &amp;quot;, I&amp;apos;m C3po.&amp;quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3, 在META-INF/services目录下创建io.fengfu.learning.spi.HelloService文件，在文件中添加以下内容:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;io.fengfu.learning.spi.HelloServiceR2D2Impl
+io.fengfu.learning.spi.HelloServiceBB8Impl
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4, 创建测试类：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;package io.fengfu.learning.spi;
+
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public class SPITest {
+    public static void main(String[] args) {
+        ServiceLoader&amp;lt;HelloService&amp;gt; loader = ServiceLoader.load(HelloService.class);
+        Iterator&amp;lt;HelloService&amp;gt; it = loader.iterator();
+        while(it.hasNext()){
+            HelloService helloSPI = it.next();
+            System.out.println(helloSPI.sayHello(&amp;quot;Fengfu&amp;quot;));
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;5, 运行，结果为：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Hello, Fengfu, I&amp;apos;m R2D2.
+Hello, Fengfu, I&amp;apos;m C3po.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;由此看出，2个是实现类都被运行了。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;什么是SPI&quot;&gt;&lt;a href=&quot;#什么是SPI&quot; class=&quot;headerlink&quot; title=&quot;什么是SPI&quot;&gt;&lt;/a&gt;什么是SPI&lt;/h2&gt;&lt;p&gt;SPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，S
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利特尔法则</title>
+    <link href="http://fengfu.io/2015/02/14/%E5%88%A9%E7%89%B9%E5%B0%94%E6%B3%95%E5%88%99/"/>
+    <id>http://fengfu.io/2015/02/14/利特尔法则/</id>
+    <published>2015-02-14T12:41:09.000Z</published>
+    <updated>2016-02-27T13:49:48.590Z</updated>
+    
+    <content type="html">&lt;p&gt;##概念##&lt;/p&gt;
+&lt;p&gt;利特尔法则由麻省理工大学斯隆商学院（MIT Sloan School of Management）的教授John Little﹐于1961年所提出与证明。其英文名称为：Little’s Law。&lt;br&gt;利特尔法则是一个有关提前期与在制品关系的简单数学公式，这一法则为精益生产的改善方向指明了道路。 如何有效地缩短生产周期呢？利特尔法则已经很明显地指出了方向：一个方向是提高产能，从而降低生产节拍；另一个方向就是压缩存货数量。然而，提高产能往往意味着增加很大的投入。另外，生产能力的提升虽然可以缩短生产周期，但是生产能力的提升总有个限度，我们无法容忍生产能力远远超过市场的需求。一般来说，每个公司在一定时期内的生产能力是大致不变的，而从长期来看，各公司也会力图使自己公司的产能与市场需求相吻合。因此，最有效地缩短生产周期的方法就是压缩在制品数量。&lt;br&gt;利特尔法则不仅适用于整个系统，而且也适用于系统的任何一部分。&lt;/p&gt;
+&lt;p&gt;##公式##&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://cdn.lieyunwang.com/wp-content/uploads/2014/11/0e1490aebb8c1b4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;L=系统中的平均项目数量；&lt;/p&gt;
+&lt;p&gt;W=一个项目在系统中所需等待的平均时间；&lt;/p&gt;
+&lt;p&gt;λ=单位时间内项目到达的平均数量；&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在一个稳定的系统中，长时间观察到的平均顾客数量L，等于，长时间观察到的有效到达速率λ与平均每个顾客在系统中花费的时间W之乘积。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;##举例##&lt;/p&gt;
+&lt;p&gt;比如我们要去一个快餐店吃饭，这个快餐店平均每分钟有2个人进入，每个人平均用餐时间是0.5小时，那么算一下这个饭店当前有多少人在用餐？&lt;br&gt;答案：2 &lt;em&gt; 0.5 &lt;/em&gt; 60 = 60人&lt;br&gt;其中2为速率λ，0.5为花费时间W，60为小时换算成与速率一致的单位的系数。&lt;/p&gt;
+&lt;p&gt;再举一个估算系统QPS的例子：&lt;br&gt;假如我们有个系统，每天的访问量是200万次，系统处理每次请求平均花费的时间是3秒，那么系统能够支撑的QPS是多少？&lt;br&gt;QPS = 2000000/24/3600/3 = 7.7&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;##概念##&lt;/p&gt;
+&lt;p&gt;利特尔法则由麻省理工大学斯隆商学院（MIT Sloan School of Management）的教授John Little﹐于1961年所提出与证明。其英文名称为：Little’s Law。&lt;br&gt;利特尔法则是一个有关提前期与在制品关系的简单
+    
+    </summary>
+    
+    
+      <category term="商业" scheme="http://fengfu.io/tags/%E5%95%86%E4%B8%9A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>线程初始化参数</title>
+    <link href="http://fengfu.io/2015/02/08/%E7%BA%BF%E7%A8%8B%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%82%E6%95%B0/"/>
+    <id>http://fengfu.io/2015/02/08/线程初始化参数/</id>
+    <published>2015-02-08T12:41:09.000Z</published>
+    <updated>2016-02-27T13:49:32.173Z</updated>
+    
+    <content type="html">&lt;p&gt;线程池创建时，有3个参数比较关键，分别是：corePoolSize、maximumPoolSize，还有一个queueSize。&lt;/p&gt;
+&lt;p&gt;corePoolSize&lt;/p&gt;
+&lt;p&gt;线程池基本大小，即在任务没有需要执行的时候线程池的大小。在刚刚创建了ThreadPoolExecutor的时候，线程并不会立即启动，只有在有任务提交的时候才会启动；除非你调用了prestartCoreThread/prestartAllCoreThreads。&lt;/p&gt;
+&lt;p&gt;maximumPoolSize&lt;/p&gt;
+&lt;p&gt;线程池中允许的最大线程数，即线程池中运行的线程不可能超过这个数量。&lt;/p&gt;
+&lt;p&gt;queueSize&lt;/p&gt;
+&lt;p&gt;线程池队列大小，即排队的队列容量。&lt;/p&gt;
+&lt;p&gt;如果线程池中线程已达到corePoolSize，并且还有新的任务提交，那么线程池首先将任务存到队列中排队。如果队列也满了，那么线程池将继续在增加 线程，直到达到maximumPoolSize。到这里细心的同学可能会问了：如果队列没设置大小呢？那么我只能告诉你：看运气吧，如果任务少，你的队列 顶多长一些；如果任务很多，那么很可能你要oom了O(∩_∩)O&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;线程池创建时，有3个参数比较关键，分别是：corePoolSize、maximumPoolSize，还有一个queueSize。&lt;/p&gt;
+&lt;p&gt;corePoolSize&lt;/p&gt;
+&lt;p&gt;线程池基本大小，即在任务没有需要执行的时候线程池的大小。在刚刚创建了ThreadPoolE
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>架构设计原则</title>
+    <link href="http://fengfu.io/2015/02/03/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/"/>
+    <id>http://fengfu.io/2015/02/03/架构设计原则/</id>
+    <published>2015-02-03T11:48:09.000Z</published>
+    <updated>2016-02-27T13:49:57.780Z</updated>
+    
+    <content type="html">&lt;ol&gt;
+&lt;li&gt;单一职责原则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;里氏替换原则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;原则：子类可以扩展父类的功能，但不能改变父类原有的功能。具体总结为以下2点：&lt;/p&gt;
+&lt;p&gt;1) 子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。&lt;br&gt;2) 子类中可以增加自己特有的方法。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;依赖倒置原则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;一句话：面向接口编程。&lt;/p&gt;
+&lt;p&gt;1) 低层模块尽量都要有抽象类或接口，或者两者都有;&lt;br&gt;2) 变量的声明类型尽量是抽象类或接口;&lt;br&gt;3) 使用继承时遵循里氏替换原则。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;接口隔离原则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;不要创建过大的接口类，即接口中的方法不要过多。本着高内聚的原则，将接口中的方法归类。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;迪米特法则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;原则：一个对象应该对其他对象保持最少的了解，出发点是降低类与类之间的耦合度。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;开闭原则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对扩展开放，对修改关闭。这个原则很虚，虚得感觉跟没说一样，索性总结一句：遵循前面5条原则，就相当于遵循了开闭原则O(∩_∩)O&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;单一职责原则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;里氏替换原则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;原则：子类
+    
+    </summary>
+    
+    
+      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第一篇Markdown</title>
+    <link href="http://fengfu.io/2015/01/28/%E7%AC%AC%E4%B8%80%E7%AF%87Markdown/"/>
+    <id>http://fengfu.io/2015/01/28/第一篇Markdown/</id>
+    <published>2015-01-28T13:38:09.000Z</published>
+    <updated>2016-02-27T13:50:09.172Z</updated>
+    
+    <content type="html">&lt;p&gt;真的是Out了，Markdown都流行了这么久了，才开始用，惭愧啊……&lt;br&gt;更惭愧的是，博客都好久没有更新了……&lt;br&gt;更更惭愧的是，还有许多想要做的事情，都还没开始；或者开始了，就没有然后了……&lt;br&gt;比如15年想要看50本书，目前还差十几本……&lt;br&gt;比如15年想要去的西藏，如今已无法成行……&lt;br&gt;比如一直想写的互联网研发体系博客，到现在才寥寥数语……&lt;br&gt;…… ……&lt;br&gt;想要太多，付出太少；担心太多，决心太少；借口太多，行动太少……&lt;br&gt;不管怎么样，不能这样纵容自己了，千里之行始于足下，从今天开始，行动起来把！&lt;br&gt;加油！&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;真的是Out了，Markdown都流行了这么久了，才开始用，惭愧啊……&lt;br&gt;更惭愧的是，博客都好久没有更新了……&lt;br&gt;更更惭愧的是，还有许多想要做的事情，都还没开始；或者开始了，就没有然后了……&lt;br&gt;比如15年想要看50本书，目前还差十几本……&lt;br&gt;比如15年想要去
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>写在开博时</title>
+    <link href="http://fengfu.io/2015/01/24/First-Blog/"/>
+    <id>http://fengfu.io/2015/01/24/First-Blog/</id>
+    <published>2015-01-24T15:38:09.000Z</published>
+    <updated>2016-02-26T03:49:36.414Z</updated>
+    
+    <content type="html">&lt;p&gt;盘算着搞一个独立域名的博客已经很久的时间了，今天终于如愿以偿，搞定了独立的域名和空间，在这里还是要先感谢godaddy.com一下，让我很便捷地就能创建自己的空间。&lt;/p&gt;
+&lt;p&gt;虽然我是个IT工程师，但是这个博客不是专门的技术博客。作为一个老程序员，除了对技术有很多的了解，对于人生也有了很多的感触。所以在这个空间里，我会写写技术，也聊聊人生，甚至天马行空……&lt;/p&gt;
+&lt;p&gt;曾经有朋友问我为什么用.io做后缀，我的解释是：io = input + output。&lt;/p&gt;
+&lt;p&gt;input = 索取&lt;/p&gt;
+&lt;p&gt;output = 奉献&lt;/p&gt;
+&lt;p&gt;虽然我只是一个普通人，但是我认为我来到这个世界上，不只是为了索取，我相信我可以以自己的绵薄之力为这个世界做一些贡献。如果这样，也不枉我在这个世界走一遭了。&lt;/p&gt;
+&lt;p&gt;祝福所有在我的博客驻足的人，世界很大，能遇到已属不易，转眼间可能又擦肩而过……&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;盘算着搞一个独立域名的博客已经很久的时间了，今天终于如愿以偿，搞定了独立的域名和空间，在这里还是要先感谢godaddy.com一下，让我很便捷地就能创建自己的空间。&lt;/p&gt;
+&lt;p&gt;虽然我是个IT工程师，但是这个博客不是专门的技术博客。作为一个老程序员，除了对技术有很多的了解
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
