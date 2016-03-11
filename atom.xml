@@ -1145,46 +1145,21 @@ Hello, Fengfu, I&amp;apos;m C3po.
     <link href="http://fengfu.io/2015/02/03/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/"/>
     <id>http://fengfu.io/2015/02/03/架构设计原则/</id>
     <published>2015-02-03T11:48:09.000Z</published>
-    <updated>2016-02-27T13:49:57.780Z</updated>
+    <updated>2016-03-11T09:28:21.519Z</updated>
     
-    <content type="html">&lt;ol&gt;
-&lt;li&gt;单一职责原则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;里氏替换原则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;原则：子类可以扩展父类的功能，但不能改变父类原有的功能。具体总结为以下2点：&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-单一职责原则&quot;&gt;&lt;a href=&quot;#1-单一职责原则&quot; class=&quot;headerlink&quot; title=&quot;1. 单一职责原则&quot;&gt;&lt;/a&gt;1. 单一职责原则&lt;/h2&gt;&lt;p&gt;简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。&lt;/p&gt;
+&lt;h2 id=&quot;2-里氏替换原则&quot;&gt;&lt;a href=&quot;#2-里氏替换原则&quot; class=&quot;headerlink&quot; title=&quot;2. 里氏替换原则&quot;&gt;&lt;/a&gt;2. 里氏替换原则&lt;/h2&gt;&lt;p&gt;原则：子类可以扩展父类的功能，但不能改变父类原有的功能。具体总结为以下2点：&lt;/p&gt;
 &lt;p&gt;1) 子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。&lt;br&gt;2) 子类中可以增加自己特有的方法。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;依赖倒置原则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;一句话：面向接口编程。&lt;/p&gt;
+&lt;h2 id=&quot;3-依赖倒置原则&quot;&gt;&lt;a href=&quot;#3-依赖倒置原则&quot; class=&quot;headerlink&quot; title=&quot;3. 依赖倒置原则&quot;&gt;&lt;/a&gt;3. 依赖倒置原则&lt;/h2&gt;&lt;p&gt;一句话：面向接口编程。&lt;/p&gt;
 &lt;p&gt;1) 低层模块尽量都要有抽象类或接口，或者两者都有;&lt;br&gt;2) 变量的声明类型尽量是抽象类或接口;&lt;br&gt;3) 使用继承时遵循里氏替换原则。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;接口隔离原则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;不要创建过大的接口类，即接口中的方法不要过多。本着高内聚的原则，将接口中的方法归类。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;迪米特法则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;原则：一个对象应该对其他对象保持最少的了解，出发点是降低类与类之间的耦合度。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;开闭原则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;对扩展开放，对修改关闭。这个原则很虚，虚得感觉跟没说一样，索性总结一句：遵循前面5条原则，就相当于遵循了开闭原则O(∩_∩)O&lt;/p&gt;
+&lt;h2 id=&quot;4-接口隔离原则&quot;&gt;&lt;a href=&quot;#4-接口隔离原则&quot; class=&quot;headerlink&quot; title=&quot;4. 接口隔离原则&quot;&gt;&lt;/a&gt;4. 接口隔离原则&lt;/h2&gt;&lt;p&gt;不要创建过大的接口类，即接口中的方法不要过多。本着高内聚的原则，将接口中的方法归类。&lt;/p&gt;
+&lt;h2 id=&quot;5-迪米特法则&quot;&gt;&lt;a href=&quot;#5-迪米特法则&quot; class=&quot;headerlink&quot; title=&quot;5. 迪米特法则&quot;&gt;&lt;/a&gt;5. 迪米特法则&lt;/h2&gt;&lt;p&gt;原则：一个对象应该对其他对象保持最少的了解，出发点是降低类与类之间的耦合度。&lt;/p&gt;
+&lt;h2 id=&quot;6-开闭原则&quot;&gt;&lt;a href=&quot;#6-开闭原则&quot; class=&quot;headerlink&quot; title=&quot;6. 开闭原则&quot;&gt;&lt;/a&gt;6. 开闭原则&lt;/h2&gt;&lt;p&gt;对扩展开放，对修改关闭。这个原则很虚，虚得感觉跟没说一样，索性总结一句：遵循前面5条原则，就相当于遵循了开闭原则O(∩_∩)O&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;ol&gt;
-&lt;li&gt;单一职责原则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;里氏替换原则&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;原则：子类
+      &lt;h2 id=&quot;1-单一职责原则&quot;&gt;&lt;a href=&quot;#1-单一职责原则&quot; class=&quot;headerlink&quot; title=&quot;1. 单一职责原则&quot;&gt;&lt;/a&gt;1. 单一职责原则&lt;/h2&gt;&lt;p&gt;简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度
     
     </summary>
     
