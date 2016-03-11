@@ -5,11 +5,11 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-03-09T02:02:55.712Z</updated>
+  <updated>2016-03-11T04:00:03.198Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
-    <name>Fengfu.Qu</name>
+    <name>宁静·致远</name>
     
   </author>
   
@@ -20,7 +20,7 @@
     <link href="http://fengfu.io/2016/03/08/JVM%E8%A7%A6%E5%8F%91FullGC%E7%9A%84%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93/"/>
     <id>http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/</id>
     <published>2016-03-08T14:53:56.000Z</published>
-    <updated>2016-03-09T02:02:55.712Z</updated>
+    <updated>2016-03-11T04:00:03.198Z</updated>
     
     <content type="html">&lt;p&gt;FullGC是Java应用中一个不容忽视的问题，因为FullGC会引起应用停顿，所以它对那些响应时间要求比较高的应用的影响还是非常大的。&lt;br&gt;当然，如果要解决FullGC的问题，我们首先需要知道在什么情况下会引起FullGC，这样才能对症下药，避免FullGC的出现。&lt;/p&gt;
 &lt;p&gt;下面的总结是针对于系统自动进行FullGC的情况分析，不包含System.gc操作。&lt;/p&gt;
