@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-03-11T04:00:03.198Z</updated>
+  <updated>2016-04-12T10:47:23.882Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -14,6 +14,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅谈软件工程师的职业发展方向</title>
+    <link href="http://fengfu.io/2016/04/11/%E6%B5%85%E8%B0%88%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91/"/>
+    <id>http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/</id>
+    <published>2016-04-11T09:31:37.000Z</published>
+    <updated>2016-04-12T10:47:23.882Z</updated>
+    
+    <content type="html">&lt;p&gt;今天在跟团队一个工作了2年多的同学做绩效面谈时，该同学问了我一个问题：自己现在比较迷茫，不知道该往哪个方向发展……&lt;/p&gt;
+&lt;p&gt;相信这是很多有一定工作经验的同学都会有的困惑，很多人每隔几年(一般是3年)就会遇到瓶颈，也会面临着新的选择。这时候，他们都会看不清方向，感到迷茫。如果这个问题得不到解决，那么他的成长就会受到制约，甚至停滞不前。在工作中的表现就是比较沉默甚至消极，严重者则选择离职，寻求新的方向（其实是开始新的轮回……）。此时，如果有人能够根据他们的特点帮助他们选择适合他们的方向，或者给出建议，那么相信他会走出迷雾，豁然开朗，这样团队的稳定性会得到加强。&lt;/p&gt;
+&lt;p&gt;所以今天简单总结一下软件工程师的职业发展方向，以帮助迷茫的同学早日走出混沌状态。&lt;/p&gt;
+&lt;h2 id=&quot;1-技术专家&quot;&gt;&lt;a href=&quot;#1-技术专家&quot; class=&quot;headerlink&quot; title=&quot;1.技术专家&quot;&gt;&lt;/a&gt;1.技术专家&lt;/h2&gt;&lt;p&gt;技术专家这个方向对于软件工程师来讲应该是比较容易实现的一个目标，因为这是外在因素影响最小的一个，我们所需要的就是专注和毅力。&lt;br&gt;在技术发展百花齐放、日新月异的今天，我们工作中可能会用到很多的技术，但是很多人只是把自己局限在“用”的层面上，并没有继续去深入研究和改进，更有人只是“知其然不知其所以然”，这样就失去了进一步积累的机会。&lt;br&gt;作家格拉德威尔在《异数》一书中指出：”人们眼中的天才之所以卓越非凡，并非天资超人一等，而是付出了持续不断的努力。1万小时的锤炼是任何人从平凡变成超凡的必要条件”。我们做个简单的算术题：如果每天工作八个小时，一周工作五天，那么成为一个领域的专家至少需要五年。&lt;br&gt;5年，看起来貌似时间很长，但是试想一下，如果我们借着工作的机会深入研究某个技术栈的原理，并在此基础上加以实践，那么我们只要不断地积累，最终是有机会成为这方面的专家的。在我身边就有这样的例子：以前我的团队中有个非常内向的小伙子（就叫他HX吧），刚来公司的时候各方面资质很平庸，平时寡言少语，也缺乏自信。在做一个项目时，我们采用了hbase作为系统存储。因为之前对hbase缺乏了解，所以项目过程中踩了很多的坑，于是HX同学就不停地填坑，甚至工作之外的时间都贡献了出去。2年过去了，虽然我们的项目早已结束，但是HX却从未放弃对hbase的研究，相反他经常翻看hbase的代码，并经常去hbase社区查看别人的讨论。现在HX已经成为了公司中对hbase最熟悉的人，并开始往hbase社区提交代码。在公司中他也已经小有名气，其他事业部的开发遇到hbase相关的问题也会来找他了解。虽然他现在还算不是hbase的专家，但是很明显，他现在已经度过了最难熬的时间，已经进入了收获期，只要他继续坚持下去，相信会取得更大的成绩。&lt;br&gt;这是身边真真切切的例子，虽然每个人的情况不完全一样，但是很多时候，我们是可以从别人的故事中找到自己的期待。&lt;/p&gt;
+&lt;h2 id=&quot;2-业务专家&quot;&gt;&lt;a href=&quot;#2-业务专家&quot; class=&quot;headerlink&quot; title=&quot;2.业务专家&quot;&gt;&lt;/a&gt;2.业务专家&lt;/h2&gt;&lt;p&gt;业务专家这个方向也比较好理解，我们长时间接触某一块业务，耳濡目染，久而久之也就会对这个业务比较熟悉甚至精通了。这个方向，其实我们仔细观察一下，身边也能找出很多的例子。我有一个认识了十几年的前同事，他从毕业开始就在做银行的信贷系统，现在还在做。目前他自己拥有一个几十人的开发团队，在国家开发银行驻场帮国开行做信贷系统，小日子过得很滋润。再回想自己曾经做过银行的外汇系统，最开始跟着中国银行学习业务，边学习边做系统，2年之后系统成熟了，业务熟悉了，就开始给建行做系统。但建行做外汇业务起步比较晚，于是我一个开发给银行的人讲业务，那种成就感你自己可以设想一下。&lt;br&gt;当然，这个方向也需要保持专注，跟上面讲的技术专家是一样的，你需要不断的积累。现在很多同学总是不停地在各个公司跳来跳去，薪水是涨上去了，但是在行业领域却没有太多的积累，从个人发展来讲，这迟早会成为一个限制因素。&lt;/p&gt;
+&lt;h2 id=&quot;3-技术经理&quot;&gt;&lt;a href=&quot;#3-技术经理&quot; class=&quot;headerlink&quot; title=&quot;3.技术经理&quot;&gt;&lt;/a&gt;3.技术经理&lt;/h2&gt;&lt;p&gt;我们身边有这么一类人，各方面能力都比较均衡，比如技术、沟通能力、组织能力。这样的人经过一段时间的锻炼后，可能会被任命为小组长，承担一些管理性的工作。再经过一段时间的历练，有些人可能不太适合这个方向，于是转向其他方向，剩下的做的还不错的人则继续升级，管理更大的团队，于是就成了技术经理。&lt;br&gt;技术经理的要求不同于前面的2个职位，保持专注就可以；而技术经理的要求就比较广泛，因为你管理的是技术团队，所以技术你不能扔；同时你管的是人，所以人际关系的相关技能你也要提升，比如沟通能力、组织能力，甚至你还要了解心理学、组织行为学等内容。这时候，全方位地充电就成了一个比较好的选择。&lt;/p&gt;
+&lt;h2 id=&quot;4-架构师&quot;&gt;&lt;a href=&quot;#4-架构师&quot; class=&quot;headerlink&quot; title=&quot;4.架构师&quot;&gt;&lt;/a&gt;4.架构师&lt;/h2&gt;&lt;p&gt;现在还有个名词叫“T型人才”。T型人才是指按知识结构区分出来的一种新型人才类型。用字母“T”来表示他们的知识结构特点。“—”表示有广博的知识面，“|”表示知识的深度。两者的结合，既有较深的专业知识，又有广博的知识面，这类集深与博于一身的人才。这种人才结构不仅在纵向的专业知识上具有较深的理解能力和独到见解，而且在横向上具备比较广泛的一般性知识修养。&lt;br&gt;我理解，架构师就是属于这种人才。他们经过长时间的技术积累，在某个方向上已经具备了比较深厚的沉淀，同时在技术体系上也得到了逐步的完善，于是成为了上天入地无所不能的架构师。&lt;br&gt;一般来讲，要成为T型人才，最好是先成为那道“|”，再成为那到“——”，这样根基会比较扎实。&lt;br&gt;所以对于要立志成为架构师的同学来说，最好先做一个技术专家，在技术专家的基础上，再扩大知识面，最终成为架构师。&lt;/p&gt;
+&lt;h2 id=&quot;5-CTO&quot;&gt;&lt;a href=&quot;#5-CTO&quot; class=&quot;headerlink&quot; title=&quot;5.CTO&quot;&gt;&lt;/a&gt;5.CTO&lt;/h2&gt;&lt;p&gt;CTO我还是不写了，仰望吧……&lt;/p&gt;
+&lt;p&gt;喷了这么多，最后简单梳理了各个方向的能力模型，希望抛砖引玉，引发你的思考。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2r8UGmVXXXXXPXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天在跟团队一个工作了2年多的同学做绩效面谈时，该同学问了我一个问题：自己现在比较迷茫，不知道该往哪个方向发展……&lt;/p&gt;
+&lt;p&gt;相信这是很多有一定工作经验的同学都会有的困惑，很多人每隔几年(一般是3年)就会遇到瓶颈，也会面临着新的选择。这时候，他们都会看不清方向，感到迷茫
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术栈选型原则</title>
+    <link href="http://fengfu.io/2016/03/22/%E6%8A%80%E6%9C%AF%E6%A0%88%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99/"/>
+    <id>http://fengfu.io/2016/03/22/技术栈选型原则/</id>
+    <published>2016-03-22T06:55:20.000Z</published>
+    <updated>2016-04-12T10:42:04.242Z</updated>
+    
+    <content type="html">&lt;p&gt;未完成&lt;/p&gt;
+&lt;p&gt;2个能力&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足需求的能力：开源产品满足自身功能、性能的能力(开发效率？运行效率？)；需求，梳理自身的业务、技术需求；&lt;/li&gt;
+&lt;li&gt;自身技术团队维护开源产品的能力；学习曲线以及公司内部的技术支持；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;3个关注点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;社区成熟度（用户数、bug数）、活跃度（contributors、releases）、技术支持（论坛、文档等）；&lt;/li&gt;
+&lt;li&gt;成功案例；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;避免过度炫技&lt;br&gt;不要因为一个人的喜好而舍弃掉整个技术团队，在任何时候这都是非常愚蠢的事情&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;未完成&lt;/p&gt;
+&lt;p&gt;2个能力&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足需求的能力：开源产品满足自身功能、性能的能力(开发效率？运行效率？)；需求，梳理自身的业务、技术需求；&lt;/li&gt;
+&lt;li&gt;自身技术团队维护开源产品的能力；学习曲线以及公司内部的技术支持；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;
+    
+    </summary>
+    
+    
+      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM触发FullGC的情况总结</title>
@@ -168,7 +237,7 @@
     <link href="http://fengfu.io/2015/04/02/Java-%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84-10-%E4%B8%AA%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
     <id>http://fengfu.io/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/</id>
     <published>2015-04-02T06:39:39.000Z</published>
-    <updated>2016-03-22T06:49:04.311Z</updated>
+    <updated>2016-03-22T06:55:44.816Z</updated>
     
     <content type="html">&lt;p&gt;英文原文：&lt;a href=&quot;http://javarevisited.blogspot.in/2013/03/0-exception-handling-best-practices-in-Java-Programming.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;10 Exception handling Best Practices in Java Programming&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;异常处理在编写健壮的Java应用的过程中，扮演着一个重要的角色。它并不是应用的功能需求，且需要优雅的处理任何错误情况，例如资源不可用，错误的输入，null输入等等。Java提供几个异常处理功能，并通过try, catch 和  finally关键字内嵌在语言的本身。Java编程语言同样允许创建新的异常和使用  throw 和 throws 抛出该异常。在实践中，异常处理不单单是知道语法这么简单。编写健壮的代码是更像是一门艺术，在本文中，将讨论Java异常处理最佳实践。这些 Java最佳实践遵循标准的JDK库，和几个处理错误和异常的开源代码。这还是一个提供给java程序员编写健壮代码的便利手册。&lt;/p&gt;
@@ -192,6 +261,8 @@
     
     </summary>
     
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
     
   </entry>
   

@@ -69,6 +69,113 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-利特尔法则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/14/利特尔法则/" class="article-date">
+  <time datetime="2015-02-14T12:41:09.000Z" itemprop="datePublished">2015-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/02/14/利特尔法则/">利特尔法则</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##概念##</p>
+<p>利特尔法则由麻省理工大学斯隆商学院（MIT Sloan School of Management）的教授John Little﹐于1961年所提出与证明。其英文名称为：Little’s Law。<br>利特尔法则是一个有关提前期与在制品关系的简单数学公式，这一法则为精益生产的改善方向指明了道路。 如何有效地缩短生产周期呢？利特尔法则已经很明显地指出了方向：一个方向是提高产能，从而降低生产节拍；另一个方向就是压缩存货数量。然而，提高产能往往意味着增加很大的投入。另外，生产能力的提升虽然可以缩短生产周期，但是生产能力的提升总有个限度，我们无法容忍生产能力远远超过市场的需求。一般来说，每个公司在一定时期内的生产能力是大致不变的，而从长期来看，各公司也会力图使自己公司的产能与市场需求相吻合。因此，最有效地缩短生产周期的方法就是压缩在制品数量。<br>利特尔法则不仅适用于整个系统，而且也适用于系统的任何一部分。</p>
+<p>##公式##</p>
+<p><img src="http://cdn.lieyunwang.com/wp-content/uploads/2014/11/0e1490aebb8c1b4.png" alt=""></p>
+<p>L=系统中的平均项目数量；</p>
+<p>W=一个项目在系统中所需等待的平均时间；</p>
+<p>λ=单位时间内项目到达的平均数量；</p>
+<p><strong>在一个稳定的系统中，长时间观察到的平均顾客数量L，等于，长时间观察到的有效到达速率λ与平均每个顾客在系统中花费的时间W之乘积。</strong></p>
+<p>##举例##</p>
+<p>比如我们要去一个快餐店吃饭，这个快餐店平均每分钟有2个人进入，每个人平均用餐时间是0.5小时，那么算一下这个饭店当前有多少人在用餐？<br>答案：2 <em> 0.5 </em> 60 = 60人<br>其中2为速率λ，0.5为花费时间W，60为小时换算成与速率一致的单位的系数。</p>
+<p>再举一个估算系统QPS的例子：<br>假如我们有个系统，每天的访问量是200万次，系统处理每次请求平均花费的时间是3秒，那么系统能够支撑的QPS是多少？<br>QPS = 2000000/24/3600/3 = 7.7</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2015/02/14/利特尔法则/" data-id="cimxaub9a000fekus2da8invo" class="article-share-link" data-share="baidu" data-title="利特尔法则">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2015/02/14/利特尔法则/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/商业/">商业</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-线程初始化参数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/08/线程初始化参数/" class="article-date">
+  <time datetime="2015-02-08T12:41:09.000Z" itemprop="datePublished">2015-02-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/02/08/线程初始化参数/">线程初始化参数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>线程池创建时，有3个参数比较关键，分别是：corePoolSize、maximumPoolSize，还有一个queueSize。</p>
+<p>corePoolSize</p>
+<p>线程池基本大小，即在任务没有需要执行的时候线程池的大小。在刚刚创建了ThreadPoolExecutor的时候，线程并不会立即启动，只有在有任务提交的时候才会启动；除非你调用了prestartCoreThread/prestartAllCoreThreads。</p>
+<p>maximumPoolSize</p>
+<p>线程池中允许的最大线程数，即线程池中运行的线程不可能超过这个数量。</p>
+<p>queueSize</p>
+<p>线程池队列大小，即排队的队列容量。</p>
+<p>如果线程池中线程已达到corePoolSize，并且还有新的任务提交，那么线程池首先将任务存到队列中排队。如果队列也满了，那么线程池将继续在增加 线程，直到达到maximumPoolSize。到这里细心的同学可能会问了：如果队列没设置大小呢？那么我只能告诉你：看运气吧，如果任务少，你的队列 顶多长一些；如果任务很多，那么很可能你要oom了O(∩_∩)O</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2015/02/08/线程初始化参数/" data-id="cimxaub8t0003ekus2ps8apct" class="article-share-link" data-share="baidu" data-title="线程初始化参数">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2015/02/08/线程初始化参数/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-架构设计原则" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/02/03/架构设计原则/" class="article-date">
@@ -104,7 +211,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/03/架构设计原则/" data-id="cim327e4e0009f0us8foyytgv" class="article-share-link" data-share="baidu" data-title="架构设计原则">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/03/架构设计原则/" data-id="cimxaub93000bekusgis2kw4g" class="article-share-link" data-share="baidu" data-title="架构设计原则">分享到</a>
       
 
       
@@ -149,7 +256,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/01/28/第一篇Markdown/" data-id="cim327e4b0006f0usrsvgc40v" class="article-share-link" data-share="baidu" data-title="第一篇Markdown">分享到</a>
+        <a data-url="http://fengfu.io/2015/01/28/第一篇Markdown/" data-id="cimxaub8y0006ekus1yi3wmfq" class="article-share-link" data-share="baidu" data-title="第一篇Markdown">分享到</a>
       
 
       
@@ -200,7 +307,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/01/24/First-Blog/" data-id="cim327e50000of0usdrsmgye3" class="article-share-link" data-share="baidu" data-title="写在开博时">分享到</a>
+        <a data-url="http://fengfu.io/2015/01/24/First-Blog/" data-id="cimxaub9x000tekusez7ynisn" class="article-share-link" data-share="baidu" data-title="写在开博时">分享到</a>
       
 
       
@@ -230,7 +337,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -248,7 +355,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -260,6 +367,14 @@
       <ul>
         
           <li>
+            <a href="/2016/04/11/浅谈软件工程师的职业发展方向/">浅谈软件工程师的职业发展方向</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/22/技术栈选型原则/">技术栈选型原则</a>
+          </li>
+        
+          <li>
             <a href="/2016/03/08/JVM触发FullGC的情况总结/">JVM触发FullGC的情况总结</a>
           </li>
         
@@ -269,14 +384,6 @@
         
           <li>
             <a href="/2015/12/29/ATPCO项目总结-管理篇/">ATPCO项目总结-管理篇</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/28/ATPCO项目总结--技术篇/">ATPCO项目总结-技术篇</a>
-          </li>
-        
-          <li>
-            <a href="/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/">【转】Java 编程中关于异常处理的 10 个最佳实践</a>
           </li>
         
       </ul>
