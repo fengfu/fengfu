@@ -69,6 +69,79 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-Java-Instrumentation研究-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/24/Java-Instrumentation研究-1/" class="article-date">
+  <time datetime="2016-04-24T07:30:14.000Z" itemprop="datePublished">2016-04-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/24/Java-Instrumentation研究-1/">Java Instrumentation研究-1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>作为一个软件工程师，你有没有遇到过以下场景：</p>
+<ol>
+<li>为了排查线上问题，非常迫切地想要知道系统中某个方法的运行数据，为此只能临时修改代码，打印日志；</li>
+<li>为了查找系统瓶颈，你需要知道某个方法的耗时，为此你只能在方法头尾处记录时间戳，并打印日志或者记录到监控中；</li>
+<li>……</li>
+</ol>
+<p>为了实现上述种种临时需求，你需要修改代码、发布、查看日志。或许，这些场景对于作为码农的你已经习以为常，但是世界是懒人创造的，那有没有一种方式能够避免我们这种重复又无任何积累的劳动呢？答案是有的。</p>
+<p>最近，公司的大神 <a href="http://www.cnblogs.com/yuyijq/" target="_blank" rel="external">余昭辉</a> 发布了一个新的应用QTracer watch，可以支持通过简单的配置，查看系统运行时的数据。而实现这一点，竟然不用像以前一样在系统中添加一行代码并发布。这种高大上的技术实现立马让我对神的仰慕之情增加了几分。但仰慕归仰慕，对于神作我们还是需要知道其原理的。</p>
+<p>通过了解，清楚了这高大上的技术实现来自于Java的Instrumentation。</p>
+<h2 id="Java-Instrumentation简介"><a href="#Java-Instrumentation简介" class="headerlink" title="Java Instrumentation简介"></a>Java Instrumentation简介</h2><p>Instrumentation是Java SE5的新特性，它把Java的instrument功能从本地代码中解放出来，使之可以用Java代码的方式解决问题。使用Instrumentation，开发者可以构建一个独立于应用程序的代理程序（Agent），用来监测和协助运行在JVM上的程序，甚至能够替换和修改某些类的定义。有了这样的功能，我们就可以实现更为灵活的运行时虚拟机监控和Java类操作了，这样的特性实际上提供了一种虚拟机级别支持的AOP实现方式，使得我们无需对原有代码做任何升级和改动，就可以实现某些 AOP 的功能了。<br>在Java SE6里面，instrument包被赋予了更强大的功能：启动后的instrument、本地代码（native code）instrument，以及动态改变classpath等。这些改变意味着Java具有了更强的动态控制、解释能力，使得Java语言变得更加灵活多变。<br>在Java SE6里面，最大的改变是运行时的Instrumentation成为可能。在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE 6的新特性改变了这种情况，通过Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到 instrumentation的目的。<br>另外，对native的Instrumentation也是Java SE6的一个崭新的功能，这使以前无法完成的功能–对native接口的 instrumentation。我们可以在Java SE6中，通过一个或者一系列的prefix添加而得以完成。<br>最后，Java SE6里的Instrumentation也增加了动态添加classpath的功能。所有这些新的功能，都使得instrument包的功能更加丰富，从而使Java语言本身更加强大。</p>
+<h2 id="Java-Instrumentation原理"><a href="#Java-Instrumentation原理" class="headerlink" title="Java Instrumentation原理"></a>Java Instrumentation原理</h2><p>“java.lang.instrument”包的具体实现，依赖于JVMTI。JVMTI（Java Virtual Machine Tool Interface）是一套由 Java虚拟机提供的，为JVM相关的工具提供的本地编程接口集合。JVMTI是从Java SE5开始引入，整合和取代了以前使用的 Java Virtual Machine Profiler Interface (JVMPI) 和 the Java Virtual Machine Debug Interface (JVMDI)，而在Java SE6中，JVMPI和JVMDI已经消失了。JVMTI提供了一套“代理”程序机制，可以支持第三方工具程序以代理的方式连接和访问JVM，并利用JVMTI提供的丰富的编程接口，完成很多跟JVM相关的功能。事实上，java.lang.instrument包的实现，也就是基于这种机制的：在Instrumentation的实现当中，存在一个JVMTI的代理程序，通过调用JVMTI当中Java类相关的函数来完成Java类的动态操作。除开Instrumentation功能外，JVMTI还在虚拟机内存管理，线程控制，方法和变量操作等等方面提供了大量有价值的函数，具体可以参考<a href="http://docs.oracle.com/javase/7/docs/platform/jvmti/jvmti.html" target="_blank" rel="external">JVMTI官方文档</a>。</p>
+<h2 id="Java-Instrumentation实现步骤"><a href="#Java-Instrumentation实现步骤" class="headerlink" title="Java Instrumentation实现步骤"></a>Java Instrumentation实现步骤</h2><p>在Java SE5时代，Instrument只提供了premain（命令行）一种方式，即在真正的应用程序（包含main方法的程序）main方法启动前启动一个代理程序。而在Java SE6中则包含两种应用Instrumentation的方式：premain（命令行）和agentmain（运行时）。在本文中，我们首先研究premain方式。<br>要实现premain方式，我们要遵循的步骤如下：<br>1）编写Agent实现类，实现ClassFileTransformer接口。ClassFileTransformer中声明了一个方法：</p>
+<pre><code>public byte[] transform(
+ClassLoader loader, 
+String className, 
+Class cBR, 
+java.security.ProtectionDomain pD, 
+byte[] classfileBuffer) throws IllegalClassFormatException
+</code></pre><p>通过这个方法，代理可以得到虚拟机载入的类的字节码（通过 classfileBuffer 参数）。代理的各种功能一般是通过操作这一串字节码得以实现的。</p>
+<p>2）编写Agent入口类，实现premain方法：</p>
+<pre><code>public static void premain(String agentArgs, Instrumentation inst)
+</code></pre><p>3）打包Agent：将上述步骤1中声明的Java类打包成一个jar文件，并在META-INF/MANIFEST.MF文件中加入“Premain-Class”来指定此Java类（注意此处需要声明全路径）；</p>
+<pre><code>Manifest-Version: 1.0
+Premain-Class: io.fengfu.learning.instrument.SampleAgent
+</code></pre><p>最终我们打包得到SampleAgent.jar。</p>
+<p>4）执行命令：</p>
+<pre><code>java -javaagent:SampleAgent-1.0-SNAPSHOT.jar -cp /home/fengfu/SampleAgent/SampleAgent-1.0-SNAPSHOT.jar;/home/fengfu/SampleAgent/lib/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp
+</code></pre><p>java选项中有-javaagent:xx，xx就是你的agent jar，java通过此选项加载agent,由agent来监控classpath下的应用。<br>如果你的Agent类引入别的包，那么需要使用-cp参数指定包的路径，否则在执行java命令时，会报找不到类的错误。</p>
+<h2 id="Java-Instrumentation实例-premain"><a href="#Java-Instrumentation实例-premain" class="headerlink" title="Java Instrumentation实例(premain)"></a>Java Instrumentation实例(premain)</h2><p>本实例基于javassist实现了对某个类中所有方法执行时间的统计，具体代码请点击 <a href="https://github.com/fengfu/fengfu.github.io/blob/master/attach/SampleAgent.zip" target="_blank" rel="external">这里</a> 下载。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="cinel8w7j000p8cus4ninqb6y" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究-1">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-浅谈软件工程师的职业发展方向" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/11/浅谈软件工程师的职业发展方向/" class="article-date">
@@ -106,7 +179,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="cimxaub900009ekusowbotjuk" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="cinel8w6y00098cusmiuxp78z" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
       
 
       
@@ -162,7 +235,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="cimxaub97000dekusoo0r51ld" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
+        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="cinel8w72000d8cusu66ewedh" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
       
 
       
@@ -214,7 +287,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="cimxaub9q000pekus4vm15tyh" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
+        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="cinel8w7n000r8cuspbernpxr" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
       
 
       
@@ -268,7 +341,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="cimxaub9e000iekus4fpiushu" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
+        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="cinel8w7a000i8cus7yi0m0me" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
       
 
       
@@ -323,7 +396,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/" data-id="cimxaub9z000uekuskvw2d3ne" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-管理篇">分享到</a>
+        <a data-url="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/" data-id="cinel8w7w000w8cusfl7snumc" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-管理篇">分享到</a>
       
 
       
@@ -403,7 +476,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/" data-id="cimxauba2000wekuszrrgi7mn" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-技术篇">分享到</a>
+        <a data-url="http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/" data-id="cinel8w7z000y8cushhnosvkr" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-技术篇">分享到</a>
       
 
       
@@ -461,7 +534,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/" data-id="cimxaub9l000nekus0k7u85qb" class="article-share-link" data-share="baidu" data-title="【转】Java 编程中关于异常处理的 10 个最佳实践">分享到</a>
+        <a data-url="http://fengfu.io/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/" data-id="cinel8w7f000n8cusr1nogd92" class="article-share-link" data-share="baidu" data-title="【转】Java 编程中关于异常处理的 10 个最佳实践">分享到</a>
       
 
       
@@ -514,7 +587,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/03/08/23种设计模式/" data-id="cimxaub8b0000ekusendpurhe" class="article-share-link" data-share="baidu" data-title="23种设计模式">分享到</a>
+        <a data-url="http://fengfu.io/2015/03/08/23种设计模式/" data-id="cinel8w6c00008cusmhiz8puw" class="article-share-link" data-share="baidu" data-title="23种设计模式">分享到</a>
       
 
       
@@ -1335,120 +1408,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/" data-id="cimxaub9u000rekusbboflfqr" class="article-share-link" data-share="baidu" data-title="Intellij Idea快捷键大全">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/" data-id="cinel8w7p000t8cusuh1hbqt1" class="article-share-link" data-share="baidu" data-title="Intellij Idea快捷键大全">分享到</a>
       
 
       
         <a href="http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Java的SPI机制" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/02/21/Java的SPI机制/" class="article-date">
-  <time datetime="2015-02-21T11:35:09.000Z" itemprop="datePublished">2015-02-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/02/21/Java的SPI机制/">Java的SPI机制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是SPI"><a href="#什么是SPI" class="headerlink" title="什么是SPI"></a>什么是SPI</h2><p>SPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，SPI是面向服务提供者的。也就是说，有人定义了接口，那么围绕该接口提供服务的第三方则针对接口提供自己的服务。说到这里，最典型的应该是我们常用的日志框架，比如common-logging、jdbc Driver。</p>
-<h2 id="SPI的优点"><a href="#SPI的优点" class="headerlink" title="SPI的优点"></a>SPI的优点</h2><p>基于SPI机制，我们可以很方便地构建出易于扩展的应用。我们使用的很多应用框架，比如dubbo，其中的extension就是基于SPI构建的。</p>
-<h2 id="Java-SPI规范"><a href="#Java-SPI规范" class="headerlink" title="Java SPI规范"></a>Java SPI规范</h2><ol>
-<li>在META-INF/services/目录下创建以接口全名命名的文件,该文件内容为接口具体实现类的全名;如我有一个实现类io.fengfu.learning.spi.HelloWorldServiceBB8Impl，实现了io.fengfu.learning.spi.HelloWorldService接口，那么就需要在META-INF/services目录下创建一个名称为io.fengfu.learning.spi.HelloWorldService的文件，文件的内容为io.fengfu.learning.spi.HelloWorldServiceBB8Impl。如果我有很多个实现类，那么只需要将实现类全名按行编写即可;</li>
-<li>接口具体实现类必须有一个不带参数的构造方法;</li>
-<li>使用ServiceLoader类动态加载META-INF中的实现类;</li>
-<li>如SPI的实现类为Jar则需要放在主程序classPath中;</li>
-</ol>
-<h2 id="SPI示例"><a href="#SPI示例" class="headerlink" title="SPI示例"></a>SPI示例</h2><p>1,定义一个接口</p>
-<pre><code>package io.fengfu.learning.spi;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public interface HelloService {
-    public String sayHello(String name);
-}
-</code></pre><p>2, 实现之：</p>
-<pre><code>package io.fengfu.learning.spi;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public class HelloServiceR2D2Impl implements HelloService {
-    public String sayHello(String name) {
-        return &quot;Hello, &quot; + name + &quot;, I&apos;m R2D2.&quot;;
-    }
-}
-
-package io.fengfu.learning.spi;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public class HelloServiceC3poImpl implements HelloService {
-    public String sayHello(String name) {
-        return &quot;Hello, &quot; + name + &quot;, I&apos;m C3po.&quot;;
-    }
-}
-</code></pre><p>3, 在META-INF/services目录下创建io.fengfu.learning.spi.HelloService文件，在文件中添加以下内容:</p>
-<pre><code>io.fengfu.learning.spi.HelloServiceR2D2Impl
-io.fengfu.learning.spi.HelloServiceBB8Impl
-</code></pre><p>4, 创建测试类：</p>
-<pre><code>package io.fengfu.learning.spi;
-
-import java.util.Iterator;
-import java.util.ServiceLoader;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public class SPITest {
-    public static void main(String[] args) {
-        ServiceLoader&lt;HelloService&gt; loader = ServiceLoader.load(HelloService.class);
-        Iterator&lt;HelloService&gt; it = loader.iterator();
-        while(it.hasNext()){
-            HelloService helloSPI = it.next();
-            System.out.println(helloSPI.sayHello(&quot;Fengfu&quot;));
-        }
-    }
-}
-</code></pre><p>5, 运行，结果为：</p>
-<pre><code>Hello, Fengfu, I&apos;m R2D2.
-Hello, Fengfu, I&apos;m C3po.
-</code></pre><p>由此看出，2个是实现类都被运行了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2015/02/21/Java的SPI机制/" data-id="cimxaub9i000lekus9g63c7zj" class="article-share-link" data-share="baidu" data-title="Java的SPI机制">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2015/02/21/Java的SPI机制/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -1476,7 +1440,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1494,7 +1458,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -1504,6 +1468,10 @@ Hello, Fengfu, I&apos;m C3po.
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/04/24/Java-Instrumentation研究-1/">Java Instrumentation研究-1</a>
+          </li>
         
           <li>
             <a href="/2016/04/11/浅谈软件工程师的职业发展方向/">浅谈软件工程师的职业发展方向</a>
@@ -1519,10 +1487,6 @@ Hello, Fengfu, I&apos;m C3po.
         
           <li>
             <a href="/2016/02/28/你若懂我该有多好/">你若懂我，该有多好</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/29/ATPCO项目总结-管理篇/">ATPCO项目总结-管理篇</a>
           </li>
         
       </ul>
