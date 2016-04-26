@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-04-26T02:13:24.120Z</updated>
+  <updated>2016-04-26T10:22:35.140Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Java Instrumentation研究之动态代理</title>
+    <title>Java Instrumentation研究之动态植入</title>
     <link href="http://fengfu.io/2016/04/25/Java-Instrumentation%E7%A0%94%E7%A9%B6-2/"/>
     <id>http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/</id>
     <published>2016-04-25T02:20:43.000Z</published>
-    <updated>2016-04-26T02:13:24.120Z</updated>
+    <updated>2016-04-26T10:22:35.140Z</updated>
     
     <content type="html">&lt;h2 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1.前言&quot;&gt;&lt;/a&gt;1.前言&lt;/h2&gt;&lt;p&gt;前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。&lt;/p&gt;
 &lt;h2 id=&quot;2-关于agentmain&quot;&gt;&lt;a href=&quot;#2-关于agentmain&quot; class=&quot;headerlink&quot; title=&quot;2.关于agentmain&quot;&gt;&lt;/a&gt;2.关于agentmain&lt;/h2&gt;&lt;p&gt;在Java SE6的Instrumentation 当中，有一个跟 premain“并驾齐驱”的“agentmain”方法，可以在main函数开始运行之后再运行。&lt;br&gt;跟premain函数一样， 开发者可以编写一个含有“agentmain”函数的Java类：&lt;/p&gt;
@@ -44,7 +44,7 @@ public static void agentmain(String agentArgs);              [2]
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;编写一个测试入口类SampleApp，能够长时间驻留，便于我们测试动态代理功能；本例中我们通过键盘数据接收用户的输入数据。只要用户输入不为“bye”，那么就会执行Test类的test()方法；在系统刚刚启动的时候，我们没有利用动态代理实现对test()方法的计时；当动态代理启动后，再执行test()方法，我们就能看到屏幕除了输出原test()方法输出的“hello world”之外，还额外输出了test()方法的运行计时。这就能够证明代理生效了；&lt;/li&gt;
+&lt;li&gt;编写一个测试入口类SampleApp，能够长时间驻留，便于我们测试动态植入功能；本例中我们通过键盘数据接收用户的输入数据。只要用户输入不为“bye”，那么就会执行Test类的test()方法；在系统刚刚启动的时候，我们没有利用动态植入实现对test()方法的计时；当执行动态植入后，再执行test()方法，我们就能看到屏幕除了输出原test()方法输出的“hello world”之外，还额外输出了test()方法的运行计时。这就能够证明植入代码生效了；&lt;/li&gt;
 &lt;li&gt;设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；&lt;/li&gt;
 &lt;li&gt;打包得到DynamicAgent-1.0-SNAPSHOT.jar；&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;执行SampleApp，启动应用：&lt;/p&gt;
@@ -60,10 +60,10 @@ public static void agentmain(String agentArgs);              [2]
 &lt;li&gt;&lt;p&gt;在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;大功告成，一个简单的动态代理就诞生了~&lt;br&gt;本实例的代码可以点 &lt;a href=&quot;(http://fengfu.io/attach/DynamicAgent.zip&quot;&gt;这里&lt;/a&gt;) 下载。&lt;/p&gt;
+&lt;p&gt;大功告成，一个简单的动态植入功能就实现了~&lt;br&gt;本实例的代码可以点 &lt;a href=&quot;(http://fengfu.io/attach/DynamicAgent.zip&quot;&gt;这里&lt;/a&gt;) 下载。&lt;/p&gt;
 &lt;h2 id=&quot;6-说明&quot;&gt;&lt;a href=&quot;#6-说明&quot; class=&quot;headerlink&quot; title=&quot;6.说明&quot;&gt;&lt;/a&gt;6.说明&lt;/h2&gt;&lt;p&gt;实例虽然简单，但是在代码编写过程中还是遇到了几个坑，贴出来供大家参考：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;如果动态代理需要通过javassist去修改某些类，那么需要在MANIFEST.MF中设置Can-Retransform-Classes和Can-Redefine-Classes为true；&lt;/li&gt;
+&lt;li&gt;如果动态植入需要通过javassist去修改某些类，那么需要在MANIFEST.MF中设置Can-Retransform-Classes和Can-Redefine-Classes为true；&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;要动态修改的类Test不要跟测试入口类SampleApp放在一个类文件中，否则代理启动动态修改Class时会报如下异常：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;java.lang.reflect.InvocationTargetException
 at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -97,7 +97,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
     <link href="http://fengfu.io/2016/04/24/Java-Instrumentation%E7%A0%94%E7%A9%B6-1/"/>
     <id>http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/</id>
     <published>2016-04-24T07:30:14.000Z</published>
-    <updated>2016-04-25T14:36:19.246Z</updated>
+    <updated>2016-04-26T10:19:46.770Z</updated>
     
     <content type="html">&lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;作为一个软件工程师，你有没有遇到过以下场景：&lt;/p&gt;
 &lt;ol&gt;
@@ -107,8 +107,8 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 &lt;/ol&gt;
 &lt;p&gt;为了实现上述种种临时需求，你需要修改代码、发布、查看日志。或许，这些场景对于作为码农的你已经习以为常，但是世界是懒人创造的，那有没有一种方式能够避免我们这种重复又无任何积累的劳动呢？答案是有的。&lt;/p&gt;
 &lt;p&gt;最近，公司的大神 &lt;a href=&quot;http://www.cnblogs.com/yuyijq/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;余昭辉&lt;/a&gt; 发布了一个新的应用QTracer watch，可以支持通过简单的配置，查看系统运行时的数据。而实现这一点，竟然不用像以前一样在系统中添加一行代码并发布。这种高大上的技术实现立马让我对神的仰慕之情增加了几分。但仰慕归仰慕，对于神作我们还是需要知道其原理的。&lt;/p&gt;
-&lt;p&gt;通过了解，清楚了这高大上的技术实现来自于Java的Instrumentation。&lt;/p&gt;
-&lt;h2 id=&quot;2-Java-Instrumentation简介&quot;&gt;&lt;a href=&quot;#2-Java-Instrumentation简介&quot; class=&quot;headerlink&quot; title=&quot;2.Java Instrumentation简介&quot;&gt;&lt;/a&gt;2.Java Instrumentation简介&lt;/h2&gt;&lt;p&gt;Instrumentation是Java SE5的新特性，它把Java的instrument功能从本地代码中解放出来，使之可以用Java代码的方式解决问题。使用Instrumentation，开发者可以构建一个独立于应用程序的代理程序（Agent），用来监测和协助运行在JVM上的程序，甚至能够替换和修改某些类的定义。有了这样的功能，我们就可以实现更为灵活的运行时虚拟机监控和Java类操作了，这样的特性实际上提供了一种虚拟机级别支持的AOP实现方式，使得我们无需对原有代码做任何升级和改动，就可以实现某些 AOP 的功能了。&lt;br&gt;在Java SE6里面，instrument包被赋予了更强大的功能：启动后的instrument、本地代码（native code）instrument，以及动态改变classpath等。这些改变意味着Java具有了更强的动态控制、解释能力，使得Java语言变得更加灵活多变。&lt;br&gt;在Java SE6里面，最大的改变是运行时的Instrumentation成为可能。在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE 6的新特性改变了这种情况，通过Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到 instrumentation的目的。&lt;br&gt;另外，对native的Instrumentation也是Java SE6的一个崭新的功能，这使以前无法完成的功能–对native接口的 instrumentation。我们可以在Java SE6中，通过一个或者一系列的prefix添加而得以完成。&lt;br&gt;最后，Java SE6里的Instrumentation也增加了动态添加classpath的功能。所有这些新的功能，都使得instrument包的功能更加丰富，从而使Java语言本身更加强大。&lt;/p&gt;
+&lt;p&gt;通过了解，清楚了这高大上的技术实现来自于Java的Instrumentation(植入)。&lt;/p&gt;
+&lt;h2 id=&quot;2-Java-Instrumentation简介&quot;&gt;&lt;a href=&quot;#2-Java-Instrumentation简介&quot; class=&quot;headerlink&quot; title=&quot;2.Java Instrumentation简介&quot;&gt;&lt;/a&gt;2.Java Instrumentation简介&lt;/h2&gt;&lt;p&gt;Instrumentation是Java SE5的新特性，它把Java的instrument功能从本地代码中解放出来，使之可以用Java代码的方式解决问题。使用Instrumentation，开发者可以构建一个独立于应用程序的代理程序（Agent），用来监测和协助运行在JVM上的程序，甚至能够替换和修改某些类的定义。有了这样的功能，我们就可以实现更为灵活的运行时虚拟机监控和Java类操作了，这样的特性实际上提供了一种虚拟机级别支持的AOP实现方式，使得我们无需对原有代码做任何升级和改动，就可以实现某些 AOP 的功能了。&lt;br&gt;在Java SE6里面，instrument包被赋予了更强大的功能：启动后的instrument、本地代码（native code）instrument，以及动态改变classpath等。这些改变意味着Java具有了更强的动态控制、解释能力，使得Java语言变得更加灵活多变。&lt;br&gt;在Java SE6里面，最大的改变是运行时的Instrumentation成为可能。在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE 6的新特性改变了这种情况，通过Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到 instrumentation的目的。&lt;br&gt;另外，对native的Instrumentation也是Java SE6的一个崭新的功能，这使以前无法完成的功能–对native接口的instrumentation。我们可以在Java SE6中，通过一个或者一系列的prefix添加而得以完成。&lt;br&gt;最后，Java SE6里的Instrumentation也增加了动态添加classpath的功能。所有这些新的功能，都使得instrument包的功能更加丰富，从而使Java语言本身更加强大。&lt;/p&gt;
 &lt;h2 id=&quot;3-Java-Instrumentation原理&quot;&gt;&lt;a href=&quot;#3-Java-Instrumentation原理&quot; class=&quot;headerlink&quot; title=&quot;3.Java Instrumentation原理&quot;&gt;&lt;/a&gt;3.Java Instrumentation原理&lt;/h2&gt;&lt;p&gt;“java.lang.instrument”包的具体实现，依赖于JVMTI。JVMTI（Java Virtual Machine Tool Interface）是一套由 Java虚拟机提供的，为JVM相关的工具提供的本地编程接口集合。JVMTI是从Java SE5开始引入，整合和取代了以前使用的 Java Virtual Machine Profiler Interface (JVMPI) 和 the Java Virtual Machine Debug Interface (JVMDI)，而在Java SE6中，JVMPI和JVMDI已经消失了。JVMTI提供了一套“代理”程序机制，可以支持第三方工具程序以代理的方式连接和访问JVM，并利用JVMTI提供的丰富的编程接口，完成很多跟JVM相关的功能。事实上，java.lang.instrument包的实现，也就是基于这种机制的：在Instrumentation的实现当中，存在一个JVMTI的代理程序，通过调用JVMTI当中Java类相关的函数来完成Java类的动态操作。除开Instrumentation功能外，JVMTI还在虚拟机内存管理，线程控制，方法和变量操作等等方面提供了大量有价值的函数，具体可以参考&lt;a href=&quot;http://docs.oracle.com/javase/7/docs/platform/jvmti/jvmti.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JVMTI官方文档&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&quot;4-Java-Instrumentation实现步骤&quot;&gt;&lt;a href=&quot;#4-Java-Instrumentation实现步骤&quot; class=&quot;headerlink&quot; title=&quot;4.Java Instrumentation实现步骤&quot;&gt;&lt;/a&gt;4.Java Instrumentation实现步骤&lt;/h2&gt;&lt;p&gt;在Java SE5时代，Instrument只提供了premain（命令行）一种方式，即在真正的应用程序（包含main方法的程序）main方法启动前启动一个代理程序。而在Java SE6中则包含两种应用Instrumentation的方式：premain（命令行）和agentmain（运行时）。在本文中，我们首先研究premain方式。&lt;br&gt;要实现premain方式，我们要遵循的步骤如下：&lt;br&gt;1）编写Agent实现类，实现ClassFileTransformer接口。ClassFileTransformer中声明了一个方法：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;public byte[] transform(
