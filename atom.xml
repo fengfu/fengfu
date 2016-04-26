@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-04-25T14:43:17.733Z</updated>
+  <updated>2016-04-26T02:13:24.120Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://fengfu.io/2016/04/25/Java-Instrumentation%E7%A0%94%E7%A9%B6-2/"/>
     <id>http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/</id>
     <published>2016-04-25T02:20:43.000Z</published>
-    <updated>2016-04-25T14:43:17.733Z</updated>
+    <updated>2016-04-26T02:13:24.120Z</updated>
     
     <content type="html">&lt;h2 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1.前言&quot;&gt;&lt;/a&gt;1.前言&lt;/h2&gt;&lt;p&gt;前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。&lt;/p&gt;
 &lt;h2 id=&quot;2-关于agentmain&quot;&gt;&lt;a href=&quot;#2-关于agentmain&quot; class=&quot;headerlink&quot; title=&quot;2.关于agentmain&quot;&gt;&lt;/a&gt;2.关于agentmain&lt;/h2&gt;&lt;p&gt;在Java SE6的Instrumentation 当中，有一个跟 premain“并驾齐驱”的“agentmain”方法，可以在main函数开始运行之后再运行。&lt;br&gt;跟premain函数一样， 开发者可以编写一个含有“agentmain”函数的Java类：&lt;/p&gt;
@@ -40,7 +40,7 @@ public static void agentmain(String agentArgs);              [2]
 &lt;li&gt;编写一个简单的测试类Test，以便于后面我们通过动态代理实现方法计时功能；&lt;/li&gt;
 &lt;li&gt;编写Agent实现类SampleTransformer，实现ClassFileTransformer接口。代码同上篇文章一样，这里不再赘述。&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;编写Agent入口类DynamicAgent，实现agentmain方法：&lt;/p&gt;
-&lt;p&gt; public static void agentmain(String args, Instrumentation inst)&lt;/p&gt;
+&lt;p&gt; &lt;code&gt;public static void agentmain(String args, Instrumentation inst)&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；&lt;/p&gt;
 &lt;/li&gt;
@@ -48,14 +48,14 @@ public static void agentmain(String agentArgs);              [2]
 &lt;li&gt;设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；&lt;/li&gt;
 &lt;li&gt;打包得到DynamicAgent-1.0-SNAPSHOT.jar；&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;执行SampleApp，启动应用：&lt;/p&gt;
-&lt;p&gt; java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp&lt;/p&gt;
+&lt;p&gt; &lt;code&gt;java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;在交互窗口输入test，我们可以看到系统输出：Hello World!&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;得到SampleApp的进程id，比如1234；&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;执行AgentLoader，启动动态代理：&lt;/p&gt;
-&lt;p&gt; java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.AgentLoader 1234&lt;/p&gt;
+&lt;p&gt; &lt;code&gt;java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.&lt;/p&gt;
 &lt;/li&gt;
