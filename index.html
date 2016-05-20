@@ -96,13 +96,13 @@
 <p>本文就来简单介绍一下使用JMC来监测JVM性能。</p>
 <p><em>注意：需要下载Oracle Jdk 7u40以后的版本，OpenJdk无效，切记！</em></p>
 <h2 id="2-目标JVM配置"><a href="#2-目标JVM配置" class="headerlink" title="2.目标JVM配置"></a>2.目标JVM配置</h2><p>在被监控的JVM（目标JVM）上需要开启以下Java Options才能对其进行监控，对于Tomcat来说，在JAVA_OPTS或CATALINA_OPTS中加入以下代码即可：</p>
-<pre><code>`-Dcom.sun.management.jmxremote.authenticate=false
+<pre><code>-Dcom.sun.management.jmxremote.authenticate=false
 -Dcom.sun.management.jmxremote.ssl=false
 -Djava.rmi.server.hostname=192.168.32.11
 -Dcom.sun.management.jmxremote.port=7777
 -Dcom.sun.management.jmxremote
 -XX:+UnlockCommercialFeatures
--XX:+FlightRecorder`
+-XX:+FlightRecorder
 </code></pre><p>java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。<br>com.sun.management.jmxremote：启用JMX远程监控。<br>com.sun.management.jmxremote.port：JMX远程监控的端口。<br>com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。<br>com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。<br>在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：</p>
 <p>jmxremote.access：</p>
 <pre><code>admin readwrite
