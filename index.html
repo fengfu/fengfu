@@ -148,6 +148,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 ... 6 more
 </code></pre></li>
 </ol>
+<p>分析原因，是因为SampleApp正在运行中，而JVM是不允许reload一个正在运行时的类的。一旦classloader加载了一个class，在运行时就不能重新加载这个class的另一个版本。</p>
 
       
     </div>

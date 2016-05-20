@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
-<meta property="og:updated_time" content="2016-04-26T10:22:35.140Z">
+<meta property="og:updated_time" content="2016-04-26T10:32:25.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Instrumentation研究之动态植入">
 <meta name="twitter:description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
@@ -147,6 +147,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 ... 6 more
 </code></pre></li>
 </ol>
+<p>分析原因，是因为SampleApp正在运行中，而JVM是不允许reload一个正在运行时的类的。一旦classloader加载了一个class，在运行时就不能重新加载这个class的另一个版本。</p>
 
       
     </div>
