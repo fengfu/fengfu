@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>性能调优工具-Java Mission Control | 宁静·致远</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.引言最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。
+另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能调优工具-Java Mission Control">
+<meta property="og:url" content="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/index.html">
+<meta property="og:site_name" content="宁静·致远">
+<meta property="og:description" content="1.引言最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。
+另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2h8gqpXXXXXbUXXXXXXXXXXXX_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i2/2657627814/TB29LQKpXXXXXX3XXXXXXXXXXXX_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2hE_PpXXXXXcRXXXXXXXXXXXX_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB2mAEGpXXXXXaHXXXXXXXXXXXX_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png">
+<meta property="og:updated_time" content="2016-05-20T11:13:12.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能调优工具-Java Mission Control">
+<meta name="twitter:description" content="1.引言最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。
+另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不">
+  
+    <link rel="alternative" href="/atom.xml" title="宁静·致远" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">宁静·致远</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="fengfu.io">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-性能调优工具-Java-Mission-Control" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" class="article-date">
+  <time datetime="2016-05-20T06:59:20.000Z" itemprop="datePublished">2016-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      性能调优工具-Java Mission Control
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。</p>
+<p>另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不同，JMC使用了JVM内部特定的基于事件的接口，几乎不会给应用造成额外的压力（默认设置下，对性能影响小于1%），因此可以用在负载很高的生产环境中。</p>
+<p>本文就来简单介绍一下使用JMC来监测JVM性能。</p>
+<p><em>注意：需要下载Oracle Jdk 7u40以后的版本，OpenJdk无效，切记！</em></p>
+<h2 id="2-目标JVM配置"><a href="#2-目标JVM配置" class="headerlink" title="2.目标JVM配置"></a>2.目标JVM配置</h2><p>在被监控的JVM（目标JVM）上需要开启以下Java Options才能对其进行监控，对于Tomcat来说，在JAVA_OPTS或CATALINA_OPTS中加入以下代码即可：</p>
+<pre><code>-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.ssl=false
+-Djava.rmi.server.hostname=192.168.32.11
+-Dcom.sun.management.jmxremote.port=7777
+-Dcom.sun.management.jmxremote
+-XX:+UnlockCommercialFeatures
+-XX:+FlightRecorder
+</code></pre><p>java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。<br>com.sun.management.jmxremote：启用JMX远程监控。<br>com.sun.management.jmxremote.port：JMX远程监控的端口。<br>com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。<br>com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。<br>在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：</p>
+<p>jmxremote.access：</p>
+<pre><code>admin readwrite
+monitor readonly
+</code></pre><p>表示admin有操作权限（比如调用GC等操作），monitor只有查看权限，不能进行任何操作。<br>jmxremote.password：</p>
+<pre><code>admin test
+monitor test    
+</code></pre><p>表示有两个用户，admin和monitor，密码分别是test和test。</p>
+<p>-XX:+UnlockCommercialFeatures：开启商业特性，默认这个选项是关闭的。<br>-XX:+FlightRecorder：开启飞行记录器。</p>
+<p>上述参数配置完毕，重新启动tomcat即可。</p>
+<h2 id="3-连接远程JVM"><a href="#3-连接远程JVM" class="headerlink" title="3.连接远程JVM"></a>3.连接远程JVM</h2><p>双击本地%JDK_HOME%\bin\jmc.exe，点击左侧“创建新定制JVM连接”图标， </p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2h8gqpXXXXXbUXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>在弹出的窗口中输入远程JVM的IP地址和端口号：</p>
+<p><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB29LQKpXXXXXX3XXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>选择“启动JMX控制台”，点击“完成”。</p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2hE_PpXXXXXcRXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>进入JMC主界面：</p>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2mAEGpXXXXXaHXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>在左侧飞行记录器的菜单上点击右键，选择“启动飞行记录”，进入到启动飞行记录的界面，在此界面设置飞行记录的文件路径、记录时长(固定时长或固定间隔)：</p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>设置监控的事件：</p>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>在此界面可以设置监控的详细设置，并点击“完成”</p>
+<p><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>现在你可以愉快地使用JFR的强大功能了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="ciofmjrjp000focusz3nw1tdx" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/25/Java-Instrumentation研究-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Java Instrumentation研究之动态植入</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/05/20/性能调优工具-Java-Mission-Control/" data-title="性能调优工具-Java Mission Control" data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/杂谈/" style="font-size: 16.67px;">杂谈</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/20/性能调优工具-Java-Mission-Control/">性能调优工具-Java Mission Control</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/25/Java-Instrumentation研究-2/">Java Instrumentation研究之动态植入</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/24/Java-Instrumentation研究-1/">Java Instrumentation研究之premain</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/11/浅谈软件工程师的职业发展方向/">浅谈软件工程师的职业发展方向</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/22/技术栈选型原则/">技术栈选型原则</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://coolshell.cn" target="_blank">酷壳</a>
+          </li>
+        
+          <li>
+            <a href="http://ifeve.com" target="_blank">并发编程网</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 宁静·致远<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"qufengfu"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+</div>
+</body>
+</html>
