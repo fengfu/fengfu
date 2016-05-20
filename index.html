@@ -69,6 +69,88 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-性能调优工具-Java-Mission-Control" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" class="article-date">
+  <time datetime="2016-05-20T06:59:20.000Z" itemprop="datePublished">2016-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/20/性能调优工具-Java-Mission-Control/">性能调优工具-Java Mission Control</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。</p>
+<p>另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不同，JMC使用了JVM内部特定的基于事件的接口，几乎不会给应用造成额外的压力（默认设置下，对性能影响小于1%），因此可以用在负载很高的生产环境中。</p>
+<p>本文就来简单介绍一下使用JMC来监测JVM性能。</p>
+<p><em>注意：需要下载Oracle Jdk 7u40以后的版本，OpenJdk无效，切记！</em></p>
+<h2 id="2-目标JVM配置"><a href="#2-目标JVM配置" class="headerlink" title="2.目标JVM配置"></a>2.目标JVM配置</h2><p>在被监控的JVM（目标JVM）上需要开启以下Java Options才能对其进行监控，对于Tomcat来说，在JAVA_OPTS或CATALINA_OPTS中加入以下代码即可：</p>
+<pre><code>`-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.ssl=false
+-Djava.rmi.server.hostname=192.168.32.11
+-Dcom.sun.management.jmxremote.port=7777
+-Dcom.sun.management.jmxremote
+-XX:+UnlockCommercialFeatures
+-XX:+FlightRecorder`
+</code></pre><p>java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。<br>com.sun.management.jmxremote：启用JMX远程监控。<br>com.sun.management.jmxremote.port：JMX远程监控的端口。<br>com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。<br>com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。<br>在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：</p>
+<p>jmxremote.access：</p>
+<pre><code>admin readwrite
+monitor readonly
+</code></pre><p>表示admin有操作权限（比如调用GC等操作），monitor只有查看权限，不能进行任何操作。<br>jmxremote.password：</p>
+<pre><code>admin test
+monitor test    
+</code></pre><p>表示有两个用户，admin和monitor，密码分别是test和test。</p>
+<p>-XX:+UnlockCommercialFeatures：开启商业特性，默认这个选项是关闭的。<br>-XX:+FlightRecorder：开启飞行记录器。</p>
+<p>上述参数配置完毕，重新启动tomcat即可。</p>
+<h2 id="3-连接远程JVM"><a href="#3-连接远程JVM" class="headerlink" title="3.连接远程JVM"></a>3.连接远程JVM</h2><p>双击本地%JDK_HOME%\bin\jmc.exe，点击左侧“创建新定制JVM连接”图标， </p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2h8gqpXXXXXbUXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>在弹出的窗口中输入远程JVM的IP地址和端口号：</p>
+<p><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB29LQKpXXXXXX3XXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>选择“启动JMX控制台”，点击“完成”。</p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2hE_PpXXXXXcRXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>进入JMC主界面：</p>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2mAEGpXXXXXaHXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>在左侧飞行记录器的菜单上点击右键，选择“启动飞行记录”，进入到启动飞行记录的界面，在此界面设置飞行记录的文件路径、记录时长(固定时长或固定间隔)：</p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>设置监控的事件：</p>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>在此界面可以设置监控的详细设置，并点击“完成”</p>
+<p><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png" alt=""></p>
+<p>现在你可以愉快地使用JFR的强大功能了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="ciofmjrjp000focusz3nw1tdx" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Java-Instrumentation研究-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/25/Java-Instrumentation研究-2/" class="article-date">
@@ -109,7 +191,7 @@ public static void agentmain(String agentArgs);              [2]
 <li>编写一个简单的测试类Test，以便于后面我们通过动态代理实现方法计时功能；</li>
 <li>编写Agent实现类SampleTransformer，实现ClassFileTransformer接口。代码同上篇文章一样，这里不再赘述。</li>
 <li><p>编写Agent入口类DynamicAgent，实现agentmain方法：</p>
-<p> <code>public static void agentmain(String args, Instrumentation inst)</code></p>
+<p> public static void agentmain(String args, Instrumentation inst)</p>
 </li>
 <li><p>编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；</p>
 </li>
@@ -117,14 +199,14 @@ public static void agentmain(String agentArgs);              [2]
 <li>设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；</li>
 <li>打包得到DynamicAgent-1.0-SNAPSHOT.jar；</li>
 <li><p>执行SampleApp，启动应用：</p>
-<p> <code>java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp</code></p>
+<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp</p>
 </li>
 </ol>
 <p>在交互窗口输入test，我们可以看到系统输出：Hello World!</p>
 <ol>
 <li>得到SampleApp的进程id，比如1234；</li>
 <li><p>执行AgentLoader，启动动态代理：</p>
-<p> <code>java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234</code></p>
+<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234</p>
 </li>
 <li><p>在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.</p>
 </li>
@@ -154,7 +236,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="cing46wxq000p84usia7r6mvf" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="ciofmjrk7000rocustm7s9air" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
       
 
       
@@ -227,7 +309,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="cing46wxv000r84usa08uqb1e" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之premain">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="ciofmjrka000tocusyi48d946" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之premain">分享到</a>
       
 
       
@@ -281,7 +363,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="cing46wx5000984us043rz7ja" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="ciofmjrjf0009ocus76p2vqiz" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
       
 
       
@@ -337,7 +419,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="cing46wxa000d84usgnlcr62v" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
+        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="ciofmjrjm000docusowd9cu43" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
       
 
       
@@ -389,7 +471,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="cing46wxx000t84usab272quk" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
+        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="ciofmjrke000vocusr7nhr2s4" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
       
 
       
@@ -443,7 +525,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="cing46wxg000i84usyamn4tra" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
+        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="ciofmjrjx000kocusx8vb0fnf" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
       
 
       
@@ -498,7 +580,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/" data-id="cing46wy6000y84us35i42oew" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-管理篇">分享到</a>
+        <a data-url="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/" data-id="ciofmjrkn0010ocus8yta1sfm" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-管理篇">分享到</a>
       
 
       
@@ -578,7 +660,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/" data-id="cing46wy7001084use81id4gs" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-技术篇">分享到</a>
+        <a data-url="http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/" data-id="ciofmjrkq0012ocus07pvc4fd" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-技术篇">分享到</a>
       
 
       
@@ -636,7 +718,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/" data-id="cing46wxn000n84usvk061nx4" class="article-share-link" data-share="baidu" data-title="【转】Java 编程中关于异常处理的 10 个最佳实践">分享到</a>
+        <a data-url="http://fengfu.io/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/" data-id="ciofmjrk4000pocusa9hyho6s" class="article-share-link" data-share="baidu" data-title="【转】Java 编程中关于异常处理的 10 个最佳实践">分享到</a>
       
 
       
@@ -645,59 +727,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-23种设计模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/03/08/23种设计模式/" class="article-date">
-  <time datetime="2015-03-08T12:41:09.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/23种设计模式/">23种设计模式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>设计模式分为3大类（创建型、结构型、行为型），共23种。</p>
-<ol>
-<li><p>创建型模式：单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式；</p>
-</li>
-<li><p>结构型模式：适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模式；</p>
-</li>
-<li><p>行为型模式：模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式；</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2015/03/08/23种设计模式/" data-id="cing46wwk000084usdawgkqiq" class="article-share-link" data-share="baidu" data-title="23种设计模式">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2015/03/08/23种设计模式/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
 
     </footer>
   </div>
@@ -721,7 +750,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -739,7 +768,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -749,6 +778,10 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/20/性能调优工具-Java-Mission-Control/">性能调优工具-Java Mission Control</a>
+          </li>
         
           <li>
             <a href="/2016/04/25/Java-Instrumentation研究-2/">Java Instrumentation研究之动态植入</a>
@@ -764,10 +797,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
         
           <li>
             <a href="/2016/03/22/技术栈选型原则/">技术栈选型原则</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/08/JVM触发FullGC的情况总结/">JVM触发FullGC的情况总结</a>
           </li>
         
       </ul>

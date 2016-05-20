@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-04-26T10:32:25.745Z</updated>
+  <updated>2016-05-20T09:22:19.939Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -16,11 +16,69 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>性能调优工具-Java Mission Control</title>
+    <link href="http://fengfu.io/2016/05/20/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-Java-Mission-Control/"/>
+    <id>http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/</id>
+    <published>2016-05-20T06:59:20.000Z</published>
+    <updated>2016-05-20T09:22:19.939Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。&lt;/p&gt;
+&lt;p&gt;另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不同，JMC使用了JVM内部特定的基于事件的接口，几乎不会给应用造成额外的压力（默认设置下，对性能影响小于1%），因此可以用在负载很高的生产环境中。&lt;/p&gt;
+&lt;p&gt;本文就来简单介绍一下使用JMC来监测JVM性能。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注意：需要下载Oracle Jdk 7u40以后的版本，OpenJdk无效，切记！&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-目标JVM配置&quot;&gt;&lt;a href=&quot;#2-目标JVM配置&quot; class=&quot;headerlink&quot; title=&quot;2.目标JVM配置&quot;&gt;&lt;/a&gt;2.目标JVM配置&lt;/h2&gt;&lt;p&gt;在被监控的JVM（目标JVM）上需要开启以下Java Options才能对其进行监控，对于Tomcat来说，在JAVA_OPTS或CATALINA_OPTS中加入以下代码即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;`-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.ssl=false
+-Djava.rmi.server.hostname=192.168.32.11
+-Dcom.sun.management.jmxremote.port=7777
+-Dcom.sun.management.jmxremote
+-XX:+UnlockCommercialFeatures
+-XX:+FlightRecorder`
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。&lt;br&gt;com.sun.management.jmxremote：启用JMX远程监控。&lt;br&gt;com.sun.management.jmxremote.port：JMX远程监控的端口。&lt;br&gt;com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。&lt;br&gt;com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。&lt;br&gt;在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：&lt;/p&gt;
+&lt;p&gt;jmxremote.access：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;admin readwrite
+monitor readonly
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;表示admin有操作权限（比如调用GC等操作），monitor只有查看权限，不能进行任何操作。&lt;br&gt;jmxremote.password：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;admin test
+monitor test    
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;表示有两个用户，admin和monitor，密码分别是test和test。&lt;/p&gt;
+&lt;p&gt;-XX:+UnlockCommercialFeatures：开启商业特性，默认这个选项是关闭的。&lt;br&gt;-XX:+FlightRecorder：开启飞行记录器。&lt;/p&gt;
+&lt;p&gt;上述参数配置完毕，重新启动tomcat即可。&lt;/p&gt;
+&lt;h2 id=&quot;3-连接远程JVM&quot;&gt;&lt;a href=&quot;#3-连接远程JVM&quot; class=&quot;headerlink&quot; title=&quot;3.连接远程JVM&quot;&gt;&lt;/a&gt;3.连接远程JVM&lt;/h2&gt;&lt;p&gt;双击本地%JDK_HOME%\bin\jmc.exe，点击左侧“创建新定制JVM连接”图标， &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2h8gqpXXXXXbUXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在弹出的窗口中输入远程JVM的IP地址和端口号：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i2/2657627814/TB29LQKpXXXXXX3XXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;选择“启动JMX控制台”，点击“完成”。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2hE_PpXXXXXcRXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;进入JMC主界面：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB2mAEGpXXXXXaHXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在左侧飞行记录器的菜单上点击右键，选择“启动飞行记录”，进入到启动飞行记录的界面，在此界面设置飞行记录的文件路径、记录时长(固定时长或固定间隔)：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;设置监控的事件：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在此界面可以设置监控的详细设置，并点击“完成”&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;现在你可以愉快地使用JFR的强大功能了。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Java Instrumentation研究之动态植入</title>
     <link href="http://fengfu.io/2016/04/25/Java-Instrumentation%E7%A0%94%E7%A9%B6-2/"/>
     <id>http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/</id>
     <published>2016-04-25T02:20:43.000Z</published>
-    <updated>2016-04-26T10:32:25.745Z</updated>
+    <updated>2016-05-20T06:54:50.378Z</updated>
     
     <content type="html">&lt;h2 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1.前言&quot;&gt;&lt;/a&gt;1.前言&lt;/h2&gt;&lt;p&gt;前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。&lt;/p&gt;
 &lt;h2 id=&quot;2-关于agentmain&quot;&gt;&lt;a href=&quot;#2-关于agentmain&quot; class=&quot;headerlink&quot; title=&quot;2.关于agentmain&quot;&gt;&lt;/a&gt;2.关于agentmain&lt;/h2&gt;&lt;p&gt;在Java SE6的Instrumentation 当中，有一个跟 premain“并驾齐驱”的“agentmain”方法，可以在main函数开始运行之后再运行。&lt;br&gt;跟premain函数一样， 开发者可以编写一个含有“agentmain”函数的Java类：&lt;/p&gt;
@@ -40,7 +98,7 @@ public static void agentmain(String agentArgs);              [2]
 &lt;li&gt;编写一个简单的测试类Test，以便于后面我们通过动态代理实现方法计时功能；&lt;/li&gt;
 &lt;li&gt;编写Agent实现类SampleTransformer，实现ClassFileTransformer接口。代码同上篇文章一样，这里不再赘述。&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;编写Agent入口类DynamicAgent，实现agentmain方法：&lt;/p&gt;
-&lt;p&gt; &lt;code&gt;public static void agentmain(String args, Instrumentation inst)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt; public static void agentmain(String args, Instrumentation inst)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；&lt;/p&gt;
 &lt;/li&gt;
@@ -48,14 +106,14 @@ public static void agentmain(String agentArgs);              [2]
 &lt;li&gt;设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；&lt;/li&gt;
 &lt;li&gt;打包得到DynamicAgent-1.0-SNAPSHOT.jar；&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;执行SampleApp，启动应用：&lt;/p&gt;
-&lt;p&gt; &lt;code&gt;java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt; java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;在交互窗口输入test，我们可以看到系统输出：Hello World!&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;得到SampleApp的进程id，比如1234；&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;执行AgentLoader，启动动态代理：&lt;/p&gt;
-&lt;p&gt; &lt;code&gt;java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt; java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.&lt;/p&gt;
 &lt;/li&gt;

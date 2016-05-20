@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
-<meta property="og:updated_time" content="2016-04-26T10:32:25.745Z">
+<meta property="og:updated_time" content="2016-05-20T06:54:50.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Instrumentation研究之动态植入">
 <meta name="twitter:description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
@@ -108,7 +108,7 @@ public static void agentmain(String agentArgs);              [2]
 <li>编写一个简单的测试类Test，以便于后面我们通过动态代理实现方法计时功能；</li>
 <li>编写Agent实现类SampleTransformer，实现ClassFileTransformer接口。代码同上篇文章一样，这里不再赘述。</li>
 <li><p>编写Agent入口类DynamicAgent，实现agentmain方法：</p>
-<p> <code>public static void agentmain(String args, Instrumentation inst)</code></p>
+<p> public static void agentmain(String args, Instrumentation inst)</p>
 </li>
 <li><p>编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；</p>
 </li>
@@ -116,14 +116,14 @@ public static void agentmain(String agentArgs);              [2]
 <li>设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；</li>
 <li>打包得到DynamicAgent-1.0-SNAPSHOT.jar；</li>
 <li><p>执行SampleApp，启动应用：</p>
-<p> <code>java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp</code></p>
+<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp</p>
 </li>
 </ol>
 <p>在交互窗口输入test，我们可以看到系统输出：Hello World!</p>
 <ol>
 <li>得到SampleApp的进程id，比如1234；</li>
 <li><p>执行AgentLoader，启动动态代理：</p>
-<p> <code>java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234</code></p>
+<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234</p>
 </li>
 <li><p>在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.</p>
 </li>
@@ -153,7 +153,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="cing46wxq000p84usia7r6mvf" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="ciofmjrk7000rocustm7s9air" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
       
 
       
@@ -168,6 +168,15 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          性能调优工具-Java Mission Control
+        
+      </div>
+    </a>
   
   
     <a href="/2016/04/24/Java-Instrumentation研究-1/" id="article-nav-older" class="article-nav-link-wrap">
@@ -194,7 +203,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -212,7 +221,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -222,6 +231,10 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/20/性能调优工具-Java-Mission-Control/">性能调优工具-Java Mission Control</a>
+          </li>
         
           <li>
             <a href="/2016/04/25/Java-Instrumentation研究-2/">Java Instrumentation研究之动态植入</a>
@@ -237,10 +250,6 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
         
           <li>
             <a href="/2016/03/22/技术栈选型原则/">技术栈选型原则</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/08/JVM触发FullGC的情况总结/">JVM触发FullGC的情况总结</a>
           </li>
         
       </ul>
