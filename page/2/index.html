@@ -69,6 +69,64 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-Java-编程中关于异常处理的-10-个最佳实践" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/" class="article-date">
+  <time datetime="2015-04-02T06:39:39.000Z" itemprop="datePublished">2015-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/">【转】Java 编程中关于异常处理的 10 个最佳实践</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>英文原文：<a href="http://javarevisited.blogspot.in/2013/03/0-exception-handling-best-practices-in-Java-Programming.html" target="_blank" rel="external">10 Exception handling Best Practices in Java Programming</a></p>
+<p>异常处理在编写健壮的Java应用的过程中，扮演着一个重要的角色。它并不是应用的功能需求，且需要优雅的处理任何错误情况，例如资源不可用，错误的输入，null输入等等。Java提供几个异常处理功能，并通过try, catch 和  finally关键字内嵌在语言的本身。Java编程语言同样允许创建新的异常和使用  throw 和 throws 抛出该异常。在实践中，异常处理不单单是知道语法这么简单。编写健壮的代码是更像是一门艺术，在本文中，将讨论Java异常处理最佳实践。这些 Java最佳实践遵循标准的JDK库，和几个处理错误和异常的开源代码。这还是一个提供给java程序员编写健壮代码的便利手册。</p>
+<p>这里是我收集的10个Java编程中进行异常处理的10最佳实践。在Java编程中对于检查异常有褒有贬，强制处理异常是一门语言的功能。在本文中，我们将尽量减少使用检查型异常，同时学会在Java编程中使用检查型VS非检查型异常。</p>
+<h2 id="1-为可恢复的错误使用检查型异常，为编程错误使用非检查型错误"><a href="#1-为可恢复的错误使用检查型异常，为编程错误使用非检查型错误" class="headerlink" title="1. 为可恢复的错误使用检查型异常，为编程错误使用非检查型错误"></a>1. 为可恢复的错误使用检查型异常，为编程错误使用非检查型错误</h2><p>选择检查型还是非检查型异常，对于Java编程人员来说，总是让人感到困惑。检查型异常保证你对错误条件提供异常处理代码，这是一种从语言到强制你编写健壮的代码的一种方式，但同时会引入大量杂乱的代码并导致其不可读。当然，如果你有替代品和恢复策略的话，捕捉异常并做些什么看起来似乎也在理。在Java编程中选择检查型异常还是运行时异常，更多信息参考 <a href="http://javarevisited.blogspot.com/2011/12/checked-vs-unchecked-exception-in-java.html" target="_blank" rel="external">checked vs unchecked exceptions</a>。</p>
+<h2 id="2-在finally程序块中关闭或者释放资源"><a href="#2-在finally程序块中关闭或者释放资源" class="headerlink" title="2. 在finally程序块中关闭或者释放资源"></a>2. 在finally程序块中关闭或者释放资源</h2><p>这在Java编程中，是一个广为人知的最佳实践，在处理网络和IO类的时候，相当于一个标准。在finally块中关闭资源， 在正常和异常执行的情况下，保证之前和稀缺资源的合理释放，这由y finally块保证。从Java7开始，该语言有了一项更有趣的功能：<a href="http://javarevisited.blogspot.com/2011/09/arm-automatic-resource-management-in.html" target="_blank" rel="external">资源管理自动化或者ARM块</a>能实现这一功能。尽管如此，我们仍然要记住在finally块中关闭资源，这是对于释放像FileDescriptors这类，应用在socket和文件编程的情况下的有限资源很重要的。</p>
+<h2 id="3-在堆栈跟踪中包含引起异常的原因"><a href="#3-在堆栈跟踪中包含引起异常的原因" class="headerlink" title="3. 在堆栈跟踪中包含引起异常的原因"></a>3. 在堆栈跟踪中包含引起异常的原因</h2><p>很多时候，当一个由另一个异常导致的异常被抛出的时候，Java库和开放源代码会将一种异常包装成另一种异常。日志记录和打印根异常就变得非常重要。Java异常类提供了 getCause()方法来检索导致异常的原因，这些（原因）可以对异常的根层次的原因提供更多的信息。该Java实践对在进行调试或排除故障大有帮助。时刻记住，如果你将一个异常包装成另一种异常时，构造一个新异常要传递源异常。</p>
+<h2 id="4-始终提供关于异常的有意义的完整的信息"><a href="#4-始终提供关于异常的有意义的完整的信息" class="headerlink" title="4. 始终提供关于异常的有意义的完整的信息"></a>4. 始终提供关于异常的有意义的完整的信息</h2><p>异常信息是最重要的地方，因为这是程序员首先看到的第一个地方，这里你能找到问题产生的根本原因。这里始终提供精确的真实的信息。例如，对比IllegalArgumentException 异常的两条异常信息：<br>消息 1: “Incorrect argument for method”<br>消息 2: “Illegal value for ${argument}: ${value}<br>第一条消息仅说明了参数是非法的或者不正确，但第二条消息包括了参数名和非法值，而这对于找到错误的原因是很重要的。在用Java编程中编写异常处理代码的时候，始终遵循该Java最佳实践。</p>
+<h2 id="5-避免过度使用检查型异常"><a href="#5-避免过度使用检查型异常" class="headerlink" title="5. 避免过度使用检查型异常"></a>5. 避免过度使用检查型异常</h2><p>检查型异常在强制执行方面有一定的优势，但同时它也破坏了代码，通过掩盖业务逻辑使代码可读性降低。只要你不过度使用检查型异常，你可以最大限度的减少这类情况，这样做的结果是你会得到更清洁的代码。你同样可以使用Java7的新功能，像<a href="http://javarevisited.blogspot.com/2011/07/jdk7-multi-cache-block-example-tutorial.html" target="_blank" rel="external">one catch block for multiple exceptions 和 automatic resource management</a>以移除重复项。</p>
+<h2 id="6-将检查型异常转为运行时异常"><a href="#6-将检查型异常转为运行时异常" class="headerlink" title="6. 将检查型异常转为运行时异常"></a>6. 将检查型异常转为运行时异常</h2><p>这是在像Spring之类的多数框架中用来限制使用检查型异常的技术之一，大部分出自于JDBC的检查型异常，都被包装进DataAccessException中，而（DataAccessException）异常是一种非检查型异常。这是Java最佳实践带来的好处，特定的异常限制到特定的模块，像 SQLException 放到DAO层，将意思明确的运行时异常抛到客户层。</p>
+<h2 id="7-记住对性能而言，异常代价高昂"><a href="#7-记住对性能而言，异常代价高昂" class="headerlink" title="7. 记住对性能而言，异常代价高昂"></a>7. 记住对性能而言，异常代价高昂</h2><p>需要记住的一件事是异常代价高昂，同时让你的代码运行缓慢。假如你有方法从ResultSet（结果集）中进行读取，这时常会抛出SQLException异常而不会移到下一元素，这将会比不抛出异常的正常代码执行的慢的多。因此最大限度的减少不必要的异常捕捉和移动，那里没有什么固定的原因。不要仅仅是抛出和捕捉异常，如果你能使用boolean变量去表示执行结果，可能会得到更整洁，更高性能的解决方案。修正错误的根源，避免不必须要的异常捕捉。</p>
+<h2 id="8-避免catch块为空"><a href="#8-避免catch块为空" class="headerlink" title="8. 避免catch块为空"></a>8. 避免catch块为空</h2><p>没有什么比空的catch块更糟糕的了，因为它不仅隐藏了错误和异常，同时可能导致你的对象处于不可使用或者脏的状态。空的catch块只能变得无意义，如果你非常肯定异常不会继续以任何方式影响对象状态，但在程序执行期间，用日志记录错误依然是最好的（方法）。对于在Java编程中编写异常处理代码，这不仅仅是一个Java最佳实践，而是一个最通用的实践。</p>
+<h2 id="9-使用标准异常"><a href="#9-使用标准异常" class="headerlink" title="9. 使用标准异常"></a>9. 使用标准异常</h2><p>我们的第九条最佳实践建议使用标准和内置的Java异常。使用标准异常而不是每次创建我们自己的异常，对于维护性和一致性，不管是现在还是以后，都是最好的选择。重用标准异常使代码更具可读性，因为大部分Java开发人员对标准的像源自于JDK的RuntimeException 异常，IllegalStateException 异常，IllegalArgumentException 异常或者 NullPointerException异常，（开发者）他们能一眼就知道每种异常的目的，而不是在代码里查找或者在文档里查找用户定义的异常的目的。</p>
+<h2 id="10-记录任何方法抛出的异常"><a href="#10-记录任何方法抛出的异常" class="headerlink" title="10. 记录任何方法抛出的异常"></a>10. 记录任何方法抛出的异常</h2><p>Java提供了throw和throws关键字来抛出异常，在javadoc中用@throw记录任何方法可能会抛出的异常。如果你编写API或者公共接口，这就变得非常重要。任何方法抛出的异常都有相应的文档记录，这样你就能下意识的提醒任何使用（该方法）的人。</p>
+<p>这些就是所有在Java编程中在处理异常的时候需要遵循的最佳实践。让我们知道了什么是在Java编程中编写异常处理代码时需要遵循的实践。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/" data-id="cipqk4txb000pz0us7r5noaja" class="article-share-link" data-share="baidu" data-title="【转】Java 编程中关于异常处理的 10 个最佳实践">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2015/04/02/Java-编程中关于异常处理的-10-个最佳实践/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-23种设计模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/03/08/23种设计模式/" class="article-date">
@@ -105,7 +163,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/03/08/23种设计模式/" data-id="ciofmjrir0000ocuscj42q9ar" class="article-share-link" data-share="baidu" data-title="23种设计模式">分享到</a>
+        <a data-url="http://fengfu.io/2015/03/08/23种设计模式/" data-id="cipqk4tvq0000z0usxg13o2jd" class="article-share-link" data-share="baidu" data-title="23种设计模式">分享到</a>
       
 
       
@@ -926,7 +984,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/" data-id="ciofmjrki000xocus4yxnb26x" class="article-share-link" data-share="baidu" data-title="Intellij Idea快捷键大全">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/" data-id="cipqk4txq000zz0usv07uunwe" class="article-share-link" data-share="baidu" data-title="Intellij Idea快捷键大全">分享到</a>
       
 
       
@@ -1035,7 +1093,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/21/Java的SPI机制/" data-id="ciofmjrk1000nocush19grge6" class="article-share-link" data-share="baidu" data-title="Java的SPI机制">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/21/Java的SPI机制/" data-id="cipqk4tx7000nz0us96hgh12f" class="article-share-link" data-share="baidu" data-title="Java的SPI机制">分享到</a>
       
 
       
@@ -1090,7 +1148,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/14/利特尔法则/" data-id="ciofmjrjt000hocusud3969yi" class="article-share-link" data-share="baidu" data-title="利特尔法则">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/14/利特尔法则/" data-id="cipqk4twz000hz0uszvx3axgs" class="article-share-link" data-share="baidu" data-title="利特尔法则">分享到</a>
       
 
       
@@ -1142,7 +1200,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/08/线程初始化参数/" data-id="ciofmjrj90003ocus1wqrbidb" class="article-share-link" data-share="baidu" data-title="线程初始化参数">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/08/线程初始化参数/" data-id="cipqk4twc0003z0us0k2q9gtw" class="article-share-link" data-share="baidu" data-title="线程初始化参数">分享到</a>
       
 
       
@@ -1195,7 +1253,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/03/架构设计原则/" data-id="ciofmjrjh000bocusimdykrrp" class="article-share-link" data-share="baidu" data-title="架构设计原则">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/03/架构设计原则/" data-id="cipqk4twp000bz0us5j9danwr" class="article-share-link" data-share="baidu" data-title="架构设计原则">分享到</a>
       
 
       
@@ -1240,7 +1298,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/01/28/第一篇Markdown/" data-id="ciofmjrjc0006ocuszr670y7x" class="article-share-link" data-share="baidu" data-title="第一篇Markdown">分享到</a>
+        <a data-url="http://fengfu.io/2015/01/28/第一篇Markdown/" data-id="cipqk4twj0006z0us56k2aoeb" class="article-share-link" data-share="baidu" data-title="第一篇Markdown">分享到</a>
       
 
       
@@ -1291,7 +1349,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/01/24/First-Blog/" data-id="ciofmjrkl000zocuso0l87eyy" class="article-share-link" data-share="baidu" data-title="写在开博时">分享到</a>
+        <a data-url="http://fengfu.io/2015/01/24/First-Blog/" data-id="cipqk4txv0011z0us5tea32q8" class="article-share-link" data-share="baidu" data-title="写在开博时">分享到</a>
       
 
       
@@ -1321,7 +1379,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1339,7 +1397,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -1349,6 +1407,10 @@ Hello, Fengfu, I&apos;m C3po.
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/">JVM 垃圾回收器CMS之各阶段总结</a>
+          </li>
         
           <li>
             <a href="/2016/05/20/性能调优工具-Java-Mission-Control/">性能调优工具-Java Mission Control</a>
@@ -1364,10 +1426,6 @@ Hello, Fengfu, I&apos;m C3po.
         
           <li>
             <a href="/2016/04/11/浅谈软件工程师的职业发展方向/">浅谈软件工程师的职业发展方向</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/22/技术栈选型原则/">技术栈选型原则</a>
           </li>
         
       </ul>
