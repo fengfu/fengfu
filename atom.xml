@@ -112,6 +112,46 @@
   </entry>
   
   <entry>
+    <title>读书笔记:微服务设计-入门</title>
+    <link href="http://fengfu.io/2016/07/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%AE%BE%E8%AE%A1/"/>
+    <id>http://fengfu.io/2016/07/30/读书笔记-微服务设计/</id>
+    <published>2016-07-30T03:11:37.000Z</published>
+    <updated>2016-08-07T08:15:27.121Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;第一章-微服务&quot;&gt;&lt;a href=&quot;#第一章-微服务&quot; class=&quot;headerlink&quot; title=&quot;第一章 微服务&quot;&gt;&lt;/a&gt;第一章 微服务&lt;/h1&gt;&lt;h2 id=&quot;微服务的由来&quot;&gt;&lt;a href=&quot;#微服务的由来&quot; class=&quot;headerlink&quot; title=&quot;微服务的由来&quot;&gt;&lt;/a&gt;微服务的由来&lt;/h2&gt;&lt;p&gt;微服务不是发明出来的，而是随着领域驱动设计、持续交付、按需虚拟化、基础设施自动化、小型自治团队、大型集群系统这些实践的流行，从现实世界总结出来的。&lt;/p&gt;
+&lt;p&gt;拓展知识点：Eric Evans的《&lt;a href=&quot;http://item.jd.com/11961038.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;领域驱动设计&lt;/a&gt;》、Alistair Cookburn的&lt;a href=&quot;http://alistair.cockburn.us/hexagonal+architecture&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;六边形架构理论&lt;/a&gt;、Netflix的构建大型反脆弱系统&lt;/p&gt;
+&lt;h2 id=&quot;什么是微服务&quot;&gt;&lt;a href=&quot;#什么是微服务&quot; class=&quot;headerlink&quot; title=&quot;什么是微服务&quot;&gt;&lt;/a&gt;什么是微服务&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;微服务很小&lt;br&gt;在考虑微服务时，内聚性这一原则很重要，具体可以联想到单一职责原则(Single Responsibility Principle)。&lt;br&gt;微服务的边界如何划分？答案是根据业务的边界来确定服务的边界。&lt;br&gt;至于很小，多小算是小？这个事情仁者见仁智者见智，有的人说花2周的时间能够构建完就可以，有的人说你认为已经够小了就行，我的理解是：只要边界小到能够提供独立的服务就行了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;微服务是自治的&lt;br&gt;一个微服务就是一个独立的实体，一个微服务的部署或修改应该尽量避免对消费方的修改，一个很典型的例子就是有人在设计接口返回值的时候用枚举，这其实很坑的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;微服务的好处&quot;&gt;&lt;a href=&quot;#微服务的好处&quot; class=&quot;headerlink&quot; title=&quot;微服务的好处&quot;&gt;&lt;/a&gt;微服务的好处&lt;/h2&gt;&lt;h3 id=&quot;1-技术异构性&quot;&gt;&lt;a href=&quot;#1-技术异构性&quot; class=&quot;headerlink&quot; title=&quot;1.技术异构性&quot;&gt;&lt;/a&gt;1.技术异构性&lt;/h3&gt;&lt;p&gt;  服务端和消费端可以采用不同的技术。如果把dubbo看做一个微服务框架，那么它在技术异构性方面做得并不好。当然也有人对dubbo进行了改良，比如当当的&lt;a href=&quot;https://github.com/dangdangdotcom/dubbox&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;dubbox&lt;/a&gt;，它在dubbo协议基础上增加了REST接口，这样消费方就可以使用其他协议与dubbo进行交互了。&lt;/p&gt;
+&lt;h3 id=&quot;2-弹性&quot;&gt;&lt;a href=&quot;#2-弹性&quot; class=&quot;headerlink&quot; title=&quot;2.弹性&quot;&gt;&lt;/a&gt;2.弹性&lt;/h3&gt;&lt;p&gt;  弹性工程学的一个关键概念就是“舱壁”，比如轮船的水密舱。当一个舱进水时，通过关闭该舱来确保其它舱不进水，进而保证整条船的安全。在微服务中，一个服务A可能会消费下游的很多服务，如果下游的某个服务有问题，那么它不能影响A服务自身的运行的。&lt;/p&gt;
+&lt;h3 id=&quot;3-扩展&quot;&gt;&lt;a href=&quot;#3-扩展&quot; class=&quot;headerlink&quot; title=&quot;3.扩展&quot;&gt;&lt;/a&gt;3.扩展&lt;/h3&gt;&lt;p&gt;  对于单块服务来讲，即便是系统中某一个服务存在性能问题，那么也需要对整个系统进行扩展。如果使用较多的小服务，那么你只需要对存在性能问题的服务进行扩展就行了。&lt;/p&gt;
+&lt;h3 id=&quot;4-简化部署&quot;&gt;&lt;a href=&quot;#4-简化部署&quot; class=&quot;headerlink&quot; title=&quot;4.简化部署&quot;&gt;&lt;/a&gt;4.简化部署&lt;/h3&gt;&lt;p&gt;  对于线上服务来说，相对于代码量巨大的单块系统，微服务具有灵活的部署优势和更小的部署风险。这里引申出一个比较重要的部署原则就是：每次部署应尽量少地修改代码，这样才能减少两次部署之间的差异。&lt;/p&gt;
+&lt;h3 id=&quot;5-与组织机构更加匹配&quot;&gt;&lt;a href=&quot;#5-与组织机构更加匹配&quot; class=&quot;headerlink&quot; title=&quot;5.与组织机构更加匹配&quot;&gt;&lt;/a&gt;5.与组织机构更加匹配&lt;/h3&gt;&lt;p&gt;  说到系统与组织机构的关系，就不能不提康威定律。梅尔.康威在1968年4月的Datamation杂志上发表的一篇名为“How Do Committees Invent”的论文中提出：任何组织在设计一套系统时，所交付的设计方案在结构上都与该组织的沟通结构保持一致。&lt;br&gt;  这里暂时不对康威定律做过多描述，但最起码有一点是肯定的，相比于单体应用，为服务能够更好地在团队之间交接，尤其那些业务、团队频繁变动的公司。&lt;/p&gt;
+&lt;h3 id=&quot;6-可组合性&quot;&gt;&lt;a href=&quot;#6-可组合性&quot; class=&quot;headerlink&quot; title=&quot;6.可组合性&quot;&gt;&lt;/a&gt;6.可组合性&lt;/h3&gt;&lt;p&gt;  相比单体应用，为服务能够更方便地组合成新的微服务，这一点的思路跟乐高倒是有点相像。&lt;/p&gt;
+&lt;h3 id=&quot;7-可替代性&quot;&gt;&lt;a href=&quot;#7-可替代性&quot; class=&quot;headerlink&quot; title=&quot;7.可替代性&quot;&gt;&lt;/a&gt;7.可替代性&lt;/h3&gt;&lt;p&gt;  一个规模比较大的单体应用，相信很少有人敢替代它。但对于一个规模比较小的微服务来讲，重新实现或者删除这个服务的可行性就大大增加了。&lt;/p&gt;
+&lt;h2 id=&quot;微服务的不足&quot;&gt;&lt;a href=&quot;#微服务的不足&quot; class=&quot;headerlink&quot; title=&quot;微服务的不足&quot;&gt;&lt;/a&gt;微服务的不足&lt;/h2&gt;&lt;p&gt;  《微服务设计》这本书里面只是提到了微服务的好处，但是并没有提到微服务有哪些不足和挑战，这里自己做一些总结。&lt;/p&gt;
+&lt;h3 id=&quot;1-维护压力&quot;&gt;&lt;a href=&quot;#1-维护压力&quot; class=&quot;headerlink&quot; title=&quot;1.维护压力&quot;&gt;&lt;/a&gt;1.维护压力&lt;/h3&gt;&lt;p&gt;  首先从服务部署的角度，无论是单机多服务，还是单机单服务，都会运维量的增加。单机多服务意味着服务维护复杂性的增加。比如服务器load高了，那到底是哪个服务引起的呢？单机单服务意味着服务器数量的增加。&lt;br&gt;  另外，微服务之间存在着很强的关联关系，当系统出现异常时，很有可能是因为下游的系统异常导致的，这就需要我们做好服务的监控和治理，甚至问题排查。因此，一旦你开始引入微服务，那么你就要在最开始的时候好好规划服务的治理。&lt;/p&gt;
+&lt;h3 id=&quot;2-重复性劳动&quot;&gt;&lt;a href=&quot;#2-重复性劳动&quot; class=&quot;headerlink&quot; title=&quot;2.重复性劳动&quot;&gt;&lt;/a&gt;2.重复性劳动&lt;/h3&gt;&lt;p&gt;  重复性劳动是指你可能无法更多地像单体应用那样引用部分代码，毕竟服务之间是隔离的。当然你也可以通过抽取lib包这样的方式在微服务之间做到代码复用，但是那样就需要微服务的团队之间具有有效的沟通机制。&lt;/p&gt;
+&lt;h3 id=&quot;3-系统运行效率&quot;&gt;&lt;a href=&quot;#3-系统运行效率&quot; class=&quot;headerlink&quot; title=&quot;3.系统运行效率&quot;&gt;&lt;/a&gt;3.系统运行效率&lt;/h3&gt;&lt;p&gt;  微服务之间的交互是通过网络进行的，因此网络的效率、稳定性就变得更加重要。在单体应用中，我们不必担心模块之间交互的数据量、效率，但是在微服务中，服务与服务之间的效率将至关重要。&lt;/p&gt;
+&lt;h3 id=&quot;4-资源浪费&quot;&gt;&lt;a href=&quot;#4-资源浪费&quot; class=&quot;headerlink&quot; title=&quot;4.资源浪费&quot;&gt;&lt;/a&gt;4.资源浪费&lt;/h3&gt;&lt;p&gt;  一般来说，微服务推荐的部署方式是单机单服务，这也意味着更多的资源浪费。毕竟我们需要为操作系统、其他基础设施预留一些内存。在一个单体应用中，这些内存就可以共用。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;第一章-微服务&quot;&gt;&lt;a href=&quot;#第一章-微服务&quot; class=&quot;headerlink&quot; title=&quot;第一章 微服务&quot;&gt;&lt;/a&gt;第一章 微服务&lt;/h1&gt;&lt;h2 id=&quot;微服务的由来&quot;&gt;&lt;a href=&quot;#微服务的由来&quot; class=&quot;headerlink&quot; 
+    
+    </summary>
+    
+    
+      <category term="微服务" scheme="http://fengfu.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
     <title>CTO、技术总监、首席架构师的区别(转)</title>
     <link href="http://fengfu.io/2016/06/30/CTO%E3%80%81%E6%8A%80%E6%9C%AF%E6%80%BB%E7%9B%91%E3%80%81%E9%A6%96%E5%B8%AD%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%84%E5%8C%BA%E5%88%AB-%E8%BD%AC/"/>
     <id>http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/</id>
@@ -1653,27 +1693,6 @@ Hello, Fengfu, I&amp;apos;m C3po.
     
     
       <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>第一篇Markdown</title>
-    <link href="http://fengfu.io/2015/01/28/%E7%AC%AC%E4%B8%80%E7%AF%87Markdown/"/>
-    <id>http://fengfu.io/2015/01/28/第一篇Markdown/</id>
-    <published>2015-01-28T13:38:09.000Z</published>
-    <updated>2016-02-27T13:50:09.172Z</updated>
-    
-    <content type="html">&lt;p&gt;真的是Out了，Markdown都流行了这么久了，才开始用，惭愧啊……&lt;br&gt;更惭愧的是，博客都好久没有更新了……&lt;br&gt;更更惭愧的是，还有许多想要做的事情，都还没开始；或者开始了，就没有然后了……&lt;br&gt;比如15年想要看50本书，目前还差十几本……&lt;br&gt;比如15年想要去的西藏，如今已无法成行……&lt;br&gt;比如一直想写的互联网研发体系博客，到现在才寥寥数语……&lt;br&gt;…… ……&lt;br&gt;想要太多，付出太少；担心太多，决心太少；借口太多，行动太少……&lt;br&gt;不管怎么样，不能这样纵容自己了，千里之行始于足下，从今天开始，行动起来把！&lt;br&gt;加油！&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;真的是Out了，Markdown都流行了这么久了，才开始用，惭愧啊……&lt;br&gt;更惭愧的是，博客都好久没有更新了……&lt;br&gt;更更惭愧的是，还有许多想要做的事情，都还没开始；或者开始了，就没有然后了……&lt;br&gt;比如15年想要看50本书，目前还差十几本……&lt;br&gt;比如15年想要去
-    
-    </summary>
-    
-    
-      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
     
   </entry>
   
