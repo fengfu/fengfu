@@ -69,6 +69,126 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-关键业务系统的JVM启动参数推荐2-0版-转" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" class="article-date">
+  <time datetime="2016-08-07T02:20:22.000Z" itemprop="datePublished">2016-08-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/">关键业务系统的JVM启动参数推荐2.0版[转]</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>注：本文转自SpringSide的作者江南白衣的博客“<a href="http://calvin1978.blogcn.com/articles/jvmoption-2.html" target="_blank" rel="external">关键业务系统的JVM启动参数推荐 2.0版</a>”，如需转载，请尊重作者权利，注明原文出处，谢谢。</p>
+<p>在关键的业务系统里，除了继续追求技术人员最爱的高吞吐与低延时之外，系统的稳定性与出现问题时排查的便捷性也很重要。</p>
+<p>这是本文的一个原则，后面也会一次又一次的强调，所以与网上其他的文章略有不同，请调优高手和运维老大们多指引。</p>
+<p>更新记录：</p>
+<p>2.0版，增加 -XX:+PerfDisableSharedMem，GC日志指向/dev/shm，避免IO造成的JVM停顿。</p>
+<h1 id="前言1，资料"><a href="#前言1，资料" class="headerlink" title="前言1，资料"></a>前言1，资料</h1><p>学习开源项目的启动脚本是个不错的主意，比如<a href="https://github.com/apache/cassandra/blob/trunk/conf/cassandra-env.sh" target="_blank" rel="external">Cassandra</a>家的， 附送一篇<a href="https://tobert.github.io/pages/als-cassandra-21-tuning-guide.html" target="_blank" rel="external">解释它的文章</a>。</p>
+<p><a href="http://hllvm.group.iteye.com/group/topic/27945" target="_blank" rel="external">JVM调优的”标准参数”的各种陷阱</a> R大的文章，在JDK6时写的，期待更新。</p>
+<p>偶然翻到Linkedin工程师的<a href="http://www.importnew.com/11336.html" target="_blank" rel="external">一篇文章</a>。</p>
+<p>更偶然翻到的<a href="http://www.techpaste.com/2012/02/java-command-line-options-jvm-performance-improvement/" target="_blank" rel="external">一份不错的参数列表</a>。</p>
+<h1 id="前言2，-XX-PrintFlagsFinal打印参数值"><a href="#前言2，-XX-PrintFlagsFinal打印参数值" class="headerlink" title="前言2， -XX:+PrintFlagsFinal打印参数值"></a>前言2， -XX:+PrintFlagsFinal打印参数值</h1><p>当你在网上兴冲冲找到一个可优化的参数时，先用-XX: +PrintFlagsFinal看看，它可能已经默认打开了，再找到一个，还是默认打开了…</p>
+<p>JDK7与JDK8，甚至JDK7中的不同版本，有些参数值都不一样，所以不要轻信网上任何文章，一切以生产环境同版本的JDK打出来的为准。</p>
+<p>经常以类似下面的语句去查看参数，偷懒不起应用，用-version代替。有些参数设置后会影响其他参数，所以查看时也把它带上。</p>
+<pre><code>java -server -Xmx1024m -Xms1024m -XX:+UseConcMarkSweepGC -XX:+PrintFlagsFinal -version| grep ParallelGCThreads
+</code></pre><h1 id="前言3，关于默认值"><a href="#前言3，关于默认值" class="headerlink" title="前言3，关于默认值"></a>前言3，关于默认值</h1><p>JDK8会默认打开-XX:+TieredCompilation多层编译，而JDK7则不会。JDK7u40以后的版本会默认打开-XX:+OptimizeStringConcat优化字符串拼接，而之前的则不打开。</p>
+<p>对于这些参数，我的建议是顺势而为，JDK在那个版本默认打开不打开总有它的理由。安全第一，没有很好的因由，不要随便因为网上某篇文章的推荐(包括你现在在读的这篇)就去设置。</p>
+<h1 id="1-性能篇"><a href="#1-性能篇" class="headerlink" title="1. 性能篇"></a>1. 性能篇</h1><p>先写一些不那么常见的，后面再来老生常谈。</p>
+<h2 id="1-1-取消偏向锁-XX-UseBiasedLocking"><a href="#1-1-取消偏向锁-XX-UseBiasedLocking" class="headerlink" title="1.1 取消偏向锁 -XX:-UseBiasedLocking"></a>1.1 取消偏向锁 -XX:-UseBiasedLocking</h2><p>JDK1.6开始默认打开的偏向锁，在没有竞争的情况下，会取消线程同步的原语，比如那个所有方法都挂着synchronized关键字的StringBuffer，如果始终只有一条线程在访问它，就略过同步操作以获得性能提升。</p>
+<p>但一旦有第二条线程访问这把锁，JVM就要撤销偏向锁恢复到未锁定线程的状态，用”-XX:+PrintSafepointStatistics -XX :P rintSafepointStatisticsCount=1” 可以看到不少RevokeBiasd的纪录，像GC一样，会Stop The World的干活，虽然只是很短很短的停顿，但对于多线程并发的应用，取消掉它反而有性能的提升和延时的极微的缩短，所以Cassandra就取消了它。</p>
+<h2 id="1-2-启动时访问并置零内存页面-XX-AlwaysPreTouch"><a href="#1-2-启动时访问并置零内存页面-XX-AlwaysPreTouch" class="headerlink" title="1.2 启动时访问并置零内存页面-XX:+AlwaysPreTouch"></a>1.2 启动时访问并置零内存页面-XX:+AlwaysPreTouch</h2><p>启动时就把参数里说好了的内存全部舔一遍，可能令得启动时慢上一点，但后面访问时会更流畅，比如页面会连续分配，比如不会在晋升新生代到老生代时才去申请页面使得GC停顿时间加长。不过这选项对32G之类的大堆才会更有感觉一点。</p>
+<h2 id="1-3-Djava-security-egd-file-dev-urandom"><a href="#1-3-Djava-security-egd-file-dev-urandom" class="headerlink" title="1.3 -Djava.security.egd=file:/dev/./urandom"></a>1.3 -Djava.security.egd=file:/dev/./urandom</h2><p>UUID.randomUUID() 有时候会很慢，Thread Dump一看居然被锁住了，原因是里面用了SecureRandom，要等待机器产生新的噪音(比如机器里的某个文件发生了变化)才肯产生新的随机数。因此最好让熵池里没有新的噪音因子时重用当前的因子。详见 <a href="http://blog.csdn.net/xiaoxinyu316/article/details/39064003" target="_blank" rel="external">JVM上的随机数与熵池策略</a></p>
+<h2 id="1-4-XX-AutoBoxCacheMax-20000"><a href="#1-4-XX-AutoBoxCacheMax-20000" class="headerlink" title="1.4 -XX:AutoBoxCacheMax=20000"></a>1.4 -XX:AutoBoxCacheMax=20000</h2><p>Integer i = 3;这语句有着 int自动装箱成Integer的过程，JDK默认只缓存 -128 ~ +127的int 和 long，超出范围的数字就要即时构建新的Integer对象。设为20000后，我们应用的QPS从48,000提升到50,000，足足4%的影响。详见<a href="http://blog.csdn.net/chengzhezhijian/article/details/9628251" target="_blank" rel="external">Java Integer(-128~127)值的==和equals比较产生的思考</a></p>
+<h2 id="1-5-XX-PerfDisableSharedMem"><a href="#1-5-XX-PerfDisableSharedMem" class="headerlink" title="1.5 -XX:+PerfDisableSharedMem"></a>1.5 -XX:+PerfDisableSharedMem</h2><p>Cassandra家的一个参数，一直没留意，直到发生高IO时的JVM停顿。原来每次进入安全点（比如GC）, JVM都会默默的在/tmp/hperf 目录写上一点statistics数据，如果刚好遇到PageCache刷盘，把文件阻塞了，就不能结束这个Stop the World的安全点了。用此参数可以禁止JVM写statistics数据，代价是VisualVM和jstat用不了，只能用JMX取数据，但在生产环境本来就不需要VisaulVM。详见<a href="http://calvin1978.blogcn.com/articles/%20http://www.evanjones.ca/jvm-mmap-pause.html" target="_blank" rel="external">The Four Month Bug: JVM statistics cause garbage collection pauses</a></p>
+<h2 id="1-6-不建议的参数"><a href="#1-6-不建议的参数" class="headerlink" title="1.6 不建议的参数"></a>1.6 不建议的参数</h2><p>-XX:+AggressiveOpts是一些还没默认打开的优化参数集合, -XX:AutoBoxCacheMax是其中的一项。但如前所述，关键系统里不建议打开。虽然通过-XX:+AggressiveOpts 与 -XX:-AggressiveOpts 的对比，目前才改变了三个参数，但为免以后某个版本的JDK里默默改变更多激进的配置，还是不要了。</p>
+<p>Linkined那种黑科技，先要解锁VMOptions才能配置的就更不用说了，比如</p>
+<pre><code>-XX:+UnlockDiagnosticVMOptions -XX: ParGCCardsPerStrideChunk=32768
+</code></pre><p>JIT Compile相关的参数，函数调用多少次之后开始编译的阀值，内联函数大小的阀值等等，不要乱改了。</p>
+<p>-XX:+UseFastAccessorMethods，据说在多层编译下还慢了，所以是默认关闭的。</p>
+<h2 id="1-7-server"><a href="#1-7-server" class="headerlink" title="1.7 -server"></a>1.7 -server</h2><p>-server 与 -client的JVM默认参数完全不一样，虽然在Linux 64位JVM里默认会被认成server模式，但还是顺手写上吧。</p>
+<h2 id="1-8-GC策略"><a href="#1-8-GC策略" class="headerlink" title="1.8 GC策略"></a>1.8 GC策略</h2><p>为了稳健，还是8G以下的堆还是CMS好了，G1的细节实现起来难度太大，从理论提出到现在都做了六七年了。</p>
+<p>CMS真正可设的东西也不多，详见<a href="http://ifeve.com/useful-jvm-flags-part-7-cms-collector/" target="_blank" rel="external">JVM实用参数（七）CMS收集器</a></p>
+<pre><code>-XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly
+</code></pre><p>因为我们的监控系统会通过JMX监控内存达到90%的状况（留点处理的时间），所以设置让它75%就开始跑了，早点开始也能避免Full GC等意外情况(概念重申，这种主动的CMS GC，和JVM的老生代、永久代、堆外内存完全不能分配内存了而强制Full GC是不同的概念)。为了让这个设置生效，还要设置-XX:+UseCMSInitiatingOccupancyOnly，否则75只被用来做开始的参考值，后面还是JVM自己算。</p>
+<p>-XX:MaxTenuringThreshold=2，这是GC里改动效果最明显的一个参数了。对象在Survivor区熬过多少次Young GC后晋升到年老代，JDK7里看起来默认是6，跑起来好像变成了15。</p>
+<p>Young GC是最大的应用停顿来源，而新生代里GC后存活对象的多少又直接影响停顿的时间，所以如果清楚Young GC的执行频率和应用里大部分临时对象的最长生命周期，可以把它设的更短一点，让其实不是临时对象的新生代长期对象赶紧晋升到年老代，别呆着。</p>
+<p>用-XX:+PrintTenuringDistribution观察下，如果后面几代都差不多，就可以设小，比如JMeter里是2。而我们的两个系统里一个设了2，一个设了6。</p>
+<p>-XX:+ExplicitGCInvokesConcurrent， 但不要-XX:+DisableExplicitGC， 比如<a href="http://calvin1978.blogcn.com/articles/directbytebuffer.html" target="_blank" rel="external">Netty之堆外内存扫盲篇</a>，可见禁了system.gc() 未必是好事，只要自己的代码里没有调它，也没用什么特别烂的类库，真有人调了总有调的原因。-XX+ExplicitGCInvokesConcurrent 则在full gc时，并不全程停顿，依然只在ygc和两个remark阶段停顿，详见<a href="http://lovestblog.cn/blog/2015/05/07/system-gc/" target="_blank" rel="external">JVM源码分析之SystemGC完全解读</a></p>
+<p>-XX: ParallelRefProcEnabled , 默认为false，并行的处理Reference对象，如WeakReference，除非在GC log里出现Reference处理时间较长的日志，否则效果不会很明显，但我们总是要JVM尽量的并行，所以设了也就设了。</p>
+<h2 id="1-9-GC里不建议设的参数"><a href="#1-9-GC里不建议设的参数" class="headerlink" title="1.9 GC里不建议设的参数"></a>1.9 GC里不建议设的参数</h2><p>-XX:+CMSClassUnloadingEnabled，在CMS中清理永久代中的过期的Class而不等到Full GC，JDK7默认关闭而JDK8打开。看自己情况，比如有没有运行动态语言脚本如Groovy产生大量的临时类。它会增加CMS remark的暂停时间，所以如果新类加载并不频繁，这个参数还是不开的好。</p>
+<p>用了CMS，新生代收集默认就是-XX:+UseParNewGC，不用自己设。</p>
+<p>并发收集线程数，ParallelGCThreads＝8+( Processor - 8 ) ( 5/8 )， ConcGCThreads = (ParallelGCThreads + 3)/4，比如双CPU，六核，超线程就是24个处理器，小于8个处理器时ParallelGCThreads按处理器数量，大于时按上述公式ParallelGCThreads＝18， ConcGCThreads＝5。这线程数调整了变化也不大，还是别乱动了。</p>
+<p>-XX:+CMSScavengeBeforeRemark，默认为关闭，在CMS remark前，先执行一次minor GC将新生代清掉，这样从老生代的对象引用到的新生代对象的个数就少了，停止全世界的CMS remark阶段就短一些。如果看到GC日志里remark阶段的时间超长，可以打开此项看看有没有效果，否则还是不要打开了，白白多了次GC。</p>
+<p>-XX:CMSFullGCsBeforeCompaction，默认为0，即每次full gc都对老生代进行碎片整理压缩。Full GC 不同于 前面设置的75%老生代时触发的CMS GC，只在System.gc()，老生代达到100%，老生代碎片过大无法分配空间给新晋升的大对象这些特殊情况里发生，所以设为每次都进行碎片整理是合适的，详见此贴里R大的解释。</p>
+<h2 id="1-10-内存大小的设置"><a href="#1-10-内存大小的设置" class="headerlink" title="1.10 内存大小的设置"></a>1.10 内存大小的设置</h2><p>这些关于大小的参数，给人感觉是最踏实可控的。</p>
+<p>其实JVM除了显式设置的-Xmx堆内存，还有一堆其他占内存的地方(堆外内存，线程栈，永久代，二进制代码cache)，在容量规划的时候要留意。</p>
+<p>关键业务系统的服务器上内存一般都是够的，所以尽管设得宽松点。</p>
+<p>-Xmx, -Xms, 堆内存大小，2～4G均可，再大了GC时间会拖长。</p>
+<p>-Xmn or -XX:NewSize and -XX:MaxNewSize or -XX:NewRatio， JDK默认新生代占堆大小的1/3， 个人喜欢把对半分， 增大新生代的大小，能减少GC的频率（但也会加大每次GC的停顿时间），主要是看老生代里没多少长期对象的话，占2/3太多了。可以用-Xmn 直接赋值(等于-XX:NewSize and -XX:MaxNewSize同值的缩写)，或把NewRatio设为1来对半分(但如果想设置新生代比老生代大就只能用-Xmn)。</p>
+<p>-XX: PermSize=128m -XX:MaxPermSize=512m （JDK7）现在的应用有Hibernate/Spring这些闹腾的家伙AOP之后类都比较多，可以一开始就把初始值从64M设到128M，并设一个更大的Max值以求保险。</p>
+<p>-XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m（JDK8），JDK8的永生代几乎可用完机器的所有内存，同样设一个128M的初始值，512M的最大值保护一下。</p>
+<h2 id="1-11-其他内存大小等可选设置"><a href="#1-11-其他内存大小等可选设置" class="headerlink" title="1.11 其他内存大小等可选设置"></a>1.11 其他内存大小等可选设置</h2><p>-XX:SurvivorRatio 新生代中每个存活区的大小，默认为8，即1/10的新生代 1/(SurvivorRatio+2)，有人喜欢设小点省点给新生代，但要避免太小使得存活区放不下临时对象而要晋升到老生代，还是从GC Log里看实际情况了。</p>
+<p>-Xss 在堆之外，线程占用栈内存，默认每条线程为1M（以前是256K）。除了方法调用出参入参的栈，逃逸分析后也会把只在该线程里可见的对象直接分配在线程栈里，而不是公共的Heap里，也就减少了新生代的GC频率。有人喜欢设小点节约内存开更多线程，但反正内存够也就不必要设小，有人喜欢再设大点。</p>
+<p>-XX:MaxDirectMemorySize，堆外内存/直接内存的大小，默认为Heap区总内存减去一个Survivor区的大小，详见<a href="http://calvin1978.blogcn.com/articles/directbytebuffer.html" target="_blank" rel="external">Netty之堆外内存扫盲篇</a>。</p>
+<p>-XX:ReservedCodeCacheSize， JIT编译后二进制代码的存放区，满了之后就不再编译。JDK7默认不开多层编译48M，开了96M，而JDK8默认开多层编译256M。可以在JMX里看看CodeCache的大小，JDK7下的48M一般够了，也可以把它设大点，反正内存多。</p>
+<h1 id="2-监控篇"><a href="#2-监控篇" class="headerlink" title="2. 监控篇"></a>2. 监控篇</h1><p>JVM输出的各种日志，如果未指定路径，通常会生成到运行应用的相同目录，为了避免有时候在不同的地方执行启动脚本，一般将日志路径集中设到一个固定的地方。</p>
+<h2 id="2-1-XX-PrintCommandLineFlags"><a href="#2-1-XX-PrintCommandLineFlags" class="headerlink" title="2.1 -XX:+PrintCommandLineFlags"></a>2.1 -XX:+PrintCommandLineFlags</h2><p>运维有时会对启动参数做一些临时的更改，将每次启动的参数输出到stdout，将来有据可查。<br>打印出来的是命令行里设置了的参数以及因为这些参数隐式影响的参数，比如开了CMS后，-XX:+UseParNewGC也被自动打开。</p>
+<h2 id="2-2-XX-OmitStackTraceInFastThrow"><a href="#2-2-XX-OmitStackTraceInFastThrow" class="headerlink" title="2.2 -XX:-OmitStackTraceInFastThrow"></a>2.2 -XX:-OmitStackTraceInFastThrow</h2><p>为异常设置StackTrace是个昂贵的操作，所以当应用在相同地方抛出相同的异常N次(两万?)之后，JVM会对某些特定异常如NPE，数组越界等进行优化，不再带上异常栈。此时，你可能会看到日志里一条条Null Point Exception，而真正输出完整栈的日志早被滚动到不知哪里去了，也就完全不知道这NPE发生在什么地方，欲哭无泪。 所以，将它禁止吧。</p>
+<h2 id="2-3-coredump与-XX-ErrorFile"><a href="#2-3-coredump与-XX-ErrorFile" class="headerlink" title="2.3 coredump与 -XX:ErrorFile"></a>2.3 coredump与 -XX:ErrorFile</h2><p>JVM crash时，hotspot 会生成一个error文件，提供JVM状态信息的细节。如前所述，将其输出到固定目录，避免到时会到处找这文件。文件名中的%p会被自动替换为应用的PID</p>
+<pre><code>-XX:ErrorFile=${MYLOGDIR}/hs_err_%p.log
+</code></pre><p>当然，更好的做法是生成coredump，从CoreDump能够转出Heap Dump 和 Thread Dump 还有crash的地方，非常实用。</p>
+<p>在启动脚本里加上 ulimit -c unlimited或其他的设置方式，如果有root权限，用一下一下输出目录更好</p>
+<pre><code>echo &quot;/{MYLOGDIR}/coredump.%p&quot; &gt; /proc/sys/kernel/core_pattern
+</code></pre><p>什么？你不知道这东西什么用？看来你是没遇过JVM Segment Fault的幸福人。</p>
+<h2 id="2-4-XX-HeapDumpOnOutOfMemoryError"><a href="#2-4-XX-HeapDumpOnOutOfMemoryError" class="headerlink" title="2.4 -XX:+HeapDumpOnOutOfMemoryError"></a>2.4 -XX:+HeapDumpOnOutOfMemoryError</h2><p>在Out Of Memory，JVM快死快死掉的时候，输出Heap Dump到指定文件。不然开发很多时候还真不知道怎么重现错误。</p>
+<p>路径只指向目录，JVM会保持文件名的唯一性，叫java_pid${pid}.hprof。如果指向文件，而文件已存在，反而不能写入。</p>
+<pre><code>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${LOGDIR}/
+</code></pre><h2 id="2-5-GC日志"><a href="#2-5-GC日志" class="headerlink" title="2.5 GC日志"></a>2.5 GC日志</h2><pre><code>-Xloggc:/dev/shm/gc-myapplication.log -XX:+PrintGCDateStamps -XX:+PrintGCDetails
+</code></pre><p>详见<a href="http://ifeve.com/useful-jvm-flags-part-8-gc-logging/" target="_blank" rel="external">JVM实用参数（八）GC日志</a>，有人担心写GC日志会影响性能，但测试下来实在没什么影响，还是留一份用来排查好。</p>
+<p>到后来，又发现如果遇上高IO的情况，如果GC的时候，操作系统正在flush pageCache 到磁盘，也可能导致GC log文件被锁住，从而让GC结束不了。所以把它指向了/dev/shm 这种内存中数据库，避免这种停顿，详见<a href="http://calvin1978.blogcn.com/articles/%E2%80%9Chttps://engineering.linkedin.com/blog/2016/02/eliminating-large-jvm-gc-pauses-caused-by-background-io-traffic%E2%80%9D" target="_blank" rel="external">Eliminating Large JVM GC Pauses Caused by Background IO Traffic</a></p>
+<p>另外还有一个-XX:+PrintGCApplicationStoppedTime -XX:+PrintGCApplicationConcurrentTime，它的名字没起好，它除了打印清晰的GC停顿时间外，还可以打印其他的停顿时间，比如取消偏向锁，class 被agent redefine，code deoptimization等等，有助于发现一些原来没想到的问题，建议也加上。如果真的发现了一些不知什么的停顿，再加上”-XX:+PrintSafepointStatistics -XX: PrintSafepointStatisticsCount=1” 找原因。</p>
+<p>GC日志默认会在重启后清空，但有人担心长期运行不重启的应用会把文件弄得很大，有”-XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1M”的参数可以让日志滚动起来。但重启后的文件名太混乱太让人头痛，所以还是不加。</p>
+<h2 id="2-6-JMX"><a href="#2-6-JMX" class="headerlink" title="2.6 JMX"></a>2.6 JMX</h2><p> <code>-Dcom.sun.management.jmxremote.port=${MY_JMX_PORT} -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1</code></p>
+<p>以上设置，只让本地的Zabbix之类监控软件通过JMX监控JVM，不允许远程访问。</p>
+<p>《关键业务系统的JVM启动参数推荐》，转载请保留链接。</p>
+<p>谢谢看到这里，还是贴个图吧。</p>
+<p>有关的…</p>
+<p>2016-07-30 – 从dstat理解Linux性能监控体系<br>2016-04-29 – Java应用调优之－目标与资料篇<br>2016-04-28 – 另一份Java应用调优指南之－工具篇<br>2016-01-01 – 另一份Java应用调优指南之－前菜</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" data-id="cirjzjm26000ka4us7gsiezsb" class="article-share-link" data-share="baidu" data-title="关键业务系统的JVM启动参数推荐2.0版[转]">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CTO、技术总监、首席架构师的区别-转" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/30/CTO、技术总监、首席架构师的区别-转/" class="article-date">
@@ -136,7 +256,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/" data-id="ciq25w0zt001278ussimddnnz" class="article-share-link" data-share="baidu" data-title="CTO、技术总监、首席架构师的区别(转)">分享到</a>
+        <a data-url="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/" data-id="cirjzjm2z0013a4usg9pcdcs8" class="article-share-link" data-share="baidu" data-title="CTO、技术总监、首席架构师的区别(转)">分享到</a>
       
 
       
@@ -199,7 +319,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" data-id="ciq25w0zj000x78usn315c3w7" class="article-share-link" data-share="baidu" data-title="JVM 垃圾回收器CMS之各阶段总结">分享到</a>
+        <a data-url="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" data-id="cirjzjm2r000ya4us0uthsys7" class="article-share-link" data-share="baidu" data-title="JVM 垃圾回收器CMS之各阶段总结">分享到</a>
       
 
       
@@ -281,7 +401,7 @@ monitor test
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="ciq25w0yo000f78usrnilvfx2" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
+        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="cirjzjm20000fa4usisq2hygv" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
       
 
       
@@ -383,7 +503,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="ciq25w0z5000r78usecunfz8w" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="cirjzjm2g000sa4uslkjgh4bg" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
       
 
       
@@ -456,7 +576,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="ciq25w0z8000t78uszzi6vikg" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之premain">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="cirjzjm2j000ua4us1dzofj7v" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之premain">分享到</a>
       
 
       
@@ -510,7 +630,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="ciq25w0ye000978us20aklm0z" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="cirjzjm1s0009a4usyzyuiaxi" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
       
 
       
@@ -566,7 +686,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="ciq25w0yj000d78us0p5k6yh9" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
+        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="cirjzjm1w000da4usrk3o7amd" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
       
 
       
@@ -618,7 +738,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="ciq25w0zc000v78use9qzcrrp" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
+        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="cirjzjm2n000wa4us0ahu0t5v" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
       
 
       
@@ -672,7 +792,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="ciq25w0yt000k78us2pfqplgj" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
+        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="cirjzjm28000la4usci7a4nxe" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
       
 
       
@@ -689,64 +809,9 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 
 
   
-    <article id="post-ATPCO项目总结-管理篇" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/29/ATPCO项目总结-管理篇/" class="article-date">
-  <time datetime="2015-12-29T12:41:09.000Z" itemprop="datePublished">2015-12-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/29/ATPCO项目总结-管理篇/">ATPCO项目总结-管理篇</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。</p>
-<p>ATPCO项目经历的这接近1年的时间里，有很多的感触，写出来做个总结吧。今天写的是管理方面。</p>
-<h2 id="1-反应速度"><a href="#1-反应速度" class="headerlink" title="1. 反应速度"></a>1. 反应速度</h2><p>项目启动最初，由于与ATPCO的商务合同没有签订，项目只投入了一个人进行研究，推动缓慢。加之团队对公布运价业务不熟悉，给了其他团队切入的机会，并最终导致了2个团队持续竞争的局面。虽然从公司的角度，一个重要的项目由2个团队做是降低风险的举措，但是由此带来的内部消耗也是比较大的，这也导致了后面的核心员工离职。<br>从这件事情来讲，对于任何事情，都要保持足够的敏感度和反应速度。互联网行业竞争激烈，需要快速反应。qunar内部的狼性文化也要求团队能够快速响应、灵活机动，这样才能更快地响应形势的变化。</p>
-<h2 id="2-团队组建"><a href="#2-团队组建" class="headerlink" title="2. 团队组建"></a>2. 团队组建</h2><p>从团队组建上，有2点做得比较好，1点做得不好。<br>先说说做得好的地方：<br>1)在项目初期就把产品经理、技术拉到一个会议室封闭，这样带来的好处是沟通效率很高，项目有问题的时候大家在屋里吼一嗓子就能很快解决问题。当然弊端是十几个人在一个屋子里面，有的时候3、4组人一起说话的时候，那感觉就跟菜市场一样了。<br>2)投入精兵强将。项目开始封闭时，项目人员短缺，无奈之下，把部门里面6个TL中的4个拉了进来。此举起到了很好的效果，不仅解决了人力的问题，而且每个人都在自己负责的事情上做出了很好的成绩。这也应了那句话：兵不在多，在于精。<br>再说说做得不好的地方：<br>1)添油战术不可取：ATPCO项目专业性很强，新人的学习门槛很高，所以在往团队增加人手的时候，最好一次性给够。添油战术对这个项目最大的弊端就是新人需要花很久去学习（最少1个月时间入门），如果每个新来的人都要经历一个学习过程，那么所带来的成本和消耗就比较大了。</p>
-<h2 id="3-沟通"><a href="#3-沟通" class="headerlink" title="3. 沟通"></a>3. 沟通</h2><p>再来说说沟通，沟通一直是管理工作中非常重要的一环，沟通做不好，工作难以开展不说，也会造成人员流失。<br>1）内部沟通<br>先说说内部沟通。<br>团队中每一个人都是一个独立的个体，具备不同的性格和不同的处事方式，每个人的诉求也是不一样的，所以对待每个人的方式也应该因人而异。但是，无论对谁，首先应该了解他的诉求。每个人来到公司都是有自己的诉求的，比如有的人比较关心技术积累、有的人关心成长空间、有的人关心薪水、有的人关心关系简单……如果不了解每个人的需求，那么可能就无法投其所好，给其所要。久而久之，如果这个人不主动跟你沟通，你又不能及时发现问题，那么久而久之，欲求不满的他可能就会闪人了。<br>2）外部沟通<br>下面的这些话不展开了说，说得太明白没意思。<br>有人的地方就有江湖，<br>有人的地方就有利益，<br>看不明白的就看利益。</p>
-<p>你不可能只靠自己和团队，还需要外围的资源的支持，讲利益互换。你对别人有利，你才有机会，此处省略一万字……</p>
-<p>公司大了，就像一个社会，你会遇到形形色色的人，你喜欢的，你讨厌的；你佩服的，你无视的……无论遇到什么样的人，都应该平和对待。一花一世界，一叶一菩提，每个人都值得尊重。</p>
-<h2 id="4-用人"><a href="#4-用人" class="headerlink" title="4. 用人"></a>4. 用人</h2><p>管理就是把合适的人用在合适的位置上，不合适的人要尽快替换，让合适的人顶上去。<br>这里要说的是招聘，不同的项目，对人的要求是不一样的。针对项目的招聘工作，一定要清楚需要什么样的人，严格按照要求招聘。如果招到的人不合适，不仅浪费时间浪费资源，对项目、对应聘者都会产生不利影响。ATPCO是一个专业性很强的项目，学习门槛很高，对人的学习、理解、沟通能力要求都很高，甚至心理素质。项目组成立半年多以来，项目组成员几进几出。有的人适应不了环境自己离职，有的人则是胜任不了被淘汰，这其实都是损失。</p>
-<h2 id="5-分工"><a href="#5-分工" class="headerlink" title="5. 分工"></a>5. 分工</h2><p>首先是将系统拆分，每个人负责独立的事情。在系统建设初期，可以采用服务化的方式将功能拆分，以加快开发速度。但是到了项目后期，系统稳定后，可以再把服务聚合起来。</p>
-<p>其次是要把合适的人放在合适的位置上。那怎么知道这个人适合这个位置呢？前面说到我们已经做了系统拆分，那么根据拆分后的系统来分析各系统需要什么样的能力？比如航路引擎需要对算法比较熟悉，规则系统需要很强的学习能力和技术功底，搜索引擎需要对分布式和性能优化比较熟悉。明确了各个位置需要的能力后，就可以去找相应的人了。</p>
-<p>第三是要能够做好backup，如果你不希望在关键时刻因为关键人物不在而导致业务受影响，那么就尽量避免出现单点。如果人手短缺万不得已，那么TL可以加强团队代码review，熟悉每个子系统的逻辑，这样能够确保在关键时刻其他人能够顶上，同时也能够帮助团队提升技术能力。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/" data-id="ciq25w0zv001478us8phx7z62" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-管理篇">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -759,7 +824,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -777,7 +842,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -787,6 +852,10 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/">关键业务系统的JVM启动参数推荐2.0版[转]</a>
+          </li>
         
           <li>
             <a href="/2016/06/30/CTO、技术总监、首席架构师的区别-转/">CTO、技术总监、首席架构师的区别(转)</a>
@@ -802,10 +871,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
         
           <li>
             <a href="/2016/04/25/Java-Instrumentation研究-2/">Java Instrumentation研究之动态植入</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/24/Java-Instrumentation研究-1/">Java Instrumentation研究之premain</a>
           </li>
         
       </ul>
