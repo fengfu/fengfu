@@ -69,6 +69,65 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-读书笔记-微服务设计-建模" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/12/读书笔记-微服务设计-建模/" class="article-date">
+  <time datetime="2016-08-12T12:52:17.000Z" itemprop="datePublished">2016-08-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/12/读书笔记-微服务设计-建模/">读书笔记:微服务设计-建模</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-什么样的服务是好服务"><a href="#1-什么样的服务是好服务" class="headerlink" title="1.什么样的服务是好服务"></a>1.什么样的服务是好服务</h1><h2 id="1-高内聚"><a href="#1-高内聚" class="headerlink" title="1.高内聚"></a>1.高内聚</h2><p>  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。<br>  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。</p>
+<h2 id="2-低耦合"><a href="#2-低耦合" class="headerlink" title="2.低耦合"></a>2.低耦合</h2><p>  使用微服务最重要的一点是：能够独立修改及部署单个服务而不需要修改系统的其他部分。</p>
+<h1 id="2-限界上下文"><a href="#2-限界上下文" class="headerlink" title="2.限界上下文"></a>2.限界上下文</h1><p>  限界上下文(bounded context)这个概念来自于Eric Evans的《领域驱动设计》一书，Eric认为：一个给定的领域包含多个限界上下文，每个限界上下文中的东西分成2个部分，一部分不需要与外界通信，另一部分则需要。每个上下文都有明确的接口，该接口决定了它会暴露哪些模型给其他的上下文。当然本文作者更喜欢这个定义：一个由显示边界限定的特定职责。如果你想要从一个限界上下文中获取信息，或者向其发起请求，需要使用模型和它的显示边界进行通信。</p>
+<p>  应该共享特定的模型，而不应该共享内部表示，这样就可以避免潜在的紧耦合风险。</p>
+<p>  一般来讲，微服务应该清晰地和限界上下文相对应。</p>
+<h1 id="3-业务功能"><a href="#3-业务功能" class="headerlink" title="3.业务功能"></a>3.业务功能</h1><p>  在思考组织内的限界上下文时，不应该从共享数据的角度来考虑，应该从这些上下文能够提供的功能来考虑。首先要问自己：这个上下文是做什么用的，然后再考虑它需要什么样的数据。</p>
+<p>  建模服务时，应该将这些功能作为关键操作提供给其协作者。</p>
+<h1 id="4-逐步划分上下文"><a href="#4-逐步划分上下文" class="headerlink" title="4.逐步划分上下文"></a>4.逐步划分上下文</h1><p>  先识别粗粒度上下文，然后当发现合适的缝隙后，再进一步划分出那些嵌套的上下文。</p>
+<p>  对于嵌套上下文，一种方式是嵌套上下文不直接对外可见，另外一种方式是限界上下文被提升到顶层上下文的层次。这两种方式都具有其合理性，具体还要看组织机构的划分。比如服务A、服务B、服务C分别由不同团队维护，那么可能大家倾向于成为顶层上下文；如果由一个团队维护，那么嵌套架构会更合理。另外，从测试的角度，嵌套式上下文更便于测试，毕竟它对外暴露的服务更少。</p>
+<p>另外一本书推荐：Vaughn Vernon的<a href="http://item.jd.com/11423256.html" target="_blank" rel="external">《实现领域驱动设计》</a>，这本书貌似卖得更好。</p>
+<p><em>图片说明：稻城-亚丁</em></p>
+<p>稻城—亚丁因其独特而原始的自然环境、美丽风景被誉为“最后的香格里拉”，景点分为稻城和亚丁两部分，有雪山、冰川、峡谷、森林、草甸、湖泊等景观。除了珍珠海、牛奶海等冰川湖泊，稻城最令人向往的是驰名藏区的雪域神峰——稻城神峰，它由仙乃日、央迈勇、夏诺多吉三座神山组成，均位于亚丁自然保护区。人们把仙乃日比作大佛、把央迈勇比作少女，将夏诺多吉当作少年，三座神山就像三尊圣灵，这里也就成了藏民心中朝圣的圣地。</p>
+<p><img src="https://img.alicdn.com/imgextra/i1/2657627814/TB29IAuXaryQeBjSszdXXaL.XXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB24zkuXabyQeBjy1XbXXa9yXXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2GWAvXhHxQeBjy1zjXXa5YVXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/" data-id="cirt7isd40006fsuspret5pps" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-建模">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-关键业务系统的JVM启动参数推荐2-0版-转" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" class="article-date">
@@ -172,7 +231,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" data-id="cirkc45du000nfgus2xpvp6ng" class="article-share-link" data-share="baidu" data-title="关键业务系统的JVM启动参数推荐2.0版[转]">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" data-id="cirt7isdw000pfsusgo5vhgkq" class="article-share-link" data-share="baidu" data-title="关键业务系统的JVM启动参数推荐2.0版[转]">分享到</a>
       
 
       
@@ -240,7 +299,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/07/30/读书笔记-微服务设计/" data-id="cirkc45d90003fgusr0ssj54k" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-入门">分享到</a>
+        <a data-url="http://fengfu.io/2016/07/30/读书笔记-微服务设计/" data-id="cirt7isd10003fsuskn02w25x" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-入门">分享到</a>
       
 
       
@@ -324,7 +383,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/" data-id="cirkc45eo0017fguswt5m9nrv" class="article-share-link" data-share="baidu" data-title="CTO、技术总监、首席架构师的区别(转)">分享到</a>
+        <a data-url="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/" data-id="cirt7isep0019fsusw0v0ldnm" class="article-share-link" data-share="baidu" data-title="CTO、技术总监、首席架构师的区别(转)">分享到</a>
       
 
       
@@ -387,7 +446,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" data-id="cirkc45eh0012fgus4ivjw2o4" class="article-share-link" data-share="baidu" data-title="JVM 垃圾回收器CMS之各阶段总结">分享到</a>
+        <a data-url="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" data-id="cirt7isej0014fsusbz6gd8ug" class="article-share-link" data-share="baidu" data-title="JVM 垃圾回收器CMS之各阶段总结">分享到</a>
       
 
       
@@ -469,7 +528,7 @@ monitor test
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="cirkc45dp000ifgus1kvqbty5" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
+        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="cirt7isdo000kfsusocrpkdta" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
       
 
       
@@ -571,7 +630,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="cirkc45e7000wfgusx4x52cl5" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="cirt7iseb000yfsusgzwmom69" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
       
 
       
@@ -644,7 +703,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="cirkc45ec000yfgusz255xzqt" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之premain">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="cirt7ised0010fsusl550zuum" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之premain">分享到</a>
       
 
       
@@ -698,7 +757,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="cirkc45dh000cfgusus3l1s97" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
+        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="cirt7isdf000efsusipfkz6ok" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
       
 
       
@@ -754,7 +813,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="cirkc45dn000gfgus6kclylmt" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
+        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="cirt7isdj000ifsusuc8yew14" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
       
 
       
@@ -763,58 +822,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JVM触发FullGC的情况总结" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/08/JVM触发FullGC的情况总结/" class="article-date">
-  <time datetime="2016-03-08T14:53:56.000Z" itemprop="datePublished">2016-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/08/JVM触发FullGC的情况总结/">JVM触发FullGC的情况总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>FullGC是Java应用中一个不容忽视的问题，因为FullGC会引起应用停顿，所以它对那些响应时间要求比较高的应用的影响还是非常大的。<br>当然，如果要解决FullGC的问题，我们首先需要知道在什么情况下会引起FullGC，这样才能对症下药，避免FullGC的出现。</p>
-<p>下面的总结是针对于系统自动进行FullGC的情况分析，不包含System.gc操作。</p>
-<h2 id="1-老年代空间不足"><a href="#1-老年代空间不足" class="headerlink" title="1. 老年代空间不足"></a>1. 老年代空间不足</h2><p>JVM中堆空间主要由新生代和老年代组成。新创建的对象大多在新生代中创建，当对象经过几次Minor GC依然存活，才有机会被转入老年代。这时问题就来了，如果此时老年代的空间不足以容纳从新生代转入的对象，那么JVM就会进行FullGC，以清理老年代的空间。如果进行FullGC后老年代依然无法容纳转入对象，那么系统就会抛出：java.lang.OutOfMemoryError: Java heap space的异常，相比大家都比较熟悉了。</p>
-<h2 id="2-永久代空间不足"><a href="#2-永久代空间不足" class="headerlink" title="2. 永久代空间不足"></a>2. 永久代空间不足</h2><p>永久代(Permanent Generation)一般是用来存放类信息、字符串常量的地方，如果我们永久代设置的空间比较小无法容纳足够的类信息时，或者因为频繁热加载类信息，又或者存储了太多的字符串常量，那么系统就会触发FullGC，以清理永久代。如果FullGC之后永久代还无法容纳足够的信息，那么系统就会抛出：java.lang.OutOfMemoryError: PermGen space的异常，眼熟吧:)</p>
-<h2 id="3-promotion-failed和concurrent-mode-failure"><a href="#3-promotion-failed和concurrent-mode-failure" class="headerlink" title="3. promotion failed和concurrent mode failure"></a>3. promotion failed和concurrent mode failure</h2><p>promotion failed是指在进行Minor GC时，新生代中的对象从Eden区往survivor区转移，但是survivor区放不下，只能放入老年代，但是悲催的是老年代也放不下，这时就会出现promotion failed的情况，系统会触发FullGC以清理空间。</p>
-<p>concurrent mode failure是指在进行CMS GC的过程中有对象要放入老年代，但是老年代空间不够引起的。 </p>
-<h2 id="4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间"><a href="#4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间" class="headerlink" title="4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间"></a>4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间</h2><p>这是一个较为复杂的触发情况，Hotspot为了避免由于新生代对象晋升到旧生代导致旧生代空间不足的现象，在进行Minor GC时，做了一个判断，如果之前统计所得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间，那么就直接触发Full GC。<br>例如程序第一次触发Minor GC后，有6MB的对象晋升到旧生代，那么当下一次Minor GC发生时，首先检查旧生代的剩余空间是否大于6MB，如果小于6MB，则执行Full GC。<br>当新生代采用PS GC时，方式稍有不同，PS GC是在Minor GC后也会检查，例如上面的例子中第一次Minor GC后，PS GC会检查此时旧生代的剩余空间是否大于6MB，如小于，则触发对旧生代的回收。<br>除了以上4种状况外，对于使用RMI来进行RPC或管理的Sun JDK应用而言，默认情况下会一小时执行一次Full GC。可通过在启动时通过- java -Dsun.rmi.dgc.client.gcInterval=3600000来设置Full GC执行的间隔时间或通过-XX:+ DisableExplicitGC来禁止RMI调用System.gc。</p>
-<p>明确了FullGC出现的原理，我们就能根据JVM垃圾回收的情况来判断系统到底是因为什么原因出现了FullGC，也就能对症下药，避免FullGC的出现。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="cirkc45ef0010fgusmpuv0lgj" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -838,7 +845,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -847,7 +854,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/杂谈/" style="font-size: 16.67px;">杂谈</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a>
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 12.5px;">微服务</a> <a href="/tags/杂谈/" style="font-size: 17.5px;">杂谈</a> <a href="/tags/架构/" style="font-size: 15px;">架构</a>
     </div>
   </div>
 
@@ -856,7 +863,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -866,6 +873,10 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/08/12/读书笔记-微服务设计-建模/">读书笔记:微服务设计-建模</a>
+          </li>
         
           <li>
             <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/">关键业务系统的JVM启动参数推荐2.0版[转]</a>
@@ -881,10 +892,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
         
           <li>
             <a href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/">JVM 垃圾回收器CMS之各阶段总结</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/20/性能调优工具-Java-Mission-Control/">性能调优工具-Java Mission Control</a>
           </li>
         
       </ul>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-08-07T02:25:15.901Z</updated>
+  <updated>2016-08-13T13:16:47.828Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -14,6 +14,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>读书笔记:微服务设计-建模</title>
+    <link href="http://fengfu.io/2016/08/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%AE%BE%E8%AE%A1-%E5%BB%BA%E6%A8%A1/"/>
+    <id>http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/</id>
+    <published>2016-08-12T12:52:17.000Z</published>
+    <updated>2016-08-13T13:16:47.828Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;1-什么样的服务是好服务&quot;&gt;&lt;a href=&quot;#1-什么样的服务是好服务&quot; class=&quot;headerlink&quot; title=&quot;1.什么样的服务是好服务&quot;&gt;&lt;/a&gt;1.什么样的服务是好服务&lt;/h1&gt;&lt;h2 id=&quot;1-高内聚&quot;&gt;&lt;a href=&quot;#1-高内聚&quot; class=&quot;headerlink&quot; title=&quot;1.高内聚&quot;&gt;&lt;/a&gt;1.高内聚&lt;/h2&gt;&lt;p&gt;  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。&lt;br&gt;  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。&lt;/p&gt;
+&lt;h2 id=&quot;2-低耦合&quot;&gt;&lt;a href=&quot;#2-低耦合&quot; class=&quot;headerlink&quot; title=&quot;2.低耦合&quot;&gt;&lt;/a&gt;2.低耦合&lt;/h2&gt;&lt;p&gt;  使用微服务最重要的一点是：能够独立修改及部署单个服务而不需要修改系统的其他部分。&lt;/p&gt;
+&lt;h1 id=&quot;2-限界上下文&quot;&gt;&lt;a href=&quot;#2-限界上下文&quot; class=&quot;headerlink&quot; title=&quot;2.限界上下文&quot;&gt;&lt;/a&gt;2.限界上下文&lt;/h1&gt;&lt;p&gt;  限界上下文(bounded context)这个概念来自于Eric Evans的《领域驱动设计》一书，Eric认为：一个给定的领域包含多个限界上下文，每个限界上下文中的东西分成2个部分，一部分不需要与外界通信，另一部分则需要。每个上下文都有明确的接口，该接口决定了它会暴露哪些模型给其他的上下文。当然本文作者更喜欢这个定义：一个由显示边界限定的特定职责。如果你想要从一个限界上下文中获取信息，或者向其发起请求，需要使用模型和它的显示边界进行通信。&lt;/p&gt;
+&lt;p&gt;  应该共享特定的模型，而不应该共享内部表示，这样就可以避免潜在的紧耦合风险。&lt;/p&gt;
+&lt;p&gt;  一般来讲，微服务应该清晰地和限界上下文相对应。&lt;/p&gt;
+&lt;h1 id=&quot;3-业务功能&quot;&gt;&lt;a href=&quot;#3-业务功能&quot; class=&quot;headerlink&quot; title=&quot;3.业务功能&quot;&gt;&lt;/a&gt;3.业务功能&lt;/h1&gt;&lt;p&gt;  在思考组织内的限界上下文时，不应该从共享数据的角度来考虑，应该从这些上下文能够提供的功能来考虑。首先要问自己：这个上下文是做什么用的，然后再考虑它需要什么样的数据。&lt;/p&gt;
+&lt;p&gt;  建模服务时，应该将这些功能作为关键操作提供给其协作者。&lt;/p&gt;
+&lt;h1 id=&quot;4-逐步划分上下文&quot;&gt;&lt;a href=&quot;#4-逐步划分上下文&quot; class=&quot;headerlink&quot; title=&quot;4.逐步划分上下文&quot;&gt;&lt;/a&gt;4.逐步划分上下文&lt;/h1&gt;&lt;p&gt;  先识别粗粒度上下文，然后当发现合适的缝隙后，再进一步划分出那些嵌套的上下文。&lt;/p&gt;
+&lt;p&gt;  对于嵌套上下文，一种方式是嵌套上下文不直接对外可见，另外一种方式是限界上下文被提升到顶层上下文的层次。这两种方式都具有其合理性，具体还要看组织机构的划分。比如服务A、服务B、服务C分别由不同团队维护，那么可能大家倾向于成为顶层上下文；如果由一个团队维护，那么嵌套架构会更合理。另外，从测试的角度，嵌套式上下文更便于测试，毕竟它对外暴露的服务更少。&lt;/p&gt;
+&lt;p&gt;另外一本书推荐：Vaughn Vernon的&lt;a href=&quot;http://item.jd.com/11423256.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《实现领域驱动设计》&lt;/a&gt;，这本书貌似卖得更好。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;图片说明：稻城-亚丁&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;稻城—亚丁因其独特而原始的自然环境、美丽风景被誉为“最后的香格里拉”，景点分为稻城和亚丁两部分，有雪山、冰川、峡谷、森林、草甸、湖泊等景观。除了珍珠海、牛奶海等冰川湖泊，稻城最令人向往的是驰名藏区的雪域神峰——稻城神峰，它由仙乃日、央迈勇、夏诺多吉三座神山组成，均位于亚丁自然保护区。人们把仙乃日比作大佛、把央迈勇比作少女，将夏诺多吉当作少年，三座神山就像三尊圣灵，这里也就成了藏民心中朝圣的圣地。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i1/2657627814/TB29IAuXaryQeBjSszdXXaL.XXa_!!2657627814.jpg&quot; alt=&quot;稻城-亚丁&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB24zkuXabyQeBjy1XbXXa9yXXa_!!2657627814.jpg&quot; alt=&quot;稻城-亚丁&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2GWAvXhHxQeBjy1zjXXa5YVXa_!!2657627814.jpg&quot; alt=&quot;稻城-亚丁&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;1-什么样的服务是好服务&quot;&gt;&lt;a href=&quot;#1-什么样的服务是好服务&quot; class=&quot;headerlink&quot; title=&quot;1.什么样的服务是好服务&quot;&gt;&lt;/a&gt;1.什么样的服务是好服务&lt;/h1&gt;&lt;h2 id=&quot;1-高内聚&quot;&gt;&lt;a href=&quot;#1-高内聚&quot; c
+    
+    </summary>
+    
+    
+      <category term="微服务" scheme="http://fengfu.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>关键业务系统的JVM启动参数推荐2.0版[转]</title>
@@ -1669,35 +1704,6 @@ Hello, Fengfu, I&amp;apos;m C3po.
     
     
       <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>架构设计原则</title>
-    <link href="http://fengfu.io/2015/02/03/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/"/>
-    <id>http://fengfu.io/2015/02/03/架构设计原则/</id>
-    <published>2015-02-03T11:48:09.000Z</published>
-    <updated>2016-05-20T06:51:25.323Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;1-单一职责原则-Single-Responsibility-Principle&quot;&gt;&lt;a href=&quot;#1-单一职责原则-Single-Responsibility-Principle&quot; class=&quot;headerlink&quot; title=&quot;1. 单一职责原则(Single Responsibility Principle)&quot;&gt;&lt;/a&gt;1. 单一职责原则(Single Responsibility Principle)&lt;/h2&gt;&lt;p&gt;简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。&lt;/p&gt;
-&lt;h2 id=&quot;2-里氏替换原则-Liskov-Substitution-Principle&quot;&gt;&lt;a href=&quot;#2-里氏替换原则-Liskov-Substitution-Principle&quot; class=&quot;headerlink&quot; title=&quot;2. 里氏替换原则(Liskov Substitution Principle)&quot;&gt;&lt;/a&gt;2. 里氏替换原则(Liskov Substitution Principle)&lt;/h2&gt;&lt;p&gt;原则：子类可以扩展父类的功能，但不能改变父类原有的功能。具体总结为以下2点：&lt;/p&gt;
-&lt;p&gt;1) 子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。&lt;br&gt;2) 子类中可以增加自己特有的方法。&lt;/p&gt;
-&lt;p&gt;例如，当类B继承类A时，除添加新的方法完成新增功能外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。&lt;/p&gt;
-&lt;h2 id=&quot;3-依赖倒置原则-Dependency-Inversion-Principle&quot;&gt;&lt;a href=&quot;#3-依赖倒置原则-Dependency-Inversion-Principle&quot; class=&quot;headerlink&quot; title=&quot;3. 依赖倒置原则(Dependency Inversion Principle)&quot;&gt;&lt;/a&gt;3. 依赖倒置原则(Dependency Inversion Principle)&lt;/h2&gt;&lt;p&gt;DIP(Dependency Inversion Priciple)，如果你觉得陌生的话，那么IOC(Inversion of Control，控制反转)你一定不会陌生，Spring的核心思想啊。一句话：面向接口编程。&lt;/p&gt;
-&lt;p&gt;1) 底层模块尽量都要有抽象类或接口，或者两者都有;&lt;br&gt;2) 变量的声明类型尽量是抽象类或接口;&lt;br&gt;3) 使用继承时遵循里氏替换原则。&lt;/p&gt;
-&lt;h2 id=&quot;4-接口隔离原则-Interface-Segregation-Principle&quot;&gt;&lt;a href=&quot;#4-接口隔离原则-Interface-Segregation-Principle&quot; class=&quot;headerlink&quot; title=&quot;4. 接口隔离原则(Interface Segregation Principle)&quot;&gt;&lt;/a&gt;4. 接口隔离原则(Interface Segregation Principle)&lt;/h2&gt;&lt;p&gt;不要创建过大的接口类，即接口中的方法不要过多。本着高内聚的原则，将接口中的方法归类，拆分为几个独立的接口。&lt;/p&gt;
-&lt;h2 id=&quot;5-迪米特法则&quot;&gt;&lt;a href=&quot;#5-迪米特法则&quot; class=&quot;headerlink&quot; title=&quot;5. 迪米特法则&quot;&gt;&lt;/a&gt;5. 迪米特法则&lt;/h2&gt;&lt;p&gt;也叫最少知道原则，原则是一个对象应该对其他对象保持最少的了解，出发点是降低类与类之间的耦合度。&lt;/p&gt;
-&lt;h2 id=&quot;6-开闭原则-Open-Closed-Principle&quot;&gt;&lt;a href=&quot;#6-开闭原则-Open-Closed-Principle&quot; class=&quot;headerlink&quot; title=&quot;6. 开闭原则(Open Closed Principle)&quot;&gt;&lt;/a&gt;6. 开闭原则(Open Closed Principle)&lt;/h2&gt;&lt;p&gt;对扩展开放，对修改关闭。这个原则很虚，虚得感觉跟没说一样，索性总结一句：遵循前面5条原则，就相当于遵循了开闭原则O(∩_∩)O&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-单一职责原则-Single-Responsibility-Principle&quot;&gt;&lt;a href=&quot;#1-单一职责原则-Single-Responsibility-Principle&quot; class=&quot;headerlink&quot; title=&quot;1. 单一职责原则(Si
-    
-    </summary>
-    
-    
-      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   

@@ -4,17 +4,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2016/8 | 宁静·致远</title>
+  <title>读书笔记:微服务设计-建模 | 宁静·致远</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="宁静·致远">
-<meta property="og:url" content="http://fengfu.io/archives/2016/08/index.html">
+  <meta name="description" content="1.什么样的服务是好服务1.高内聚  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。
+2.低耦合  使用微服务最重要的一点是：能够独立修">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记:微服务设计-建模">
+<meta property="og:url" content="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/index.html">
 <meta property="og:site_name" content="宁静·致远">
-<meta property="og:description">
+<meta property="og:description" content="1.什么样的服务是好服务1.高内聚  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。
+2.低耦合  使用微服务最重要的一点是：能够独立修">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i1/2657627814/TB29IAuXaryQeBjSszdXXaL.XXa_!!2657627814.jpg">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB24zkuXabyQeBjy1XbXXa9yXXa_!!2657627814.jpg">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2GWAvXhHxQeBjy1zjXXa5YVXa_!!2657627814.jpg">
+<meta property="og:updated_time" content="2016-08-13T13:16:47.828Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="宁静·致远">
-<meta name="twitter:description">
+<meta name="twitter:title" content="读书笔记:微服务设计-建模">
+<meta name="twitter:description" content="1.什么样的服务是好服务1.高内聚  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。
+2.低耦合  使用微服务最重要的一点是：能够独立修">
   
     <link rel="alternative" href="/atom.xml" title="宁静·致远" type="application/atom+xml">
   
@@ -67,58 +74,79 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/08/12/读书笔记-微服务设计-建模/" class="archive-article-date">
-  <time datetime="2016-08-12T12:52:17.000Z" itemprop="datePublished">8月 12</time>
+      <section id="main"><article id="post-读书笔记-微服务设计-建模" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/12/读书笔记-微服务设计-建模/" class="article-date">
+  <time datetime="2016-08-12T12:52:17.000Z" itemprop="datePublished">2016-08-12</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/12/读书笔记-微服务设计-建模/">读书笔记:微服务设计-建模</a>
+    <h1 class="article-title" itemprop="name">
+      读书笔记:微服务设计-建模
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" class="archive-article-date">
-  <time datetime="2016-08-07T02:20:22.000Z" itemprop="datePublished">8月 7</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/">关键业务系统的JVM启动参数推荐2.0版[转]</a>
-    </h1>
-  
+        <h1 id="1-什么样的服务是好服务"><a href="#1-什么样的服务是好服务" class="headerlink" title="1.什么样的服务是好服务"></a>1.什么样的服务是好服务</h1><h2 id="1-高内聚"><a href="#1-高内聚" class="headerlink" title="1.高内聚"></a>1.高内聚</h2><p>  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。<br>  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。</p>
+<h2 id="2-低耦合"><a href="#2-低耦合" class="headerlink" title="2.低耦合"></a>2.低耦合</h2><p>  使用微服务最重要的一点是：能够独立修改及部署单个服务而不需要修改系统的其他部分。</p>
+<h1 id="2-限界上下文"><a href="#2-限界上下文" class="headerlink" title="2.限界上下文"></a>2.限界上下文</h1><p>  限界上下文(bounded context)这个概念来自于Eric Evans的《领域驱动设计》一书，Eric认为：一个给定的领域包含多个限界上下文，每个限界上下文中的东西分成2个部分，一部分不需要与外界通信，另一部分则需要。每个上下文都有明确的接口，该接口决定了它会暴露哪些模型给其他的上下文。当然本文作者更喜欢这个定义：一个由显示边界限定的特定职责。如果你想要从一个限界上下文中获取信息，或者向其发起请求，需要使用模型和它的显示边界进行通信。</p>
+<p>  应该共享特定的模型，而不应该共享内部表示，这样就可以避免潜在的紧耦合风险。</p>
+<p>  一般来讲，微服务应该清晰地和限界上下文相对应。</p>
+<h1 id="3-业务功能"><a href="#3-业务功能" class="headerlink" title="3.业务功能"></a>3.业务功能</h1><p>  在思考组织内的限界上下文时，不应该从共享数据的角度来考虑，应该从这些上下文能够提供的功能来考虑。首先要问自己：这个上下文是做什么用的，然后再考虑它需要什么样的数据。</p>
+<p>  建模服务时，应该将这些功能作为关键操作提供给其协作者。</p>
+<h1 id="4-逐步划分上下文"><a href="#4-逐步划分上下文" class="headerlink" title="4.逐步划分上下文"></a>4.逐步划分上下文</h1><p>  先识别粗粒度上下文，然后当发现合适的缝隙后，再进一步划分出那些嵌套的上下文。</p>
+<p>  对于嵌套上下文，一种方式是嵌套上下文不直接对外可见，另外一种方式是限界上下文被提升到顶层上下文的层次。这两种方式都具有其合理性，具体还要看组织机构的划分。比如服务A、服务B、服务C分别由不同团队维护，那么可能大家倾向于成为顶层上下文；如果由一个团队维护，那么嵌套架构会更合理。另外，从测试的角度，嵌套式上下文更便于测试，毕竟它对外暴露的服务更少。</p>
+<p>另外一本书推荐：Vaughn Vernon的<a href="http://item.jd.com/11423256.html" target="_blank" rel="external">《实现领域驱动设计》</a>，这本书貌似卖得更好。</p>
+<p><em>图片说明：稻城-亚丁</em></p>
+<p>稻城—亚丁因其独特而原始的自然环境、美丽风景被誉为“最后的香格里拉”，景点分为稻城和亚丁两部分，有雪山、冰川、峡谷、森林、草甸、湖泊等景观。除了珍珠海、牛奶海等冰川湖泊，稻城最令人向往的是驰名藏区的雪域神峰——稻城神峰，它由仙乃日、央迈勇、夏诺多吉三座神山组成，均位于亚丁自然保护区。人们把仙乃日比作大佛、把央迈勇比作少女，将夏诺多吉当作少年，三座神山就像三尊圣灵，这里也就成了藏民心中朝圣的圣地。</p>
+<p><img src="https://img.alicdn.com/imgextra/i1/2657627814/TB29IAuXaryQeBjSszdXXaL.XXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB24zkuXabyQeBjy1XbXXa9yXXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2GWAvXhHxQeBjy1zjXXa5YVXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/" data-id="cirt7isd40006fsuspret5pps" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-建模">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">关键业务系统的JVM启动参数推荐2.0版[转]</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/08/12/读书笔记-微服务设计-建模/" data-title="读书笔记:微服务设计-建模" data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/"></div>
+  </section>
 </section>
       
       <aside id="sidebar">
