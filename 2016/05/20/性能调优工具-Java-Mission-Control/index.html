@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png">
-<meta property="og:updated_time" content="2016-05-20T11:13:12.941Z">
+<meta property="og:updated_time" content="2016-08-25T02:53:36.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能调优工具-Java Mission Control">
 <meta name="twitter:description" content="1.引言最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。
@@ -34,7 +34,7 @@
     <link rel="icon" href="/favicon.png">
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <!--link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css"-->
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
 </head>
@@ -115,7 +115,9 @@
 -XX:+FlightRecorder
 </code></pre><p>java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。<br>com.sun.management.jmxremote：启用JMX远程监控。<br>com.sun.management.jmxremote.port：JMX远程监控的端口。<br>com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。<br>com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。<br>在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：</p>
 <p>jmxremote.access：</p>
-<pre><code>admin readwrite
+<pre><code>admin readwrite \
+  create com.sun.management.*,com.oracle.jrockit.* \
+  unregister
 monitor readonly
 </code></pre><p>表示admin有操作权限（比如调用GC等操作），monitor只有查看权限，不能进行任何操作。<br>jmxremote.password：</p>
 <pre><code>admin test
@@ -144,7 +146,7 @@ monitor test
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="cirt7isdo000kfsusocrpkdta" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
+        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="ciunzy1bo000oekusk6093je4" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
       
 
       
@@ -194,7 +196,7 @@ monitor test
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -212,7 +214,7 @@ monitor test
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -224,23 +226,23 @@ monitor test
       <ul>
         
           <li>
+            <a href="/2016/10/24/让你变成优秀程序员的几个小习惯/">让你变成优秀程序员的几个小习惯(转)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/22/晋级Review归来/">晋级Review归来</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/19/接口文档参考模板/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2016/08/12/读书笔记-微服务设计-建模/">读书笔记:微服务设计-建模</a>
           </li>
         
           <li>
             <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/">关键业务系统的JVM启动参数推荐2.0版[转]</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/30/读书笔记-微服务设计/">读书笔记:微服务设计-入门</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/CTO、技术总监、首席架构师的区别-转/">CTO、技术总监、首席架构师的区别(转)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/">JVM 垃圾回收器CMS之各阶段总结</a>
           </li>
         
       </ul>

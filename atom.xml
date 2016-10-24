@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-08-13T13:16:47.828Z</updated>
+  <updated>2016-10-24T11:45:11.413Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -14,6 +14,146 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>让你变成优秀程序员的几个小习惯(转)</title>
+    <link href="http://fengfu.io/2016/10/24/%E8%AE%A9%E4%BD%A0%E5%8F%98%E6%88%90%E4%BC%98%E7%A7%80%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B0%8F%E4%B9%A0%E6%83%AF/"/>
+    <id>http://fengfu.io/2016/10/24/让你变成优秀程序员的几个小习惯/</id>
+    <published>2016-10-24T11:39:22.000Z</published>
+    <updated>2016-10-24T11:45:11.413Z</updated>
+    
+    <content type="html">&lt;p&gt;译文链接：&lt;a href=&quot;http://www.codeceo.com/article/habits-to-be-better-programmer.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.codeceo.com/article/habits-to-be-better-programmer.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;英文原文：&lt;a href=&quot;https://www.quora.com/What-little-habits-made-you-a-better-software-engineer?srid=ieH&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;What little habits made you a better software engineer?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;翻译作者：&lt;a href=&quot;http://www.codeceo.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;码农网&lt;/a&gt; – 小峰&lt;/p&gt;
+&lt;p&gt;作者Jeff Standen，有着21+年经验的软件开发者。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;首先开发spike解决方案&lt;/strong&gt;——这是我早期敏捷/极限编程所养成的习惯之一。spike解决方案是一次性原型，可以帮助你在投入大量时间和精力之前验证你是否走对路。&lt;/p&gt;
+&lt;p&gt;区别就在于原型，因为你遵循这样一个规则，在你完成研究之后，你最终会扔掉“spike”代码。所以允许你偷工减料，迅速行动，因为它不会出现在产品或代码审查中。&lt;/p&gt;
+&lt;p&gt;此方法有助于迅速发现设计的哪些部位尚不明确，而不必过早地尝试架构或设计决策。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;致力于小而连贯代码块的版本控制&lt;/strong&gt;——通过类似CVS/Subversion，每次提交都直接发送到服务器。做部分文件的提交并不简单。&lt;/p&gt;
+&lt;p&gt;随着Git的出现，只提交较大文件的若干行代码变得很容易，并且可以在push到远程代码仓库之前先本地rebase/merge提交。&lt;/p&gt;
+&lt;p&gt;有一次，我在工作于更大功能的时候，采用了小型增量提交，我的工作效率直线上升。这样做能够清空我的大脑以便于面对更重要的事情。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;经常写代码&lt;/strong&gt;——最近，我正工作于：一个基于Web的企业协作和自动化平台（PHP / MySQL），一个基于云的实时指标聚合器和使用循环哈希（Node.js/ Redis）的API，一个面向iOS app商店（Swift/ SpriteKit）的棋盘游戏，专门的基于URL的cronjob可替代基于web的SaaS服务（JAVA），等等。&lt;/p&gt;
+&lt;p&gt;用过大量框架和语言有助于我的抽象和算法思维。&lt;/p&gt;
+&lt;p&gt;我从工具，如Eclipse RCP、Tapestry和Hibernate中学到了很多伟大的经验教训，并用到我的PHP项目里。尤其是在2000年初，在有Java特征的企业生态系统用于PHP存在之前。我从Unity3d/C＃学到了很多关于网络和面向消息的架构。&lt;/p&gt;
+&lt;p&gt;如果我只坚持单一平台和社区的话，就永远不会知道这些概念。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;编写简单的代码&lt;/strong&gt;——我以前习惯于写复杂的代码以作为对自己的挑战。而现在的挑战是要编写优雅且简单的代码——到一种每个人都觉得他们也能做到的地步（即使他们不能）。简单代码通常来自于若干次复杂代码的迭代。&lt;/p&gt;
+&lt;p&gt;引用Antoine de Saint Exupéry的话就是：“不是没有什么可添加，而是没有什么可消减的时候，才算是达到了完美。”&lt;/p&gt;
+&lt;p&gt;这也使得我们在长时间休止之后返回项目，以及鼓励其他人参与进来变得容易多了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最后优化&lt;/strong&gt;——我们很容易掉入试图比用户或计算机更聪明，并且预优化各种边缘情况的陷阱。关注帕累托法则（80％的效果来自于20％的工作）。写代码，运行代码，当必要的时候专注于最大的瓶颈。这也支持保持代码库的简单。&lt;/p&gt;
+&lt;p&gt;说“不要首先优化代码”并不意味着“编写粗糙的代码”。代码总是应该精益和优雅，没有必要画蛇添足，不要将一整天的时间用在挤压剩下的10％，但其实已经能够工作良好的一些东西上。不但工作效率会下降，而且还会引进更多复杂性，解决方案变得不那么可归纳，等等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;着眼于“最重要的事情优先”&lt;/strong&gt;——总是有一些项目领域比其他的更有趣或更具挑战性。工作于那些有趣的东西总是比工作于那些必要的东西更有诱惑。&lt;/p&gt;
+&lt;p&gt;在攻克重要部分时，将有趣部分作为一种调剂，也就是说，两者都做一点也是可以。&lt;/p&gt;
+&lt;p&gt;因此，光从这一点上说，将大的问题分解成小问题的理念是不言自明的。每个人都懂。所以，我会通过计分若干“quick wins”来开启我的一天，这能让我更有冲劲和更专注（“quick wins”可以是任何东西，包括有趣又小型的挑战），然后我会首先冲向“最重要的事情”。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;了解全栈&lt;/strong&gt;——当我刚开始干这一行的时候，没有什么比等别人做完他们那部分东西，然后我才能继续我那部分工作更糟糕的了（设计师，后端人员，前端人员，数据库人员，服务器人员，等等）。&lt;/p&gt;
+&lt;p&gt;于是，当我2000年创办自己的软件开发公司的时候，我做了一个明智的决定，那就是涉猎全栈。我知道我不可能擅长所有东西，也不可能是最后唯一对所有一切负责的人，但我想要做终端到终端的原型，因为我没有耐心看过程。&lt;/p&gt;
+&lt;p&gt;每当我需要的东西触碰到我不懂的领域时，我会研究它。于是乎，我学会了服务器管理，数据库管理，设计，前端/后端开发，云架构等。&lt;/p&gt;
+&lt;p&gt;通过了解其他领域是做什么的，我才能写出包含它们需要的代码。&lt;/p&gt;
+&lt;p&gt;当然，其中的一些要点似乎并不是所谓的“小习惯”，但我向你保证，它们是小变化历经20年时间导致的结果。重要的行为变化并没有意义，更多的是关于我是如何频繁地练习这门技术（在过去10年时间中每年大概4000-5000个小时）。&lt;/p&gt;
+&lt;p&gt;所以，我的做法更像是去回答这个问题：“什么样的小习惯会导致更糟糕的软件和低效的生产力？”，然后反过来。&lt;/p&gt;
+&lt;h1 id=&quot;作者Ed-Prentice，软件工程师&quot;&gt;&lt;a href=&quot;#作者Ed-Prentice，软件工程师&quot; class=&quot;headerlink&quot; title=&quot;作者Ed Prentice，软件工程师&quot;&gt;&lt;/a&gt;作者Ed Prentice，软件工程师&lt;/h1&gt;&lt;p&gt;时间是宝贵的，所以要尽可能地节省时间。尽可能自动化。一旦时间成为一种商品，那么你可以实现下一个伟大的创新。&lt;/p&gt;
+&lt;p&gt;使用功能强大的IDE（如vim），并将其配置能为你做尽可能多的事情。力争单个命令Build/Test/Deploy/Run。&lt;/p&gt;
+&lt;p&gt;如果你发现自己常做某件事情，那么可以让它们在一个按键下发生，或者一次点击下发生。或者更好的是，让它们自动发生。&lt;/p&gt;
+&lt;p&gt;了解键盘快捷键和UNIX命令行。几乎所有的IDE都可以让你运行复杂的编译命令，甚至任意的终端命令——不但强大，并且可以为你节省大量的时间。&lt;/p&gt;
+&lt;p&gt;提问题，然后提更多的问题。如果有什么你不明白的事情发生了，那就问为什么。然后走开，研究替代方案，并提出来。一直问问题直到你可以详细地给下一个问为什么的开发人员解释。我时常感到奇怪为什么会有这么多开发人员不知道为什么，仅仅是因为觉得“它总是/曾是这样”。&lt;/p&gt;
+&lt;p&gt;通过提供更好的替代解决方案挑战现状——并且制定步骤实现。如果你的测试不完整，或每天/每周运行一次——那么成为本地的Continuous Integration大师——目的是为了有利于你的团队，并实现它。一旦你使用它并且它可以帮助你更好工作的话，那么让你的团队也使用它。&lt;/p&gt;
+&lt;p&gt;不要只是挑战别人，挑战自己。从来没有写过web应用程序？那么写一个。从未用过Python？用Python劫持无人飞行器。&lt;/p&gt;
+&lt;p&gt;拥有一些东西。创造一些东西。没有必是非要做技术项目，可以是一个事件，例如聚会或编程马拉松，也可以是一个游戏，一个网站，一个博客。&lt;/p&gt;
+&lt;p&gt;教一些东西。Java，公开演讲，写作，下棋，vim，网球。&lt;/p&gt;
+&lt;p&gt;成为一个杰出的人。拿到一个垃圾类/组件？修复好它。编写代码的正确途径。不在代码中走捷径。做出明智的决策，向你周围的人说明为什么你要做这个决定的利弊。总是改善代码。制定不需要花费1小时的待办事项表？Just Do It。&lt;/p&gt;
+&lt;p&gt;浏览你熟悉的Stack Exchange的话题——例如你喜欢的语言。当你发现什么新的东西的时候，尽快末位淘汰相关知识。知道C语言？什么是分支预测？这篇文章会告诉你——你要做的就是学习。&lt;/p&gt;
+&lt;p&gt;浏览你不熟悉的Stack Exchange的话题——好好学习，天天向上。&lt;/p&gt;
+&lt;p&gt;学会沟通。书面文字，呈现展示，解决问题，小却激烈的小项目，大型团队，小型团队。&lt;/p&gt;
+&lt;p&gt;文档化你的所有过程。你可以回头查阅你为什么做这些事情，以及依赖原先的解决方案去解决碰到的相似问题。这还有助于捕捉你可能会忘记的思维过程和关键的信息片段。我经常通过日志来回顾前几天的工作。&lt;/p&gt;
+&lt;p&gt;在你写之前文档化你的代码。使用系统图，类层次结构，流程图表，以展示说明你的代码将如何工作。如果有人提出建议——是的，他们会提出来的——那么你可以进行修改，这比已经写好了代码再去修改要容易得多。这是另一个我很少看到有人会做但却有着最负面影响的事情。&lt;/p&gt;
+&lt;p&gt;特定化。为新的东西制作图表，向大家展示。收集尽可能多的细节。确保每个人同意这个图表。如果有人提出了建议，那就补充/添加更正到图表。保持图表更新。&lt;/p&gt;
+&lt;p&gt;知道潜意思的偏见和男性特权。了解你是哪种MBTI和人格类型，并且更重要的是，要知道如何与其他性格类型更好地互动。了解情商。每个人都是不一样的，你需要知道如何与他们进行最有效和最有建设性的交互。&lt;/p&gt;
+&lt;p&gt;定期为团队做一些事情。带饼干。教魔术。培育一点文化，并鼓励其他人也这样做。赞美其他人的贡献。一支有凝聚力的团队是很难被击败的。&lt;/p&gt;
+&lt;p&gt;学习如何与人合作。我个人非常喜欢《The Pragmatic Programmer》的“stone snop”。&lt;/p&gt;
+&lt;p&gt;理解和使用别人的代码。如果你正在实现自己的XML解析器或或csv阅读器或git hook，那么你就是在重新发明轮子。&lt;/p&gt;
+&lt;p&gt;一旦你写了代码，并且它是有效的，通过测试的，那么回过头去整理一下吧。重新运行测试。再整理。每个类都应该有单一的职责，每个函数都应该只做一件事情。在大多数情况下，函数应该小于20行代码的长度。使用自文档的函数名和变量名。花时间整理你的代码以后将会10倍地回报给你和你的团队。&lt;/p&gt;
+&lt;p&gt;参与其中。承担责任。如果事情有不对的地方，那就解决它。如果最后期限临近了又想出了一个解决方案，那让其他人尽快知道。任何人都可以做到这一点，即使是最初级的开发人员。这要求对项目的蓝图，方向和截止期限有着大局观的认识——参与进来。保存好每天的工作内容！&lt;/p&gt;
+&lt;p&gt;和团队分享学到的经验教训（在适当的时候）。指出Java中finally块内部抛出异常的时候发生了什么？和大家一起分享。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;译文链接：&lt;a href=&quot;http://www.codeceo.com/article/habits-to-be-better-programmer.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.codeceo.com/a
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>晋级Review归来</title>
+    <link href="http://fengfu.io/2016/08/22/%E6%99%8B%E7%BA%A7Review%E5%BD%92%E6%9D%A5/"/>
+    <id>http://fengfu.io/2016/08/22/晋级Review归来/</id>
+    <published>2016-08-22T01:50:26.000Z</published>
+    <updated>2016-08-22T01:57:37.357Z</updated>
+    
+    <content type="html">&lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演。在这过程中发现了很多问题，觉得有必要写出来总结一下了。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演。在这过程中发现了很多问题，觉得有必要写出来总结一下了。&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://fengfu.io/2016/08/19/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%E5%8F%82%E8%80%83%E6%A8%A1%E6%9D%BF/"/>
+    <id>http://fengfu.io/2016/08/19/接口文档参考模板/</id>
+    <published>2016-08-19T11:22:50.869Z</published>
+    <updated>2016-08-19T11:22:50.827Z</updated>
+    
+    <content type="html">&lt;p&gt;虽然提供了在线接口参数的查看，但在和客户端对接过程中，我们作为后台开发，还是需要人工提供接口文档给客户端的，这里提供一个接口文档编写的模板，以供参考，并且以我们熟悉的?service=User.GetBaseInfo为例说明如何编写高效的文档。  &lt;/p&gt;
+&lt;p&gt; &lt;em&gt;温馨提示：斜体字表示是注释说明&lt;/em&gt;。  &lt;/p&gt;
+&lt;p&gt;##功能说明&lt;br&gt;&lt;em&gt;对接口功能的简单说明。&lt;/em&gt;&lt;br&gt;获取用户的基本信息。&lt;/p&gt;
+&lt;p&gt;##接口URL&lt;br&gt;&lt;em&gt;请求的相对链接和当前接口级参数，通常为?service=XXX.XXX + 公共接口参数。&lt;/em&gt;&lt;br&gt;/demo/?service=User.GetBaseInfo  &lt;/p&gt;
+&lt;h2 id=&quot;参数说明&quot;&gt;&lt;a href=&quot;#参数说明&quot; class=&quot;headerlink&quot; title=&quot;参数说明&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://phalapi.oschina.mopaas.com/Public/demo/checkApiParams.php?service=User.GetBaseInfo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;参数说明&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;对当前接口级参数的说明，建议使用在线接口参数查询工具，但以下的参数说明也是需要的。&lt;/em&gt;  &lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;名字&lt;/th&gt;
+&lt;th&gt;是否必须&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;userId&lt;/td&gt;
+&lt;td&gt;用户ID&lt;/td&gt;
+&lt;td&gt;是&lt;/td&gt;
+&lt;td&gt;表示用户的ID&lt;/td&gt;
+&lt;td&gt;&amp;amp;user_iduser_id=1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;##返回参数&lt;br&gt;&lt;em&gt;对当前接口级返回参数的说明，即对{“ret”:返回状态码,”data”:”应该业务数据”,”msg”:”错误提示”}中的data部分进行说明。&lt;/em&gt;  &lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&amp;#10;    &amp;#34;ret&amp;#34;: 200,&amp;#10;    &amp;#34;data&amp;#34;: &amp;#123;&amp;#10;        &amp;#34;code&amp;#34;: 0,  //code=0&amp;#34920;&amp;#31034;&amp;#27491;&amp;#30830;&amp;#33719;&amp;#21462;&amp;#29992;&amp;#25143;&amp;#20449;&amp;#24687;&amp;#65292;code=1&amp;#26102;&amp;#34920;&amp;#31034;&amp;#29992;&amp;#25143;&amp;#19981;&amp;#23384;&amp;#22312;&amp;#10;        &amp;#34;msg&amp;#34;: &amp;#34;&amp;#34;,   //&amp;#19994;&amp;#21153;&amp;#25552;&amp;#31034;&amp;#25991;&amp;#26696;&amp;#10;        &amp;#34;info&amp;#34;: &amp;#123;  //&amp;#20165;&amp;#24403;code=0&amp;#30340;&amp;#24773;&amp;#20917;&amp;#19979;&amp;#38750;&amp;#31354;&amp;#19988;&amp;#26377;&amp;#29992;&amp;#25143;&amp;#20449;&amp;#24687;&amp;#10;            &amp;#34;id&amp;#34;: &amp;#34;1&amp;#34;,  //&amp;#29992;&amp;#25143;ID   &amp;#10;            &amp;#34;name&amp;#34;: &amp;#34;dogstar&amp;#34;,  //&amp;#29992;&amp;#25143;&amp;#21517;&amp;#10;            &amp;#34;from&amp;#34;: &amp;#34;oschina&amp;#34;  //&amp;#29992;&amp;#25143;&amp;#26469;&amp;#28304;&amp;#10;        &amp;#125;&amp;#10;    &amp;#125;,&amp;#10;    &amp;#34;msg&amp;#34;: &amp;#34;&amp;#34;&amp;#10;&amp;#125;&amp;#10;```  &amp;#9;  &amp;#10;&amp;#10;  &amp;#10;##&amp;#31034;&amp;#20363;&amp;#10; _&amp;#33267;&amp;#23569;&amp;#24212;&amp;#21253;&amp;#25324;&amp;#25104;&amp;#21151;&amp;#31034;&amp;#20363;&amp;#65292;&amp;#22833;&amp;#36133;&amp;#31034;&amp;#20363;&amp;#21487;&amp;#36873;_     &amp;#10;  &amp;#10;###&amp;#25104;&amp;#21151;&amp;#31034;&amp;#20363;&amp;#10;&amp;#35831;&amp;#27714;&amp;#65306;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;a href=&quot;http://phalapi.oschina.mopaas.com/Public/demo/?service=User.GetBaseInfo&amp;amp;user_iduser_id=1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://phalapi.oschina.mopaas.com/Public/demo/?service=User.GetBaseInfo&amp;amp;user_iduser_id=1&lt;/a&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#36820;&amp;#22238;&amp;#65306;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;{&lt;br&gt;    “ret”: 200,&lt;br&gt;    “data”: {&lt;br&gt;        “code”: 0,&lt;br&gt;        “msg”: “”,&lt;br&gt;        “info”: {&lt;br&gt;            “id”: “1”,&lt;br&gt;            “name”: “dogstar”,&lt;br&gt;            “from”: “oschina”&lt;br&gt;        }&lt;br&gt;    },&lt;br&gt;    “msg”: “”&lt;br&gt;}&lt;br&gt;```&lt;/p&gt;
+&lt;hr&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;虽然提供了在线接口参数的查看，但在和客户端对接过程中，我们作为后台开发，还是需要人工提供接口文档给客户端的，这里提供一个接口文档编写的模板，以供参考，并且以我们熟悉的?service=User.GetBaseInfo为例说明如何编写高效的文档。  &lt;/p&gt;
+&lt;p&gt; &lt;em&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>读书笔记:微服务设计-建模</title>
@@ -297,7 +437,7 @@
     <link href="http://fengfu.io/2016/05/20/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-Java-Mission-Control/"/>
     <id>http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/</id>
     <published>2016-05-20T06:59:20.000Z</published>
-    <updated>2016-05-20T11:13:12.941Z</updated>
+    <updated>2016-08-25T02:53:36.776Z</updated>
     
     <content type="html">&lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。&lt;/p&gt;
 &lt;p&gt;另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不同，JMC使用了JVM内部特定的基于事件的接口，几乎不会给应用造成额外的压力（默认设置下，对性能影响小于1%），因此可以用在负载很高的生产环境中。&lt;/p&gt;
@@ -313,7 +453,9 @@
 -XX:+FlightRecorder
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。&lt;br&gt;com.sun.management.jmxremote：启用JMX远程监控。&lt;br&gt;com.sun.management.jmxremote.port：JMX远程监控的端口。&lt;br&gt;com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。&lt;br&gt;com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。&lt;br&gt;在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：&lt;/p&gt;
 &lt;p&gt;jmxremote.access：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;admin readwrite
+&lt;pre&gt;&lt;code&gt;admin readwrite \
+  create com.sun.management.*,com.oracle.jrockit.* \
+  unregister
 monitor readonly
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;表示admin有操作权限（比如调用GC等操作），monitor只有查看权限，不能进行任何操作。&lt;br&gt;jmxremote.password：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;admin test
@@ -735,7 +877,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     <link href="http://fengfu.io/2015/03/08/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     <id>http://fengfu.io/2015/03/08/23种设计模式/</id>
     <published>2015-03-08T12:41:09.000Z</published>
-    <updated>2016-02-27T13:51:07.274Z</updated>
+    <updated>2016-08-24T02:23:00.092Z</updated>
     
     <content type="html">&lt;p&gt;设计模式分为3大类（创建型、结构型、行为型），共23种。&lt;/p&gt;
 &lt;ol&gt;
@@ -746,6 +888,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 &lt;li&gt;&lt;p&gt;行为型模式：模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式；&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;关于建造者模式和工厂模式：&lt;br&gt;当创造一个对象需要很多步骤时适合使用建造者模式。而当只需调用一个方法就可以简单地创建整个对象时适合使用工厂模式。&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -1552,153 +1695,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     <summary type="html">
     
       &lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h2&gt;&lt;p&gt;IntelliJ IDEA 的便捷操作性，快捷键的功劳占了一大半，对于各个快捷键组合请认真对待。IntelliJ IDEA 本身的设计思维是
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java的SPI机制</title>
-    <link href="http://fengfu.io/2015/02/21/Java%E7%9A%84SPI%E6%9C%BA%E5%88%B6/"/>
-    <id>http://fengfu.io/2015/02/21/Java的SPI机制/</id>
-    <published>2015-02-21T11:35:09.000Z</published>
-    <updated>2016-02-27T13:50:17.243Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;什么是SPI&quot;&gt;&lt;a href=&quot;#什么是SPI&quot; class=&quot;headerlink&quot; title=&quot;什么是SPI&quot;&gt;&lt;/a&gt;什么是SPI&lt;/h2&gt;&lt;p&gt;SPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，SPI是面向服务提供者的。也就是说，有人定义了接口，那么围绕该接口提供服务的第三方则针对接口提供自己的服务。说到这里，最典型的应该是我们常用的日志框架，比如common-logging、jdbc Driver。&lt;/p&gt;
-&lt;h2 id=&quot;SPI的优点&quot;&gt;&lt;a href=&quot;#SPI的优点&quot; class=&quot;headerlink&quot; title=&quot;SPI的优点&quot;&gt;&lt;/a&gt;SPI的优点&lt;/h2&gt;&lt;p&gt;基于SPI机制，我们可以很方便地构建出易于扩展的应用。我们使用的很多应用框架，比如dubbo，其中的extension就是基于SPI构建的。&lt;/p&gt;
-&lt;h2 id=&quot;Java-SPI规范&quot;&gt;&lt;a href=&quot;#Java-SPI规范&quot; class=&quot;headerlink&quot; title=&quot;Java SPI规范&quot;&gt;&lt;/a&gt;Java SPI规范&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;在META-INF/services/目录下创建以接口全名命名的文件,该文件内容为接口具体实现类的全名;如我有一个实现类io.fengfu.learning.spi.HelloWorldServiceBB8Impl，实现了io.fengfu.learning.spi.HelloWorldService接口，那么就需要在META-INF/services目录下创建一个名称为io.fengfu.learning.spi.HelloWorldService的文件，文件的内容为io.fengfu.learning.spi.HelloWorldServiceBB8Impl。如果我有很多个实现类，那么只需要将实现类全名按行编写即可;&lt;/li&gt;
-&lt;li&gt;接口具体实现类必须有一个不带参数的构造方法;&lt;/li&gt;
-&lt;li&gt;使用ServiceLoader类动态加载META-INF中的实现类;&lt;/li&gt;
-&lt;li&gt;如SPI的实现类为Jar则需要放在主程序classPath中;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;SPI示例&quot;&gt;&lt;a href=&quot;#SPI示例&quot; class=&quot;headerlink&quot; title=&quot;SPI示例&quot;&gt;&lt;/a&gt;SPI示例&lt;/h2&gt;&lt;p&gt;1,定义一个接口&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;package io.fengfu.learning.spi;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public interface HelloService {
-    public String sayHello(String name);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2, 实现之：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;package io.fengfu.learning.spi;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public class HelloServiceR2D2Impl implements HelloService {
-    public String sayHello(String name) {
-        return &amp;quot;Hello, &amp;quot; + name + &amp;quot;, I&amp;apos;m R2D2.&amp;quot;;
-    }
-}
-
-package io.fengfu.learning.spi;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public class HelloServiceC3poImpl implements HelloService {
-    public String sayHello(String name) {
-        return &amp;quot;Hello, &amp;quot; + name + &amp;quot;, I&amp;apos;m C3po.&amp;quot;;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3, 在META-INF/services目录下创建io.fengfu.learning.spi.HelloService文件，在文件中添加以下内容:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;io.fengfu.learning.spi.HelloServiceR2D2Impl
-io.fengfu.learning.spi.HelloServiceBB8Impl
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4, 创建测试类：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;package io.fengfu.learning.spi;
-
-import java.util.Iterator;
-import java.util.ServiceLoader;
-
-/**
- * Created by fengfu.qu on 2014/2/4.
- */
-public class SPITest {
-    public static void main(String[] args) {
-        ServiceLoader&amp;lt;HelloService&amp;gt; loader = ServiceLoader.load(HelloService.class);
-        Iterator&amp;lt;HelloService&amp;gt; it = loader.iterator();
-        while(it.hasNext()){
-            HelloService helloSPI = it.next();
-            System.out.println(helloSPI.sayHello(&amp;quot;Fengfu&amp;quot;));
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;5, 运行，结果为：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Hello, Fengfu, I&amp;apos;m R2D2.
-Hello, Fengfu, I&amp;apos;m C3po.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;由此看出，2个是实现类都被运行了。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;什么是SPI&quot;&gt;&lt;a href=&quot;#什么是SPI&quot; class=&quot;headerlink&quot; title=&quot;什么是SPI&quot;&gt;&lt;/a&gt;什么是SPI&lt;/h2&gt;&lt;p&gt;SPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，S
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利特尔法则</title>
-    <link href="http://fengfu.io/2015/02/14/%E5%88%A9%E7%89%B9%E5%B0%94%E6%B3%95%E5%88%99/"/>
-    <id>http://fengfu.io/2015/02/14/利特尔法则/</id>
-    <published>2015-02-14T12:41:09.000Z</published>
-    <updated>2016-02-27T13:49:48.590Z</updated>
-    
-    <content type="html">&lt;p&gt;##概念##&lt;/p&gt;
-&lt;p&gt;利特尔法则由麻省理工大学斯隆商学院（MIT Sloan School of Management）的教授John Little﹐于1961年所提出与证明。其英文名称为：Little’s Law。&lt;br&gt;利特尔法则是一个有关提前期与在制品关系的简单数学公式，这一法则为精益生产的改善方向指明了道路。 如何有效地缩短生产周期呢？利特尔法则已经很明显地指出了方向：一个方向是提高产能，从而降低生产节拍；另一个方向就是压缩存货数量。然而，提高产能往往意味着增加很大的投入。另外，生产能力的提升虽然可以缩短生产周期，但是生产能力的提升总有个限度，我们无法容忍生产能力远远超过市场的需求。一般来说，每个公司在一定时期内的生产能力是大致不变的，而从长期来看，各公司也会力图使自己公司的产能与市场需求相吻合。因此，最有效地缩短生产周期的方法就是压缩在制品数量。&lt;br&gt;利特尔法则不仅适用于整个系统，而且也适用于系统的任何一部分。&lt;/p&gt;
-&lt;p&gt;##公式##&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://cdn.lieyunwang.com/wp-content/uploads/2014/11/0e1490aebb8c1b4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;L=系统中的平均项目数量；&lt;/p&gt;
-&lt;p&gt;W=一个项目在系统中所需等待的平均时间；&lt;/p&gt;
-&lt;p&gt;λ=单位时间内项目到达的平均数量；&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;在一个稳定的系统中，长时间观察到的平均顾客数量L，等于，长时间观察到的有效到达速率λ与平均每个顾客在系统中花费的时间W之乘积。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;##举例##&lt;/p&gt;
-&lt;p&gt;比如我们要去一个快餐店吃饭，这个快餐店平均每分钟有2个人进入，每个人平均用餐时间是0.5小时，那么算一下这个饭店当前有多少人在用餐？&lt;br&gt;答案：2 &lt;em&gt; 0.5 &lt;/em&gt; 60 = 60人&lt;br&gt;其中2为速率λ，0.5为花费时间W，60为小时换算成与速率一致的单位的系数。&lt;/p&gt;
-&lt;p&gt;再举一个估算系统QPS的例子：&lt;br&gt;假如我们有个系统，每天的访问量是200万次，系统处理每次请求平均花费的时间是3秒，那么系统能够支撑的QPS是多少？&lt;br&gt;QPS = 2000000/24/3600/3 = 7.7&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;##概念##&lt;/p&gt;
-&lt;p&gt;利特尔法则由麻省理工大学斯隆商学院（MIT Sloan School of Management）的教授John Little﹐于1961年所提出与证明。其英文名称为：Little’s Law。&lt;br&gt;利特尔法则是一个有关提前期与在制品关系的简单
-    
-    </summary>
-    
-    
-      <category term="商业" scheme="http://fengfu.io/tags/%E5%95%86%E4%B8%9A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>线程初始化参数</title>
-    <link href="http://fengfu.io/2015/02/08/%E7%BA%BF%E7%A8%8B%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%82%E6%95%B0/"/>
-    <id>http://fengfu.io/2015/02/08/线程初始化参数/</id>
-    <published>2015-02-08T12:41:09.000Z</published>
-    <updated>2016-02-27T13:49:32.173Z</updated>
-    
-    <content type="html">&lt;p&gt;线程池创建时，有3个参数比较关键，分别是：corePoolSize、maximumPoolSize，还有一个queueSize。&lt;/p&gt;
-&lt;p&gt;corePoolSize&lt;/p&gt;
-&lt;p&gt;线程池基本大小，即在任务没有需要执行的时候线程池的大小。在刚刚创建了ThreadPoolExecutor的时候，线程并不会立即启动，只有在有任务提交的时候才会启动；除非你调用了prestartCoreThread/prestartAllCoreThreads。&lt;/p&gt;
-&lt;p&gt;maximumPoolSize&lt;/p&gt;
-&lt;p&gt;线程池中允许的最大线程数，即线程池中运行的线程不可能超过这个数量。&lt;/p&gt;
-&lt;p&gt;queueSize&lt;/p&gt;
-&lt;p&gt;线程池队列大小，即排队的队列容量。&lt;/p&gt;
-&lt;p&gt;如果线程池中线程已达到corePoolSize，并且还有新的任务提交，那么线程池首先将任务存到队列中排队。如果队列也满了，那么线程池将继续在增加 线程，直到达到maximumPoolSize。到这里细心的同学可能会问了：如果队列没设置大小呢？那么我只能告诉你：看运气吧，如果任务少，你的队列 顶多长一些；如果任务很多，那么很可能你要oom了O(∩_∩)O&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;线程池创建时，有3个参数比较关键，分别是：corePoolSize、maximumPoolSize，还有一个queueSize。&lt;/p&gt;
-&lt;p&gt;corePoolSize&lt;/p&gt;
-&lt;p&gt;线程池基本大小，即在任务没有需要执行的时候线程池的大小。在刚刚创建了ThreadPoolE
     
     </summary>
     
