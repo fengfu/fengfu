@@ -87,31 +87,11 @@
   </entry>
   
   <entry>
-    <title>晋级Review归来</title>
-    <link href="http://fengfu.io/2016/08/22/%E6%99%8B%E7%BA%A7Review%E5%BD%92%E6%9D%A5/"/>
-    <id>http://fengfu.io/2016/08/22/晋级Review归来/</id>
-    <published>2016-08-22T01:50:26.000Z</published>
-    <updated>2016-08-22T01:57:37.357Z</updated>
-    
-    <content type="html">&lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演。在这过程中发现了很多问题，觉得有必要写出来总结一下了。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演。在这过程中发现了很多问题，觉得有必要写出来总结一下了。&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://fengfu.io/2016/08/19/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%E5%8F%82%E8%80%83%E6%A8%A1%E6%9D%BF/"/>
-    <id>http://fengfu.io/2016/08/19/接口文档参考模板/</id>
-    <published>2016-08-19T11:22:50.869Z</published>
-    <updated>2016-08-19T11:22:50.827Z</updated>
+    <title>接口文档参考模板</title>
+    <link href="http://fengfu.io/2016/08/23/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%E5%8F%82%E8%80%83%E6%A8%A1%E6%9D%BF/"/>
+    <id>http://fengfu.io/2016/08/23/接口文档参考模板/</id>
+    <published>2016-08-23T01:50:26.000Z</published>
+    <updated>2016-10-24T11:56:02.624Z</updated>
     
     <content type="html">&lt;p&gt;虽然提供了在线接口参数的查看，但在和客户端对接过程中，我们作为后台开发，还是需要人工提供接口文档给客户端的，这里提供一个接口文档编写的模板，以供参考，并且以我们熟悉的?service=User.GetBaseInfo为例说明如何编写高效的文档。  &lt;/p&gt;
 &lt;p&gt; &lt;em&gt;温馨提示：斜体字表示是注释说明&lt;/em&gt;。  &lt;/p&gt;
@@ -152,6 +132,30 @@
     
     </summary>
     
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>晋级Review归来</title>
+    <link href="http://fengfu.io/2016/08/22/%E6%99%8B%E7%BA%A7Review%E5%BD%92%E6%9D%A5/"/>
+    <id>http://fengfu.io/2016/08/22/晋级Review归来/</id>
+    <published>2016-08-22T01:50:26.000Z</published>
+    <updated>2016-10-24T11:55:37.627Z</updated>
+    
+    <content type="html">&lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演。在这过程中发现了很多问题，觉得有必要写出来总结一下了。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演。在这过程中发现了很多问题，觉得有必要写出来总结一下了。&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
     
   </entry>
   
