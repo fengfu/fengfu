@@ -68,50 +68,6 @@
     <div class="outer">
       <section id="main">
   
-    <article id="post-读书笔记-微服务设计-集成" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/25/读书笔记-微服务设计-集成/" class="article-date">
-  <time datetime="2016-10-25T11:17:50.000Z" itemprop="datePublished">2016-10-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/25/读书笔记-微服务设计-集成/">读书笔记-微服务设计-集成</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="寻找理想的集成技术"><a href="#寻找理想的集成技术" class="headerlink" title="寻找理想的集成技术"></a>寻找理想的集成技术</h1><h1 id="为用户创建接口"><a href="#为用户创建接口" class="headerlink" title="为用户创建接口"></a>为用户创建接口</h1><h1 id="共享数据库"><a href="#共享数据库" class="headerlink" title="共享数据库"></a>共享数据库</h1><h1 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h1><h1 id="编排与协同"><a href="#编排与协同" class="headerlink" title="编排与协同"></a>编排与协同</h1><h1 id="远程过程调用"><a href="#远程过程调用" class="headerlink" title="远程过程调用"></a>远程过程调用</h1><h1 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h1><h1 id="基于事件的异步协作"><a href="#基于事件的异步协作" class="headerlink" title="基于事件的异步协作"></a>基于事件的异步协作</h1><h1 id="服务即状态机"><a href="#服务即状态机" class="headerlink" title="服务即状态机"></a>服务即状态机</h1><h1 id="响应式扩展"><a href="#响应式扩展" class="headerlink" title="响应式扩展"></a>响应式扩展</h1><h1 id="DRY和重用代码的危险"><a href="#DRY和重用代码的危险" class="headerlink" title="DRY和重用代码的危险"></a>DRY和重用代码的危险</h1><h1 id="按引用访问"><a href="#按引用访问" class="headerlink" title="按引用访问"></a>按引用访问</h1><h1 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h1><h1 id="用户界面"><a href="#用户界面" class="headerlink" title="用户界面"></a>用户界面</h1><h1 id="与第三方软件集成"><a href="#与第三方软件集成" class="headerlink" title="与第三方软件集成"></a>与第三方软件集成</h1><h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1>
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/10/25/读书笔记-微服务设计-集成/" data-id="ciuq9vhgx0006owusexyl1a2y" class="article-share-link" data-share="baidu" data-title="读书笔记-微服务设计-集成">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2016/10/25/读书笔记-微服务设计-集成/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-让你变成优秀程序员的几个小习惯" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/24/让你变成优秀程序员的几个小习惯/" class="article-date">
@@ -821,6 +777,108 @@ monitor test
 
 
   
+    <article id="post-Java-Instrumentation研究-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/25/Java-Instrumentation研究-2/" class="article-date">
+  <time datetime="2016-04-25T02:20:43.000Z" itemprop="datePublished">2016-04-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/25/Java-Instrumentation研究-2/">Java Instrumentation研究之动态植入</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。</p>
+<h2 id="2-关于agentmain"><a href="#2-关于agentmain" class="headerlink" title="2.关于agentmain"></a>2.关于agentmain</h2><p>在Java SE6的Instrumentation 当中，有一个跟 premain“并驾齐驱”的“agentmain”方法，可以在main函数开始运行之后再运行。<br>跟premain函数一样， 开发者可以编写一个含有“agentmain”函数的Java类：</p>
+<pre><code>public static void agentmain(String agentArgs, Instrumentation inst);          [1] 
+public static void agentmain(String agentArgs);              [2]
+</code></pre><p>[1]的优先级比[2]高，将会被优先执行。</p>
+<p>跟前文提到的premain函数一样，我们可以在agentmain方法中对类进行各种操作。其中的agentArgs和Inst的用法跟premain相同。<br>与“Premain-Class”类似，我们必须在manifest文件里面设置“Agent-Class”来指定包含agentmain函数的类。<br>可是，跟premain不同的是，agentmain需要在main函数开始运行后才启动，这样的时机应该如何确定呢，这样的功能又如何实现呢？<br>在 Java SE6 文档当中，我们也许无法在java.lang.instrument包相关的文档部分看到明确的介绍，更加无法看到具体的应用agnetmain的例子。不过，在 Java SE6的新特性里面，有一个不太起眼的地方，揭示了agentmain的用法。这就是Java SE6当中提供的Attach API。</p>
+<h2 id="3-关于Attach-API"><a href="#3-关于Attach-API" class="headerlink" title="3.关于Attach API"></a>3.关于Attach API</h2><p><a href="http://docs.oracle.com/javase/7/docs/jdk/api/attach/spec/index.html" target="_blank" rel="external">Attach API</a>不是Java的标准API，而是Sun公司提供的一套扩展API，用来向目标JVM“附着”（Attach）代理工具程序的。有了它，我们可以方便地监控一个JVM，运行一个外加的代理程序。<br>Attach API很简单，只有2个主要的类，都在com.sun.tools.attach包里面：VirtualMachine代表一个Java虚拟机，也就是程序需要监控的目标虚拟机，提供了JVM枚举，Attach动作和Detach动作（Attach 动作的相反行为，从JVM 上面解除一个代理）等等 ; VirtualMachineDescriptor则是一个描述虚拟机的容器类，配合VirtualMachine类完成各种功能。</p>
+<h2 id="4-agentmain实现步骤"><a href="#4-agentmain实现步骤" class="headerlink" title="4.agentmain实现步骤"></a>4.agentmain实现步骤</h2><p>与Permain类似，agentmain方式同样需要提供一个agent jar，并且这个jar需要满足：</p>
+<ol>
+<li>在manifest中指定Agent-Class属性，值为代理类全路径；</li>
+<li>代理类需要提供public static void agentmain(String args, Instrumentation inst)或public static void agentmain(String args)方法。并且再二者同时存在时以前者优先。args和inst和premain中的一致。</li>
+</ol>
+<p>Attach API中的VirtualMachine代表一个运行中的VM，其提供了loadAgent()方法，可以在运行时动态加载一个代理jar，这样就可以实现类似premain的效果了。</p>
+<h2 id="5-agentmain实例"><a href="#5-agentmain实例" class="headerlink" title="5.agentmain实例"></a>5.agentmain实例</h2><p>与上文一样，我们要通过Java Instrumentation实现对某个类中所有方法执行时间的统计，只不过不同的是：这次我们采用动态Instrumentation的方式。</p>
+<ol>
+<li>编写一个简单的测试类Test，以便于后面我们通过动态代理实现方法计时功能；</li>
+<li>编写Agent实现类SampleTransformer，实现ClassFileTransformer接口。代码同上篇文章一样，这里不再赘述。</li>
+<li><p>编写Agent入口类DynamicAgent，实现agentmain方法：</p>
+<p> public static void agentmain(String args, Instrumentation inst)</p>
+</li>
+<li><p>编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；</p>
+</li>
+<li>编写一个测试入口类SampleApp，能够长时间驻留，便于我们测试动态植入功能；本例中我们通过键盘数据接收用户的输入数据。只要用户输入不为“bye”，那么就会执行Test类的test()方法；在系统刚刚启动的时候，我们没有利用动态植入实现对test()方法的计时；当执行动态植入后，再执行test()方法，我们就能看到屏幕除了输出原test()方法输出的“hello world”之外，还额外输出了test()方法的运行计时。这就能够证明植入代码生效了；</li>
+<li>设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；</li>
+<li>打包得到DynamicAgent-1.0-SNAPSHOT.jar；</li>
+<li><p>执行SampleApp，启动应用：</p>
+<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp</p>
+</li>
+</ol>
+<p>在交互窗口输入test，我们可以看到系统输出：Hello World!</p>
+<ol>
+<li>得到SampleApp的进程id，比如1234；</li>
+<li><p>执行AgentLoader，启动动态代理：</p>
+<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234</p>
+</li>
+<li><p>在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.</p>
+</li>
+</ol>
+<p>大功告成，一个简单的动态植入功能就实现了~<br>本实例的代码可以点 <a href="(http://fengfu.io/attach/DynamicAgent.zip">这里</a>) 下载。</p>
+<h2 id="6-说明"><a href="#6-说明" class="headerlink" title="6.说明"></a>6.说明</h2><p>实例虽然简单，但是在代码编写过程中还是遇到了几个坑，贴出来供大家参考：</p>
+<ol>
+<li>如果动态植入需要通过javassist去修改某些类，那么需要在MANIFEST.MF中设置Can-Retransform-Classes和Can-Redefine-Classes为true；</li>
+<li><p>要动态修改的类Test不要跟测试入口类SampleApp放在一个类文件中，否则代理启动动态修改Class时会报如下异常：</p>
+<pre><code>java.lang.reflect.InvocationTargetException
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+at java.lang.reflect.Method.invoke(Unknown Source)
+at sun.instrument.InstrumentationImpl.loadClassAndStartAgent(Unknown Source)
+at sun.instrument.InstrumentationImpl.loadClassAndCallAgentmain(Unknown Source)
+Caused by: java.lang.UnsupportedOperationException: class redefinition failed: attempted to add a method
+at sun.instrument.InstrumentationImpl.retransformClasses0(Native Method)
+at sun.instrument.InstrumentationImpl.retransformClasses(Unknown Source)
+at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
+... 6 more
+</code></pre></li>
+</ol>
+<p>分析原因，是因为SampleApp正在运行中，而JVM是不允许reload一个正在运行时的类的。一旦classloader加载了一个class，在运行时就不能重新加载这个class的另一个版本。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="ciuq9vhiv0016owusijcragly" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
 
 
   <nav id="page-nav">
@@ -836,7 +894,7 @@ monitor test
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -845,7 +903,7 @@ monitor test
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 13.33px;">微服务</a> <a href="/tags/杂谈/" style="font-size: 16.67px;">杂谈</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a>
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 12.5px;">微服务</a> <a href="/tags/杂谈/" style="font-size: 17.5px;">杂谈</a> <a href="/tags/架构/" style="font-size: 15px;">架构</a>
     </div>
   </div>
 
@@ -854,7 +912,7 @@ monitor test
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -864,10 +922,6 @@ monitor test
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2016/10/25/读书笔记-微服务设计-集成/">读书笔记-微服务设计-集成</a>
-          </li>
         
           <li>
             <a href="/2016/10/24/让你变成优秀程序员的几个小习惯/">让你变成优秀程序员的几个小习惯(转)</a>
@@ -883,6 +937,10 @@ monitor test
         
           <li>
             <a href="/2016/08/12/读书笔记-微服务设计-建模/">读书笔记:微服务设计-建模</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/">关键业务系统的JVM启动参数推荐2.0版[转]</a>
           </li>
         
       </ul>
