@@ -68,6 +68,827 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-Intellij Idea快捷键大全" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/21/Intellij Idea快捷键大全/" class="article-date">
+  <time datetime="2015-02-21T11:41:09.000Z" itemprop="datePublished">2015-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/02/21/Intellij Idea快捷键大全/">Intellij Idea快捷键大全</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>IntelliJ IDEA 的便捷操作性，快捷键的功劳占了一大半，对于各个快捷键组合请认真对待。IntelliJ IDEA 本身的设计思维是提倡键盘优先于鼠标的，所以各种快捷键组合层出不穷，对于快捷键设置也有各种支持，对于其他 IDE 的快捷键组合也有预设模板进行支持。</p>
+<p>关于各个快捷键的频率分类上可能每个人都有各自的看法，下面的整理也只是已我个人的使用习惯来划分的，而我应该是可以代表某一部分小众人员。但是我个人还是建议你可以在我的基础上整理一份属于的快捷键目录，本篇文章也只是起到一个工具和引子的作用。</p>
+<p>对于下面各个快捷键的使介绍描述也许用我个人语言翻译起来不够准确或是不全面，且在不同的文件类型上按出来的效果也可能结果不太一样,所以 <strong>强烈建议</strong> 你自己把各个快捷键都亲自操作下体会下各个快捷键的实际用法。</p>
+<h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>由于文化的不同，我们使用的电脑必备一个软件就是中文输入法，而目前大多数人都使用搜狗拼音输入法或是其他类似的。而这些输入法跟 IntelliJ IDEA 有一个万恶的冲突永恒不变：快捷键冲突。所以为了配合 IntelliJ IDEA，我们要去掉这些输入法下的所有快捷键。</p>
+<p><img src="images/xxvii-c-keymap-premise-1.jpg" alt="前提"></p>
+<blockquote>
+<ul>
+<li>如上图红色圈住内容所示，默认是 <code>逗号</code> 我改为了 ESC 键下的 <code>波浪号</code>，<code>Ctrl + 逗号</code> 这个快捷键适合做智能提示用，下面的快捷键列表会讲。</li>
+</ul>
+</blockquote>
+<p><img src="images/xxvii-c-keymap-premise-2.jpg" alt="前提"></p>
+<blockquote>
+<ul>
+<li>如上图红色圈住内容所示，这些快捷键很容易跟 IntelliJ IDEA 快捷键冲突，需要全部去掉。</li>
+</ul>
+</blockquote>
+<p><img src="images/xxvii-c-keymap-premise-3.jpg" alt="前提"></p>
+<blockquote>
+<ul>
+<li>如上图红色圈住内容所示，QQ 这些快捷键也很容易跟 IntelliJ IDEA 快捷键冲突，需要全部去掉，最多保持一个截图功能即可。</li>
+</ul>
+</blockquote>
+<p>可能还有其他一些软件，比如网易云音乐、有道词典等等这些软件都可能存在快捷键冲突，所以为了 IntelliJ IDEA 这些软件的快捷键都是值得舍弃的，如果你在开发的时候。</p>
+<h2 id="Ctrl"><a href="#Ctrl" class="headerlink" title="Ctrl"></a>Ctrl</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Ctrl + F</td>
+<td style="text-align:left">在当前文件进行文本查找 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + R</td>
+<td style="text-align:left">在当前文件进行文本替换 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Z</td>
+<td style="text-align:left">撤销 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Y</td>
+<td style="text-align:left">删除光标所在行 或 删除选中的行 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + X</td>
+<td style="text-align:left">剪切光标所在行 或 剪切选择内容</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + C</td>
+<td style="text-align:left">复制光标所在行 或 复制选择内容</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + D</td>
+<td style="text-align:left">复制光标所在行 或 复制选择内容，并把复制内容插入光标位置下面 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + W</td>
+<td style="text-align:left">递进式选择代码块。可选中光标所在的单词或段落，连续按会在原有选中的基础上再扩展选中范围 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + E</td>
+<td style="text-align:left">显示最近打开的文件记录列表</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + N</td>
+<td style="text-align:left">根据输入的 <strong>类名</strong> 查找类文件</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + G</td>
+<td style="text-align:left">在当前文件跳转到指定行处</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + J</td>
+<td style="text-align:left">插入自定义动态代码模板</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + P</td>
+<td style="text-align:left">方法参数提示显示</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Q</td>
+<td style="text-align:left">光标所在的变量 / 类名 / 方法名等上面（也可以在提示补充的时候按），显示文档内容</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + U</td>
+<td style="text-align:left">前往当前光标所在的方法的父类的方法 / 接口定义</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + B</td>
+<td style="text-align:left">进入光标所在的方法/变量的接口或是定义出，等效于 <code>Ctrl + 左键单击</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + K</td>
+<td style="text-align:left">版本控制提交项目，需要此项目有加入到版本控制才可用</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + T</td>
+<td style="text-align:left">版本控制更新项目，需要此项目有加入到版本控制才可用</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + H</td>
+<td style="text-align:left">显示当前类的层次结构</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + O</td>
+<td style="text-align:left">选择可重写的方法</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + I</td>
+<td style="text-align:left">选择可继承的方法</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + +</td>
+<td style="text-align:left">展开代码</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + -</td>
+<td style="text-align:left">折叠代码</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + /</td>
+<td style="text-align:left">注释光标所在行代码，会根据当前不同文件类型使用不同的注释符号 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + [</td>
+<td style="text-align:left">移动光标到当前所在代码的花括号开始位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + ]</td>
+<td style="text-align:left">移动光标到当前所在代码的花括号结束位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + F1</td>
+<td style="text-align:left">在光标所在的错误代码出显示错误信息</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + F3</td>
+<td style="text-align:left">调转到所选中的词的下一个引用位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + F4</td>
+<td style="text-align:left">关闭当前编辑文件</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + F8</td>
+<td style="text-align:left">在 Debug 模式下，设置光标当前行为断点，如果当前已经是断点则去掉断点</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + F9</td>
+<td style="text-align:left">执行 Make Project 操作</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + F11</td>
+<td style="text-align:left">选中文件 / 文件夹，使用助记符设定 / 取消书签</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + F12</td>
+<td style="text-align:left">弹出当前文件结构层，可以在弹出的层上直接输入，进行筛选</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Tab</td>
+<td style="text-align:left">编辑窗口切换，如果在切换的过程又加按上delete，则是关闭对应选中的窗口</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Enter</td>
+<td style="text-align:left">智能分隔行</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + End</td>
+<td style="text-align:left">跳到文件尾</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Home</td>
+<td style="text-align:left">跳到文件头</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Space</td>
+<td style="text-align:left">基础代码补全，默认在 Windows 系统上被输入法占用，需要进行修改，建议修改为 <code>Ctrl + 逗号</code> <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Delete</td>
+<td style="text-align:left">删除光标后面的单词或是中文句</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + BackSpace</td>
+<td style="text-align:left">删除光标前面的单词或是中文句</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + 1,2,3…9</td>
+<td style="text-align:left">定位到对应数值的书签位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + 左键单击</td>
+<td style="text-align:left">在打开的文件标题上，弹出该文件路径</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + 光标定位</td>
+<td style="text-align:left">按 Ctrl 不要松开，会显示光标所在的类信息摘要</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + 左方向键</td>
+<td style="text-align:left">光标跳转到当前单词 / 中文句的左侧开头位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + 右方向键</td>
+<td style="text-align:left">光标跳转到当前单词 / 中文句的右侧开头位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + 前方向键</td>
+<td style="text-align:left">等效于鼠标滚轮向前效果</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + 后方向键</td>
+<td style="text-align:left">等效于鼠标滚轮向后效果</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Alt"><a href="#Alt" class="headerlink" title="Alt"></a>Alt</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Alt + `</td>
+<td style="text-align:left">显示版本控制常用操作菜单弹出层</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Q</td>
+<td style="text-align:left">弹出一个提示，显示当前类的声明 / 上下文信息</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + F1</td>
+<td style="text-align:left">显示当前文件选择目标弹出层，弹出层中有很多目标可以进行选择</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + F2</td>
+<td style="text-align:left">对于前面页面，显示各类浏览器打开目标选择弹出层</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + F3</td>
+<td style="text-align:left">选中文本，逐个往下查找相同文本，并高亮显示</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + F7</td>
+<td style="text-align:left">查找光标所在的方法 / 变量 / 类被调用的地方</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + F8</td>
+<td style="text-align:left">在 Debug 的状态下，选中对象，弹出可输入计算表达式调试框，查看该输入内容的调试结果</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Home</td>
+<td style="text-align:left">定位 / 显示到当前文件的 <code>Navigation Bar</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Enter</td>
+<td style="text-align:left">IntelliJ IDEA 根据光标所在问题，提供快速修复选择，光标放在的位置不同提示的结果也不同 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Insert</td>
+<td style="text-align:left">代码自动生成，如生成对象的 set / get 方法，构造函数，toString() 等</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + 左方向键</td>
+<td style="text-align:left">按左方向切换当前已打开的文件视图</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + 右方向键</td>
+<td style="text-align:left">按右方向切换当前已打开的文件视图</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + 前方向键</td>
+<td style="text-align:left">当前光标跳转到当前文件的前一个方法名位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + 后方向键</td>
+<td style="text-align:left">当前光标跳转到当前文件的后一个方法名位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + 1,2,3…9</td>
+<td style="text-align:left">显示对应数值的选项卡，其中 1 是 Project 用得最多</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Shift"><a href="#Shift" class="headerlink" title="Shift"></a>Shift</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Shift + F1</td>
+<td style="text-align:left">如果有外部文档可以连接外部文档</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F2</td>
+<td style="text-align:left">跳转到上一个高亮错误 或 警告位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F3</td>
+<td style="text-align:left">在查找模式下，查找匹配上一个</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F4</td>
+<td style="text-align:left">对当前打开的文件，使用新Windows窗口打开，旧窗口保留</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F6</td>
+<td style="text-align:left">对文件 / 文件夹 重命名</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F7</td>
+<td style="text-align:left">在 Debug 模式下，智能步入。断点所在行上有多个方法调用，会弹出进入哪个方法</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F8</td>
+<td style="text-align:left">在 Debug 模式下，跳出，表现出来的效果跟 <code>F9</code> 一样</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F9</td>
+<td style="text-align:left">等效于点击工具栏的 <code>Debug</code> 按钮</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F10</td>
+<td style="text-align:left">等效于点击工具栏的 <code>Run</code> 按钮</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + F11</td>
+<td style="text-align:left">弹出书签显示层</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + Tab</td>
+<td style="text-align:left">取消缩进</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + ESC</td>
+<td style="text-align:left">隐藏当前 或 最后一个激活的工具窗口</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + End</td>
+<td style="text-align:left">选中光标到当前行尾位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + Home</td>
+<td style="text-align:left">选中光标到当前行头位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + Enter</td>
+<td style="text-align:left">开始新一行。光标所在行下空出一行，光标定位到新行位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + 左键单击</td>
+<td style="text-align:left">在打开的文件名上按此快捷键，可以关闭当前打开文件</td>
+</tr>
+<tr>
+<td style="text-align:left">Shift + 滚轮前后滚动</td>
+<td style="text-align:left">当前文件的横向滚动轴滚动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Ctrl-Alt"><a href="#Ctrl-Alt" class="headerlink" title="Ctrl + Alt"></a>Ctrl + Alt</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Ctrl + Alt + L</td>
+<td style="text-align:left">格式化代码，可以对当前文件和整个包目录使用 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + O</td>
+<td style="text-align:left">优化导入的类，可以对当前文件和整个包目录使用 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + I</td>
+<td style="text-align:left">光标所在行 或 选中部分进行自动代码缩进，有点类似格式化</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + T</td>
+<td style="text-align:left">对选中的代码弹出环绕选项弹出层</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + J</td>
+<td style="text-align:left">弹出模板选择窗口，讲选定的代码加入动态模板中</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + H</td>
+<td style="text-align:left">调用层次</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + B</td>
+<td style="text-align:left">在某个调用的方法名上使用会跳到具体的实现处，可以跳过接口</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + V</td>
+<td style="text-align:left">快速引进变量</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + Y</td>
+<td style="text-align:left">同步、刷新</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + S</td>
+<td style="text-align:left">打开 IntelliJ IDEA 系统设置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + F7</td>
+<td style="text-align:left">显示使用的地方。寻找被该类或是变量被调用的地方，用弹出框的方式找出来</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + F11</td>
+<td style="text-align:left">切换全屏模式</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + Enter</td>
+<td style="text-align:left">光标所在行上空出一行，光标定位到新行</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + Home</td>
+<td style="text-align:left">弹出跟当前文件有关联的文件弹出层</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + Space</td>
+<td style="text-align:left">类名自动完成</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + 左方向键</td>
+<td style="text-align:left">退回到上一个操作的地方 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + 右方向键</td>
+<td style="text-align:left">前进到上一个操作的地方 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + 前方向键</td>
+<td style="text-align:left">在查找模式下，跳到上个查找的文件</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Alt + 后方向键</td>
+<td style="text-align:left">在查找模式下，跳到下个查找的文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Ctrl-Shift"><a href="#Ctrl-Shift" class="headerlink" title="Ctrl + Shift"></a>Ctrl + Shift</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Ctrl + Shift + F</td>
+<td style="text-align:left">根据输入内容查找整个项目 或 指定目录内文件 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + R</td>
+<td style="text-align:left">根据输入内容替换对应内容，范围为整个项目 或 指定目录内文件 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + J</td>
+<td style="text-align:left">自动将下一行合并到当前行末尾 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Z</td>
+<td style="text-align:left">取消撤销 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + W</td>
+<td style="text-align:left">递进式取消选择代码块。可选中光标所在的单词或段落，连续按会在原有选中的基础上再扩展取消选中范围 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + N</td>
+<td style="text-align:left">通过文件名定位 / 打开文件 / 目录，打开目录需要在输入的内容后面多加一个正斜杠 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + U</td>
+<td style="text-align:left">对选中的代码进行大 / 小写轮流转换 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + T</td>
+<td style="text-align:left">对当前类生成单元测试类，如果已经存在的单元测试类则可以进行选择</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + C</td>
+<td style="text-align:left">复制当前文件磁盘路径到剪贴板</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + V</td>
+<td style="text-align:left">弹出缓存的最近拷贝的内容管理器弹出层</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + E</td>
+<td style="text-align:left">显示最近修改的文件列表的弹出层</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + H</td>
+<td style="text-align:left">显示方法层次结构</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + B</td>
+<td style="text-align:left">跳转到类型声明处</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + I</td>
+<td style="text-align:left">快速查看光标所在的方法 或 类的定义</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + A</td>
+<td style="text-align:left">查找动作 / 设置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + /</td>
+<td style="text-align:left">代码块注释 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + [</td>
+<td style="text-align:left">选中从光标所在位置到它的顶部中括号位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + ]</td>
+<td style="text-align:left">选中从光标所在位置到它的底部中括号位置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + +</td>
+<td style="text-align:left">展开所有代码</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + -</td>
+<td style="text-align:left">折叠所有代码</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + F7</td>
+<td style="text-align:left">高亮显示所有该选中文本，按Esc高亮消失</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + F8</td>
+<td style="text-align:left">在 Debug 模式下，指定断点进入条件</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + F9</td>
+<td style="text-align:left">编译选中的文件 / 包 / Module</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + F12</td>
+<td style="text-align:left">编辑器最大化</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Space</td>
+<td style="text-align:left">智能代码提示</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Enter</td>
+<td style="text-align:left">自动结束代码，行末自动添加分号 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Backspace</td>
+<td style="text-align:left">退回到上次修改的地方</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + 1,2,3…9</td>
+<td style="text-align:left">快速添加指定数值的书签</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + 左方向键</td>
+<td style="text-align:left">在代码文件上，光标跳转到当前单词 / 中文句的左侧开头位置，同时选中该单词 / 中文句</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + 右方向键</td>
+<td style="text-align:left">在代码文件上，光标跳转到当前单词 / 中文句的右侧开头位置，同时选中该单词 / 中文句</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + 左方向键</td>
+<td style="text-align:left">在光标焦点是在工具选项卡上，缩小选项卡区域</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + 右方向键</td>
+<td style="text-align:left">在光标焦点是在工具选项卡上，扩大选项卡区域</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + 前方向键</td>
+<td style="text-align:left">光标放在方法名上，将方法移动到上一个方法前面，调整方法排序</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + 后方向键</td>
+<td style="text-align:left">光标放在方法名上，将方法移动到下一个方法前面，调整方法排序</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Alt-Shift"><a href="#Alt-Shift" class="headerlink" title="Alt + Shift"></a>Alt + Shift</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Alt + Shift + N</td>
+<td style="text-align:left">选择 / 添加 task</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + F</td>
+<td style="text-align:left">显示添加到收藏夹弹出层</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + C</td>
+<td style="text-align:left">查看最近操作项目的变化情况列表</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + F</td>
+<td style="text-align:left">添加到收藏夹</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + I</td>
+<td style="text-align:left">查看项目当前文件</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + F7</td>
+<td style="text-align:left">在 Debug 模式下，下一步，进入当前方法体内，如果方法体还有方法，则会进入该内嵌的方法中，依此循环进入</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + F9</td>
+<td style="text-align:left">弹出 <code>Debug</code>  的可选择菜单</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + F10</td>
+<td style="text-align:left">弹出 <code>Run</code>  的可选择菜单</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + 左键双击</td>
+<td style="text-align:left">选择被双击的单词 / 中文句，按住不放，可以同时选择其他单词 / 中文句</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + 前方向键</td>
+<td style="text-align:left">移动光标所在行向上移动</td>
+</tr>
+<tr>
+<td style="text-align:left">Alt + Shift + 后方向键</td>
+<td style="text-align:left">移动光标所在行向下移动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Ctrl-Shift-Alt"><a href="#Ctrl-Shift-Alt" class="headerlink" title="Ctrl + Shift + Alt"></a>Ctrl + Shift + Alt</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Alt + V</td>
+<td style="text-align:left">无格式黏贴</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Alt + N</td>
+<td style="text-align:left">前往指定的变量 / 方法</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Alt + S</td>
+<td style="text-align:left">打开当前项目设置</td>
+</tr>
+<tr>
+<td style="text-align:left">Ctrl + Shift + Alt + C</td>
+<td style="text-align:left">复制参考信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">F2</td>
+<td style="text-align:left">跳转到下一个高亮错误 或 警告位置 <code>（必备）</code></td>
+</tr>
+<tr>
+<td style="text-align:left">F3</td>
+<td style="text-align:left">在查找模式下，定位到下一个匹配处</td>
+</tr>
+<tr>
+<td style="text-align:left">F4</td>
+<td style="text-align:left">编辑源</td>
+</tr>
+<tr>
+<td style="text-align:left">F7</td>
+<td style="text-align:left">在 Debug 模式下，进入下一步，如果当前行断点是一个方法，则进入当前方法体内，如果该方法体还有方法，则不会进入该内嵌的方法中</td>
+</tr>
+<tr>
+<td style="text-align:left">F8</td>
+<td style="text-align:left">在 Debug 模式下，进入下一步，如果当前行断点是一个方法，则不进入当前方法体内</td>
+</tr>
+<tr>
+<td style="text-align:left">F9</td>
+<td style="text-align:left">在 Debug 模式下，恢复程序运行，但是如果该断点下面代码还有断点则停在下一个断点上</td>
+</tr>
+<tr>
+<td style="text-align:left">F11</td>
+<td style="text-align:left">添加书签</td>
+</tr>
+<tr>
+<td style="text-align:left">F12</td>
+<td style="text-align:left">回到前一个工具窗口</td>
+</tr>
+<tr>
+<td style="text-align:left">Tab</td>
+<td style="text-align:left">缩进</td>
+</tr>
+<tr>
+<td style="text-align:left">ESC</td>
+<td style="text-align:left">从工具窗口进入代码文件窗口</td>
+</tr>
+<tr>
+<td style="text-align:left">连按两次Shift</td>
+<td style="text-align:left">弹出 <code>Search Everywhere</code> 弹出层</td>
+</tr>
+</tbody>
+</table>
+<h2 id="官网快捷键资料"><a href="#官网快捷键资料" class="headerlink" title="官网快捷键资料"></a>官网快捷键资料</h2><blockquote>
+<ul>
+<li>Windows / Linux：<a href="https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard.pdf" target="_blank" rel="external">https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard.pdf</a></li>
+<li>Mac OS X：<a href="https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard_Mac.pdf" target="_blank" rel="external">https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard_Mac.pdf</a></li>
+</ul>
+</blockquote>
+<h2 id="第三方快捷键资料"><a href="#第三方快捷键资料" class="headerlink" title="第三方快捷键资料"></a>第三方快捷键资料</h2><blockquote>
+<ul>
+<li>来自 eta02913：<a href="http://xinyuwu.iteye.com/blog/1005454" target="_blank" rel="external">http://xinyuwu.iteye.com/blog/1005454</a></li>
+</ul>
+</blockquote>
+<h2 id="快捷键修改"><a href="#快捷键修改" class="headerlink" title="快捷键修改"></a>快捷键修改</h2><p><img src="images/xxvii-a-keymap-setting-1.jpg" alt="修改快捷键"></p>
+<blockquote>
+<ul>
+<li>按 <code>Ctrl + Alt + S</code> 弹出 IDE 设置，如上图选择左侧的 <code>Keymap</code>。</li>
+<li>IntelliJ IDEA 支持两种方式来筛选我们要找的快捷键，一种是上图标注 1 所示的，通过输入快捷键描述内容；一种是上图标注 2 所示的，通过 <strong>按</strong> 指定快捷键快捷键，这里需要再次强调的是，这个输入框是自动监听你当前按下的按键，而不是用来输入的。</li>
+<li>上图标注 3 所示，初安装的 IntelliJ IDEA 使用的是 <code>Default</code> 的快捷键模板，IntelliJ IDEA 默认的快捷键模板都是不可修改的。如果你直接修改，当前这个位置 IntelliJ IDEA 会自动变成 <code>Default Copy</code>，建议你养成习惯，修改之前先点击 <code>Copy</code>，拷贝一套快捷键模板，然后输入自己的命名。</li>
+</ul>
+</blockquote>
+<p><img src="images/xxvii-a-keymap-setting-2.jpg" alt="修改快捷键"></p>
+<blockquote>
+<ul>
+<li>IntelliJ IDEA 是支持一个操作命令同时设置多个快捷键组合，就如上图的 <code>Backspace</code>，同时支持 <code>Backspace</code> 和 <code>Shift + Backspace</code> 两组快捷键。</li>
+<li>要修改某个快捷键，选中快捷键介绍内容，右键，就会弹出如上图标注 1 所示操作选择。</li>
+<li>命令 <code>Add Keyboard Shortcut</code> 用来添加新纯键盘快捷键组合。</li>
+<li>命令 <code>Add Mouse Shortcut</code> 用来添加新 <code>键盘 + 鼠标</code> 快捷键组合，比如设置 <code>Ctrl + 左键单击</code> 这类快捷组合。其中在弹出的添加面板中 <code>Click Pad</code> 是用来监听当前鼠标是左键单击还是右键单击。</li>
+<li>命令 <code>Add Abbreviation</code> 根据 IntelliJ IDEA 的版本文档解释，添加简称主要是为了方便 <code>Search Everywhere</code> 中使用，但是我尝试之后发现没办法根据我设置的简称搜索，暂时无法了解其作用。 </li>
+<li>命令 <code>Remove 快捷键</code> 移出当前操作命令已设置的快捷键组合，由于 IntelliJ IDEA 默认就占用了很多快捷键组合，所以如果你要修改某个快捷键，建议还是删除掉旧的。 </li>
+</ul>
+</blockquote>
+<p><img src="images/xxvii-a-keymap-setting-3.jpg" alt="修改快捷键"></p>
+<blockquote>
+<ul>
+<li>IntelliJ IDEA 对其他 IDE 用户很友好，比如如上图对于其他主流的 IDE，快捷键上已经默认了有其过度快捷键模板了，但是我还是建议你专心使用 IntelliJ IDEA 的默认。</li>
+</ul>
+</blockquote>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><p><img src="images/xxvii-b-ideavim-1.jpg" alt="vim插件推荐"></p>
+<blockquote>
+<ul>
+<li>如果你是一个 Vim 粉，IntelliJ IDEA 也为你准备了一个方案：如上图安装 IdeaVim 插件即可。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/" data-id="ciuq9vhja001eowussabt1o9g" class="article-share-link" data-share="baidu" data-title="Intellij Idea快捷键大全">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2015/02/21/Intellij Idea快捷键大全/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Java的SPI机制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/02/21/Java的SPI机制/" class="article-date">
@@ -160,7 +981,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/21/Java的SPI机制/" data-id="ciunzy1c8000yekusia83e9qh" class="article-share-link" data-share="baidu" data-title="Java的SPI机制">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/21/Java的SPI机制/" data-id="ciuq9vhio0012owusjjyeeukf" class="article-share-link" data-share="baidu" data-title="Java的SPI机制">分享到</a>
       
 
       
@@ -215,7 +1036,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/14/利特尔法则/" data-id="ciunzy1bs000qekusn58etmdp" class="article-share-link" data-share="baidu" data-title="利特尔法则">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/14/利特尔法则/" data-id="ciuq9vhi8000uowusfs97ldh9" class="article-share-link" data-share="baidu" data-title="利特尔法则">分享到</a>
       
 
       
@@ -267,7 +1088,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/08/线程初始化参数/" data-id="ciunzy1b2000bekusno91f92m" class="article-share-link" data-share="baidu" data-title="线程初始化参数">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/08/线程初始化参数/" data-id="ciuq9vhh8000dowusx2qed8zf" class="article-share-link" data-share="baidu" data-title="线程初始化参数">分享到</a>
       
 
       
@@ -320,7 +1141,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/03/架构设计原则/" data-id="ciunzy1bd000iekustixyql5a" class="article-share-link" data-share="baidu" data-title="架构设计原则">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/03/架构设计原则/" data-id="ciuq9vhhl000kowus5ig4tnct" class="article-share-link" data-share="baidu" data-title="架构设计原则">分享到</a>
       
 
       
@@ -365,7 +1186,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/01/28/第一篇Markdown/" data-id="ciunzy1b6000eekus5o4wvizq" class="article-share-link" data-share="baidu" data-title="第一篇Markdown">分享到</a>
+        <a data-url="http://fengfu.io/2015/01/28/第一篇Markdown/" data-id="ciuq9vhhd000gowuss0ehq19q" class="article-share-link" data-share="baidu" data-title="第一篇Markdown">分享到</a>
       
 
       
@@ -416,7 +1237,7 @@ Hello, Fengfu, I&apos;m C3po.
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/01/24/First-Blog/" data-id="ciunzy1cq001cekusmz2nfjb7" class="article-share-link" data-share="baidu" data-title="写在开博时">分享到</a>
+        <a data-url="http://fengfu.io/2015/01/24/First-Blog/" data-id="ciuq9vhjd001gowusb1n73l1z" class="article-share-link" data-share="baidu" data-title="写在开博时">分享到</a>
       
 
       
@@ -446,7 +1267,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -455,7 +1276,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 12.5px;">微服务</a> <a href="/tags/杂谈/" style="font-size: 17.5px;">杂谈</a> <a href="/tags/架构/" style="font-size: 15px;">架构</a>
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 13.33px;">微服务</a> <a href="/tags/杂谈/" style="font-size: 16.67px;">杂谈</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a>
     </div>
   </div>
 
@@ -464,7 +1285,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -474,6 +1295,10 @@ Hello, Fengfu, I&apos;m C3po.
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/10/25/读书笔记-微服务设计-集成/">读书笔记-微服务设计-集成</a>
+          </li>
         
           <li>
             <a href="/2016/10/24/让你变成优秀程序员的几个小习惯/">让你变成优秀程序员的几个小习惯(转)</a>
@@ -489,10 +1314,6 @@ Hello, Fengfu, I&apos;m C3po.
         
           <li>
             <a href="/2016/08/12/读书笔记-微服务设计-建模/">读书笔记:微服务设计-建模</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/">关键业务系统的JVM启动参数推荐2.0版[转]</a>
           </li>
         
       </ul>
@@ -512,6 +1333,22 @@ Hello, Fengfu, I&apos;m C3po.
         
           <li>
             <a href="http://ifeve.com" target="_blank">并发编程网</a>
+          </li>
+        
+          <li>
+            <a href="http://calvin1978.blogcn.com" target="_blank">花钱的年化</a>
+          </li>
+        
+          <li>
+            <a href="http://lovestblog.cn" target="_blank">你假笨</a>
+          </li>
+        
+          <li>
+            <a href="http://hellojava.info" target="_blank">hellojava</a>
+          </li>
+        
+          <li>
+            <a href="http://techblog.netflix.com" target="_blank">Netflix技术博客</a>
           </li>
         
       </ul>
