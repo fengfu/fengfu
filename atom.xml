@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-10-28T11:10:49.681Z</updated>
+  <updated>2016-11-08T08:43:14.021Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://fengfu.io/2016/10/27/%E6%99%8B%E7%BA%A7Review%E5%BD%92%E6%9D%A5%E8%AF%9D%E4%BB%A3%E7%A0%81%E6%9C%89%E6%AF%92/"/>
     <id>http://fengfu.io/2016/10/27/晋级Review归来话代码有毒/</id>
     <published>2016-10-27T07:36:55.000Z</published>
-    <updated>2016-10-28T11:10:49.681Z</updated>
+    <updated>2016-11-08T08:43:14.021Z</updated>
     
     <content type="html">&lt;p&gt;这几天做应届生的转正定级答辩，结束后小黑哥在朋友圈里面发了下面一幅图：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2qDgda71M.eBjSZPiXXawfpXa_!!2657627814.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -33,8 +33,9 @@
 &lt;h1 id=&quot;1-资源不限制&quot;&gt;&lt;a href=&quot;#1-资源不限制&quot; class=&quot;headerlink&quot; title=&quot;1.资源不限制&quot;&gt;&lt;/a&gt;1.资源不限制&lt;/h1&gt;&lt;p&gt;这是很多码农容易中的毒，典型的症状是：&lt;/p&gt;
 &lt;h2 id=&quot;1-1-缓存不设置最大数量限制&quot;&gt;&lt;a href=&quot;#1-1-缓存不设置最大数量限制&quot; class=&quot;headerlink&quot; title=&quot;1.1 缓存不设置最大数量限制&quot;&gt;&lt;/a&gt;1.1 缓存不设置最大数量限制&lt;/h2&gt;&lt;p&gt;比如我们使用map实现了一个cache，但是没有设置cache的大小，久而久之你可以想象一下这个cache最终会膨胀到什么程度。当然有同学可能会说我使用的是Guava cache，可以设置数量限制。well done，你再回去看看你的full gc是不是比较频繁，没准是因为这个值太大导致的哟~&lt;/p&gt;
 &lt;h2 id=&quot;1-2-线程池不设置队列大小&quot;&gt;&lt;a href=&quot;#1-2-线程池不设置队列大小&quot; class=&quot;headerlink&quot; title=&quot;1.2 线程池不设置队列大小&quot;&gt;&lt;/a&gt;1.2 线程池不设置队列大小&lt;/h2&gt;&lt;p&gt;比如我们使用newFixedThreadPool，但是我们没有设置队列的大小，而悲催的是，在java中，线程池队列的默认大小是Integer.MAX_VALUE，我想你自己也能清楚这种情况下会发生什么问题。&lt;br&gt;再比如Executors.newCachedThreadPool，这个接口很多人会用到，但很多用的人都没有仔细想过会不会在某种情况下这里创建出巨多的线程。&lt;/p&gt;
-&lt;h1 id=&quot;2-网络不超时&quot;&gt;&lt;a href=&quot;#2-网络不超时&quot; class=&quot;headerlink&quot; title=&quot;2.网络不超时&quot;&gt;&lt;/a&gt;2.网络不超时&lt;/h1&gt;&lt;p&gt;在服务化设计大行其道的今天，我们很多的服务调用都是通过网络调用进行的。设想一下，如果我们调用的某个服务性能低下或者网络异常，长时间没有返回结果，那么作为调用端你应该怎么办？做缩脖子老等吗？&lt;/p&gt;
-&lt;p&gt;在review代码的时候，这种情况尤其常见，尤其是使用httpclient的时候。&lt;/p&gt;
+&lt;h1 id=&quot;2-网络不超时&quot;&gt;&lt;a href=&quot;#2-网络不超时&quot; class=&quot;headerlink&quot; title=&quot;2.网络不超时&quot;&gt;&lt;/a&gt;2.网络不超时&lt;/h1&gt;&lt;p&gt;这里说的是网络调用的场景不设置超时。&lt;/p&gt;
+&lt;p&gt;在服务化设计大行其道的今天，我们很多的服务调用都是通过网络调用进行的。设想一下，如果我们调用的某个服务性能低下或者网络异常，长时间没有返回结果，那么调用端线程就会一直阻塞在这里。如果没有使用线程池，那么应用会阻塞在这里。如果使用了线程池，那么线程就会长时间阻塞，最终导致线程池爆掉。&lt;/p&gt;
+&lt;p&gt;在review代码的时候，这种情况尤其常见，尤其是使用httpclient的时候，各位看官要多加注意哟。&lt;/p&gt;
 &lt;h1 id=&quot;3-自我不保护&quot;&gt;&lt;a href=&quot;#3-自我不保护&quot; class=&quot;headerlink&quot; title=&quot;3.自我不保护&quot;&gt;&lt;/a&gt;3.自我不保护&lt;/h1&gt;&lt;p&gt;这种情况尤其常见于对外提供接口的情况。对于调用方传过来的参数，我们没有做严格的有效性检查或者限制，最终导致不符合要求的数据将程序搞挂。比如我们提供了一个用户信息批量查询的接口，参数是一个数组。结果是某个调用方传了有1000个元素的数组过来，最终可能直接导致程序内存溢出……这种情况我们能去怪罪调用方吗？严格来说，我们不能，在这里可以借鉴一句经典的话：不要相信前端传来的任何数据。我想对于接口也是一样：不要相信调用端传来的任何数据。&lt;/p&gt;
 &lt;p&gt;还有一种情况就是系统处理能力的保护，最典型的就是QPS。如果我们的系统能够承受的QPS是100，那么如果QPS超过这个数值，我们该怎么办？我想很多人心里已经有了答案了。&lt;/p&gt;
 &lt;h1 id=&quot;4-连接不关闭&quot;&gt;&lt;a href=&quot;#4-连接不关闭&quot; class=&quot;headerlink&quot; title=&quot;4.连接不关闭&quot;&gt;&lt;/a&gt;4.连接不关闭&lt;/h1&gt;&lt;p&gt;这里其实是有两点要强调，连接和流。&lt;/p&gt;
