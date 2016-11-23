@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-11-08T08:43:14.021Z</updated>
+  <updated>2016-11-23T05:32:10.313Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>服务化架构-前言</title>
+    <link href="http://fengfu.io/2016/11/23/%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84-%E5%89%8D%E8%A8%80/"/>
+    <id>http://fengfu.io/2016/11/23/服务化架构-前言/</id>
+    <published>2016-11-23T03:20:00.000Z</published>
+    <updated>2016-11-23T05:32:10.313Z</updated>
+    
+    <content type="html">&lt;p&gt;近两年，微服务的概念逐渐火了起来，而docker的出现，更是在微服务的火上浇了一桶油。纯粹地讲，我不太认同微服务的说法。说白了，你还是一个服务，只是因为你的小微，有些地方你需要特别注意，比如高内聚、低耦合，比如团队规模的“两个披萨”原则等。但其实这些原则对于“服务”的世界来讲，早就是普世价值了。&lt;/p&gt;
+&lt;p&gt;那我们再往前看5年，那时候服务化的架构已经开始在业界崭露头角，比如2011年的时候，阿里把内部的dubbo框架开源了。从当前的标准来看，dubbo并不是一个非常优秀的服务化框架，它有很多缺陷和缺失，但是在5年前，这已经难能可贵了。&lt;/p&gt;
+&lt;p&gt;上周，在朋友的公司做了一次服务化架构的内训。为了准备这个PPT，特地将服务化框架的体系做了一个梳理，因此决定趁热打铁，写个系列博客进行更进一步的总结。&lt;/p&gt;
+&lt;p&gt;这个系列的文章，将从以下几个方面进行总结：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;服务化架构的组成&lt;/li&gt;
+&lt;li&gt;服务注册与发现&lt;/li&gt;
+&lt;li&gt;RPC&lt;/li&gt;
+&lt;li&gt;同步与异步&lt;/li&gt;
+&lt;li&gt;服务依赖管理&lt;/li&gt;
+&lt;li&gt;服务依赖管理&lt;/li&gt;
+&lt;li&gt;服务链路跟踪&lt;/li&gt;
+&lt;li&gt;服务路由&lt;/li&gt;
+&lt;li&gt;服务负载均衡&lt;/li&gt;
+&lt;li&gt;服务降级&lt;/li&gt;
+&lt;li&gt;服务限流&lt;/li&gt;
+&lt;li&gt;服务上下线&lt;/li&gt;
+&lt;li&gt;服务授权&lt;/li&gt;
+&lt;li&gt;服务监控与告警&lt;/li&gt;
+&lt;li&gt;服务版本管理&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近两年，微服务的概念逐渐火了起来，而docker的出现，更是在微服务的火上浇了一桶油。纯粹地讲，我不太认同微服务的说法。说白了，你还是一个服务，只是因为你的小微，有些地方你需要特别注意，比如高内聚、低耦合，比如团队规模的“两个披萨”原则等。但其实这些原则对于“服务”的世界来
+    
+    </summary>
+    
+    
+      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
   
   <entry>
     <title>晋级Review归来话代码有毒</title>
@@ -961,40 +1002,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     
     
       <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>23种设计模式</title>
-    <link href="http://fengfu.io/2015/03/08/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://fengfu.io/2015/03/08/23种设计模式/</id>
-    <published>2015-03-08T12:41:09.000Z</published>
-    <updated>2016-08-24T02:23:00.092Z</updated>
-    
-    <content type="html">&lt;p&gt;设计模式分为3大类（创建型、结构型、行为型），共23种。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建型模式：单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;结构型模式：适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模式；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;行为型模式：模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式；&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;关于建造者模式和工厂模式：&lt;br&gt;当创造一个对象需要很多步骤时适合使用建造者模式。而当只需调用一个方法就可以简单地创建整个对象时适合使用工厂模式。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;设计模式分为3大类（创建型、结构型、行为型），共23种。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建型模式：单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;结构型模式：适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模
-    
-    </summary>
-    
-    
-      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
