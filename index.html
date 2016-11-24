@@ -68,6 +68,73 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-服务化架构-组成" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/23/服务化架构-组成/" class="article-date">
+  <time datetime="2016-11-23T06:21:06.000Z" itemprop="datePublished">2016-11-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/23/服务化架构-组成/">服务化架构-组成</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="功能结构"><a href="#功能结构" class="headerlink" title="功能结构"></a>功能结构</h1><p>既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有一个地方存储provider的信息，便于consumer调用，那么这个角色就是注册中心(registry)。</p>
+<p>另外，鉴于分布式系统的复杂性和状态多样性，我们需要对provider、consumer、registry进行管理，比如服务依赖管理、权限管理、配置管理、版本管理、流量控制、服务上下线等，那么管理端(administrator)也就成了标配。</p>
+<p>所以综上所述，一个完整的分布式服务化架构，应该包含4部分：</p>
+<ol>
+<li>注册中心Registry</li>
+<li>服务提供端Provider</li>
+<li>服务消费端Consumer</li>
+<li>管理端Administrator</li>
+</ol>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2_wgncKNOdeFjSZFBXXctzXXa_!!2657627814.png" alt=""></p>
+<p>其中，Provider将自己能够提供的服务信息登记到注册中心，同时通过心跳的方式定时更新自己的状态。Consumer从Registry获取可用服务信息后，直接与Provider建立连接进行交互。</p>
+<p>这种架构，基于RPC的服务框架如dubbo/dubbox，JSF都是采用这种机制。</p>
+<p>另外，一些基于REST的服务框架（比如Spring Cloud）会增加服务路由的组件，也就是说Consumer需要经过服务路由才能请求Provider，这种方式下，其架构就是由5部分组成：</p>
+<ol>
+<li>注册中心Registry</li>
+<li>服务提供端Provider</li>
+<li>服务消费端Consumer</li>
+<li>服务路由Router</li>
+<li>管理端Administrator</li>
+</ol>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB29vfhdNaJ.eBjSsziXXaJ_XXa_!!2657627814.png" alt=""></p>
+<p>经由服务路由调用的方式，典型的代表是Spring Cloud，如下图：</p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB28lS_dH1J.eBjSszcXXbFzVXa_!!2657627814.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/11/23/服务化架构-组成/" data-id="civw508j4000ktsushtqut8zw" class="article-share-link" data-share="baidu" data-title="服务化架构-组成">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/11/23/服务化架构-组成/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-服务化架构-前言" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/23/服务化架构-前言/" class="article-date">
@@ -100,7 +167,6 @@
 <li>RPC</li>
 <li>同步与异步</li>
 <li>服务依赖管理</li>
-<li>服务依赖管理</li>
 <li>服务链路跟踪</li>
 <li>服务路由</li>
 <li>服务负载均衡</li>
@@ -116,7 +182,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/11/23/服务化架构-前言/" data-id="civuhvfuq0000s4usyarr1qdi" class="article-share-link" data-share="baidu" data-title="服务化架构-前言">分享到</a>
+        <a data-url="http://fengfu.io/2016/11/23/服务化架构-前言/" data-id="civw508j9000mtsusp1tz504a" class="article-share-link" data-share="baidu" data-title="服务化架构-前言">分享到</a>
       
 
       
@@ -210,7 +276,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/10/27/晋级Review归来话代码有毒/" data-id="civuhujs2000oqcusdpnuxc3b" class="article-share-link" data-share="baidu" data-title="晋级Review归来话代码有毒">分享到</a>
+        <a data-url="http://fengfu.io/2016/10/27/晋级Review归来话代码有毒/" data-id="civw508jh000qtsusvyr3e8f0" class="article-share-link" data-share="baidu" data-title="晋级Review归来话代码有毒">分享到</a>
       
 
       
@@ -305,7 +371,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/10/24/让你变成优秀程序员的几个小习惯/" data-id="civuhujra0008qcusvwgzluye" class="article-share-link" data-share="baidu" data-title="让你变成优秀程序员的几个小习惯(转)">分享到</a>
+        <a data-url="http://fengfu.io/2016/10/24/让你变成优秀程序员的几个小习惯/" data-id="civw508il0008tsuswdt5qskz" class="article-share-link" data-share="baidu" data-title="让你变成优秀程序员的几个小习惯(转)">分享到</a>
       
 
       
@@ -379,7 +445,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/23/接口文档参考模板/" data-id="civuhujs4000qqcus83c72asa" class="article-share-link" data-share="baidu" data-title="接口文档参考模板">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/23/接口文档参考模板/" data-id="civw508jk000stsushompt9ld" class="article-share-link" data-share="baidu" data-title="接口文档参考模板">分享到</a>
       
 
       
@@ -441,7 +507,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/22/晋级Review归来话答辩/" data-id="civuhujry000mqcuskjku1ah3" class="article-share-link" data-share="baidu" data-title="晋级Review归来话答辩">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/22/晋级Review归来话答辩/" data-id="civw508jd000otsus7bchjuxl" class="article-share-link" data-share="baidu" data-title="晋级Review归来话答辩">分享到</a>
       
 
       
@@ -500,7 +566,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/" data-id="civuhujr50006qcus060dgikn" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-建模">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/" data-id="civw508ih0006tsus60cyurdk" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-建模">分享到</a>
       
 
       
@@ -620,7 +686,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" data-id="civuhujsm000zqcus4to0uu0a" class="article-share-link" data-share="baidu" data-title="关键业务系统的JVM启动参数推荐2.0版[转]">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" data-id="civw508k20011tsusnizidk04" class="article-share-link" data-share="baidu" data-title="关键业务系统的JVM启动参数推荐2.0版[转]">分享到</a>
       
 
       
@@ -688,7 +754,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/07/30/读书笔记-微服务设计/" data-id="civuhujqp0003qcuskedno2ta" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-入门">分享到</a>
+        <a data-url="http://fengfu.io/2016/07/30/读书笔记-微服务设计/" data-id="civw508i30003tsusku1wu2nf" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-入门">分享到</a>
       
 
       
@@ -772,7 +838,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/" data-id="civuhujto001jqcusoun6cvi5" class="article-share-link" data-share="baidu" data-title="CTO、技术总监、首席架构师的区别(转)">分享到</a>
+        <a data-url="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/" data-id="civw508l4001ltsus50g4c5q5" class="article-share-link" data-share="baidu" data-title="CTO、技术总监、首席架构师的区别(转)">分享到</a>
       
 
       
@@ -781,69 +847,6 @@ future.setCallback(new ResponseCallback(){
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JVM-垃圾回收器CMS之各阶段整理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" class="article-date">
-  <time datetime="2016-06-21T07:50:22.000Z" itemprop="datePublished">2016-06-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/">JVM 垃圾回收器CMS之各阶段总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>先贴一张图：</p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2HFD0qVXXXXblXpXXXXXXXXXX_!!2657627814.jpg" alt=""></p>
-<h2 id="1-初始标记阶段-CMS-initial-mark"><a href="#1-初始标记阶段-CMS-initial-mark" class="headerlink" title="1.初始标记阶段(CMS-initial-mark)"></a>1.初始标记阶段(CMS-initial-mark)</h2><p>  这个阶段的主要任务是找到堆中所有的垃圾回收根节点对象，这个阶段会暂停所有的应用程序线程，即STW(Stop the world)。此阶段会打印1行日志，如下：</p>
-<pre><code>[GC [1 CMS-initial-mark: 2905437K(4096000K)] 3134625K(5916480K), 0.2551680 secs] [Times: user=0.26 sys=0.00, real=0.25 secs]
-</code></pre><p>其中第一组数据，第一对数据标识老年代实际占用的空间大小和老年代分配的空间大小，第二对数据标识整个堆的实际使用情况和分配的堆的空间。<br>细心的人可能发现了CMS-initial-mark前面的数字“1”，这个标志代表了STW，在后面的“重新标记”阶段，你也会发现这个标志。这正好与上面图中说明的阶段是对应的。</p>
-<h2 id="2-标记阶段-CMS-concurrent-mark"><a href="#2-标记阶段-CMS-concurrent-mark" class="headerlink" title="2.标记阶段(CMS-concurrent-mark)"></a>2.标记阶段(CMS-concurrent-mark)</h2><p>  这个阶段是和应用线程并发执行的，所谓并发收集器指的就是这个，主要作用是标记可达的对象。由于只是进行标记，所以不会对堆的占用产生实质的改变。</p>
-<pre><code>2016-06-21T16:38:53.911+0800: 367848.849: [CMS-concurrent-mark-start]
-2016-06-21T16:38:57.241+0800: 367852.178: [CMS-concurrent-mark: 2.787/3.329 secs] [Times: user=12.12 sys=0.64, real=3.33 secs]
-</code></pre><p>这个阶段会打印2行日志，第一行CMS-concurrent-mark-start标识标记阶段开始。第二行中的“2.787/3.329 secs”表示标记阶段的耗时。后面的“user=12.12”表示占用的cpu时间(此JVM运行的服务器CPU为4核)。</p>
-<h2 id="3-预清理阶段-CMS-concurrent-preclean"><a href="#3-预清理阶段-CMS-concurrent-preclean" class="headerlink" title="3.预清理阶段(CMS-concurrent-preclean)"></a>3.预清理阶段(CMS-concurrent-preclean)</h2><p>  在之前的标记阶段，标记和应用线程是并发执行的，因此有些对象的状态在标记后会发生改变。这个阶段只要是发现从新生代晋升的对象、新分配到老年代的对象以及在标记阶段被修改了的对象。<br>  这个阶段也会打印2行日志，跟标记阶段类似。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:38:57.241+0800: 367852.178: [CMS-concurrent-preclean-start]&#10;2016-06-21T16:38:57.718+0800: 367852.655: [CMS-concurrent-preclean: 0.342/0.477 secs] [Times: user=1.79 sys=0.10, real=0.48 secs]</span><br></pre></td></tr></table></figure>
-<h2 id="4-重新标记阶段"><a href="#4-重新标记阶段" class="headerlink" title="4.重新标记阶段"></a>4.重新标记阶段</h2><p>  可中断预清理阶段是在JDK1.5中加入的。这个阶段是CMS中比较复杂的一个阶段，因为在这个阶段，JVM会执行很多操作。<br>  首先是CMS-concurrent-abortable-preclean，可中断的预清理。我们可能要问，既然再上一个阶段已经执行了预清理了，为什么还要再做一次？我们知道，CMS是以获取最短停顿时间为目的的GC，所以简单说进行可中断预清理的目的就是希望尽量缩短停顿的时间。<br>  可中断预清理涉及几个参数：<br>  -XX:CMSMaxAbortablePrecleanTime：当abortable-preclean阶段执行达到这个时间时才会结束<br>  -XX:CMSScheduleRemarkEdenSizeThreshold（默认2m）：控制abortable-preclean阶段什么时候开始执行，即当eden使用达到此值时，才会开始abortable-preclean阶段<br>  -XX:CMSScheduleRemarkEdenPenetratio（默认50%）：控制abortable-preclean阶段什么时候结束执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:38:57.718+0800: 367852.656: [CMS-concurrent-abortable-preclean-start]&#10;2016-06-21T16:38:58.801+0800: 367853.738: [CMS-concurrent-abortable-preclean: 0.920/1.083 secs] [Times: user=4.06 sys=0.20, real=1.08 secs]&#10;2016-06-21T16:38:58.808+0800: 367853.746: [GC[YG occupancy: 777901 K (1820480 K)]367853.746: [Rescan (parallel) , 0.1361120 secs]367853.882: [weak refs processing, 0.0005370 secs]367853.883: [scrub string table, 0.0044130 secs] [1 CMS-remark: 3034451K(4096000K)] 3812352K(5916480K), 0.1412750 secs] [Times: user=0.54 sys=0.00, real=0.14 secs]</span><br></pre></td></tr></table></figure>
-<p>  其次，是Rescan操作，此阶段暂停应用线程，对对象进行重新扫描并标记。通过上面的日志我们可以看到，在CMS-remark的时候有一次STW。另外，这个过程还会打印出弱引用处理、类卸载等过程的耗时。</p>
-<h2 id="5-清除阶段-CMS-concurrent-sweep"><a href="#5-清除阶段-CMS-concurrent-sweep" class="headerlink" title="5.清除阶段(CMS-concurrent-sweep)"></a>5.清除阶段(CMS-concurrent-sweep)</h2><p>  这个阶段开始进行垃圾的清理工作，此时应用线程被重新激活，回收线程与应用线程并发运行，那些无效的对象被清理掉。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:38:58.950+0800: 367853.888: [CMS-concurrent-sweep-start]&#10;2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-sweep: 5.656/6.900 secs] [Times: user=25.88 sys=1.28, real=6.90 secs]</span><br></pre></td></tr></table></figure>
-<h2 id="6-初始标记阶段-CMS-concurrent-reset"><a href="#6-初始标记阶段-CMS-concurrent-reset" class="headerlink" title="6.初始标记阶段(CMS-concurrent-reset)"></a>6.初始标记阶段(CMS-concurrent-reset)</h2><p>  这是CMS一个回收周期的最后一个阶段，在这个阶段，CMS会清除内部状态，为下次回收做准备。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-reset-start]&#10;2016-06-21T16:39:05.860+0800: 367860.798: [CMS-concurrent-reset: 0.010/0.010 secs] [Times: user=0.04 sys=0.00, real=0.01 secs]</span><br></pre></td></tr></table></figure>
-<p>  至此，一个CMS周期结束。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" data-id="civuhujtg001eqcustgkao2ku" class="article-share-link" data-share="baidu" data-title="JVM 垃圾回收器CMS之各阶段总结">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -867,7 +870,7 @@ future.setCallback(new ResponseCallback(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -885,7 +888,7 @@ future.setCallback(new ResponseCallback(){
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -895,6 +898,10 @@ future.setCallback(new ResponseCallback(){
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/11/23/服务化架构-组成/">服务化架构-组成</a>
+          </li>
         
           <li>
             <a href="/2016/11/23/服务化架构-前言/">服务化架构-前言</a>
@@ -910,10 +917,6 @@ future.setCallback(new ResponseCallback(){
         
           <li>
             <a href="/2016/08/23/接口文档参考模板/">接口文档参考模板</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/22/晋级Review归来话答辩/">晋级Review归来话答辩</a>
           </li>
         
       </ul>

@@ -4,17 +4,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2016/7 | 宁静·致远</title>
+  <title>服务化架构-组成 | 宁静·致远</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="宁静·致远">
-<meta property="og:url" content="http://fengfu.io/archives/2016/07/index.html">
+  <meta name="description" content="功能结构既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有一个地方存储provider的信息，便于consumer调用，那么这个角色就是注册中心(registry)。
+另外，鉴于分布式系统的复杂性和状态多样性，我们需要对provider、consumer、registry进行管理，比如服务依赖管理、权限管理、配置管理、版本管">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务化架构-组成">
+<meta property="og:url" content="http://fengfu.io/2016/11/23/服务化架构-组成/index.html">
 <meta property="og:site_name" content="宁静·致远">
-<meta property="og:description">
+<meta property="og:description" content="功能结构既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有一个地方存储provider的信息，便于consumer调用，那么这个角色就是注册中心(registry)。
+另外，鉴于分布式系统的复杂性和状态多样性，我们需要对provider、consumer、registry进行管理，比如服务依赖管理、权限管理、配置管理、版本管">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2_wgncKNOdeFjSZFBXXctzXXa_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB29vfhdNaJ.eBjSsziXXaJ_XXa_!!2657627814.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB28lS_dH1J.eBjSszcXXbFzVXa_!!2657627814.jpg">
+<meta property="og:updated_time" content="2016-11-24T09:08:27.741Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="宁静·致远">
-<meta name="twitter:description">
+<meta name="twitter:title" content="服务化架构-组成">
+<meta name="twitter:description" content="功能结构既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有一个地方存储provider的信息，便于consumer调用，那么这个角色就是注册中心(registry)。
+另外，鉴于分布式系统的复杂性和状态多样性，我们需要对provider、consumer、registry进行管理，比如服务依赖管理、权限管理、配置管理、版本管">
   
     <link rel="alternative" href="/atom.xml" title="宁静·致远" type="application/atom+xml">
   
@@ -66,40 +73,87 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/07/30/读书笔记-微服务设计/" class="archive-article-date">
-  <time datetime="2016-07-30T03:11:37.000Z" itemprop="datePublished">7月 30</time>
+      <section id="main"><article id="post-服务化架构-组成" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/23/服务化架构-组成/" class="article-date">
+  <time datetime="2016-11-23T06:21:06.000Z" itemprop="datePublished">2016-11-23</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/07/30/读书笔记-微服务设计/">读书笔记:微服务设计-入门</a>
+    <h1 class="article-title" itemprop="name">
+      服务化架构-组成
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="功能结构"><a href="#功能结构" class="headerlink" title="功能结构"></a>功能结构</h1><p>既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有一个地方存储provider的信息，便于consumer调用，那么这个角色就是注册中心(registry)。</p>
+<p>另外，鉴于分布式系统的复杂性和状态多样性，我们需要对provider、consumer、registry进行管理，比如服务依赖管理、权限管理、配置管理、版本管理、流量控制、服务上下线等，那么管理端(administrator)也就成了标配。</p>
+<p>所以综上所述，一个完整的分布式服务化架构，应该包含4部分：</p>
+<ol>
+<li>注册中心Registry</li>
+<li>服务提供端Provider</li>
+<li>服务消费端Consumer</li>
+<li>管理端Administrator</li>
+</ol>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2_wgncKNOdeFjSZFBXXctzXXa_!!2657627814.png" alt=""></p>
+<p>其中，Provider将自己能够提供的服务信息登记到注册中心，同时通过心跳的方式定时更新自己的状态。Consumer从Registry获取可用服务信息后，直接与Provider建立连接进行交互。</p>
+<p>这种架构，基于RPC的服务框架如dubbo/dubbox，JSF都是采用这种机制。</p>
+<p>另外，一些基于REST的服务框架（比如Spring Cloud）会增加服务路由的组件，也就是说Consumer需要经过服务路由才能请求Provider，这种方式下，其架构就是由5部分组成：</p>
+<ol>
+<li>注册中心Registry</li>
+<li>服务提供端Provider</li>
+<li>服务消费端Consumer</li>
+<li>服务路由Router</li>
+<li>管理端Administrator</li>
+</ol>
+<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB29vfhdNaJ.eBjSsziXXaJ_XXa_!!2657627814.png" alt=""></p>
+<p>经由服务路由调用的方式，典型的代表是Spring Cloud，如下图：</p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB28lS_dH1J.eBjSszcXXbFzVXa_!!2657627814.jpg" alt=""></p>
 
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/11/23/服务化架构-组成/" data-id="civw508j4000ktsushtqut8zw" class="article-share-link" data-share="baidu" data-title="服务化架构-组成">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/11/23/服务化架构-组成/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/23/服务化架构-前言/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">服务化架构-前言</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/11/23/服务化架构-组成/" data-title="服务化架构-组成" data-url="http://fengfu.io/2016/11/23/服务化架构-组成/"></div>
+  </section>
 </section>
       
       <aside id="sidebar">
