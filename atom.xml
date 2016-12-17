@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fengfu.io/"/>
-  <updated>2016-11-24T09:08:27.741Z</updated>
+  <updated>2016-12-16T14:16:45.388Z</updated>
   <id>http://fengfu.io/</id>
   
   <author>
@@ -14,6 +14,102 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jcmd命令详解</title>
+    <link href="http://fengfu.io/2016/12/03/jcmd%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://fengfu.io/2016/12/03/jcmd命令详解/</id>
+    <published>2016-12-03T08:28:59.000Z</published>
+    <updated>2016-12-16T14:16:45.388Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对jcmd的介绍:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The jcmd utility is used to send diagnostic command requests to the JVM, where these requests are useful for controlling Java Flight Recordings, troubleshoot, and diagnose JVM and Java Applications. It must be used on the same machine where the JVM is running, and have the same effective user and group identifiers that were used to launch the JVM.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;翻译成人话就是：&lt;br&gt;jcmd一个用来发送诊断命令请求到JVM的工具，这些请求对于控制Java飞行记录器、故障排除、JVM和Java应用诊断来说是比较有用的。jcmd必须与正在运行的JVM在同一台机器上使用，并且使用启动该JVM时的用户权限。&lt;/p&gt;
+&lt;p&gt;jcmd的用法有以下几种:&lt;br&gt;&lt;code&gt;jcmd [ options ]&lt;/code&gt;&lt;br&gt;&lt;code&gt;jcmd [ pid | main-class ] PerfCounter.print&lt;/code&gt;&lt;br&gt;&lt;code&gt;jcmd [ pid | main-class ] command [ arguments ]&lt;/code&gt;&lt;br&gt;&lt;code&gt;jcmd [ pid | main-class ] -f file&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;使用不带参数或参数-l，jcmd 将打印运行的Java进程的列表信息，其中包括进程ID、main类和它们的命令行参数。&lt;br&gt;如果在命令行中指定进程ID，jcmd 将向该进程ID的Java进程发送至诊断命令请求。&lt;br&gt;如果在命令行中指定main类，jcmd 将向main类包含该子字符串的所有Java进程发送诊断命令请求。&lt;br&gt;如果使用PerfCounter.print 参数，jcmd 打印目标Java进程上可用的性能计数器。&lt;br&gt;如果使用-f 选项参数，jcmd 将向目标Java进程发送file中存储的诊断命令。&lt;/p&gt;
+&lt;p&gt;其中command的说明如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;命令&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;help&lt;/td&gt;
+&lt;td&gt;打印帮助信息，示例：&lt;code&gt;jcmd &amp;lt;PID&amp;gt; help [&amp;lt;command name&amp;gt;]&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ManagementAgent.stop&lt;/td&gt;
+&lt;td&gt;停止JMX Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ManagementAgent.start_local&lt;/td&gt;
+&lt;td&gt;开启本地JMX Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ManagementAgent.start&lt;/td&gt;
+&lt;td&gt;开启JMX Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Thread.print&lt;/td&gt;
+&lt;td&gt;参数-l打印java.util.concurrent锁信息，相当于：&lt;code&gt;jstack &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PerfCounter.print&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jstat -J-Djstat.showUnsupported=true -snap &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.class_histogram&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jmap -histo &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.heap_dump&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jmap -dump:format=b,file=xxx.bin &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.run_finalization&lt;/td&gt;
+&lt;td&gt;相当于：System.runFinalization()&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.run&lt;/td&gt;
+&lt;td&gt;相当于：System.gc()&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.uptime&lt;/td&gt;
+&lt;td&gt;参数-date打印当前时间，VM启动到现在的时候，以秒为单位显示&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.flags&lt;/td&gt;
+&lt;td&gt;参数-all输出全部，相当于：&lt;code&gt;jinfo -flags &amp;lt;PID&amp;gt;, jinfo -flag &amp;lt;VM FLAG&amp;gt; &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.system_properties&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jinfo -sysprops &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.command_line&lt;/td&gt;
+&lt;td&gt;相当于：jinfo -sysprops &lt;pid&gt; &amp;vert; grep command&lt;/pid&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.version&lt;/td&gt;
+&lt;td&gt;相当于：jinfo -sysprops &lt;pid&gt; &amp;vert; grep version&lt;/pid&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>服务化架构-组成</title>
@@ -948,63 +1044,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
     
       &lt;p&gt;ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。&lt;/p&gt;
 &lt;p&gt;ATPCO项目经历的
-    
-    </summary>
-    
-    
-      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ATPCO项目总结-技术篇</title>
-    <link href="http://fengfu.io/2015/12/28/ATPCO%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93--%E6%8A%80%E6%9C%AF%E7%AF%87/"/>
-    <id>http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/</id>
-    <published>2015-12-28T12:41:09.000Z</published>
-    <updated>2016-02-27T13:50:52.397Z</updated>
-    
-    <content type="html">&lt;p&gt;接着上篇写，这一篇从技术方面来总结一下ATPCO项目。&lt;/p&gt;
-&lt;h1 id=&quot;1-项目特点&quot;&gt;&lt;a href=&quot;#1-项目特点&quot; class=&quot;headerlink&quot; title=&quot;1.项目特点&quot;&gt;&lt;/a&gt;1.项目特点&lt;/h1&gt;&lt;p&gt;ATPCO是一个业务性非常强的项目，主要体现在以下几点：&lt;/p&gt;
-&lt;h2 id=&quot;1）规则复杂&quot;&gt;&lt;a href=&quot;#1）规则复杂&quot; class=&quot;headerlink&quot; title=&quot;1）规则复杂&quot;&gt;&lt;/a&gt;1）规则复杂&lt;/h2&gt;&lt;p&gt;ATPCO提供的数据主要分为：Fares、Rules、Routings三类数据。其中Fare与Rules、Routings存在强关联。Rules中包含了8类Record数据，即Record1-Record8。其中Record3中又划分成35项Category。每一个Category分别表示一类运价规则，如Cat1表示乘客类型的规则，Cat2表示适用航班的规则，Cat3表示淡旺季规则……&lt;/p&gt;
-&lt;h2 id=&quot;2）计算量大&quot;&gt;&lt;a href=&quot;#2）计算量大&quot; class=&quot;headerlink&quot; title=&quot;2）计算量大&quot;&gt;&lt;/a&gt;2）计算量大&lt;/h2&gt;&lt;p&gt;ATPCO中公布运价数据有9000万条，Rules数据有1亿多条，每个Fare平均关联20多条Rules数据。Fare不仅需要与Rules、Routings进行匹配，还需要与Av（此AV指航班可用座位，不是那个AV）进行匹配。用户一次搜索可能会引起几十万的计算量，如果在短时间内快速计算出结果？可以肯定的一点是：普通的单机计算是行不通的。&lt;/p&gt;
-&lt;h2 id=&quot;3）算法复杂&quot;&gt;&lt;a href=&quot;#3）算法复杂&quot; class=&quot;headerlink&quot; title=&quot;3）算法复杂&quot;&gt;&lt;/a&gt;3）算法复杂&lt;/h2&gt;&lt;p&gt;这里说的算法复杂主要集中在航路规划方面。目前全球有4000多城市，5000多机场。理论上两个机场都是可以到达的。那么我们可以想象从一个城市到另外一个城市的路径图就是这个样子了：&lt;br&gt;&lt;img src=&quot;http://i.imgur.com/SweamdD.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;是不是很晕？晕就对了，我们在这个坑里面已经1年了，估计航信、携程的同学更能感同身受吧。&lt;/p&gt;
-&lt;h1 id=&quot;2-业务抽象&quot;&gt;&lt;a href=&quot;#2-业务抽象&quot; class=&quot;headerlink&quot; title=&quot;2.业务抽象&quot;&gt;&lt;/a&gt;2.业务抽象&lt;/h1&gt;&lt;p&gt;上面已经提到，ATPCO的规则比较复杂，那么相应的转换到技术层面，其业务抽象也会比较有挑战。好在我们有Carl de Marcken（ITA创始人，后被Google收购）这位大牛，他写的几篇专利文章为我们提供了极大的帮助，在此再度膜拜一下。参考Carl的专利，我们抽象出了Itinerary、Journey、Pricing Unit、Fare Component几个关键模型，并根据这些模型搭建了整个系统的框架和接口。&lt;br&gt;在其他方面的抽象，我们做得其实不太好。比如搜索条件，我们的业务抽象并不能适应所有的场景，比如多程、缺口程。一方面是我们对业务的理解不够深入，另外一方面也是在设计方面，我们做得还不够好。有时间需要补一下DDD(领域驱动设计)的知识并加以实践了。&lt;/p&gt;
-&lt;h1 id=&quot;3-技术框架&quot;&gt;&lt;a href=&quot;#3-技术框架&quot; class=&quot;headerlink&quot; title=&quot;3.技术框架&quot;&gt;&lt;/a&gt;3.技术框架&lt;/h1&gt;&lt;h2 id=&quot;空间换时间之殇&quot;&gt;&lt;a href=&quot;#空间换时间之殇&quot; class=&quot;headerlink&quot; title=&quot;空间换时间之殇&quot;&gt;&lt;/a&gt;空间换时间之殇&lt;/h2&gt;&lt;p&gt;从技术框架的层面，应该是这篇总结里面需要长篇叙述的了，因为这个层面踩过的坑还是很多的。&lt;br&gt;在项目初期，考虑到ATPCO涉及的数据量和计算量比较大，我们决定采用空间换时间的方式，即事先把数据组装好，在搜索的时候直接使用事先计算好的数据以减少响应时间。这种方式后来被证明是错误的，因为事先组装数据的方式意味着一旦数据有变化，事先生成的数据就需要重新生成，而在我们对ATPCO规则理解不断深入的情况下，这种情况是非常频繁的。另一方面，如果需要调整计算模型，或者系统有bug，那么所有数据就需要重跑。在这种机制下，整个系统好比一艘航空母舰，庞大、笨重，如果需要转身，我们只能默默地等待……&lt;/p&gt;
-&lt;h2 id=&quot;简单为美&quot;&gt;&lt;a href=&quot;#简单为美&quot; class=&quot;headerlink&quot; title=&quot;简单为美&quot;&gt;&lt;/a&gt;简单为美&lt;/h2&gt;&lt;p&gt;因为历史原因，我们在接手ATPCO的同事，还负责维护另外一个比较老的公布运价系统。为了兼容老的系统，我们在收到用户请求后，分别调用老系统、新系统，收到结果后进行合并，并返回给调用端。这样的好处是能够保证新、老系统互不影响，一个系统出问题的时候，另外一个系统依然能够提供服务。但是这样的设计也有弊端，因为增加了请求分发、数据合并的环节，中间环节变多，势必导致复杂性升高，同时效率降低，势必也会导致响应时间变长。&lt;/p&gt;
-&lt;p&gt;很多时候，简单跟高效是成正比的。就像AK47一样，因为设计简单，其结果就是很少出故障，而且维护简单。比如在越战时期，很多美军士兵宁可使用捡到的AK47步枪，也不愿使用自己的M16，因为M16结构复杂而且容易卡壳，在战场上枪支卡壳那可是丢性命的事情……&lt;/p&gt;
-&lt;p&gt;由此引申出来的问题就是，不管是做系统架构设计、还是模块设计，都应该遵循简单为美的原则。只有简单，系统才容易理解，才容易维护，才会高效运转。所以当我们头脑中有方案的时候，要多问问自己，这是否已经是最简单高效的方案了。&lt;/p&gt;
-&lt;h2 id=&quot;优雅的服务化&quot;&gt;&lt;a href=&quot;#优雅的服务化&quot; class=&quot;headerlink&quot; title=&quot;优雅的服务化&quot;&gt;&lt;/a&gt;优雅的服务化&lt;/h2&gt;&lt;p&gt;在构建一个复杂系统的时候，如果系统内部功能彼此独立，那么可以考虑采用服务化的方式：即各子系统之间协商好服务接口，彼此通过服务的方式进行调用。这样的好处是各系统之间互相独立，互不影响。这样能够提高系统自身的扩展性、可维护性，并降低系统间的耦合性。ATPCO系统按照功能特点，划分成了Processor、Planner、Searcher、Engine四个子系统，系统与系统之间通过dubbo的方式进行调用。这种方式使得开发人员只关注自己的业务逻辑实现即可，因此能够提升自身的开发效率。当然这种方式的弊端就是服务之间调用时的沟通、联调、排错成本相对较高，但是相比因此带来的整体效率提升，这点成本还是可以接受的。&lt;/p&gt;
-&lt;p&gt;目前在互联网行业，服务化的理念已经深入人心，包括现在逐渐流行的微服务。在此借鉴著名SOA专家Thomas Erl的归纳的服务设计原则：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;标准化的服务契约 Standardized service contract&lt;/li&gt;
-&lt;li&gt;服务的松耦合 Service loose coupling&lt;/li&gt;
-&lt;li&gt;服务的抽象 Service abstraction&lt;/li&gt;
-&lt;li&gt;服务的可重用性 Service reusability&lt;/li&gt;
-&lt;li&gt;服务的自治性 Service autonomy&lt;/li&gt;
-&lt;li&gt;服务的无状态性 Service statelessness&lt;/li&gt;
-&lt;li&gt;服务的可发现性 Service discoverability&lt;/li&gt;
-&lt;li&gt;服务的可组合性 Service composability&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;当然如果如果一个系统中有很多同质化的服务或子系统，那么在系统稳定后，可以考虑将这些服务合并，以降低维护成本。我曾经听一个同事讲过他维护的一个与外部航司交互的接口群，每个接口都是一个子系统，一共有20多个子系统。这种系统维护的时候就比较麻烦，因为某些业务策略的修改可能要修改所有的子系统，这种情况下就可以考虑将服务合并，以降低维护的成本。&lt;/p&gt;
-&lt;h2 id=&quot;分布式的挑战&quot;&gt;&lt;a href=&quot;#分布式的挑战&quot; class=&quot;headerlink&quot; title=&quot;分布式的挑战&quot;&gt;&lt;/a&gt;分布式的挑战&lt;/h2&gt;&lt;p&gt;ATPCO系统是一个计算密集型的系统，一个用户请求可能会产生几十万次的计算。在这种情况下，单机的计算能力将会成为整个系统的瓶颈，因此必须采用分布式计算的方式将巨大的计算量拆分到不同的机器上进行处理，最终将结果合并。这里所说的分布式计算有2种方式：一种是采用MapReduce的方式，即将数据分发到不同的机器上进行处理；另外一种方式就是RDD(Resilient Distributed Dataset)的方式，即将算法分发到不同的机器上，由各自己自行读取数据进行处理。&lt;/p&gt;
-&lt;p&gt;在ATPCO系统中，我们计划采用第二种方式实现分布式计算。之所以说计划，是因为目前只是制定了方案，但并没有投入应用，相信这不会太久。&lt;/p&gt;
-&lt;p&gt;分布式的另外一个应用方向就是对于ATPCO文件的处理。ATPCO每个小时都会给我们推送新的数据，如果我们的系统有问题的时候，很有可能需要从最初的文件重新处理。如果堆积了几个月的文件需要重跑，那么这将是一个灾难。于是我们采用了分布式处理的方式，即由多台机器按发布航司分别处理数据，这样系统的处理能力可以成倍增加，比如我用10台机器重新处理数据，那么其速度将是以前单机处理时的10倍。这样的话，我们就再也不用担心重跑数据了，O(∩_∩)O哈哈~&lt;/p&gt;
-&lt;h2 id=&quot;4-技术管理&quot;&gt;&lt;a href=&quot;#4-技术管理&quot; class=&quot;headerlink&quot; title=&quot;4.技术管理&quot;&gt;&lt;/a&gt;4.技术管理&lt;/h2&gt;&lt;p&gt;技术管理这个事情可以新开一篇blog来总结了，在此只说关键的几点吧：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;招聘，人才是最重要的，创意人才(来自谷歌的《重新定义公司》一书)更重要！&lt;/li&gt;
-&lt;li&gt;技术路线/框架制定，并根据反馈适时调整&lt;/li&gt;
-&lt;li&gt;参与关键技术问题的攻克&lt;/li&gt;
-&lt;li&gt;代码review，这一点很重要，但是也很容易忽略&lt;/li&gt;
-&lt;li&gt;团队激励，将团队捏合成一个整体，团队协同，群策群力才能成功&lt;/li&gt;
-&lt;li&gt;技术创新，科技是第一生产力&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;接着上篇写，这一篇从技术方面来总结一下ATPCO项目。&lt;/p&gt;
-&lt;h1 id=&quot;1-项目特点&quot;&gt;&lt;a href=&quot;#1-项目特点&quot; class=&quot;headerlink&quot; title=&quot;1.项目特点&quot;&gt;&lt;/a&gt;1.项目特点&lt;/h1&gt;&lt;p&gt;ATPCO是一个业务性非常强的项目，主
     
     </summary>
     

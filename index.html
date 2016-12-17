@@ -68,6 +68,126 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-jcmd命令详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/03/jcmd命令详解/" class="article-date">
+  <time datetime="2016-12-03T08:28:59.000Z" itemprop="datePublished">2016-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/03/jcmd命令详解/">jcmd命令详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对jcmd的介绍:</p>
+<p><em>The jcmd utility is used to send diagnostic command requests to the JVM, where these requests are useful for controlling Java Flight Recordings, troubleshoot, and diagnose JVM and Java Applications. It must be used on the same machine where the JVM is running, and have the same effective user and group identifiers that were used to launch the JVM.</em></p>
+<p>翻译成人话就是：<br>jcmd一个用来发送诊断命令请求到JVM的工具，这些请求对于控制Java飞行记录器、故障排除、JVM和Java应用诊断来说是比较有用的。jcmd必须与正在运行的JVM在同一台机器上使用，并且使用启动该JVM时的用户权限。</p>
+<p>jcmd的用法有以下几种:<br><code>jcmd [ options ]</code><br><code>jcmd [ pid | main-class ] PerfCounter.print</code><br><code>jcmd [ pid | main-class ] command [ arguments ]</code><br><code>jcmd [ pid | main-class ] -f file</code></p>
+<p>使用不带参数或参数-l，jcmd 将打印运行的Java进程的列表信息，其中包括进程ID、main类和它们的命令行参数。<br>如果在命令行中指定进程ID，jcmd 将向该进程ID的Java进程发送至诊断命令请求。<br>如果在命令行中指定main类，jcmd 将向main类包含该子字符串的所有Java进程发送诊断命令请求。<br>如果使用PerfCounter.print 参数，jcmd 打印目标Java进程上可用的性能计数器。<br>如果使用-f 选项参数，jcmd 将向目标Java进程发送file中存储的诊断命令。</p>
+<p>其中command的说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>help</td>
+<td>打印帮助信息，示例：<code>jcmd &lt;PID&gt; help [&lt;command name&gt;]</code></td>
+</tr>
+<tr>
+<td>ManagementAgent.stop</td>
+<td>停止JMX Agent</td>
+</tr>
+<tr>
+<td>ManagementAgent.start_local</td>
+<td>开启本地JMX Agent</td>
+</tr>
+<tr>
+<td>ManagementAgent.start</td>
+<td>开启JMX Agent</td>
+</tr>
+<tr>
+<td>Thread.print</td>
+<td>参数-l打印java.util.concurrent锁信息，相当于：<code>jstack &lt;PID&gt;</code></td>
+</tr>
+<tr>
+<td>PerfCounter.print</td>
+<td>相当于：<code>jstat -J-Djstat.showUnsupported=true -snap &lt;PID&gt;</code></td>
+</tr>
+<tr>
+<td>GC.class_histogram</td>
+<td>相当于：<code>jmap -histo &lt;PID&gt;</code></td>
+</tr>
+<tr>
+<td>GC.heap_dump</td>
+<td>相当于：<code>jmap -dump:format=b,file=xxx.bin &lt;PID&gt;</code></td>
+</tr>
+<tr>
+<td>GC.run_finalization</td>
+<td>相当于：System.runFinalization()</td>
+</tr>
+<tr>
+<td>GC.run</td>
+<td>相当于：System.gc()</td>
+</tr>
+<tr>
+<td>VM.uptime</td>
+<td>参数-date打印当前时间，VM启动到现在的时候，以秒为单位显示</td>
+</tr>
+<tr>
+<td>VM.flags</td>
+<td>参数-all输出全部，相当于：<code>jinfo -flags &lt;PID&gt;, jinfo -flag &lt;VM FLAG&gt; &lt;PID&gt;</code></td>
+</tr>
+<tr>
+<td>VM.system_properties</td>
+<td>相当于：<code>jinfo -sysprops &lt;PID&gt;</code></td>
+</tr>
+<tr>
+<td>VM.command_line</td>
+<td>相当于：jinfo -sysprops <pid> &vert; grep command</pid></td>
+</tr>
+<tr>
+<td>VM.version</td>
+<td>相当于：jinfo -sysprops <pid> &vert; grep version</pid></td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/12/03/jcmd命令详解/" data-id="ciwrv3rvl0018e4us9fe2oh6b" class="article-share-link" data-share="baidu" data-title="jcmd命令详解">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/12/03/jcmd命令详解/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-服务化架构-组成" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/23/服务化架构-组成/" class="article-date">
@@ -118,7 +238,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/11/23/服务化架构-组成/" data-id="civw508j4000ktsushtqut8zw" class="article-share-link" data-share="baidu" data-title="服务化架构-组成">分享到</a>
+        <a data-url="http://fengfu.io/2016/11/23/服务化架构-组成/" data-id="ciwrv3ru7000ke4usytqt51qy" class="article-share-link" data-share="baidu" data-title="服务化架构-组成">分享到</a>
       
 
       
@@ -182,7 +302,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/11/23/服务化架构-前言/" data-id="civw508j9000mtsusp1tz504a" class="article-share-link" data-share="baidu" data-title="服务化架构-前言">分享到</a>
+        <a data-url="http://fengfu.io/2016/11/23/服务化架构-前言/" data-id="ciwrv3ruh000oe4uspb1hiude" class="article-share-link" data-share="baidu" data-title="服务化架构-前言">分享到</a>
       
 
       
@@ -276,7 +396,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/10/27/晋级Review归来话代码有毒/" data-id="civw508jh000qtsusvyr3e8f0" class="article-share-link" data-share="baidu" data-title="晋级Review归来话代码有毒">分享到</a>
+        <a data-url="http://fengfu.io/2016/10/27/晋级Review归来话代码有毒/" data-id="ciwrv3rur000se4usvh1yave9" class="article-share-link" data-share="baidu" data-title="晋级Review归来话代码有毒">分享到</a>
       
 
       
@@ -371,7 +491,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/10/24/让你变成优秀程序员的几个小习惯/" data-id="civw508il0008tsuswdt5qskz" class="article-share-link" data-share="baidu" data-title="让你变成优秀程序员的几个小习惯(转)">分享到</a>
+        <a data-url="http://fengfu.io/2016/10/24/让你变成优秀程序员的几个小习惯/" data-id="ciwrv3rtx0008e4ustukad6rg" class="article-share-link" data-share="baidu" data-title="让你变成优秀程序员的几个小习惯(转)">分享到</a>
       
 
       
@@ -445,7 +565,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/23/接口文档参考模板/" data-id="civw508jk000stsushompt9ld" class="article-share-link" data-share="baidu" data-title="接口文档参考模板">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/23/接口文档参考模板/" data-id="ciwrv3rur000ue4usiedn4vz0" class="article-share-link" data-share="baidu" data-title="接口文档参考模板">分享到</a>
       
 
       
@@ -507,7 +627,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/22/晋级Review归来话答辩/" data-id="civw508jd000otsus7bchjuxl" class="article-share-link" data-share="baidu" data-title="晋级Review归来话答辩">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/22/晋级Review归来话答辩/" data-id="ciwrv3rur000qe4usyhicu8me" class="article-share-link" data-share="baidu" data-title="晋级Review归来话答辩">分享到</a>
       
 
       
@@ -566,7 +686,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/" data-id="civw508ih0006tsus60cyurdk" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-建模">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/" data-id="ciwrv3rtx0006e4us9i1zordx" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-建模">分享到</a>
       
 
       
@@ -686,7 +806,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" data-id="civw508k20011tsusnizidk04" class="article-share-link" data-share="baidu" data-title="关键业务系统的JVM启动参数推荐2.0版[转]">分享到</a>
+        <a data-url="http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/" data-id="ciwrv3rvb0013e4usmkpnjfet" class="article-share-link" data-share="baidu" data-title="关键业务系统的JVM启动参数推荐2.0版[转]">分享到</a>
       
 
       
@@ -754,7 +874,7 @@ future.setCallback(new ResponseCallback(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/07/30/读书笔记-微服务设计/" data-id="civw508i30003tsusku1wu2nf" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-入门">分享到</a>
+        <a data-url="http://fengfu.io/2016/07/30/读书笔记-微服务设计/" data-id="ciwrv3rtd0003e4us9b50izx4" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-入门">分享到</a>
       
 
       
@@ -763,90 +883,6 @@ future.setCallback(new ResponseCallback(){
 
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-CTO、技术总监、首席架构师的区别-转" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/30/CTO、技术总监、首席架构师的区别-转/" class="article-date">
-  <time datetime="2016-06-30T10:15:38.000Z" itemprop="datePublished">2016-06-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/30/CTO、技术总监、首席架构师的区别-转/">CTO、技术总监、首席架构师的区别(转)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>注:本文转自微信号erpweixin(简化ERP)，如转载请注明原文地址。原文地址请点 <a href="http://mp.weixin.qq.com/s?__biz=MjM5Njk2Mzg0MQ==&amp;mid=2651072525&amp;idx=1&amp;sn=4a5147a1fe70e3531891caf8fba29bb6&amp;scene=24&amp;srcid=0630cwnSLIEbtxEJQFdjTnWv#rd" title="CTO、技术总监、首席架构师的区别" target="_blank" rel="external">这里</a>：</p>
-<p>经常有创业公司老板来拜访我，常常会拜托给我一句话：帮我找一个CTO。</p>
-<p>我解释的多了，所以想把这个写下来，看看你到底需要的应该是啥。</p>
-<h2 id="一、高级程序员"><a href="#一、高级程序员" class="headerlink" title="一、高级程序员"></a>一、高级程序员</h2><p>如果你是一个刚刚创业的公司，公司没有专职产品经理和项目经理，你就是公司的产品经理，你如果对你现在的开发员能力不满，那么你只需要的是一个高级程序员。</p>
-<p>你定义功能、你做计划推进和管理，他可以带1-2个副手把你规划的功能实现了，他是主力干活者，有技术难题也是他来亲自攻克解决。</p>
-<p>所以，一个高级程序员，他的职责很清晰：</p>
-<p>1、负责核心复杂功能的实现方案设计、编码实现<br>2、负责疑难BUG分析诊断、攻关解决</p>
-<h2 id="二、研发Leader"><a href="#二、研发Leader" class="headerlink" title="二、研发Leader"></a>二、研发Leader</h2><p>公司再长大些。如果你就有一个研发团队（含产品/开发/测试），你就一套主产品，而且你的研发团队小于15人，那么你需要的就是一个研发Leader。</p>
-<p>因为你已经有了1-2个高级程序员，核心难题攻克和核心功能研发进度与质量保证，已经可以靠他们自身能力解决掉了。那么你需要研发Leader干什么。</p>
-<p>研发Leader的职责是：</p>
-<p>1、团队任务管理：开发工作量评估、开发任务分配</p>
-<p>2、团队生产质量提升：代码审核、开发风险识别/报告/协调解决</p>
-<p>3、团队生产力提升：代码模板研发与推广、最佳实践规范总结与推广、自动化研发生产工具研发与推广</p>
-<p>4、团队专业力提升：招聘面试、新人指导、领导复盘总结改进</p>
-<h2 id="三、技术总监"><a href="#三、技术总监" class="headerlink" title="三、技术总监"></a>三、技术总监</h2><p>如果你的研发团队超过20人了，而且有多套主打产品线了，你可能已经有了多个研发Leader了，那么你需要一个技术总监。</p>
-<p>技术总监的职责：</p>
-<p>1、组建平台研发部，搭建公共技术平台，方便上面各条产品线开发。</p>
-<p>2、通过技术平台、通过高一层的职权，管理和协调各个产品线组。现在每个产品线都应该有合格的研发Leader和高级程序员了。</p>
-<h2 id="四、首席架构师"><a href="#四、首席架构师" class="headerlink" title="四、首席架构师"></a>四、首席架构师</h2><p>因为你已经有了技术总监了，所以技术平台不错了。技术平台和各条产品线的协调互动，也是技术总监管着。</p>
-<p>因为你已经有了各个产品线的高级程序员，他们在靠个人能力维持着核心功能模块的开发进度和代码质量。</p>
-<p>因为你已经有了研发Leader，所以代码模板研发与推广、最佳实践规范总结与推广，这些事都已经在日常按份内职责开展了。</p>
-<p>那么，啥时候需要首席架构师啊。</p>
-<p>也就是说，需要分离管理族和专业族了。你会发现，这个阶段你的研发团队已经超过100来人了，需要有人专注来做架构规划、设计、日常维护。不能让研发总监和研发Leader又做管理又做技术一股脑都扔给他们，你就等着总结果产出。这是不对的。</p>
-<p>需要从技术总监和研发Leader身上剥离职责了。让技术总监和研发Leader偏项目管理（管理族），把各个模块之间的架构设计工作，独立出一个岗位，就是架构师，来负责。</p>
-<p>每个产品线都有架构师，在技术平台部门也有技术平台的架构师。那么，技术平台和业务产品线的架构互动，就是首席架构师在衔接了。让技术平台架构能够和产品业务系统的架构互相促进和支撑，就是首席架构师的份内之事。</p>
-<p>架构师的职责是：</p>
-<p>1、架构分析：从功能性需求中识别出需要增加的非功能性需求，好满足性能、可扩展、解耦/集成、安全、可运维、高可用、易部署、易更新。并且识别完非功能型需求，还要做技术选型、技术架构风险识别、技术实现工作量评估</p>
-<p>2、架构设计与实现：非功能性模块的架构设计、接口设计、代码实现。所以需要的是有代码实现能力还要有架构思维的工程师，不需要画PPT的工程师</p>
-<p>3、业务架构设计与实现：需要对跨系统的接口进行识别、实现、维护，需要对能写成公共代码类库的进行分析、识别、接口设计、实现、变更维护。</p>
-<p>4、重构：架构师需要经常做Bug分析、非模板性和公共类库代码检查，以发现代码腐烂程度，以发现还有哪些代码没有做很好的架构与精心的代码设计。所以重构是经常性维护发生的，不是攒到某一刻动大手术，甚至推翻重做，那就不叫重构了。</p>
-<h2 id="五、CTO"><a href="#五、CTO" class="headerlink" title="五、CTO"></a>五、CTO</h2><p>你把架构师团队组织建立完成，再往大长，你才需要真正意义上的CTO了。否则你一开始就招真正的CTO，他也不满意，你的期望也不对。现在你的期望也对了，他的能力模型也正好和你的期望职能匹配了，你能给他的和他想要的也正好匹配了。</p>
-<p>有的公司有软件系统产品副总裁，也有软件系统技术副总裁，而且把软件系统技术副总裁叫CTO，软件系统产品副总裁叫产品VP。这就很怪异。</p>
-<p>真正的CTO，是软件产品和技术是统一管理的。</p>
-<p>他做的事情，是商业、产品、技术、管理、团队相平衡的综合统管。</p>
-<p>CTO的职责：</p>
-<p>1、业绩达成：洞察客户需求，捕捉商业机会，规划技术产品，通过技术产品领导业务增长，有清晰的战略规划、主攻方向，带领团队实现组织目标</p>
-<p>2、前沿与平台：到这个研发规模规模级别了，一定要有专门的团队做技术应用创新探索和前沿技术预研。而且要和技术平台团队、应用研发团队形成很好的联动作用，让创新原型试点能够很平滑的融入商业平台再让应用研发线规模化的使用起来。大量的前沿探索都死在了内部，做完试点就停滞了，这就需要CTO做好整体的衔接推动工作。</p>
-<p>3、研发过程管理：站在全局立场来端到端改进业务流程，为业务增长提供方便</p>
-<p>4、组织与人才建设：公司文化和价值观的传承；研发专业族团队梯队建制建设、研发管理族团队梯队建制建设；创建创新激发机制，激发研发人创新向前发展，激发黑马人脱颖而出</p>
-<p>阿朱出品必属精品，阿朱出品必属精品，阿朱出品必属精品，阿朱出品必属精品，唉，现在好文章，都需要重要的话说四遍了</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/" data-id="civw508l4001ltsus50g4c5q5" class="article-share-link" data-share="baidu" data-title="CTO、技术总监、首席架构师的区别(转)">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
 
     </footer>
   </div>
@@ -870,7 +906,7 @@ future.setCallback(new ResponseCallback(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -888,7 +924,7 @@ future.setCallback(new ResponseCallback(){
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -898,6 +934,10 @@ future.setCallback(new ResponseCallback(){
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/12/03/jcmd命令详解/">jcmd命令详解</a>
+          </li>
         
           <li>
             <a href="/2016/11/23/服务化架构-组成/">服务化架构-组成</a>
@@ -913,10 +953,6 @@ future.setCallback(new ResponseCallback(){
         
           <li>
             <a href="/2016/10/24/让你变成优秀程序员的几个小习惯/">让你变成优秀程序员的几个小习惯(转)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/23/接口文档参考模板/">接口文档参考模板</a>
           </li>
         
       </ul>

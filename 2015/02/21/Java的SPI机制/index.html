@@ -14,7 +14,7 @@ SPI的优点基于SPI机制，我们可以很方便地构建出易于扩展的�
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="什么是SPISPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，SPI是面向服务提供者的。也就是说，有人定义了接口，那么围绕该接口提供服务的第三方则针对接口提供自己的服务。说到这里，最典型的应该是我们常用的日志框架，比如common-logging、jdbc Driver。
 SPI的优点基于SPI机制，我们可以很方便地构建出易于扩展的应用。我们">
-<meta property="og:updated_time" content="2016-02-27T13:50:17.243Z">
+<meta property="og:updated_time" content="2016-11-28T09:54:42.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java的SPI机制">
 <meta name="twitter:description" content="什么是SPISPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，SPI是面向服务提供者的。也就是说，有人定义了接口，那么围绕该接口提供服务的第三方则针对接口提供自己的服务。说到这里，最典型的应该是我们常用的日志框架，比如common-logging、jdbc Driver。
@@ -115,6 +115,17 @@ public interface HelloService {
 /**
  * Created by fengfu.qu on 2014/2/4.
  */
+public class HelloServiceC3poImpl implements HelloService {
+    public String sayHello(String name) {
+        return &quot;Hello, &quot; + name + &quot;, I&apos;m C3po.&quot;;
+    }
+}
+
+package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
 public class HelloServiceR2D2Impl implements HelloService {
     public String sayHello(String name) {
         return &quot;Hello, &quot; + name + &quot;, I&apos;m R2D2.&quot;;
@@ -126,13 +137,14 @@ package io.fengfu.learning.spi;
 /**
  * Created by fengfu.qu on 2014/2/4.
  */
-public class HelloServiceC3poImpl implements HelloService {
+public class HelloServiceBB8Impl implements HelloService {
     public String sayHello(String name) {
-        return &quot;Hello, &quot; + name + &quot;, I&apos;m C3po.&quot;;
+        return &quot;Hello, &quot; + name + &quot;, I&apos;m BB8.&quot;;
     }
 }
 </code></pre><p>3, 在META-INF/services目录下创建io.fengfu.learning.spi.HelloService文件，在文件中添加以下内容:</p>
-<pre><code>io.fengfu.learning.spi.HelloServiceR2D2Impl
+<pre><code>io.fengfu.learning.spi.HelloServiceC3poImpl
+io.fengfu.learning.spi.HelloServiceR2D2Impl
 io.fengfu.learning.spi.HelloServiceBB8Impl
 </code></pre><p>4, 创建测试类：</p>
 <pre><code>package io.fengfu.learning.spi;
@@ -154,15 +166,16 @@ public class SPITest {
     }
 }
 </code></pre><p>5, 运行，结果为：</p>
-<pre><code>Hello, Fengfu, I&apos;m R2D2.
-Hello, Fengfu, I&apos;m C3po.
-</code></pre><p>由此看出，2个是实现类都被运行了。</p>
+<pre><code>Hello, Fengfu, I&apos;m C3po.
+Hello, Fengfu, I&apos;m R2D2.
+Hello, Fengfu, I&apos;m BB8.
+</code></pre><p>由此看出，3个是实现类都被运行了。</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2015/02/21/Java的SPI机制/" data-id="civw508ka0016tsuscunfi55a" class="article-share-link" data-share="baidu" data-title="Java的SPI机制">分享到</a>
+        <a data-url="http://fengfu.io/2015/02/21/Java的SPI机制/" data-id="ciwrv3rvl001ae4usczewqghl" class="article-share-link" data-share="baidu" data-title="Java的SPI机制">分享到</a>
       
 
       
@@ -212,7 +225,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -230,7 +243,7 @@ Hello, Fengfu, I&apos;m C3po.
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -240,6 +253,10 @@ Hello, Fengfu, I&apos;m C3po.
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/12/03/jcmd命令详解/">jcmd命令详解</a>
+          </li>
         
           <li>
             <a href="/2016/11/23/服务化架构-组成/">服务化架构-组成</a>
@@ -255,10 +272,6 @@ Hello, Fengfu, I&apos;m C3po.
         
           <li>
             <a href="/2016/10/24/让你变成优秀程序员的几个小习惯/">让你变成优秀程序员的几个小习惯(转)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/23/接口文档参考模板/">接口文档参考模板</a>
           </li>
         
       </ul>
