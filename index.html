@@ -65,6 +65,130 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-使用JRebel远程热部署Class" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/11/使用JRebel远程热部署Class/" class="article-date">
+  <time datetime="2017-04-11T13:08:09.000Z" itemprop="datePublished">2017-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/11/使用JRebel远程热部署Class/">使用 jrebel 远程部署开发环境的 dubbo 服务</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文转自<a href="http://wulfric.me/2017/04/jrebel/" target="_blank" rel="external">http://wulfric.me/2017/04/jrebel/</a> ，如果转载请尊重原作者版权。</p>
+<blockquote>
+<p>声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" title="姓名标示-非商业性-禁止改作4.0国际" target="_blank" rel="external">CC BY-NC-ND 4.0</a> 授权。</p>
+</blockquote>
+<figure><a class="post-image" rel="post-image" href=""><img src="https://zeroturnaround.com/wp-content/uploads/2011/02/jrebel-dl.png" alt="jrebel " title="jrebel"></a><br></figure>
+
+<p>在开发 java 程序的时候，如果改动非常频繁，每次改动都要重新打包、部署，对于很重的应用（比如本文所说的 dubbo provider 服务），这样反复的流程十分消耗精力和热情。我们需要一个工具，当代码作改动之后能够立即看到效果。Java 在 1.4 的时候引入了 HotSwap 技术，允许调试者使用同一个类标识来更新类的字节码。这意味着所有对象都可以引用一个更新后的类，并在它们的方法被调用的时候执行新的代码，这就避免了无论何时只要有类的字节码被修改就要重载容器的这种要求<sup id="fnref:hotswap-jrebel"><a href="#fn:hotswap-jrebel">1</a></sup>。不幸的是，这种重定义仅限于修改方法体—除了方法体之外，它既不能添加方法或域，也不能修改其他任何东西。</p>
+<p>和 PHP 这样的脚本语言不一样，Java 部署是一个令人心烦的问题。一个运行中的 Java 程序相当于一辆在公路上奔跑的汽车，而 HotSwap 技术只能让你更换坐垫，但是让你想要更换轮胎的时候，HotSwap 就帮不上忙了，这个时候你只能停下来，换掉轮胎，再重新启动。而对于 PHP 来说，每个请求都会新开一个进程加载所有的 .php 文件编译和执行，所以不存在这个问题。运行 PHP 程序相当于给静止的汽车拍照，你大可以换完轮胎之后再拍照，这没有任何不良影响。（这个比喻可能不太恰当，却很有趣：在比喻中，静态的语言看起来是运动的，而动态语言看起来是静止的）</p>
+<p><a href="https://zeroturnaround.com/software/jrebel/" target="_blank" rel="external">JRebel</a> 是 java 的热部署插件，它监控已编译的 .class 文件，只要有变动，就立即更新在部署好的应用上，能够实现实时查看代码变化的功能。</p>
+<figure><a class="post-image" rel="post-image" href=""><img src="https://zeroturnaround.com/wp-content/uploads/2016/11/JR_devcycle_2016_c.png" alt="skip build, package and deploy" title="skip build, package and deploy"></a><br><br><figcaption>skip build, package and deploy</figcaption><br><br></figure>
+
+<p>HotSwap 是工作在虚拟机层面上，且依赖于 JVM 的内部运作，JRebel 用到了 JVM 的两个显著的功能特征—抽象的字节码和类加载器。类加载器允许 JRebel 辨别出类被加载的时刻，然后实时地翻译字节码，用以在虚拟机和可执行代码之间创建另一个抽象层<sup id="fnref:hotswap-jrebel:1"><a href="#fn:hotswap-jrebel">1</a></sup>。这种技术也应用在 zeroturnaround 家其他的工具，比如 xrebel。</p>
+<p>如果继续使用上面的比喻，JRebel 相当于在汽车运行过程中，先额外生成一个轮胎，然后以迅雷之势替换掉目标轮胎—汽车不需要停止装载和再启动。</p>
+<h2 id="安装和使用"><a href="#安装和使用" class="headerlink" title="安装和使用"></a>安装和使用</h2><p>JRebel 的安装参照官网即可，我是直接在 Intellij 的插件中心安装的，速度比较慢，插件也比较大，挂了代理才下载完成。下载完毕重启 IDE 即可使用。</p>
+<p>JRebel 是收费插件，第一次打开的时候需要激活，网上有各种神奇教程可以参考。其实这个插件官方提供了免费的激活码，只要需要你注册一个<a href="https://my.jrebel.com/" target="_blank" rel="external">帐号</a>，并关联一个 twitter 或者 facebook 帐号即可。jrebel 需要这个关联帐号的写权限，会定期发送使用统计到你的 timeline，你可以使用一个小号来关联。</p>
+<p>安装和激活完毕之后，就可以在 IDE 的配置页看到 JRebel 选项了。</p>
+<figure><a href="http://wulfric.qiniudn.com/java/jrebel-preference.png-origin.webp" target="_blank" rel="external"><img src="http://wulfric.qiniudn.com/java/jrebel-preference.png-article.webp" alt="jrebel preference" title="jrebel preference"></a><br><br><figcaption>jrebel preference</figcaption><br><br></figure>
+
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>为了能够比较熟悉该插件的使用，建议按照官方教程，先通过 IDE 本地启动，再通过命令行启动，然后尝试部署到远端服务器。</p>
+<p>当在 console 窗口观察到这些输出之后，说明应用正确启用了 JRebel 插件。</p>
+<pre><code>2017-04-01 16:27:31 JRebel:  #############################################################
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  JRebel Agent 7.0.6 (201703201213)
+2017-04-01 16:27:31 JRebel:  (c) Copyright ZeroTurnaround AS, Estonia, Tartu.
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  Over the last 2 days JRebel prevented
+2017-04-01 16:27:31 JRebel:  at least 0 redeploys/restarts saving you about 0 hours.
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  JRebel started in remote server mode.
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  #############################################################
+</code></pre><h3 id="IDE-运行"><a href="#IDE-运行" class="headerlink" title="IDE 运行"></a>IDE 运行</h3><p>IDE 运行本地应用最简单。参见<a href="https://zeroturnaround.com/software/jrebel/quickstart/intellij/?run=ide#!/server-configuration" target="_blank" rel="external">官方教程</a>。</p>
+<ol>
+<li>执行<span class="codespan">mvn clean</span>清空 target 目录；</li>
+<li>打开 「View &gt; Tool Windows &gt; JRebel」调出 JRebel Panel 编辑窗，点击「generate rebel.xml」按钮选中需要监控和热部署的模块。因为是本地执行，所以另外一个「generate rebel-remote.xml」 不需要选中；</li>
+<li>将以前通过 「Run ‘MyApp’」或者「Debug ‘MyApp’」来运行的命令改成「Run with JRebel ‘MyApp’」或者「Debug with JRebel ‘MyApp’」即可；</li>
+<li>修改代码，然后在「Build」菜单下选择合适的构建选项（只构建单个文件/构建模块/构建项目）；</li>
+<li>访问接口，查看结果是否实时改变。</li>
+</ol>
+<h3 id="命令行运行"><a href="#命令行运行" class="headerlink" title="命令行运行"></a>命令行运行</h3><p>在 JRebel 设置页的「Startup」标签中选择「Run locally from command line」， 选择合适的 jvm 和目标环境。我的 dubbo 使用了 netty 部署，所以选择了「Standalone application」，给出的启动参数如下。</p>
+<pre><code># agentpath 是必需的，foo.bar.MyApp 是你要运行的程序
+java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-ide-idea/lib/jrebel6/lib/libjrebel64.dylib foo.bar.MyApp
+</code></pre><p>P.S.: 注意上面的「Application Support」需要换成「Application\ Support」。</p>
+<p>dubbo 一般推荐使用 start.sh 脚本来启动应用，我们编辑 start.sh 文件，在启动的具体位置那里，将「-agentpath:…」添加在 java 后面，大致如下。</p>
+<pre><code>java -agentpath:... $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS -classpath ...
+</code></pre><p>各种目标环境的配置方法有着或大或小的区别，请按照自己的目标环境跟着 JRebel 给的配置方案来设置。</p>
+<ol>
+<li>配置启动参数，如上所述；</li>
+<li>选择需要热部署的模块；</li>
+<li>执行<span class="codespan">start.sh</span>部署应用；</li>
+<li>Run with JRebel ‘MyApp’；</li>
+<li>修改代码，构建改动的文件；</li>
+<li>访问接口，查看结果是否实时改变。</li>
+</ol>
+<p>从输出结果可以看到，JRebel 接管了 console。</p>
+<h3 id="远程服务器运行"><a href="#远程服务器运行" class="headerlink" title="远程服务器运行"></a>远程服务器运行</h3><p>官方<a href="https://zeroturnaround.com/software/jrebel/quickstart/intellij/?run=remote#!/server-configuration" target="_blank" rel="external">教程1</a>，<a href="https://manuals.zeroturnaround.com/jrebel/remoteserver/intellij.html" target="_blank" rel="external">教程2</a>更好<sup id="fnref:jrebel-doc"><a href="#fn:jrebel-doc">2</a></sup>。</p>
+<p>同上，在 JRebel 配置页选择「Run on a remote server」，根据给出的建议配置好启动项。</p>
+<pre><code>java -agentpath:... -Drebel.remoting_plugin=true ... -jar ...
+</code></pre><p>在 JRebel 配置页添加远程服务器地址，注意要是能够 http 访问的 url 才可以。</p>
+<figure><a class="post-image" rel="post-image" href=""><img src="https://manuals.zeroturnaround.com/jrebel/_images/intellij-add-remote-server.png" alt="添加远程服务器" title="添加远程服务器"></a><br></figure>
+
+<p>添加远程服务器</p>
+<ol>
+<li>配置启动参数和添加远程服务器，如上所述；</li>
+<li>选择需要热部署的模块，注意这个时候「generate rebel.xml」和「generate rebel-remote.xml」 两个都要选中；</li>
+<li>将包含 rebel.xml 和 rebel-remote.xml 的代码部署到远程服务器。本地打包并上传，或者代码上传并在远程服务器打包都可以；</li>
+<li>在远程服务器上<span class="codespan">start.sh</span>启动应用；</li>
+<li>修改代码，构建改动的文件；</li>
+<li>访问接口，查看结果是否实时改变。</li>
+</ol>
+<p>P.S.: 教程1似乎有些问题，远端启动应用后，本地不需要再「Run with JRebel ‘MyApp’」了。</p>
+<p>P.S.: 在官方教程里，「Run with JRebel ‘MyApp’」和「generate rebel.xml」checkbox 的图标一模一样，注意区分：有的是让你启动，有的是选中。</p>
+<p>P.S.: JRebel 对 Spring 的 bean 注入默认就有很好的支持，参见 <a href="https://zeroturnaround.com/software/jrebel/learn/jrebel-spring-integration/" target="_blank" rel="external">JRebel Spring</a>。它可以根据 xml 文件或者注解自动重新装载 bean。还支持动态实时地在 Spring 中添加 bean 和依赖。</p>
+<ol>
+<li><p>HotSwap 和 JRebel 原理<a href="https://dzone.com/articles/reloading-java-classes-401" target="_blank" rel="external">原文</a>，<a href="http://www.hollischuang.com/archives/598" target="_blank" rel="external">译文</a> <a href="#fnref:hotswap-jrebel">↩</a> <a href="#fnref:hotswap-jrebel:1">↩<sup>2</sup></a></p>
+</li>
+<li><p>参照官方的<a href="https://manuals.zeroturnaround.com/jrebel/index.html" target="_blank" rel="external">详细使用文档</a>是更好的选择 <a href="#fnref:jrebel-doc">↩</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2017/04/11/使用JRebel远程热部署Class/" data-id="cj3pqlbpp0000yvx0e64yukfn" class="article-share-link" data-share="baidu" data-title="使用 jrebel 远程部署开发环境的 dubbo 服务">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2017/04/11/使用JRebel远程热部署Class/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Spring Xml扩展机制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/06/Spring Xml扩展机制/" class="article-date">
@@ -780,65 +904,6 @@ future.setCallback(new ResponseCallback(){
 
 
   
-    <article id="post-读书笔记-微服务设计-建模" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/08/12/读书笔记-微服务设计-建模/" class="article-date">
-  <time datetime="2016-08-12T12:52:17.000Z" itemprop="datePublished">2016-08-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/12/读书笔记-微服务设计-建模/">读书笔记:微服务设计-建模</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-什么样的服务是好服务"><a href="#1-什么样的服务是好服务" class="headerlink" title="1.什么样的服务是好服务"></a>1.什么样的服务是好服务</h1><h2 id="1-高内聚"><a href="#1-高内聚" class="headerlink" title="1.高内聚"></a>1.高内聚</h2><p>  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。<br>  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。</p>
-<h2 id="2-低耦合"><a href="#2-低耦合" class="headerlink" title="2.低耦合"></a>2.低耦合</h2><p>  使用微服务最重要的一点是：能够独立修改及部署单个服务而不需要修改系统的其他部分。</p>
-<h1 id="2-限界上下文"><a href="#2-限界上下文" class="headerlink" title="2.限界上下文"></a>2.限界上下文</h1><p>  限界上下文(bounded context)这个概念来自于Eric Evans的《领域驱动设计》一书，Eric认为：一个给定的领域包含多个限界上下文，每个限界上下文中的东西分成2个部分，一部分不需要与外界通信，另一部分则需要。每个上下文都有明确的接口，该接口决定了它会暴露哪些模型给其他的上下文。当然本文作者更喜欢这个定义：一个由显示边界限定的特定职责。如果你想要从一个限界上下文中获取信息，或者向其发起请求，需要使用模型和它的显示边界进行通信。</p>
-<p>  应该共享特定的模型，而不应该共享内部表示，这样就可以避免潜在的紧耦合风险。</p>
-<p>  一般来讲，微服务应该清晰地和限界上下文相对应。</p>
-<h1 id="3-业务功能"><a href="#3-业务功能" class="headerlink" title="3.业务功能"></a>3.业务功能</h1><p>  在思考组织内的限界上下文时，不应该从共享数据的角度来考虑，应该从这些上下文能够提供的功能来考虑。首先要问自己：这个上下文是做什么用的，然后再考虑它需要什么样的数据。</p>
-<p>  建模服务时，应该将这些功能作为关键操作提供给其协作者。</p>
-<h1 id="4-逐步划分上下文"><a href="#4-逐步划分上下文" class="headerlink" title="4.逐步划分上下文"></a>4.逐步划分上下文</h1><p>  先识别粗粒度上下文，然后当发现合适的缝隙后，再进一步划分出那些嵌套的上下文。</p>
-<p>  对于嵌套上下文，一种方式是嵌套上下文不直接对外可见，另外一种方式是限界上下文被提升到顶层上下文的层次。这两种方式都具有其合理性，具体还要看组织机构的划分。比如服务A、服务B、服务C分别由不同团队维护，那么可能大家倾向于成为顶层上下文；如果由一个团队维护，那么嵌套架构会更合理。另外，从测试的角度，嵌套式上下文更便于测试，毕竟它对外暴露的服务更少。</p>
-<p>另外一本书推荐：Vaughn Vernon的<a href="http://item.jd.com/11423256.html" target="_blank" rel="external">《实现领域驱动设计》</a>，这本书貌似卖得更好。</p>
-<p><em>图片说明：稻城-亚丁</em></p>
-<p>稻城—亚丁因其独特而原始的自然环境、美丽风景被誉为“最后的香格里拉”，景点分为稻城和亚丁两部分，有雪山、冰川、峡谷、森林、草甸、湖泊等景观。除了珍珠海、牛奶海等冰川湖泊，稻城最令人向往的是驰名藏区的雪域神峰——稻城神峰，它由仙乃日、央迈勇、夏诺多吉三座神山组成，均位于亚丁自然保护区。人们把仙乃日比作大佛、把央迈勇比作少女，将夏诺多吉当作少年，三座神山就像三尊圣灵，这里也就成了藏民心中朝圣的圣地。</p>
-<p><img src="https://img.alicdn.com/imgextra/i1/2657627814/TB29IAuXaryQeBjSszdXXaL.XXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
-<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB24zkuXabyQeBjy1XbXXa9yXXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2GWAvXhHxQeBjy1zjXXa5YVXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/" data-id="cj315luqp001utnx0c4au8q7y" class="article-share-link" data-share="baidu" data-title="读书笔记:微服务设计-建模">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -854,7 +919,7 @@ future.setCallback(new ResponseCallback(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -872,7 +937,7 @@ future.setCallback(new ResponseCallback(){
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -882,6 +947,10 @@ future.setCallback(new ResponseCallback(){
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/04/11/使用JRebel远程热部署Class/">使用 jrebel 远程部署开发环境的 dubbo 服务</a>
+          </li>
         
           <li>
             <a href="/2017/03/06/Spring Xml扩展机制/">Spring xml扩展机制</a>
@@ -897,10 +966,6 @@ future.setCallback(new ResponseCallback(){
         
           <li>
             <a href="/2016/11/23/服务化架构-组成/">服务化架构-组成</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/23/服务化架构-前言/">服务化架构-前言</a>
           </li>
         
       </ul>
