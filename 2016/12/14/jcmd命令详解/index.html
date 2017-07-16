@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>jcmd命令详解 | 宁静·致远</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简介在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对jcmd的介绍: The jcmd utility is used to send diagnostic command requests to the JVM, where these requests are useful for controllin">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jcmd命令详解">
+<meta property="og:url" content="http://fengfu.io/2016/12/14/jcmd命令详解/index.html">
+<meta property="og:site_name" content="宁静·致远">
+<meta property="og:description" content="简介在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对jcmd的介绍: The jcmd utility is used to send diagnostic command requests to the JVM, where these requests are useful for controllin">
+<meta property="og:updated_time" content="2017-07-16T14:14:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jcmd命令详解">
+<meta name="twitter:description" content="简介在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对jcmd的介绍: The jcmd utility is used to send diagnostic command requests to the JVM, where these requests are useful for controllin">
+  
+    <link rel="alternative" href="/atom.xml" title="宁静·致远" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">宁静·致远</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="fengfu.io">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-jcmd命令详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/14/jcmd命令详解/" class="article-date">
+  <time datetime="2016-12-14T08:28:59.000Z" itemprop="datePublished">2016-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jcmd命令详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对jcmd的介绍:</p>
+<p><em>The jcmd utility is used to send diagnostic command requests to the JVM, where these requests are useful for controlling Java Flight Recordings, troubleshoot, and diagnose JVM and Java Applications. It must be used on the same machine where the JVM is running, and have the same effective user and group identifiers that were used to launch the JVM.</em></p>
+<p>翻译成人话就是：<br>jcmd一个用来发送诊断命令请求到JVM的工具，这些请求对于控制Java飞行记录器、故障排除、JVM和Java应用诊断来说是比较有用的。jcmd必须与正在运行的JVM在同一台机器上使用，并且使用启动该JVM时的用户权限。</p>
+<h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><p>jcmd的用法是:<br><code>jcmd &lt;process id/main class&gt; &lt;command&gt; [options]</code></p>
+<p>其中command的说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>help</td>
+<td>打印帮助信息，示例：jcmd <pid> help [<command name="">]</pid></td>
+</tr>
+<tr>
+<td>ManagementAgent.stop</td>
+<td>停止JMX Agent</td>
+</tr>
+<tr>
+<td>ManagementAgent.start_local</td>
+<td>开启本地JMX Agent</td>
+</tr>
+<tr>
+<td>ManagementAgent.start</td>
+<td>开启JMX Agent</td>
+</tr>
+<tr>
+<td>Thread.print</td>
+<td>参数-l打印java.util.concurrent锁信息，相当于：jstack <pid></pid></td>
+</tr>
+<tr>
+<td>PerfCounter.print</td>
+<td>相当于：jstat -J-Djstat.showUnsupported=true -snap <pid></pid></td>
+</tr>
+<tr>
+<td>GC.class_histogram</td>
+<td>相当于：jmap -histo <pid></pid></td>
+</tr>
+<tr>
+<td>GC.heap_dump</td>
+<td>相当于：jmap -dump:format=b,file=xxx.bin <pid></pid></td>
+</tr>
+<tr>
+<td>GC.run_finalization</td>
+<td>相当于：System.runFinalization()</td>
+</tr>
+<tr>
+<td>GC.run</td>
+<td>相当于：System.gc()</td>
+</tr>
+<tr>
+<td>VM.uptime</td>
+<td>参数-date打印当前时间，VM启动到现在的时候，以秒为单位显示</td>
+</tr>
+<tr>
+<td>VM.flags</td>
+<td>参数-all输出全部，相当于：jinfo -flags <pid>, jinfo -flag <vm flag=""> <pid></pid></vm></pid></td>
+</tr>
+<tr>
+<td>VM.system_properties</td>
+<td>相当于：jinfo -sysprops <pid></pid></td>
+</tr>
+<tr>
+<td>VM.command_line</td>
+<td>相当于：jinfo -sysprops <pid></pid></td>
+<td>grep command</td>
+</tr>
+<tr>
+<td>VM.version</td>
+<td>相当于：jinfo -sysprops <pid></pid></td>
+<td>grep version</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2016/12/14/jcmd命令详解/" data-id="cj3vdyj1k000tgcx0ud7rabs0" class="article-share-link" data-share="baidu" data-title="jcmd命令详解">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2016/12/14/jcmd命令详解/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/23/服务化架构-注册与发现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          服务化架构-注册与发现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/06/Spring Xml扩展机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Spring xml扩展机制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/12/14/jcmd命令详解/" data-title="jcmd命令详解" data-url="http://fengfu.io/2016/12/14/jcmd命令详解/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能/">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 12.5px;">微服务</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/杂谈/" style="font-size: 17.5px;">杂谈</a> <a href="/tags/架构/" style="font-size: 15px;">架构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/13/Linux性能分析工具/">Linux性能分析工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/23/服务化架构-服务降级/">服务化架构-服务降级</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/11/使用JRebel远程热部署Class/">使用 jrebel 远程部署开发环境的 dubbo 服务</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/06/Spring Xml扩展机制/">Spring xml扩展机制</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/14/jcmd命令详解/">jcmd命令详解</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://coolshell.cn" target="_blank">酷壳</a>
+          </li>
+        
+          <li>
+            <a href="http://ifeve.com" target="_blank">并发编程网</a>
+          </li>
+        
+          <li>
+            <a href="http://calvin1978.blogcn.com" target="_blank">花钱的年化</a>
+          </li>
+        
+          <li>
+            <a href="http://lovestblog.cn" target="_blank">你假笨</a>
+          </li>
+        
+          <li>
+            <a href="http://hellojava.info" target="_blank">hellojava</a>
+          </li>
+        
+          <li>
+            <a href="http://techblog.netflix.com" target="_blank">Netflix技术博客</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 宁静·致远<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"qufengfu"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
