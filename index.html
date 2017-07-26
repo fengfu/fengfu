@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/一个HashBasedTable引发的故障/">一个HashBasedTable引发的故障</a>
+      <a class="article-title" href="/2017/07/25/一个HashBasedTable引发的故障/">一个Guava HashBasedTable引发的故障</a>
     </h1>
   
 
@@ -99,12 +99,12 @@
 <p>继续放狗，看到一篇博客(<a href="http://www.cnblogs.com/yuyijq/p/4431798.html" target="_blank" rel="external">链接</a>)讲netty里面的autoread特性会导致CLOSE_WAIT出现，但autoread是netty4里面的特性，我们使用的AHC依赖的是netty 3.10，这个原因也排除了。</p>
 <p>至此，线索中断，于是求助余老师。PS：上面的那博客其实就是余老师写的，😆</p>
 <p>余老师了解了情况之后，首先询问AHC是否使用的非单例（如果创建多个AsyncHttpClient实例是有可能导致大量CLOSE_WAIT的），答案是没有。<br>继续询问使用AHC的线程中是否使用了阻塞，答案是没有。<br>到这里，余老师也没给出更进一步的建议，所以继续排查。</p>
-<p>第二天已经是周末，余老师继续帮忙定位问题，在看代码时发现有个地方的缓存使用了HashBasedTable，而HashBasedTable是非线程安全的，因为它使用了HashMap实现的，于是怀疑是这个地方可能会有问题。通过查看监控，发现故障时CPU、Load是同时增长的，而且CPU使用率在25%左右，基本可以确定在当时某个CPU核心使用率达到100%（服务器是4核）。</p>
-<p>通过代码和监控的关联，可以确定这次故障的原因是因为使用了非线程安全的HashBasedTable，导致竞态条件下踩中了HashMap的坑导致当前线程所在CPU核心使用率100%，这样CPU也就没有时间来处理后续的网络事件了，比如断开连接，最终导致大量CLOSE_WAIT以及超时出现。</p>
+<p>第二天已经是周末，余老师继续帮忙定位问题，在看代码时发现有个地方的缓存使用了HashBasedTable，而HashBasedTable是非线程安全的，因为它使用了HashMap实现的，于是怀疑是这个地方可能会有问题。通过查看监控，发现故障时CPU、Load是同时增长的，而且CPU使用率在25%左右，基本可以确定在当时某个线程CPU使用率达到100%（服务器是4核）。</p>
+<p>通过代码和监控的关联，可以确定这次故障的原因是因为使用了非线程安全的HashBasedTable，导致竞态条件下踩中了HashMap的坑导致当前线程CPU使用率100%，这样当前线程也就没有时间来处理后续的网络事件了，比如断开连接，最终导致大量CLOSE_WAIT以及超时出现。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Cache&lt;String, Table&lt;String,String,PackageFlightBean&gt;&gt; packageListBeanCache = CacheBuilder.from(packageListSpec).build();<span class="comment">//&lt;key,&lt;code,PackageFlightBean&gt;&gt;</span></div><div class="line"></div><div class="line"><span class="meta">@Resource</span></div><div class="line"><span class="keyword">private</span> DomesticSearchService domesticSearchService;</div><div class="line"><span class="meta">@Resource</span></div><div class="line"><span class="keyword">private</span> InterSearchService interSearchService;</div><div class="line"><span class="meta">@Resource</span></div><div class="line"><span class="keyword">private</span> PackageSearchService packageSearchService;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putPackageFlightBean</span><span class="params">(MultiQuery query,String code,PackageFlightBean packageFlightBean)</span></span>&#123;</div><div class="line">    List&lt;String&gt; codeList = splitter.splitToList(code);</div><div class="line">    <span class="keyword">if</span>(codeList.size()!=<span class="number">2</span> || packageFlightBean==<span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    String key = query.genPackageKey();</div><div class="line">    Table&lt;String,String,PackageFlightBean&gt; beanTable = packageListBeanCache.getIfPresent(key);</div><div class="line">    <span class="keyword">if</span>(beanTable==<span class="keyword">null</span>)&#123;</div><div class="line">        beanTable = HashBasedTable.create();<span class="comment">//这里使用了HashBasedTable，内部使用HashMap实现，非线程安全</span></div><div class="line">        beanTable.put(codeList.get(<span class="number">0</span>),codeList.get(<span class="number">1</span>),packageFlightBean);</div><div class="line">        packageListBeanCache.put(key,beanTable);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        beanTable.put(codeList.get(<span class="number">0</span>),codeList.get(<span class="number">1</span>),packageFlightBean);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这次故障原因分析的过程走了一些弯路，原因有这么几点：</p>
-<p>1.没有及时发现某个CPU核心使用率达到100%的情况：</p>
-<p>如果能及时发现这一点，那么很可能就能在第一时间反应到是死循环导致的，那么定位问题会更快一些。当然如果我们的监控系统能够发现某个CPU核心使用率100%并告警就更好了，这个建议已经反馈给OPS同学，他们在想办法做了。那么在现有的情况下，如果我们发现CPU使用率平滑持续在25%左右，那么我们也需要额外注意，因为在4核的系统中，这可能代表某个CPU使用率已经在100%了；</p>
+<p>1.没有及时发现某个线程CPU使用率达到100%的情况：</p>
+<p>如果能及时发现这一点，那么很可能就能在第一时间反应到是死循环导致的，那么定位问题会更快一些。当然如果我们的监控系统能够发现某个线程CPU使用率100%并告警就更好了，这个建议已经反馈给OPS同学，他们在想办法做了。那么在现有的情况下，如果我们发现CPU使用率平滑持续在25%左右，那么我们也需要额外注意，因为在4核的系统中，这可能代表某个线程CPU使用率已经在100%了；</p>
 <p>2.没有保留现场如线程栈之类的信息：<br>如果在重启服务之前保留了线程栈，那么定位问题会更方便一些，可惜当时的同学急于修复故障，而未做到这一点；</p>
 <p>3.没有发现HashBasedTable的坑：</p>
 <p>  因为故障系统是个低频应用而且是从别的团队接手过来的，所以对代码不够熟悉，更不知道HashBasedTable是非线程安全的，最终导致故障的出现。这里也提醒一下，Guava里面的HashBasedTable、ArrayTable、TreeBasedTable、StandardTable、StandardRowSortedTable都是非线程安全的，使用的时候务必注意。另外，我们在使用在使用第三方工具的时候，务必要仔细查看相关说明，比如一些限制因素，避免踩坑。</p>
@@ -113,7 +113,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/" data-id="cj5kohhdp000l23x00l4j5bni" class="article-share-link" data-share="baidu" data-title="一个HashBasedTable引发的故障">分享到</a>
+        <a data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/" data-id="cj5kohhdp000l23x00l4j5bni" class="article-share-link" data-share="baidu" data-title="一个Guava HashBasedTable引发的故障">分享到</a>
       
 
       
@@ -881,7 +881,7 @@ future.setCallback(new ResponseCallback(){
       <ul>
         
           <li>
-            <a href="/2017/07/25/一个HashBasedTable引发的故障/">一个HashBasedTable引发的故障</a>
+            <a href="/2017/07/25/一个HashBasedTable引发的故障/">一个Guava HashBasedTable引发的故障</a>
           </li>
         
           <li>
