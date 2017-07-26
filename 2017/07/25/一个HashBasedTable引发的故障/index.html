@@ -4,21 +4,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>一个HashBasedTable引发的故障 | 宁静·致远</title>
+  <title>一个Guava HashBasedTable引发的故障 | 宁静·致远</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言这篇故障从原因来看比较简单，但分享出来的原因是因为在分析故障原因的过程中忽略了一些关键因素，导致走了一些弯路，所以写出来供大家借鉴。 故障现象上周负责的系统出现了一次故障，故障的表象是部分搜索超时严重。在对监控进行排查的时候，发现有一台服务器CPU使用率有比较大的飙升，为了不影响业务，先将此服务器重启。重启后，CPU使用率恢复正常，故障恢复（见下图）。 故障原因分析过程剩下的事情就是对故障原因">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一个HashBasedTable引发的故障">
+<meta property="og:title" content="一个Guava HashBasedTable引发的故障">
 <meta property="og:url" content="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="前言这篇故障从原因来看比较简单，但分享出来的原因是因为在分析故障原因的过程中忽略了一些关键因素，导致走了一些弯路，所以写出来供大家借鉴。 故障现象上周负责的系统出现了一次故障，故障的表象是部分搜索超时严重。在对监控进行排查的时候，发现有一台服务器CPU使用率有比较大的飙升，为了不影响业务，先将此服务器重启。重启后，CPU使用率恢复正常，故障恢复（见下图）。 故障原因分析过程剩下的事情就是对故障原因">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i1/2657627814/TB2oeAKaVokyKJjy1zbXXXZfVXa_!!2657627814.png">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i1/2657627814/TB2KN9XcnIlyKJjSZFMXXXvVXXa_!!2657627814.jpg">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB2JGALa3wjyKJjSspeXXXXZXXa_!!2657627814.png">
-<meta property="og:updated_time" content="2017-07-26T16:25:53.000Z">
+<meta property="og:updated_time" content="2017-07-26T16:27:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一个HashBasedTable引发的故障">
+<meta name="twitter:title" content="一个Guava HashBasedTable引发的故障">
 <meta name="twitter:description" content="前言这篇故障从原因来看比较简单，但分享出来的原因是因为在分析故障原因的过程中忽略了一些关键因素，导致走了一些弯路，所以写出来供大家借鉴。 故障现象上周负责的系统出现了一次故障，故障的表象是部分搜索超时严重。在对监控进行排查的时候，发现有一台服务器CPU使用率有比较大的飙升，为了不影响业务，先将此服务器重启。重启后，CPU使用率恢复正常，故障恢复（见下图）。 故障原因分析过程剩下的事情就是对故障原因">
 <meta name="twitter:image" content="https://img.alicdn.com/imgextra/i1/2657627814/TB2oeAKaVokyKJjy1zbXXXZfVXa_!!2657627814.png">
   
@@ -86,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      一个HashBasedTable引发的故障
+      一个Guava HashBasedTable引发的故障
     </h1>
   
 
@@ -120,7 +120,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/" data-id="cj5kohhdp000l23x00l4j5bni" class="article-share-link" data-share="baidu" data-title="一个HashBasedTable引发的故障">分享到</a>
+        <a data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/" data-id="cj5kohhdp000l23x00l4j5bni" class="article-share-link" data-share="baidu" data-title="一个Guava HashBasedTable引发的故障">分享到</a>
       
 
       
@@ -153,7 +153,7 @@
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2017/07/25/一个HashBasedTable引发的故障/" data-title="一个HashBasedTable引发的故障" data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/07/25/一个HashBasedTable引发的故障/" data-title="一个Guava HashBasedTable引发的故障" data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/"></div>
   </section>
 </section>
       
@@ -195,7 +195,7 @@
       <ul>
         
           <li>
-            <a href="/2017/07/25/一个HashBasedTable引发的故障/">一个HashBasedTable引发的故障</a>
+            <a href="/2017/07/25/一个HashBasedTable引发的故障/">一个Guava HashBasedTable引发的故障</a>
           </li>
         
           <li>
