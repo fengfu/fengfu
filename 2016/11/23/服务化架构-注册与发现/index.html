@@ -4,19 +4,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>你若懂我，该有多好 | 宁静·致远</title>
+  <title>服务化架构-注册与发现 | 宁静·致远</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="每个人都有一个死角，自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里，你不懂我，我不怪你。 每个人都有一道伤口，或深或浅，盖上布，以为不存在。我把最殷红的血涂在那里，你不懂我，我不怪你。 每个人都有一场爱恋，用心，用情，用力，感动也感伤。我把最炙热的心情藏在那里，你不懂我，我不怪你。 每个人都有一行泪，喝下冰冷的水，酝酿成的热泪。我把最辛酸的委屈汇在那里，你不懂我，我不怪你。 每个人都有一段">
-<meta name="keywords" content="人生">
+  <meta name="description" content="基本功能在分布式系统中，服务提供端和消费端彼此不知道对方的存在，因此需要有一种机制来确保消费端能够找到提供端并进行调用。一般来说，提供端需要将自己能够提供的服务信息暴露出来，这样消费端通过检索就能找到自己需要的服务并建立连接进行调用。所以，对于服务提供端来讲，需要具备以下功能：  服务注册：将服务信息暴露出来，供消费端查找和使用 取消注册：即注销服务的注册信息  同时，对于消费端来说，则需要：">
+<meta name="keywords" content="架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="你若懂我，该有多好">
-<meta property="og:url" content="http://fengfu.io/2016/02/28/你若懂我该有多好/index.html">
+<meta property="og:title" content="服务化架构-注册与发现">
+<meta property="og:url" content="http://fengfu.io/2016/11/23/服务化架构-注册与发现/index.html">
 <meta property="og:site_name" content="宁静·致远">
-<meta property="og:description" content="每个人都有一个死角，自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里，你不懂我，我不怪你。 每个人都有一道伤口，或深或浅，盖上布，以为不存在。我把最殷红的血涂在那里，你不懂我，我不怪你。 每个人都有一场爱恋，用心，用情，用力，感动也感伤。我把最炙热的心情藏在那里，你不懂我，我不怪你。 每个人都有一行泪，喝下冰冷的水，酝酿成的热泪。我把最辛酸的委屈汇在那里，你不懂我，我不怪你。 每个人都有一段">
+<meta property="og:description" content="基本功能在分布式系统中，服务提供端和消费端彼此不知道对方的存在，因此需要有一种机制来确保消费端能够找到提供端并进行调用。一般来说，提供端需要将自己能够提供的服务信息暴露出来，这样消费端通过检索就能找到自己需要的服务并建立连接进行调用。所以，对于服务提供端来讲，需要具备以下功能：  服务注册：将服务信息暴露出来，供消费端查找和使用 取消注册：即注销服务的注册信息  同时，对于消费端来说，则需要：">
 <meta property="og:updated_time" content="2017-04-12T03:07:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你若懂我，该有多好">
-<meta name="twitter:description" content="每个人都有一个死角，自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里，你不懂我，我不怪你。 每个人都有一道伤口，或深或浅，盖上布，以为不存在。我把最殷红的血涂在那里，你不懂我，我不怪你。 每个人都有一场爱恋，用心，用情，用力，感动也感伤。我把最炙热的心情藏在那里，你不懂我，我不怪你。 每个人都有一行泪，喝下冰冷的水，酝酿成的热泪。我把最辛酸的委屈汇在那里，你不懂我，我不怪你。 每个人都有一段">
+<meta name="twitter:title" content="服务化架构-注册与发现">
+<meta name="twitter:description" content="基本功能在分布式系统中，服务提供端和消费端彼此不知道对方的存在，因此需要有一种机制来确保消费端能够找到提供端并进行调用。一般来说，提供端需要将自己能够提供的服务信息暴露出来，这样消费端通过检索就能找到自己需要的服务并建立连接进行调用。所以，对于服务提供端来讲，需要具备以下功能：  服务注册：将服务信息暴露出来，供消费端查找和使用 取消注册：即注销服务的注册信息  同时，对于消费端来说，则需要：">
   
     <link rel="alternative" href="/atom.xml" title="宁静·致远" type="application/atom+xml">
   
@@ -68,10 +68,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-你若懂我该有多好" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-服务化架构-注册与发现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/02/28/你若懂我该有多好/" class="article-date">
-  <time datetime="2016-02-27T23:38:00.000Z" itemprop="datePublished">2016-02-28</time>
+    <a href="/2016/11/23/服务化架构-注册与发现/" class="article-date">
+  <time datetime="2016-11-23T06:21:40.000Z" itemprop="datePublished">2016-11-23</time>
 </a>
     
   </div>
@@ -82,7 +82,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      你若懂我，该有多好
+      服务化架构-注册与发现
     </h1>
   
 
@@ -90,30 +90,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>每个人都有一个死角，<br>自己走不出来，<br>别人也闯不进去。<br>我把最深沉的秘密放在那里，<br>你不懂我，我不怪你。</p>
-<p>每个人都有一道伤口，<br>或深或浅，<br>盖上布，<br>以为不存在。<br>我把最殷红的血涂在那里，<br>你不懂我，我不怪你。</p>
-<p>每个人都有一场爱恋，<br>用心，用情，用力，<br>感动也感伤。<br>我把最炙热的心情藏在那里，<br>你不懂我，我不怪你。</p>
-<p>每个人都有一行泪，<br>喝下冰冷的水，<br>酝酿成的热泪。<br>我把最辛酸的委屈汇在那里，<br>你不懂我，我不怪你。</p>
-<p>每个人都有一段告白，<br>忐忑，不安，<br>却包含真心和勇气。<br>我把最抒情的语言用在那里，<br>你不懂我，我不怪你。</p>
-<p>你永远也看不见我最爱你的时候，<br>因为我只有在看不见你的时候，<br>才最爱你。</p>
-<p>同样，你永远也看不见我最寂寞的时候，<br>因为我只有在你看不见我的时候，<br>才最寂寞。</p>
-<p>也许，我太会隐藏自己的悲伤，<br>也许，我太会安慰自己的伤痕。<br>从阴雨走到艳阳，<br>我路过泥泞，路过风。</p>
-<p>一路走来，<br>你若懂我，<br>该有多好。</p>
-<p>(作者：莫言)</p>
+        <h1 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h1><p>在分布式系统中，服务提供端和消费端彼此不知道对方的存在，因此需要有一种机制来确保消费端能够找到提供端并进行调用。一般来说，提供端需要将自己能够提供的服务信息暴露出来，这样消费端通过检索就能找到自己需要的服务并建立连接进行调用。所以，对于服务提供端来讲，需要具备以下功能：</p>
+<ol>
+<li>服务注册：将服务信息暴露出来，供消费端查找和使用</li>
+<li>取消注册：即注销服务的注册信息</li>
+</ol>
+<p>同时，对于消费端来说，则需要：</p>
+<ol>
+<li>服务检索：按一定条件查找服务信息，如按应用、接口、IP等检索</li>
+<li>服务订阅：订阅特定的服务，为后面的服务调用和治理做前期准备</li>
+<li>取消订阅：取消指定服务的订阅</li>
+</ol>
+<h1 id="结构组成"><a href="#结构组成" class="headerlink" title="结构组成"></a>结构组成</h1><p>在这种情况下，注册中心的概念就被提了出来。</p>
+<p>同时，系统间调用需要能够根据服务的运行状态(如上下线状态、负载、响应时间、网络情况等)而灵活调整调用端与服务端的组合。</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="cj5nmhtxa000q03s6t6h8h0ju" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
+        <a data-url="http://fengfu.io/2016/11/23/服务化架构-注册与发现/" data-id="cj5nmhtxs001k03s61f8x4bmw" class="article-share-link" data-share="baidu" data-title="服务化架构-注册与发现">分享到</a>
       
 
       
-        <a href="http://fengfu.io/2016/02/28/你若懂我该有多好/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://fengfu.io/2016/11/23/服务化架构-注册与发现/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人生/">人生</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
 
     </footer>
   </div>
@@ -121,19 +124,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/12/29/ATPCO项目总结-管理篇/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/11/23/服务化架构-组成/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">
         
-          ATPCO项目总结-管理篇
+          服务化架构-组成
         
       </div>
     </a>
   
   
-    <a href="/2016/03/08/JVM触发FullGC的情况总结/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/12/14/jcmd命令详解/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">JVM触发FullGC的情况总结</div>
+      <div class="article-nav-title">jcmd命令详解</div>
     </a>
   
 </nav>
@@ -143,7 +146,7 @@
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2016/02/28/你若懂我该有多好/" data-title="你若懂我，该有多好" data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/11/23/服务化架构-注册与发现/" data-title="服务化架构-注册与发现" data-url="http://fengfu.io/2016/11/23/服务化架构-注册与发现/"></div>
   </section>
 </section>
       
