@@ -65,6 +65,60 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-为什么Synchronized不能加在String和Integer等基本包装类型上" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/05/为什么Synchronized不能加在String和Integer等基本包装类型上/" class="article-date">
+  <time datetime="2017-09-05T02:52:54.000Z" itemprop="datePublished">2017-09-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/05/为什么Synchronized不能加在String和Integer等基本包装类型上/">为什么Synchronized不能加在String和Integer等基本包装类型上</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>同步块不应该加在String或基本包装类型上，如Byte、Short、Integer、Long、Float、Double、Boolean、Character。</p>
+<p>String不能用作同步块的参数是因为String为不可变对象，任何String对象的改变都将产生一个新的String对象，这也将导致前面加的锁不会被释放。</p>
+<p>Integer、Boolean、Double、Long不能作为同步块参数的原因是他们是基本包装类型，包装类型有特殊的逻辑，用一句话说就是Java的自动封箱和解箱操作会导致这些对象在经过运算后不再是原来的对象。</p>
+<p>用复杂的话说就是：当把基本变量赋值给包装类型的变量（其实编译过后的操作就是调用包装类型的静态方法valueOf）或者调用静态valueOf方法时：</p>
+<ul>
+<li>Boolean返回的是缓存的对象。</li>
+<li>整型（Byte,Short,Integer,Long）会检查该数字是否在1个字节可表示的有符号整数范围内（-128~127），是则返回缓存对象，否则返回新对象。</li>
+<li>Character会缓存整型值为0~127的字符，同样会检查字符是否落在缓存范围中，是则返回，否则返回新对象。</li>
+<li>Double和Float的valueOf方法始终返回新对象。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://fengfu.io/2017/09/05/为什么Synchronized不能加在String和Integer等基本包装类型上/" data-id="cj777t2ef000qqzx0iiqycrl2" class="article-share-link" data-share="baidu" data-title="为什么Synchronized不能加在String和Integer等基本包装类型上">分享到</a>
+      
+
+      
+        <a href="http://fengfu.io/2017/09/05/为什么Synchronized不能加在String和Integer等基本包装类型上/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-设计一个容错的微服务架构" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/08/23/设计一个容错的微服务架构/" class="article-date">
@@ -166,7 +220,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/08/23/设计一个容错的微服务架构/" data-id="cj6opopgz0000jnx03639h7xf" class="article-share-link" data-share="baidu" data-title="设计一个容错的微服务架构(转)">分享到</a>
+        <a data-url="http://fengfu.io/2017/08/23/设计一个容错的微服务架构/" data-id="cj777t2fm0027qzx0cjtlgt5t" class="article-share-link" data-share="baidu" data-title="设计一个容错的微服务架构(转)">分享到</a>
       
 
       
@@ -253,7 +307,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/07/27/语义化版本2-0-0/" data-id="cj6oph1ln0021hxx0299txwp0" class="article-share-link" data-share="baidu" data-title="语义化版本2.0.0">分享到</a>
+        <a data-url="http://fengfu.io/2017/07/27/语义化版本2-0-0/" data-id="cj777t2fm0029qzx0zo66ptkp" class="article-share-link" data-share="baidu" data-title="语义化版本2.0.0">分享到</a>
       
 
       
@@ -318,7 +372,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/" data-id="cj6oph1kd000thxx0nzhlcw7k" class="article-share-link" data-share="baidu" data-title="一个Guava HashBasedTable引发的故障">分享到</a>
+        <a data-url="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/" data-id="cj777t2ec000nqzx0ob5k02yq" class="article-share-link" data-share="baidu" data-title="一个Guava HashBasedTable引发的故障">分享到</a>
       
 
       
@@ -364,7 +418,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/06/13/Linux性能分析工具/" data-id="cj6oph1k6000lhxx0nsgfo78x" class="article-share-link" data-share="baidu" data-title="Linux性能分析工具">分享到</a>
+        <a data-url="http://fengfu.io/2017/06/13/Linux性能分析工具/" data-id="cj777t2el000xqzx0ub7h5uhx" class="article-share-link" data-share="baidu" data-title="Linux性能分析工具">分享到</a>
       
 
       
@@ -417,7 +471,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/04/23/服务化架构-服务降级/" data-id="cj6oph1l8001khxx08amy8psi" class="article-share-link" data-share="baidu" data-title="服务化架构-服务降级">分享到</a>
+        <a data-url="http://fengfu.io/2017/04/23/服务化架构-服务降级/" data-id="cj777t2fg001yqzx09xpsbar2" class="article-share-link" data-share="baidu" data-title="服务化架构-服务降级">分享到</a>
       
 
       
@@ -540,7 +594,7 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/04/11/使用JRebel远程热部署Class/" data-id="cj6oph1kh000yhxx026pzccwx" class="article-share-link" data-share="baidu" data-title="使用 jrebel 远程部署开发环境的 dubbo 服务">分享到</a>
+        <a data-url="http://fengfu.io/2017/04/11/使用JRebel远程热部署Class/" data-id="cj777t2ev0017qzx0wgc824pg" class="article-share-link" data-share="baidu" data-title="使用 jrebel 远程部署开发环境的 dubbo 服务">分享到</a>
       
 
       
@@ -621,7 +675,7 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2017/03/06/Spring Xml扩展机制/" data-id="cj6oph1k7000ohxx0hprwiino" class="article-share-link" data-share="baidu" data-title="Spring xml扩展机制">分享到</a>
+        <a data-url="http://fengfu.io/2017/03/06/Spring Xml扩展机制/" data-id="cj777t2ei000sqzx0ihiylwit" class="article-share-link" data-share="baidu" data-title="Spring xml扩展机制">分享到</a>
       
 
       
@@ -742,7 +796,7 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/12/14/jcmd命令详解/" data-id="cj6oph1k8000qhxx0waisnbay" class="article-share-link" data-share="baidu" data-title="jcmd命令详解">分享到</a>
+        <a data-url="http://fengfu.io/2016/12/14/jcmd命令详解/" data-id="cj777t2eo0010qzx0loig4ii0" class="article-share-link" data-share="baidu" data-title="jcmd命令详解">分享到</a>
       
 
       
@@ -799,78 +853,11 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://fengfu.io/2016/11/23/服务化架构-注册与发现/" data-id="cj6oph1la001mhxx0ihvjk7qc" class="article-share-link" data-share="baidu" data-title="服务化架构-注册与发现">分享到</a>
+        <a data-url="http://fengfu.io/2016/11/23/服务化架构-注册与发现/" data-id="cj777t2fb001qqzx0mvy5ogm4" class="article-share-link" data-share="baidu" data-title="服务化架构-注册与发现">分享到</a>
       
 
       
         <a href="http://fengfu.io/2016/11/23/服务化架构-注册与发现/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-服务化架构-组成" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/23/服务化架构-组成/" class="article-date">
-  <time datetime="2016-11-23T06:21:06.000Z" itemprop="datePublished">2016-11-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/23/服务化架构-组成/">服务化架构-组成</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="功能结构"><a href="#功能结构" class="headerlink" title="功能结构"></a>功能结构</h1><p>既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有一个地方存储provider的信息，便于consumer调用，那么这个角色就是注册中心(registry)。</p>
-<p>另外，鉴于分布式系统的复杂性和状态多样性，我们需要对provider、consumer、registry进行管理，比如服务依赖管理、权限管理、配置管理、版本管理、流量控制、服务上下线等，那么管理端(administrator)也就成了标配。</p>
-<p>所以综上所述，一个完整的分布式服务化架构，应该包含4部分：</p>
-<ol>
-<li>注册中心Registry</li>
-<li>服务提供端Provider</li>
-<li>服务消费端Consumer</li>
-<li>管理端Administrator</li>
-</ol>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2_wgncKNOdeFjSZFBXXctzXXa_!!2657627814.png" alt=""></p>
-<p>其中，Provider将自己能够提供的服务信息登记到注册中心，同时通过心跳的方式定时更新自己的状态。Consumer从Registry获取可用服务信息后，直接与Provider建立连接进行交互。</p>
-<p>这种架构，基于RPC的服务框架如dubbo/dubbox，JSF都是采用这种机制。</p>
-<p>另外，一些基于REST的服务框架（比如Spring Cloud）会增加服务路由的组件，也就是说Consumer需要经过服务路由才能请求Provider，这种方式下，其架构就是由5部分组成：</p>
-<ol>
-<li>注册中心Registry</li>
-<li>服务提供端Provider</li>
-<li>服务消费端Consumer</li>
-<li>服务路由Router</li>
-<li>管理端Administrator</li>
-</ol>
-<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB29vfhdNaJ.eBjSsziXXaJ_XXa_!!2657627814.png" alt=""></p>
-<p>经由服务路由调用的方式，典型的代表是Spring Cloud，如下图：</p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB28lS_dH1J.eBjSszcXXbFzVXa_!!2657627814.jpg" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/11/23/服务化架构-组成/" data-id="cj6oph1lc001phxx027ulv0j4" class="article-share-link" data-share="baidu" data-title="服务化架构-组成">分享到</a>
-      
-
-      
-        <a href="http://fengfu.io/2016/11/23/服务化架构-组成/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -898,7 +885,7 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能/">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">8</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能/">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -916,7 +903,7 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -926,6 +913,10 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/09/05/为什么Synchronized不能加在String和Integer等基本包装类型上/">为什么Synchronized不能加在String和Integer等基本包装类型上</a>
+          </li>
         
           <li>
             <a href="/2017/08/23/设计一个容错的微服务架构/">设计一个容错的微服务架构(转)</a>
@@ -941,10 +932,6 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
         
           <li>
             <a href="/2017/06/13/Linux性能分析工具/">Linux性能分析工具</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/23/服务化架构-服务降级/">服务化架构-服务降级</a>
           </li>
         
       </ul>
