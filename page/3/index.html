@@ -1,93 +1,387 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+
+
+
   
-  <title>宁静·致远</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta property="og:type" content="website">
 <meta property="og:title" content="宁静·致远">
 <meta property="og:url" content="http://fengfu.io/page/3/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="宁静·致远">
-  
-    <link rel="alternative" href="/atom.xml" title="宁静·致远" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
-  
-</head>
-<body>
-<div id="container">
-  <div id="wrap">
-    <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">宁静·致远</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
-          <input type="submit" value="" class="search-form-submit">
-          <input name=tn type=hidden value="bds">
-          <input name=cl type=hidden value="3">
-          <input name=ct type=hidden value="2097152">
-          <input type="hidden" name="si" value="fengfu.io">
-        </form>
-      </div>
-    </div>
-  </div>
-</header>
-    <div class="outer">
-      <section id="main">
-  
-    <article id="post-JVM-垃圾回收器CMS之各阶段整理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" class="article-date">
-  <time datetime="2016-06-21T07:50:22.000Z" itemprop="datePublished">2016-06-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/">JVM 垃圾回收器CMS之各阶段总结</a>
-    </h1>
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fengfu.io/page/3/"/>
+
+
+
+
+
+  <title>宁静·致远</title>
   
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宁静·致远</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-rss">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            RSS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" itemprop="url">JVM 垃圾回收器CMS之各阶段总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-21T15:50:22+08:00">
+                2016-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" class="leancloud_visitors" data-flag-title="JVM 垃圾回收器CMS之各阶段总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>先贴一张图：</p>
+      
+
+      
+        
+          
+            <p>先贴一张图：</p>
 <p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2HFD0qVXXXXblXpXXXXXXXXXX_!!2657627814.jpg" alt=""></p>
 <h2 id="1-初始标记阶段-CMS-initial-mark"><a href="#1-初始标记阶段-CMS-initial-mark" class="headerlink" title="1.初始标记阶段(CMS-initial-mark)"></a>1.初始标记阶段(CMS-initial-mark)</h2><p>  这个阶段的主要任务是找到堆中所有的垃圾回收根节点对象，这个阶段会暂停所有的应用程序线程，即STW(Stop the world)。此阶段会打印1行日志，如下：</p>
 <pre><code>[GC [1 CMS-initial-mark: 2905437K(4096000K)] 3134625K(5916480K), 0.2551680 secs] [Times: user=0.26 sys=0.00, real=0.25 secs]
@@ -107,50 +401,136 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-reset-start]</div><div class="line">2016-06-21T16:39:05.860+0800: 367860.798: [CMS-concurrent-reset: 0.010/0.010 secs] [Times: user=0.04 sys=0.00, real=0.01 secs]</div></pre></td></tr></table></figure>
 <p>  至此，一个CMS周期结束。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" data-id="cj777t2dx0005qzx0rtcu0mx8" class="article-share-link" data-share="baidu" data-title="JVM 垃圾回收器CMS之各阶段总结">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-性能调优工具-Java-Mission-Control" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" class="article-date">
-  <time datetime="2016-05-20T06:59:20.000Z" itemprop="datePublished">2016-05-20</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/20/性能调优工具-Java-Mission-Control/">性能调优工具-Java Mission Control</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/20/性能调优工具-Java-Mission-Control/" itemprop="url">性能调优工具-Java Mission Control</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-20T14:59:20+08:00">
+                2016-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/05/20/性能调优工具-Java-Mission-Control/" class="leancloud_visitors" data-flag-title="性能调优工具-Java Mission Control">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。</p>
+      
+
+      
+        
+          
+            <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。</p>
 <p>另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不同，JMC使用了JVM内部特定的基于事件的接口，几乎不会给应用造成额外的压力（默认设置下，对性能影响小于1%），因此可以用在负载很高的生产环境中。</p>
 <p>本文就来简单介绍一下使用JMC来监测JVM性能。</p>
 <p><em>注意：需要下载Oracle Jdk 7u40以后的版本，OpenJdk无效，切记！</em></p>
@@ -191,50 +571,136 @@ monitor test
 <p><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png" alt=""></p>
 <p>现在你可以愉快地使用JFR的强大功能了。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/" data-id="cj777t2ey001cqzx07omlhb3k" class="article-share-link" data-share="baidu" data-title="性能调优工具-Java Mission Control">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Java-Instrumentation研究-2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/25/Java-Instrumentation研究-2/" class="article-date">
-  <time datetime="2016-04-25T02:20:43.000Z" itemprop="datePublished">2016-04-25</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/25/Java-Instrumentation研究-2/">Java Instrumentation研究之动态植入</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/25/Java-Instrumentation研究-2/" itemprop="url">Java Instrumentation研究之动态植入</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-25T10:20:43+08:00">
+                2016-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/04/25/Java-Instrumentation研究-2/" class="leancloud_visitors" data-flag-title="Java Instrumentation研究之动态植入">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。</p>
+      
+
+      
+        
+          
+            <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。</p>
 <h2 id="2-关于agentmain"><a href="#2-关于agentmain" class="headerlink" title="2.关于agentmain"></a>2.关于agentmain</h2><p>在Java SE6的Instrumentation 当中，有一个跟 premain“并驾齐驱”的“agentmain”方法，可以在main函数开始运行之后再运行。<br>跟premain函数一样， 开发者可以编写一个含有“agentmain”函数的Java类：</p>
 <pre><code>public static void agentmain(String agentArgs, Instrumentation inst);          [1] 
 public static void agentmain(String agentArgs);              [2]
@@ -293,50 +759,136 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 </ol>
 <p>分析原因，是因为SampleApp正在运行中，而JVM是不允许reload一个正在运行时的类的。一旦classloader加载了一个class，在运行时就不能重新加载这个class的另一个版本。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/" data-id="cj777t2e7000gqzx02ao613lr" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之动态植入">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Java-Instrumentation研究-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/24/Java-Instrumentation研究-1/" class="article-date">
-  <time datetime="2016-04-24T07:30:14.000Z" itemprop="datePublished">2016-04-24</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/24/Java-Instrumentation研究-1/">Java Instrumentation研究之premain</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/24/Java-Instrumentation研究-1/" itemprop="url">Java Instrumentation研究之premain</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-24T15:30:14+08:00">
+                2016-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/04/24/Java-Instrumentation研究-1/" class="leancloud_visitors" data-flag-title="Java Instrumentation研究之premain">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>作为一个软件工程师，你有没有遇到过以下场景：</p>
+      
+
+      
+        
+          
+            <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>作为一个软件工程师，你有没有遇到过以下场景：</p>
 <ol>
 <li>为了排查线上问题，非常迫切地想要知道系统中某个方法的运行数据，为此只能临时修改代码，打印日志；</li>
 <li>为了查找系统瓶颈，你需要知道某个方法的耗时，为此你只能在方法头尾处记录时间戳，并打印日志或者记录到监控中；</li>
@@ -366,50 +918,136 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 </code></pre><p>java选项中有-javaagent:xx，xx就是你的agent jar，java通过此选项加载agent,由agent来监控classpath下的应用。<br>如果你的Agent类引入别的包，那么需要使用-cp参数指定包的路径，否则在执行java命令时，会报找不到类的错误。</p>
 <h2 id="5-Java-Instrumentation实例-premain"><a href="#5-Java-Instrumentation实例-premain" class="headerlink" title="5.Java Instrumentation实例(premain)"></a>5.Java Instrumentation实例(premain)</h2><p>本实例基于javassist实现了对某个类中所有方法执行时间的统计，具体代码请点击 <a href="http://fengfu.io/attach/SampleAgent.zip">这里</a> 下载。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/" data-id="cj777t2e4000cqzx0vrdf2n5m" class="article-share-link" data-share="baidu" data-title="Java Instrumentation研究之premain">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-浅谈软件工程师的职业发展方向" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/11/浅谈软件工程师的职业发展方向/" class="article-date">
-  <time datetime="2016-04-11T09:31:37.000Z" itemprop="datePublished">2016-04-11</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/11/浅谈软件工程师的职业发展方向/">浅谈软件工程师的职业发展方向</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/11/浅谈软件工程师的职业发展方向/" itemprop="url">浅谈软件工程师的职业发展方向</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-11T17:31:37+08:00">
+                2016-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/04/11/浅谈软件工程师的职业发展方向/" class="leancloud_visitors" data-flag-title="浅谈软件工程师的职业发展方向">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>今天在跟团队一个工作了2年多的同学做绩效面谈时，该同学问了我一个问题：自己现在比较迷茫，不知道该往哪个方向发展……</p>
+      
+
+      
+        
+          
+            <p>今天在跟团队一个工作了2年多的同学做绩效面谈时，该同学问了我一个问题：自己现在比较迷茫，不知道该往哪个方向发展……</p>
 <p>相信这是很多有一定工作经验的同学都会有的困惑，很多人每隔几年(一般是3年)就会遇到瓶颈，也会面临着新的选择。这时候，他们都会看不清方向，感到迷茫。如果这个问题得不到解决，那么他的成长就会受到制约，甚至停滞不前。在工作中的表现就是比较沉默甚至消极，严重者则选择离职，寻求新的方向（其实是开始新的轮回……）。此时，如果有人能够根据他们的特点帮助他们选择适合他们的方向，或者给出建议，那么相信他会走出迷雾，豁然开朗，这样团队的稳定性会得到加强。</p>
 <p>所以今天简单总结一下软件工程师的职业发展方向，以帮助迷茫的同学早日走出混沌状态。</p>
 <h2 id="1-技术专家"><a href="#1-技术专家" class="headerlink" title="1.技术专家"></a>1.技术专家</h2><p>技术专家这个方向对于软件工程师来讲应该是比较容易实现的一个目标，因为这是外在因素影响最小的一个，我们所需要的就是专注和毅力。<br>在技术发展百花齐放、日新月异的今天，我们工作中可能会用到很多的技术，但是很多人只是把自己局限在“用”的层面上，并没有继续去深入研究和改进，更有人只是“知其然不知其所以然”，这样就失去了进一步积累的机会。<br>作家格拉德威尔在《异数》一书中指出：”人们眼中的天才之所以卓越非凡，并非天资超人一等，而是付出了持续不断的努力。1万小时的锤炼是任何人从平凡变成超凡的必要条件”。我们做个简单的算术题：如果每天工作八个小时，一周工作五天，那么成为一个领域的专家至少需要五年。<br>5年，看起来貌似时间很长，但是试想一下，如果我们借着工作的机会深入研究某个技术栈的原理，并在此基础上加以实践，那么我们只要不断地积累，最终是有机会成为这方面的专家的。在我身边就有这样的例子：以前我的团队中有个非常内向的小伙子（就叫他HX吧），刚来公司的时候各方面资质很平庸，平时寡言少语，也缺乏自信。在做一个项目时，我们采用了hbase作为系统存储。因为之前对hbase缺乏了解，所以项目过程中踩了很多的坑，于是HX同学就不停地填坑，甚至工作之外的时间都贡献了出去。2年过去了，虽然我们的项目早已结束，但是HX却从未放弃对hbase的研究，相反他经常翻看hbase的代码，并经常去hbase社区查看别人的讨论。现在HX已经成为了公司中对hbase最熟悉的人，并开始往hbase社区提交代码。在公司中他也已经小有名气，其他事业部的开发遇到hbase相关的问题也会来找他了解。虽然他现在还算不是hbase的专家，但是很明显，他现在已经度过了最难熬的时间，已经进入了收获期，只要他继续坚持下去，相信会取得更大的成绩。<br>这是身边真真切切的例子，虽然每个人的情况不完全一样，但是很多时候，我们是可以从别人的故事中找到自己的期待。</p>
@@ -420,50 +1058,136 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 <p>喷了这么多，最后简单梳理了各个方向的能力模型，希望抛砖引玉，引发你的思考。</p>
 <p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2r8UGmVXXXXXPXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/" data-id="cj777t2fc001uqzx0v1i52x46" class="article-share-link" data-share="baidu" data-title="浅谈软件工程师的职业发展方向">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-技术栈选型原则" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/22/技术栈选型原则/" class="article-date">
-  <time datetime="2016-03-22T06:55:20.000Z" itemprop="datePublished">2016-03-22</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/03/22/技术栈选型原则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/22/技术栈选型原则/">技术栈选型原则</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/03/22/技术栈选型原则/" itemprop="url">技术栈选型原则</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-22T14:55:20+08:00">
+                2016-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/03/22/技术栈选型原则/" class="leancloud_visitors" data-flag-title="技术栈选型原则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>未完成</p>
+      
+
+      
+        
+          
+            <p>未完成</p>
 <p>2个能力</p>
 <ol>
 <li>满足需求的能力：开源产品满足自身功能、性能的能力(开发效率？运行效率？)；需求，梳理自身的业务、技术需求；</li>
@@ -476,50 +1200,136 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 </ol>
 <p>避免过度炫技<br>不要因为一个人的喜好而舍弃掉整个技术团队，在任何时候这都是非常愚蠢的事情</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/03/22/技术栈选型原则/" data-id="cj777t2ew0019qzx029ccpd2f" class="article-share-link" data-share="baidu" data-title="技术栈选型原则">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/03/22/技术栈选型原则/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-JVM触发FullGC的情况总结" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/08/JVM触发FullGC的情况总结/" class="article-date">
-  <time datetime="2016-03-08T14:53:56.000Z" itemprop="datePublished">2016-03-08</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/08/JVM触发FullGC的情况总结/">JVM触发FullGC的情况总结</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/03/08/JVM触发FullGC的情况总结/" itemprop="url">JVM触发FullGC的情况总结</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-08T22:53:56+08:00">
+                2016-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/03/08/JVM触发FullGC的情况总结/" class="leancloud_visitors" data-flag-title="JVM触发FullGC的情况总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>FullGC是Java应用中一个不容忽视的问题，因为FullGC会引起应用停顿，所以它对那些响应时间要求比较高的应用的影响还是非常大的。<br>当然，如果要解决FullGC的问题，我们首先需要知道在什么情况下会引起FullGC，这样才能对症下药，避免FullGC的出现。</p>
+      
+
+      
+        
+          
+            <p>FullGC是Java应用中一个不容忽视的问题，因为FullGC会引起应用停顿，所以它对那些响应时间要求比较高的应用的影响还是非常大的。<br>当然，如果要解决FullGC的问题，我们首先需要知道在什么情况下会引起FullGC，这样才能对症下药，避免FullGC的出现。</p>
 <p>下面的总结是针对于系统自动进行FullGC的情况分析，不包含System.gc操作。</p>
 <h2 id="1-老年代空间不足"><a href="#1-老年代空间不足" class="headerlink" title="1. 老年代空间不足"></a>1. 老年代空间不足</h2><p>JVM中堆空间主要由新生代和老年代组成。新创建的对象大多在新生代中创建，当对象经过几次Minor GC依然存活，才有机会被转入老年代。这时问题就来了，如果此时老年代的空间不足以容纳从新生代转入的对象，那么JVM就会进行FullGC，以清理老年代的空间。如果进行FullGC后老年代依然无法容纳转入对象，那么系统就会抛出：java.lang.OutOfMemoryError: Java heap space的异常，相比大家都比较熟悉了。</p>
 <h2 id="2-永久代空间不足"><a href="#2-永久代空间不足" class="headerlink" title="2. 永久代空间不足"></a>2. 永久代空间不足</h2><p>永久代(Permanent Generation)一般是用来存放类信息、字符串常量的地方，如果我们永久代设置的空间比较小无法容纳足够的类信息时，或者因为频繁热加载类信息，又或者存储了太多的字符串常量，那么系统就会触发FullGC，以清理永久代。如果FullGC之后永久代还无法容纳足够的信息，那么系统就会抛出：java.lang.OutOfMemoryError: PermGen space的异常，眼熟吧:)</p>
@@ -528,50 +1338,136 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 <h2 id="4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间"><a href="#4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间" class="headerlink" title="4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间"></a>4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间</h2><p>这是一个较为复杂的触发情况，Hotspot为了避免由于新生代对象晋升到旧生代导致旧生代空间不足的现象，在进行Minor GC时，做了一个判断，如果之前统计所得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间，那么就直接触发Full GC。<br>例如程序第一次触发Minor GC后，有6MB的对象晋升到旧生代，那么当下一次Minor GC发生时，首先检查旧生代的剩余空间是否大于6MB，如果小于6MB，则执行Full GC。<br>当新生代采用PS GC时，方式稍有不同，PS GC是在Minor GC后也会检查，例如上面的例子中第一次Minor GC后，PS GC会检查此时旧生代的剩余空间是否大于6MB，如小于，则触发对旧生代的回收。<br>除了以上4种状况外，对于使用RMI来进行RPC或管理的Sun JDK应用而言，默认情况下会一小时执行一次Full GC。可通过在启动时通过- java -Dsun.rmi.dgc.client.gcInterval=3600000来设置Full GC执行的间隔时间或通过-XX:+ DisableExplicitGC来禁止RMI调用System.gc。</p>
 <p>明确了FullGC出现的原理，我们就能根据JVM垃圾回收的情况来判断系统到底是因为什么原因出现了FullGC，也就能对症下药，避免FullGC的出现。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/" data-id="cj777t2e5000eqzx0rtt4pl3a" class="article-share-link" data-share="baidu" data-title="JVM触发FullGC的情况总结">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-你若懂我该有多好" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/28/你若懂我该有多好/" class="article-date">
-  <time datetime="2016-02-27T23:38:00.000Z" itemprop="datePublished">2016-02-28</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/02/28/你若懂我该有多好/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/28/你若懂我该有多好/">你若懂我，该有多好</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/02/28/你若懂我该有多好/" itemprop="url">你若懂我，该有多好</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-28T07:38:00+08:00">
+                2016-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/02/28/你若懂我该有多好/" class="leancloud_visitors" data-flag-title="你若懂我，该有多好">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>每个人都有一个死角，<br>自己走不出来，<br>别人也闯不进去。<br>我把最深沉的秘密放在那里，<br>你不懂我，我不怪你。</p>
+      
+
+      
+        
+          
+            <p>每个人都有一个死角，<br>自己走不出来，<br>别人也闯不进去。<br>我把最深沉的秘密放在那里，<br>你不懂我，我不怪你。</p>
 <p>每个人都有一道伤口，<br>或深或浅，<br>盖上布，<br>以为不存在。<br>我把最殷红的血涂在那里，<br>你不懂我，我不怪你。</p>
 <p>每个人都有一场爱恋，<br>用心，用情，用力，<br>感动也感伤。<br>我把最炙热的心情藏在那里，<br>你不懂我，我不怪你。</p>
 <p>每个人都有一行泪，<br>喝下冰冷的水，<br>酝酿成的热泪。<br>我把最辛酸的委屈汇在那里，<br>你不懂我，我不怪你。</p>
@@ -582,50 +1478,136 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 <p>一路走来，<br>你若懂我，<br>该有多好。</p>
 <p>(作者：莫言)</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2016/02/28/你若懂我该有多好/" data-id="cj777t2ek000vqzx0ov37f3oo" class="article-share-link" data-share="baidu" data-title="你若懂我，该有多好">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2016/02/28/你若懂我该有多好/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人生/">人生</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-ATPCO项目总结-管理篇" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/29/ATPCO项目总结-管理篇/" class="article-date">
-  <time datetime="2015-12-29T12:41:09.000Z" itemprop="datePublished">2015-12-29</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/29/ATPCO项目总结-管理篇/">ATPCO项目总结-管理篇</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/29/ATPCO项目总结-管理篇/" itemprop="url">ATPCO项目总结-管理篇</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-29T20:41:09+08:00">
+                2015-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/12/29/ATPCO项目总结-管理篇/" class="leancloud_visitors" data-flag-title="ATPCO项目总结-管理篇">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。</p>
+      
+
+      
+        
+          
+            <p>ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。</p>
 <p>ATPCO项目经历的这接近1年的时间里，有很多的感触，写出来做个总结吧。今天写的是管理方面。</p>
 <h2 id="1-反应速度"><a href="#1-反应速度" class="headerlink" title="1. 反应速度"></a>1. 反应速度</h2><p>项目启动最初，由于与ATPCO的商务合同没有签订，项目只投入了一个人进行研究，推动缓慢。加之团队对公布运价业务不熟悉，给了其他团队切入的机会，并最终导致了2个团队持续竞争的局面。虽然从公司的角度，一个重要的项目由2个团队做是降低风险的举措，但是由此带来的内部消耗也是比较大的，这也导致了后面的核心员工离职。<br>从这件事情来讲，对于任何事情，都要保持足够的敏感度和反应速度。互联网行业竞争激烈，需要快速反应。qunar内部的狼性文化也要求团队能够快速响应、灵活机动，这样才能更快地响应形势的变化。</p>
 <h2 id="2-团队组建"><a href="#2-团队组建" class="headerlink" title="2. 团队组建"></a>2. 团队组建</h2><p>从团队组建上，有2点做得比较好，1点做得不好。<br>先说说做得好的地方：<br>1)在项目初期就把产品经理、技术拉到一个会议室封闭，这样带来的好处是沟通效率很高，项目有问题的时候大家在屋里吼一嗓子就能很快解决问题。当然弊端是十几个人在一个屋子里面，有的时候3、4组人一起说话的时候，那感觉就跟菜市场一样了。<br>2)投入精兵强将。项目开始封闭时，项目人员短缺，无奈之下，把部门里面6个TL中的4个拉了进来。此举起到了很好的效果，不仅解决了人力的问题，而且每个人都在自己负责的事情上做出了很好的成绩。这也应了那句话：兵不在多，在于精。<br>再说说做得不好的地方：<br>1)添油战术不可取：ATPCO项目专业性很强，新人的学习门槛很高，所以在往团队增加人手的时候，最好一次性给够。添油战术对这个项目最大的弊端就是新人需要花很久去学习（最少1个月时间入门），如果每个新来的人都要经历一个学习过程，那么所带来的成本和消耗就比较大了。</p>
@@ -637,50 +1619,136 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 <p>其次是要把合适的人放在合适的位置上。那怎么知道这个人适合这个位置呢？前面说到我们已经做了系统拆分，那么根据拆分后的系统来分析各系统需要什么样的能力？比如航路引擎需要对算法比较熟悉，规则系统需要很强的学习能力和技术功底，搜索引擎需要对分布式和性能优化比较熟悉。明确了各个位置需要的能力后，就可以去找相应的人了。</p>
 <p>第三是要能够做好backup，如果你不希望在关键时刻因为关键人物不在而导致业务受影响，那么就尽量避免出现单点。如果人手短缺万不得已，那么TL可以加强团队代码review，熟悉每个子系统的逻辑，这样能够确保在关键时刻其他人能够顶上，同时也能够帮助团队提升技术能力。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/" data-id="cj777t2dk0000qzx0ycjdqc1v" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-管理篇">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-ATPCO项目总结--技术篇" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/28/ATPCO项目总结--技术篇/" class="article-date">
-  <time datetime="2015-12-28T12:41:09.000Z" itemprop="datePublished">2015-12-28</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/28/ATPCO项目总结--技术篇/">ATPCO项目总结-技术篇</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/28/ATPCO项目总结--技术篇/" itemprop="url">ATPCO项目总结-技术篇</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-28T20:41:09+08:00">
+                2015-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/12/28/ATPCO项目总结--技术篇/" class="leancloud_visitors" data-flag-title="ATPCO项目总结-技术篇">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>接着上篇写，这一篇从技术方面来总结一下ATPCO项目。</p>
+      
+
+      
+        
+          
+            <p>接着上篇写，这一篇从技术方面来总结一下ATPCO项目。</p>
 <h1 id="1-项目特点"><a href="#1-项目特点" class="headerlink" title="1.项目特点"></a>1.项目特点</h1><p>ATPCO是一个业务性非常强的项目，主要体现在以下几点：</p>
 <h2 id="1）规则复杂"><a href="#1）规则复杂" class="headerlink" title="1）规则复杂"></a>1）规则复杂</h2><p>ATPCO提供的数据主要分为：Fares、Rules、Routings三类数据。其中Fare与Rules、Routings存在强关联。Rules中包含了8类Record数据，即Record1-Record8。其中Record3中又划分成35项Category。每一个Category分别表示一类运价规则，如Cat1表示乘客类型的规则，Cat2表示适用航班的规则，Cat3表示淡旺季规则……</p>
 <h2 id="2）计算量大"><a href="#2）计算量大" class="headerlink" title="2）计算量大"></a>2）计算量大</h2><p>ATPCO中公布运价数据有9000万条，Rules数据有1亿多条，每个Fare平均关联20多条Rules数据。Fare不仅需要与Rules、Routings进行匹配，还需要与Av（此AV指航班可用座位，不是那个AV）进行匹配。用户一次搜索可能会引起几十万的计算量，如果在短时间内快速计算出结果？可以肯定的一点是：普通的单机计算是行不通的。</p>
@@ -717,210 +1785,411 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 <li>技术创新，科技是第一生产力</li>
 </ol>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/" data-id="cj777t2du0004qzx0xe900bh4" class="article-share-link" data-share="baidu" data-title="ATPCO项目总结-技术篇">分享到</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
 
       
-        <a href="http://fengfu.io/2015/12/28/ATPCO项目总结--技术篇/#ds-thread" class="article-comment-link">评论</a>
+
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
-
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+  </section>
 
   
-
-
-  <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
-</section>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
       
-      <aside id="sidebar">
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人生/">人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/商业/">商业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能/">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂谈/">杂谈</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a><span class="tag-list-count">8</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/人生/" style="font-size: 10px;">人生</a> <a href="/tags/商业/" style="font-size: 10px;">商业</a> <a href="/tags/微服务/" style="font-size: 12.5px;">微服务</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/杂谈/" style="font-size: 17.5px;">杂谈</a> <a href="/tags/架构/" style="font-size: 15px;">架构</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">近期文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/09/05/为什么Synchronized不能加在String和Integer等基本包装类型上/">为什么Synchronized不能加在String和Integer等基本包装类型上</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/23/设计一个容错的微服务架构/">设计一个容错的微服务架构(转)</a>
-          </li>
-        
-          <li>
-            <a href="/2017/07/27/语义化版本2-0-0/">语义化版本2.0.0</a>
-          </li>
-        
-          <li>
-            <a href="/2017/07/25/一个HashBasedTable引发的故障/">一个Guava HashBasedTable引发的故障</a>
-          </li>
-        
-          <li>
-            <a href="/2017/06/13/Linux性能分析工具/">Linux性能分析工具</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">友情链接</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="http://coolshell.cn" target="_blank">酷壳</a>
-          </li>
-        
-          <li>
-            <a href="http://ifeve.com" target="_blank">并发编程网</a>
-          </li>
-        
-          <li>
-            <a href="http://calvin1978.blogcn.com" target="_blank">花钱的年化</a>
-          </li>
-        
-          <li>
-            <a href="http://lovestblog.cn" target="_blank">你假笨</a>
-          </li>
-        
-          <li>
-            <a href="http://hellojava.info" target="_blank">hellojava</a>
-          </li>
-        
-          <li>
-            <a href="http://techblog.netflix.com" target="_blank">Netflix技术博客</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
       
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="宁静·致远" />
+          <p class="site-author-name" itemprop="name">宁静·致远</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
     </div>
-    <footer id="footer">
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 宁静·致远<br>
-      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
-      .
-      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
-    </div>
-  </div>
-</footer>
-  </div>
-  <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-  <!-- totop start -->
-<div id="totop">
-<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宁静·致远</span>
 </div>
 
-<!-- totop end -->
 
-<!-- 多说公共js代码 start -->
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
 <script type="text/javascript">
-var duoshuoQuery = {short_name:"qufengfu"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共js代码 end -->
-
-
-<!-- 百度分享 start -->
-
-<div id="article-share-box" class="article-share-box">
-  <div id="bdshare" class="bdsharebuttonbox article-share-links">
-    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
-    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
-    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
-    <a class="article-share-more" data-cmd="more" title="更多"></a>
-  </div>
-</div>
-<script>
-  function SetShareData(cmd, config) {
-    if (shareDataTitle && shareDataUrl) {
-      config.bdText = shareDataTitle;
-      config.bdUrl = shareDataUrl;
-    }
-    return config;
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
   }
-  window._bd_share_config={
-    "common":{onBeforeClick: SetShareData},
-    "share":{"bdCustomStyle":"/css/bdshare.css"}
-  };
-  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
 </script>
 
-<!-- 百度分享 end -->
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
 
 
-<script src="/js/script.js"></script>
 
-</div>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("pq7j7M6jaVzlRAhO3VhuFy1O-gzGzoHsz", "Fqlk4xsApzNKqC5HV87nMkix");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
