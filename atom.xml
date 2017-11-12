@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>宁静·致远</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://fengfu.io/"/>
+  <updated>2016-12-16T14:16:45.388Z</updated>
+  <id>http://fengfu.io/</id>
+  
+  <author>
+    <name>宁静·致远</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jcmd命令详解</title>
+    <link href="http://fengfu.io/2016/12/03/jcmd%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://fengfu.io/2016/12/03/jcmd命令详解/</id>
+    <published>2016-12-03T08:28:59.000Z</published>
+    <updated>2016-12-16T14:16:45.388Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对jcmd的介绍:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The jcmd utility is used to send diagnostic command requests to the JVM, where these requests are useful for controlling Java Flight Recordings, troubleshoot, and diagnose JVM and Java Applications. It must be used on the same machine where the JVM is running, and have the same effective user and group identifiers that were used to launch the JVM.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;翻译成人话就是：&lt;br&gt;jcmd一个用来发送诊断命令请求到JVM的工具，这些请求对于控制Java飞行记录器、故障排除、JVM和Java应用诊断来说是比较有用的。jcmd必须与正在运行的JVM在同一台机器上使用，并且使用启动该JVM时的用户权限。&lt;/p&gt;
+&lt;p&gt;jcmd的用法有以下几种:&lt;br&gt;&lt;code&gt;jcmd [ options ]&lt;/code&gt;&lt;br&gt;&lt;code&gt;jcmd [ pid | main-class ] PerfCounter.print&lt;/code&gt;&lt;br&gt;&lt;code&gt;jcmd [ pid | main-class ] command [ arguments ]&lt;/code&gt;&lt;br&gt;&lt;code&gt;jcmd [ pid | main-class ] -f file&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;使用不带参数或参数-l，jcmd 将打印运行的Java进程的列表信息，其中包括进程ID、main类和它们的命令行参数。&lt;br&gt;如果在命令行中指定进程ID，jcmd 将向该进程ID的Java进程发送至诊断命令请求。&lt;br&gt;如果在命令行中指定main类，jcmd 将向main类包含该子字符串的所有Java进程发送诊断命令请求。&lt;br&gt;如果使用PerfCounter.print 参数，jcmd 打印目标Java进程上可用的性能计数器。&lt;br&gt;如果使用-f 选项参数，jcmd 将向目标Java进程发送file中存储的诊断命令。&lt;/p&gt;
+&lt;p&gt;其中command的说明如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;命令&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;help&lt;/td&gt;
+&lt;td&gt;打印帮助信息，示例：&lt;code&gt;jcmd &amp;lt;PID&amp;gt; help [&amp;lt;command name&amp;gt;]&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ManagementAgent.stop&lt;/td&gt;
+&lt;td&gt;停止JMX Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ManagementAgent.start_local&lt;/td&gt;
+&lt;td&gt;开启本地JMX Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ManagementAgent.start&lt;/td&gt;
+&lt;td&gt;开启JMX Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Thread.print&lt;/td&gt;
+&lt;td&gt;参数-l打印java.util.concurrent锁信息，相当于：&lt;code&gt;jstack &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PerfCounter.print&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jstat -J-Djstat.showUnsupported=true -snap &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.class_histogram&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jmap -histo &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.heap_dump&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jmap -dump:format=b,file=xxx.bin &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.run_finalization&lt;/td&gt;
+&lt;td&gt;相当于：System.runFinalization()&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GC.run&lt;/td&gt;
+&lt;td&gt;相当于：System.gc()&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.uptime&lt;/td&gt;
+&lt;td&gt;参数-date打印当前时间，VM启动到现在的时候，以秒为单位显示&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.flags&lt;/td&gt;
+&lt;td&gt;参数-all输出全部，相当于：&lt;code&gt;jinfo -flags &amp;lt;PID&amp;gt;, jinfo -flag &amp;lt;VM FLAG&amp;gt; &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.system_properties&lt;/td&gt;
+&lt;td&gt;相当于：&lt;code&gt;jinfo -sysprops &amp;lt;PID&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.command_line&lt;/td&gt;
+&lt;td&gt;相当于：jinfo -sysprops &lt;pid&gt; &amp;vert; grep command&lt;/pid&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VM.version&lt;/td&gt;
+&lt;td&gt;相当于：jinfo -sysprops &lt;pid&gt; &amp;vert; grep version&lt;/pid&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;在JDK 1.7及之后的版本，新增了一个命令行工具jcmd。它是一个多功能工具，可以做哪些事情呢？这里先卖个关子，先来看看Oracle官方对
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>服务化架构-组成</title>
+    <link href="http://fengfu.io/2016/11/23/%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84-%E7%BB%84%E6%88%90/"/>
+    <id>http://fengfu.io/2016/11/23/服务化架构-组成/</id>
+    <published>2016-11-23T06:21:06.000Z</published>
+    <updated>2016-11-24T09:08:27.741Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;功能结构&quot;&gt;&lt;a href=&quot;#功能结构&quot; class=&quot;headerlink&quot; title=&quot;功能结构&quot;&gt;&lt;/a&gt;功能结构&lt;/h1&gt;&lt;p&gt;既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有一个地方存储provider的信息，便于consumer调用，那么这个角色就是注册中心(registry)。&lt;/p&gt;
+&lt;p&gt;另外，鉴于分布式系统的复杂性和状态多样性，我们需要对provider、consumer、registry进行管理，比如服务依赖管理、权限管理、配置管理、版本管理、流量控制、服务上下线等，那么管理端(administrator)也就成了标配。&lt;/p&gt;
+&lt;p&gt;所以综上所述，一个完整的分布式服务化架构，应该包含4部分：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;注册中心Registry&lt;/li&gt;
+&lt;li&gt;服务提供端Provider&lt;/li&gt;
+&lt;li&gt;服务消费端Consumer&lt;/li&gt;
+&lt;li&gt;管理端Administrator&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2_wgncKNOdeFjSZFBXXctzXXa_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;其中，Provider将自己能够提供的服务信息登记到注册中心，同时通过心跳的方式定时更新自己的状态。Consumer从Registry获取可用服务信息后，直接与Provider建立连接进行交互。&lt;/p&gt;
+&lt;p&gt;这种架构，基于RPC的服务框架如dubbo/dubbox，JSF都是采用这种机制。&lt;/p&gt;
+&lt;p&gt;另外，一些基于REST的服务框架（比如Spring Cloud）会增加服务路由的组件，也就是说Consumer需要经过服务路由才能请求Provider，这种方式下，其架构就是由5部分组成：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;注册中心Registry&lt;/li&gt;
+&lt;li&gt;服务提供端Provider&lt;/li&gt;
+&lt;li&gt;服务消费端Consumer&lt;/li&gt;
+&lt;li&gt;服务路由Router&lt;/li&gt;
+&lt;li&gt;管理端Administrator&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB29vfhdNaJ.eBjSsziXXaJ_XXa_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;经由服务路由调用的方式，典型的代表是Spring Cloud，如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB28lS_dH1J.eBjSszcXXbFzVXa_!!2657627814.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;功能结构&quot;&gt;&lt;a href=&quot;#功能结构&quot; class=&quot;headerlink&quot; title=&quot;功能结构&quot;&gt;&lt;/a&gt;功能结构&lt;/h1&gt;&lt;p&gt;既然是服务化架构，那么肯定会包含服务提供方和调用方，即provider和consumer。那么作为分布式的服务化架构，需要有
+    
+    </summary>
+    
+    
+      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>服务化架构-前言</title>
+    <link href="http://fengfu.io/2016/11/23/%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84-%E5%89%8D%E8%A8%80/"/>
+    <id>http://fengfu.io/2016/11/23/服务化架构-前言/</id>
+    <published>2016-11-23T03:20:00.000Z</published>
+    <updated>2016-11-23T06:22:43.775Z</updated>
+    
+    <content type="html">&lt;p&gt;近两年，微服务的概念逐渐火了起来，而docker的出现，更是在微服务的火上浇了一桶油。纯粹地讲，我不太认同微服务的说法。说白了，你还是一个服务，只是因为你的小微，有些地方你需要特别注意，比如高内聚、低耦合，比如团队规模的“两个披萨”原则等。但其实这些原则对于“服务”的世界来讲，早就是普世价值了。&lt;/p&gt;
+&lt;p&gt;那我们再往前看5年，那时候服务化的架构已经开始在业界崭露头角，比如2011年的时候，阿里把内部的dubbo框架开源了。从当前的标准来看，dubbo并不是一个非常优秀的服务化框架，它有很多缺陷和缺失，但是在5年前，这已经难能可贵了。&lt;/p&gt;
+&lt;p&gt;上周，在朋友的公司做了一次服务化架构的内训。为了准备这个PPT，特地将服务化框架的体系做了一个梳理，因此决定趁热打铁，写个系列博客进行更进一步的总结。&lt;/p&gt;
+&lt;p&gt;这个系列的文章，将从以下几个方面进行总结：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;服务化架构的组成&lt;/li&gt;
+&lt;li&gt;服务注册与发现&lt;/li&gt;
+&lt;li&gt;RPC&lt;/li&gt;
+&lt;li&gt;同步与异步&lt;/li&gt;
+&lt;li&gt;服务依赖管理&lt;/li&gt;
+&lt;li&gt;服务链路跟踪&lt;/li&gt;
+&lt;li&gt;服务路由&lt;/li&gt;
+&lt;li&gt;服务负载均衡&lt;/li&gt;
+&lt;li&gt;服务降级&lt;/li&gt;
+&lt;li&gt;服务限流&lt;/li&gt;
+&lt;li&gt;服务上下线&lt;/li&gt;
+&lt;li&gt;服务授权&lt;/li&gt;
+&lt;li&gt;服务监控与告警&lt;/li&gt;
+&lt;li&gt;服务版本管理&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近两年，微服务的概念逐渐火了起来，而docker的出现，更是在微服务的火上浇了一桶油。纯粹地讲，我不太认同微服务的说法。说白了，你还是一个服务，只是因为你的小微，有些地方你需要特别注意，比如高内聚、低耦合，比如团队规模的“两个披萨”原则等。但其实这些原则对于“服务”的世界来
+    
+    </summary>
+    
+    
+      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>晋级Review归来话代码有毒</title>
+    <link href="http://fengfu.io/2016/10/27/%E6%99%8B%E7%BA%A7Review%E5%BD%92%E6%9D%A5%E8%AF%9D%E4%BB%A3%E7%A0%81%E6%9C%89%E6%AF%92/"/>
+    <id>http://fengfu.io/2016/10/27/晋级Review归来话代码有毒/</id>
+    <published>2016-10-27T07:36:55.000Z</published>
+    <updated>2016-11-08T08:43:14.021Z</updated>
+    
+    <content type="html">&lt;p&gt;这几天做应届生的转正定级答辩，结束后小黑哥在朋友圈里面发了下面一幅图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2qDgda71M.eBjSZPiXXawfpXa_!!2657627814.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;并在评论里面说了一句话：网络不超时，堆外不清理，异步不回调，异常不监控。&lt;/p&gt;
+&lt;p&gt;上面的中毒情况总结得非常不错，这让我想起了《唐伯虎点秋香》里面的一段情节：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2Poz0aHaI.eBjy1XdXXcoqXXa_!!2657627814.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;华夫人对唐伯虎说：一日丧命散是用七种不同的毒虫再加上那鹤顶红提炼七七四十九天而成的，无色无味，杀人于无影无踪。吃了我们一日丧命散的人，一天之内会武功全失，经脉逆流，胡思乱想而至走火入魔，最后啊，会血管爆裂而死。&lt;/p&gt;
+&lt;p&gt;借着这个情节和小黑哥的中毒，来总结一下代码里面的七种毒虫吧。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i1/2657627814/TB2Qegea71M.eBjSZPiXXawfpXa_!!2657627814.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;1-资源不限制&quot;&gt;&lt;a href=&quot;#1-资源不限制&quot; class=&quot;headerlink&quot; title=&quot;1.资源不限制&quot;&gt;&lt;/a&gt;1.资源不限制&lt;/h1&gt;&lt;p&gt;这是很多码农容易中的毒，典型的症状是：&lt;/p&gt;
+&lt;h2 id=&quot;1-1-缓存不设置最大数量限制&quot;&gt;&lt;a href=&quot;#1-1-缓存不设置最大数量限制&quot; class=&quot;headerlink&quot; title=&quot;1.1 缓存不设置最大数量限制&quot;&gt;&lt;/a&gt;1.1 缓存不设置最大数量限制&lt;/h2&gt;&lt;p&gt;比如我们使用map实现了一个cache，但是没有设置cache的大小，久而久之你可以想象一下这个cache最终会膨胀到什么程度。当然有同学可能会说我使用的是Guava cache，可以设置数量限制。well done，你再回去看看你的full gc是不是比较频繁，没准是因为这个值太大导致的哟~&lt;/p&gt;
+&lt;h2 id=&quot;1-2-线程池不设置队列大小&quot;&gt;&lt;a href=&quot;#1-2-线程池不设置队列大小&quot; class=&quot;headerlink&quot; title=&quot;1.2 线程池不设置队列大小&quot;&gt;&lt;/a&gt;1.2 线程池不设置队列大小&lt;/h2&gt;&lt;p&gt;比如我们使用newFixedThreadPool，但是我们没有设置队列的大小，而悲催的是，在java中，线程池队列的默认大小是Integer.MAX_VALUE，我想你自己也能清楚这种情况下会发生什么问题。&lt;br&gt;再比如Executors.newCachedThreadPool，这个接口很多人会用到，但很多用的人都没有仔细想过会不会在某种情况下这里创建出巨多的线程。&lt;/p&gt;
+&lt;h1 id=&quot;2-网络不超时&quot;&gt;&lt;a href=&quot;#2-网络不超时&quot; class=&quot;headerlink&quot; title=&quot;2.网络不超时&quot;&gt;&lt;/a&gt;2.网络不超时&lt;/h1&gt;&lt;p&gt;这里说的是网络调用的场景不设置超时。&lt;/p&gt;
+&lt;p&gt;在服务化设计大行其道的今天，我们很多的服务调用都是通过网络调用进行的。设想一下，如果我们调用的某个服务性能低下或者网络异常，长时间没有返回结果，那么调用端线程就会一直阻塞在这里。如果没有使用线程池，那么应用会阻塞在这里。如果使用了线程池，那么线程就会长时间阻塞，最终导致线程池爆掉。&lt;/p&gt;
+&lt;p&gt;在review代码的时候，这种情况尤其常见，尤其是使用httpclient的时候，各位看官要多加注意哟。&lt;/p&gt;
+&lt;h1 id=&quot;3-自我不保护&quot;&gt;&lt;a href=&quot;#3-自我不保护&quot; class=&quot;headerlink&quot; title=&quot;3.自我不保护&quot;&gt;&lt;/a&gt;3.自我不保护&lt;/h1&gt;&lt;p&gt;这种情况尤其常见于对外提供接口的情况。对于调用方传过来的参数，我们没有做严格的有效性检查或者限制，最终导致不符合要求的数据将程序搞挂。比如我们提供了一个用户信息批量查询的接口，参数是一个数组。结果是某个调用方传了有1000个元素的数组过来，最终可能直接导致程序内存溢出……这种情况我们能去怪罪调用方吗？严格来说，我们不能，在这里可以借鉴一句经典的话：不要相信前端传来的任何数据。我想对于接口也是一样：不要相信调用端传来的任何数据。&lt;/p&gt;
+&lt;p&gt;还有一种情况就是系统处理能力的保护，最典型的就是QPS。如果我们的系统能够承受的QPS是100，那么如果QPS超过这个数值，我们该怎么办？我想很多人心里已经有了答案了。&lt;/p&gt;
+&lt;h1 id=&quot;4-连接不关闭&quot;&gt;&lt;a href=&quot;#4-连接不关闭&quot; class=&quot;headerlink&quot; title=&quot;4.连接不关闭&quot;&gt;&lt;/a&gt;4.连接不关闭&lt;/h1&gt;&lt;p&gt;这里其实是有两点要强调，连接和流。&lt;/p&gt;
+&lt;h2 id=&quot;4-1-连接不关闭&quot;&gt;&lt;a href=&quot;#4-1-连接不关闭&quot; class=&quot;headerlink&quot; title=&quot;4.1 连接不关闭&quot;&gt;&lt;/a&gt;4.1 连接不关闭&lt;/h2&gt;&lt;p&gt;说到连接，这里所说的是网络连接。我们都知道，网络资源是一种受限资源，无限制的网络连接会给自身及对方系统带来很大的压力，因此我们会使用连接池或其他连接复用技术来降低系统压力，以此提高效率。但是如果我们忘记了关闭连接的话，就会对对端系统带来隐患。比如数据库连接，如果忘记关闭，会造成数据库服务器连接资源耗尽最终导致拒绝服务。当然有同学说，现在很多服务器都有超时检查机制，长时间不活动的连接会自动清除。那么你想过没有，如果连接被服务器断开，这种情况下客户端是感知不到的。只有你下次使用的时候才发现连接已经不可用了。&lt;/p&gt;
+&lt;h2 id=&quot;4-2-流不关闭&quot;&gt;&lt;a href=&quot;#4-2-流不关闭&quot; class=&quot;headerlink&quot; title=&quot;4.2 流不关闭&quot;&gt;&lt;/a&gt;4.2 流不关闭&lt;/h2&gt;&lt;p&gt;流的问题很好理解，我们读写文件、网络传输，很多很多场景需要使用流，而在操作系统层面，对文件、网络的操作都是有限制的。在使用流的时候，我们首先需要进行open，最后close。如果我们忘记了close，那么系统就不会释放对此资源的占用，最终超出系统限制而导致后续的操作失败，最典型的错误就是too many open files。&lt;/p&gt;
+&lt;h1 id=&quot;5-异步不回调&quot;&gt;&lt;a href=&quot;#5-异步不回调&quot; class=&quot;headerlink&quot; title=&quot;5.异步不回调&quot;&gt;&lt;/a&gt;5.异步不回调&lt;/h1&gt;&lt;p&gt;在分布式服务架构中，很多的服务为了提高并发处理能力，使用了异步机制。异步的好处是消费端可以不必一直等待服务端的结果，而将资源交给其他的逻辑处理。当服务端有结果返回时，通过回调机制调用消费端的逻辑进行后续的处理。但是在实际的使用过程中，发现很多人还是使用同步的方式来调用异步方法，比如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;fooService.findFoo(fooId); //fooService.findFoo方法支持异步
+Future&amp;lt;Foo&amp;gt; fooFuture = RpcContext.getContext().getFuture(); 
+
+Foo foo = fooFuture.get(); // 如果foo已返回，直接拿到返回值，否则线程wait住，等待foo返回后，线程会被notify唤醒
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们知道Future对象具有如下的特性：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;异步执行，可用 get 方法获取执行结果；&lt;/li&gt;
+&lt;li&gt;如果计算还没完成，get 方法是会阻塞的，如果完成了，是可以多次获取并立即得到结果的；&lt;/li&gt;
+&lt;li&gt;如果计算还没完成，是可以取消计算的；&lt;/li&gt;
+&lt;li&gt;可以查询计算的执行状态&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以上述的代码问题主要出现在第3行，如果fooService.findFoo方法还没有返回值，那么fooFuture.get()方法会被阻塞直到结果返回，这样就失去了异步调用的优势了。&lt;/p&gt;
+&lt;p&gt;那么针对上面的代码，正确的写法应该是通过回调机制做数据返回时的处理：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;fooService.findFoo(fooId);  
+
+ResponseFuture future = ((FutureAdapter)RpcContext.getContext().getFuture()).getFuture();
+future.setCallback(new ResponseCallback(){
+    public void done(Object response){
+       //调用正常的时候执行
+    }
+
+    public void caught(Throwable exception){
+      //调用异常的时候执行
+    }
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;当然，上面的方式只是举了个栗子，具体情况需要根据不同的RPC框架去做处理。这里推荐Google guava concurrent包里面的接口和工具类，比如ListenableFuture、Futures等，具体实例网上有很多的说明，请大家自行安利，这里就不做赘述了。&lt;/p&gt;
+&lt;h1 id=&quot;6-异常不监控&quot;&gt;&lt;a href=&quot;#6-异常不监控&quot; class=&quot;headerlink&quot; title=&quot;6.异常不监控&quot;&gt;&lt;/a&gt;6.异常不监控&lt;/h1&gt;&lt;p&gt;当系统抛出异常被捕获后，很多同学只是通过日志记录了一下异常信息，但是并没有通过监控系统记录异常。这样带来的隐患就是我们没法在第一时间感知系统异常，只能是影响到其他监控了才会有所体现，但这样就只能靠运气了。如果被影响的监控比较敏感，或许很快就会有告警；但是如果被影响的监控不敏感，或者压根没开告警，那么你就呵呵了……&lt;/p&gt;
+&lt;h1 id=&quot;7-堆外不清理&quot;&gt;&lt;a href=&quot;#7-堆外不清理&quot; class=&quot;headerlink&quot; title=&quot;7.堆外不清理&quot;&gt;&lt;/a&gt;7.堆外不清理&lt;/h1&gt;&lt;p&gt;在某些业务场景下，我们可能需要使用DirectByteBuffer分配字节缓冲区，或者使用MappedByteBuffer做内存映射，那么我们不可避免地需要使用堆外内存。DirectByteBuffer对象在创建过程中会先通过Unsafe接口直接通过os::malloc来分配内存，然后将内存的起始地址和大小存到DirectByteBuffer对象里，这样就可以直接操作这些内存。我们dump内存时可能会发现DirectByteBuffer对象很小，但是其实它后面可能关联了一个非常大的堆外内存，因此我们通常称之为“冰山对象”。这些内存只有在DirectByteBuffer回收掉之后才有机会被回收，因此如果这些对象大部分都移到了old，但是一直没有触发CMS GC或者Full GC，那么悲剧将会发生，因为你的物理内存被他们耗尽了，因此为了避免这种悲剧的发生，通过-XX:MaxDirectMemorySize来指定最大的堆外内存大小，当使用达到了阈值的时候将调用System.gc来做一次full gc，以此来回收掉没有被使用的堆外内存。&lt;/p&gt;
+&lt;p&gt;另外，当前我们的使用的服务框架、第三方组件，很多都是基于netty、mina这种NIO框架实现网络调用，而这些NIO框架基本都在使用堆外内存。而我们知道，堆外内存是无法通过JVM的垃圾回收器回收的，只能通过System.gc()来回收。但是很多同学在设置JVM参数的时候，往往选择拷贝已有的配置，而忽略了一个很重要的参数DisableExplicitGC，这个参数的意思是禁用显式GC，也就是使System.gc()失效。如果我们在jvm参数中配置了-XX:+DisableExplicitGC，那么带来的后果就是进入到老年代的堆外内存无法被回收掉，最终导致OOM。&lt;/p&gt;
+&lt;p&gt;至此，一日丧命散的其中毒虫就介绍完了。如果想要活得久，请远离这七条毒虫，哈哈。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这几天做应届生的转正定级答辩，结束后小黑哥在朋友圈里面发了下面一幅图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2qDgda71M.eBjSZPiXXawfpXa_!!26576278
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>让你变成优秀程序员的几个小习惯(转)</title>
+    <link href="http://fengfu.io/2016/10/24/%E8%AE%A9%E4%BD%A0%E5%8F%98%E6%88%90%E4%BC%98%E7%A7%80%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B0%8F%E4%B9%A0%E6%83%AF/"/>
+    <id>http://fengfu.io/2016/10/24/让你变成优秀程序员的几个小习惯/</id>
+    <published>2016-10-24T11:39:22.000Z</published>
+    <updated>2016-10-24T11:45:11.413Z</updated>
+    
+    <content type="html">&lt;p&gt;译文链接：&lt;a href=&quot;http://www.codeceo.com/article/habits-to-be-better-programmer.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.codeceo.com/article/habits-to-be-better-programmer.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;英文原文：&lt;a href=&quot;https://www.quora.com/What-little-habits-made-you-a-better-software-engineer?srid=ieH&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;What little habits made you a better software engineer?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;翻译作者：&lt;a href=&quot;http://www.codeceo.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;码农网&lt;/a&gt; – 小峰&lt;/p&gt;
+&lt;p&gt;作者Jeff Standen，有着21+年经验的软件开发者。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;首先开发spike解决方案&lt;/strong&gt;——这是我早期敏捷/极限编程所养成的习惯之一。spike解决方案是一次性原型，可以帮助你在投入大量时间和精力之前验证你是否走对路。&lt;/p&gt;
+&lt;p&gt;区别就在于原型，因为你遵循这样一个规则，在你完成研究之后，你最终会扔掉“spike”代码。所以允许你偷工减料，迅速行动，因为它不会出现在产品或代码审查中。&lt;/p&gt;
+&lt;p&gt;此方法有助于迅速发现设计的哪些部位尚不明确，而不必过早地尝试架构或设计决策。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;致力于小而连贯代码块的版本控制&lt;/strong&gt;——通过类似CVS/Subversion，每次提交都直接发送到服务器。做部分文件的提交并不简单。&lt;/p&gt;
+&lt;p&gt;随着Git的出现，只提交较大文件的若干行代码变得很容易，并且可以在push到远程代码仓库之前先本地rebase/merge提交。&lt;/p&gt;
+&lt;p&gt;有一次，我在工作于更大功能的时候，采用了小型增量提交，我的工作效率直线上升。这样做能够清空我的大脑以便于面对更重要的事情。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;经常写代码&lt;/strong&gt;——最近，我正工作于：一个基于Web的企业协作和自动化平台（PHP / MySQL），一个基于云的实时指标聚合器和使用循环哈希（Node.js/ Redis）的API，一个面向iOS app商店（Swift/ SpriteKit）的棋盘游戏，专门的基于URL的cronjob可替代基于web的SaaS服务（JAVA），等等。&lt;/p&gt;
+&lt;p&gt;用过大量框架和语言有助于我的抽象和算法思维。&lt;/p&gt;
+&lt;p&gt;我从工具，如Eclipse RCP、Tapestry和Hibernate中学到了很多伟大的经验教训，并用到我的PHP项目里。尤其是在2000年初，在有Java特征的企业生态系统用于PHP存在之前。我从Unity3d/C＃学到了很多关于网络和面向消息的架构。&lt;/p&gt;
+&lt;p&gt;如果我只坚持单一平台和社区的话，就永远不会知道这些概念。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;编写简单的代码&lt;/strong&gt;——我以前习惯于写复杂的代码以作为对自己的挑战。而现在的挑战是要编写优雅且简单的代码——到一种每个人都觉得他们也能做到的地步（即使他们不能）。简单代码通常来自于若干次复杂代码的迭代。&lt;/p&gt;
+&lt;p&gt;引用Antoine de Saint Exupéry的话就是：“不是没有什么可添加，而是没有什么可消减的时候，才算是达到了完美。”&lt;/p&gt;
+&lt;p&gt;这也使得我们在长时间休止之后返回项目，以及鼓励其他人参与进来变得容易多了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最后优化&lt;/strong&gt;——我们很容易掉入试图比用户或计算机更聪明，并且预优化各种边缘情况的陷阱。关注帕累托法则（80％的效果来自于20％的工作）。写代码，运行代码，当必要的时候专注于最大的瓶颈。这也支持保持代码库的简单。&lt;/p&gt;
+&lt;p&gt;说“不要首先优化代码”并不意味着“编写粗糙的代码”。代码总是应该精益和优雅，没有必要画蛇添足，不要将一整天的时间用在挤压剩下的10％，但其实已经能够工作良好的一些东西上。不但工作效率会下降，而且还会引进更多复杂性，解决方案变得不那么可归纳，等等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;着眼于“最重要的事情优先”&lt;/strong&gt;——总是有一些项目领域比其他的更有趣或更具挑战性。工作于那些有趣的东西总是比工作于那些必要的东西更有诱惑。&lt;/p&gt;
+&lt;p&gt;在攻克重要部分时，将有趣部分作为一种调剂，也就是说，两者都做一点也是可以。&lt;/p&gt;
+&lt;p&gt;因此，光从这一点上说，将大的问题分解成小问题的理念是不言自明的。每个人都懂。所以，我会通过计分若干“quick wins”来开启我的一天，这能让我更有冲劲和更专注（“quick wins”可以是任何东西，包括有趣又小型的挑战），然后我会首先冲向“最重要的事情”。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;了解全栈&lt;/strong&gt;——当我刚开始干这一行的时候，没有什么比等别人做完他们那部分东西，然后我才能继续我那部分工作更糟糕的了（设计师，后端人员，前端人员，数据库人员，服务器人员，等等）。&lt;/p&gt;
+&lt;p&gt;于是，当我2000年创办自己的软件开发公司的时候，我做了一个明智的决定，那就是涉猎全栈。我知道我不可能擅长所有东西，也不可能是最后唯一对所有一切负责的人，但我想要做终端到终端的原型，因为我没有耐心看过程。&lt;/p&gt;
+&lt;p&gt;每当我需要的东西触碰到我不懂的领域时，我会研究它。于是乎，我学会了服务器管理，数据库管理，设计，前端/后端开发，云架构等。&lt;/p&gt;
+&lt;p&gt;通过了解其他领域是做什么的，我才能写出包含它们需要的代码。&lt;/p&gt;
+&lt;p&gt;当然，其中的一些要点似乎并不是所谓的“小习惯”，但我向你保证，它们是小变化历经20年时间导致的结果。重要的行为变化并没有意义，更多的是关于我是如何频繁地练习这门技术（在过去10年时间中每年大概4000-5000个小时）。&lt;/p&gt;
+&lt;p&gt;所以，我的做法更像是去回答这个问题：“什么样的小习惯会导致更糟糕的软件和低效的生产力？”，然后反过来。&lt;/p&gt;
+&lt;h1 id=&quot;作者Ed-Prentice，软件工程师&quot;&gt;&lt;a href=&quot;#作者Ed-Prentice，软件工程师&quot; class=&quot;headerlink&quot; title=&quot;作者Ed Prentice，软件工程师&quot;&gt;&lt;/a&gt;作者Ed Prentice，软件工程师&lt;/h1&gt;&lt;p&gt;时间是宝贵的，所以要尽可能地节省时间。尽可能自动化。一旦时间成为一种商品，那么你可以实现下一个伟大的创新。&lt;/p&gt;
+&lt;p&gt;使用功能强大的IDE（如vim），并将其配置能为你做尽可能多的事情。力争单个命令Build/Test/Deploy/Run。&lt;/p&gt;
+&lt;p&gt;如果你发现自己常做某件事情，那么可以让它们在一个按键下发生，或者一次点击下发生。或者更好的是，让它们自动发生。&lt;/p&gt;
+&lt;p&gt;了解键盘快捷键和UNIX命令行。几乎所有的IDE都可以让你运行复杂的编译命令，甚至任意的终端命令——不但强大，并且可以为你节省大量的时间。&lt;/p&gt;
+&lt;p&gt;提问题，然后提更多的问题。如果有什么你不明白的事情发生了，那就问为什么。然后走开，研究替代方案，并提出来。一直问问题直到你可以详细地给下一个问为什么的开发人员解释。我时常感到奇怪为什么会有这么多开发人员不知道为什么，仅仅是因为觉得“它总是/曾是这样”。&lt;/p&gt;
+&lt;p&gt;通过提供更好的替代解决方案挑战现状——并且制定步骤实现。如果你的测试不完整，或每天/每周运行一次——那么成为本地的Continuous Integration大师——目的是为了有利于你的团队，并实现它。一旦你使用它并且它可以帮助你更好工作的话，那么让你的团队也使用它。&lt;/p&gt;
+&lt;p&gt;不要只是挑战别人，挑战自己。从来没有写过web应用程序？那么写一个。从未用过Python？用Python劫持无人飞行器。&lt;/p&gt;
+&lt;p&gt;拥有一些东西。创造一些东西。没有必是非要做技术项目，可以是一个事件，例如聚会或编程马拉松，也可以是一个游戏，一个网站，一个博客。&lt;/p&gt;
+&lt;p&gt;教一些东西。Java，公开演讲，写作，下棋，vim，网球。&lt;/p&gt;
+&lt;p&gt;成为一个杰出的人。拿到一个垃圾类/组件？修复好它。编写代码的正确途径。不在代码中走捷径。做出明智的决策，向你周围的人说明为什么你要做这个决定的利弊。总是改善代码。制定不需要花费1小时的待办事项表？Just Do It。&lt;/p&gt;
+&lt;p&gt;浏览你熟悉的Stack Exchange的话题——例如你喜欢的语言。当你发现什么新的东西的时候，尽快末位淘汰相关知识。知道C语言？什么是分支预测？这篇文章会告诉你——你要做的就是学习。&lt;/p&gt;
+&lt;p&gt;浏览你不熟悉的Stack Exchange的话题——好好学习，天天向上。&lt;/p&gt;
+&lt;p&gt;学会沟通。书面文字，呈现展示，解决问题，小却激烈的小项目，大型团队，小型团队。&lt;/p&gt;
+&lt;p&gt;文档化你的所有过程。你可以回头查阅你为什么做这些事情，以及依赖原先的解决方案去解决碰到的相似问题。这还有助于捕捉你可能会忘记的思维过程和关键的信息片段。我经常通过日志来回顾前几天的工作。&lt;/p&gt;
+&lt;p&gt;在你写之前文档化你的代码。使用系统图，类层次结构，流程图表，以展示说明你的代码将如何工作。如果有人提出建议——是的，他们会提出来的——那么你可以进行修改，这比已经写好了代码再去修改要容易得多。这是另一个我很少看到有人会做但却有着最负面影响的事情。&lt;/p&gt;
+&lt;p&gt;特定化。为新的东西制作图表，向大家展示。收集尽可能多的细节。确保每个人同意这个图表。如果有人提出了建议，那就补充/添加更正到图表。保持图表更新。&lt;/p&gt;
+&lt;p&gt;知道潜意思的偏见和男性特权。了解你是哪种MBTI和人格类型，并且更重要的是，要知道如何与其他性格类型更好地互动。了解情商。每个人都是不一样的，你需要知道如何与他们进行最有效和最有建设性的交互。&lt;/p&gt;
+&lt;p&gt;定期为团队做一些事情。带饼干。教魔术。培育一点文化，并鼓励其他人也这样做。赞美其他人的贡献。一支有凝聚力的团队是很难被击败的。&lt;/p&gt;
+&lt;p&gt;学习如何与人合作。我个人非常喜欢《The Pragmatic Programmer》的“stone snop”。&lt;/p&gt;
+&lt;p&gt;理解和使用别人的代码。如果你正在实现自己的XML解析器或或csv阅读器或git hook，那么你就是在重新发明轮子。&lt;/p&gt;
+&lt;p&gt;一旦你写了代码，并且它是有效的，通过测试的，那么回过头去整理一下吧。重新运行测试。再整理。每个类都应该有单一的职责，每个函数都应该只做一件事情。在大多数情况下，函数应该小于20行代码的长度。使用自文档的函数名和变量名。花时间整理你的代码以后将会10倍地回报给你和你的团队。&lt;/p&gt;
+&lt;p&gt;参与其中。承担责任。如果事情有不对的地方，那就解决它。如果最后期限临近了又想出了一个解决方案，那让其他人尽快知道。任何人都可以做到这一点，即使是最初级的开发人员。这要求对项目的蓝图，方向和截止期限有着大局观的认识——参与进来。保存好每天的工作内容！&lt;/p&gt;
+&lt;p&gt;和团队分享学到的经验教训（在适当的时候）。指出Java中finally块内部抛出异常的时候发生了什么？和大家一起分享。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;译文链接：&lt;a href=&quot;http://www.codeceo.com/article/habits-to-be-better-programmer.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.codeceo.com/a
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>接口文档参考模板</title>
+    <link href="http://fengfu.io/2016/08/23/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%E5%8F%82%E8%80%83%E6%A8%A1%E6%9D%BF/"/>
+    <id>http://fengfu.io/2016/08/23/接口文档参考模板/</id>
+    <published>2016-08-23T01:50:26.000Z</published>
+    <updated>2016-10-24T11:56:02.624Z</updated>
+    
+    <content type="html">&lt;p&gt;虽然提供了在线接口参数的查看，但在和客户端对接过程中，我们作为后台开发，还是需要人工提供接口文档给客户端的，这里提供一个接口文档编写的模板，以供参考，并且以我们熟悉的?service=User.GetBaseInfo为例说明如何编写高效的文档。  &lt;/p&gt;
+&lt;p&gt; &lt;em&gt;温馨提示：斜体字表示是注释说明&lt;/em&gt;。  &lt;/p&gt;
+&lt;p&gt;##功能说明&lt;br&gt;&lt;em&gt;对接口功能的简单说明。&lt;/em&gt;&lt;br&gt;获取用户的基本信息。&lt;/p&gt;
+&lt;p&gt;##接口URL&lt;br&gt;&lt;em&gt;请求的相对链接和当前接口级参数，通常为?service=XXX.XXX + 公共接口参数。&lt;/em&gt;&lt;br&gt;/demo/?service=User.GetBaseInfo  &lt;/p&gt;
+&lt;h2 id=&quot;参数说明&quot;&gt;&lt;a href=&quot;#参数说明&quot; class=&quot;headerlink&quot; title=&quot;参数说明&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://phalapi.oschina.mopaas.com/Public/demo/checkApiParams.php?service=User.GetBaseInfo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;参数说明&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;对当前接口级参数的说明，建议使用在线接口参数查询工具，但以下的参数说明也是需要的。&lt;/em&gt;  &lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;名字&lt;/th&gt;
+&lt;th&gt;是否必须&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;userId&lt;/td&gt;
+&lt;td&gt;用户ID&lt;/td&gt;
+&lt;td&gt;是&lt;/td&gt;
+&lt;td&gt;表示用户的ID&lt;/td&gt;
+&lt;td&gt;&amp;amp;user_iduser_id=1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;##返回参数&lt;br&gt;&lt;em&gt;对当前接口级返回参数的说明，即对{“ret”:返回状态码,”data”:”应该业务数据”,”msg”:”错误提示”}中的data部分进行说明。&lt;/em&gt;  &lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&amp;#10;    &amp;#34;ret&amp;#34;: 200,&amp;#10;    &amp;#34;data&amp;#34;: &amp;#123;&amp;#10;        &amp;#34;code&amp;#34;: 0,  //code=0&amp;#34920;&amp;#31034;&amp;#27491;&amp;#30830;&amp;#33719;&amp;#21462;&amp;#29992;&amp;#25143;&amp;#20449;&amp;#24687;&amp;#65292;code=1&amp;#26102;&amp;#34920;&amp;#31034;&amp;#29992;&amp;#25143;&amp;#19981;&amp;#23384;&amp;#22312;&amp;#10;        &amp;#34;msg&amp;#34;: &amp;#34;&amp;#34;,   //&amp;#19994;&amp;#21153;&amp;#25552;&amp;#31034;&amp;#25991;&amp;#26696;&amp;#10;        &amp;#34;info&amp;#34;: &amp;#123;  //&amp;#20165;&amp;#24403;code=0&amp;#30340;&amp;#24773;&amp;#20917;&amp;#19979;&amp;#38750;&amp;#31354;&amp;#19988;&amp;#26377;&amp;#29992;&amp;#25143;&amp;#20449;&amp;#24687;&amp;#10;            &amp;#34;id&amp;#34;: &amp;#34;1&amp;#34;,  //&amp;#29992;&amp;#25143;ID   &amp;#10;            &amp;#34;name&amp;#34;: &amp;#34;dogstar&amp;#34;,  //&amp;#29992;&amp;#25143;&amp;#21517;&amp;#10;            &amp;#34;from&amp;#34;: &amp;#34;oschina&amp;#34;  //&amp;#29992;&amp;#25143;&amp;#26469;&amp;#28304;&amp;#10;        &amp;#125;&amp;#10;    &amp;#125;,&amp;#10;    &amp;#34;msg&amp;#34;: &amp;#34;&amp;#34;&amp;#10;&amp;#125;&amp;#10;```  &amp;#9;  &amp;#10;&amp;#10;  &amp;#10;##&amp;#31034;&amp;#20363;&amp;#10; _&amp;#33267;&amp;#23569;&amp;#24212;&amp;#21253;&amp;#25324;&amp;#25104;&amp;#21151;&amp;#31034;&amp;#20363;&amp;#65292;&amp;#22833;&amp;#36133;&amp;#31034;&amp;#20363;&amp;#21487;&amp;#36873;_     &amp;#10;  &amp;#10;###&amp;#25104;&amp;#21151;&amp;#31034;&amp;#20363;&amp;#10;&amp;#35831;&amp;#27714;&amp;#65306;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;a href=&quot;http://phalapi.oschina.mopaas.com/Public/demo/?service=User.GetBaseInfo&amp;amp;user_iduser_id=1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://phalapi.oschina.mopaas.com/Public/demo/?service=User.GetBaseInfo&amp;amp;user_iduser_id=1&lt;/a&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#36820;&amp;#22238;&amp;#65306;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;{&lt;br&gt;    “ret”: 200,&lt;br&gt;    “data”: {&lt;br&gt;        “code”: 0,&lt;br&gt;        “msg”: “”,&lt;br&gt;        “info”: {&lt;br&gt;            “id”: “1”,&lt;br&gt;            “name”: “dogstar”,&lt;br&gt;            “from”: “oschina”&lt;br&gt;        }&lt;br&gt;    },&lt;br&gt;    “msg”: “”&lt;br&gt;}&lt;br&gt;```&lt;/p&gt;
+&lt;hr&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;虽然提供了在线接口参数的查看，但在和客户端对接过程中，我们作为后台开发，还是需要人工提供接口文档给客户端的，这里提供一个接口文档编写的模板，以供参考，并且以我们熟悉的?service=User.GetBaseInfo为例说明如何编写高效的文档。  &lt;/p&gt;
+&lt;p&gt; &lt;em&gt;
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>晋级Review归来话答辩</title>
+    <link href="http://fengfu.io/2016/08/22/%E6%99%8B%E7%BA%A7Review%E5%BD%92%E6%9D%A5%E8%AF%9D%E7%AD%94%E8%BE%A9/"/>
+    <id>http://fengfu.io/2016/08/22/晋级Review归来话答辩/</id>
+    <published>2016-08-22T01:50:26.000Z</published>
+    <updated>2016-10-27T07:35:42.246Z</updated>
+    
+    <content type="html">&lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演，同时也参加了其他同学的晋级答辩。在这过程中发现了很多问题，觉得有必要写出来总结一下了，以帮助同学们写好PPT和做好答辩工作。&lt;/p&gt;
+&lt;h1 id=&quot;PPT中的常见问题&quot;&gt;&lt;a href=&quot;#PPT中的常见问题&quot; class=&quot;headerlink&quot; title=&quot;PPT中的常见问题&quot;&gt;&lt;/a&gt;PPT中的常见问题&lt;/h1&gt;&lt;h2 id=&quot;1-没有大纲&quot;&gt;&lt;a href=&quot;#1-没有大纲&quot; class=&quot;headerlink&quot; title=&quot;1.没有大纲&quot;&gt;&lt;/a&gt;1.没有大纲&lt;/h2&gt;&lt;p&gt;写PPT跟上学的时候写作文有点类似，我们需要先把大纲列出来，否则写出来的内容就容易有缺失，内容也不连贯。这样的PPT在讲的时候也会让你很纠结，听众更难受。&lt;/p&gt;
+&lt;h2 id=&quot;2-前后不连贯&quot;&gt;&lt;a href=&quot;#2-前后不连贯&quot; class=&quot;headerlink&quot; title=&quot;2.前后不连贯&quot;&gt;&lt;/a&gt;2.前后不连贯&lt;/h2&gt;&lt;p&gt;一个好的PPT，前后之间应该有关联，不应该彼此孤立。很多时候，我们需要通过前面的片子来引出后面的内容，也就是俗话说的“抛砖引玉”。典型的场景比如：通过项目特点/难点，引出后面的挑战/遇到的问题，最后引出如何解决。这样下来，整个PPT就会顺畅很多。&lt;/p&gt;
+&lt;h2 id=&quot;3-重要内容有遗漏&quot;&gt;&lt;a href=&quot;#3-重要内容有遗漏&quot; class=&quot;headerlink&quot; title=&quot;3.重要内容有遗漏&quot;&gt;&lt;/a&gt;3.重要内容有遗漏&lt;/h2&gt;&lt;p&gt;此处说的重要内容是指契合公司文化的内容，比如去哪儿来说，推崇工程师文化，那么你平时的工作中，通过工具提升工作效率，或者开发一些组件这样的事情就比较值得拿出来说。但是有些人可能觉得这些事情不重要而忽略，那么就是一种损失。&lt;/p&gt;
+&lt;p&gt;其实任何工作都是这样，你如果只是做好本职工作（自扫门前雪），这本身就是一个基本要求，你做好是应该的。但是如果你对自己要求高一些，站在整个团队的角度，或者站在整个公司的角度看待问题或者做一些事情，那么这个事情的高度就会更高一些，做出的成绩可能也会更大。所以从这一点来讲，作为工程师，在做事的态度和方式上，也应该立足高远才好。&lt;/p&gt;
+&lt;h2 id=&quot;4-文字太多&quot;&gt;&lt;a href=&quot;#4-文字太多&quot; class=&quot;headerlink&quot; title=&quot;4.文字太多&quot;&gt;&lt;/a&gt;4.文字太多&lt;/h2&gt;&lt;p&gt;一页PPT最好不要超过30字，这是一个基本原则，希望能够尽量遵守。因为人是视觉动物，当看到密密麻麻的字的时候，首先会选择放弃。我们来看一下下面这张PPT，看到的第一眼你是什么感觉？&lt;br&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i2/2657627814/TB2BPAMaxmJ.eBjy0FhXXbBdFXa_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;再来看这张：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB2ta.PaCqJ.eBjy1zbXXbx8FXa_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;相比上一张，是不是清爽了很多？&lt;/p&gt;
+&lt;p&gt;另外，关于PPT的文字，给大家的建议是用微软雅黑，微软雅黑无论在表现汉字还是字母数字都比较圆润，看起来比较舒服。尽量不要用宋体，因为宋体边缘较窄，会给人带来视觉上的沉重感。&lt;/p&gt;
+&lt;h2 id=&quot;5-没有图表&quot;&gt;&lt;a href=&quot;#5-没有图表&quot; class=&quot;headerlink&quot; title=&quot;5.没有图表&quot;&gt;&lt;/a&gt;5.没有图表&lt;/h2&gt;&lt;p&gt;俗话说，一图胜千言。作为工程师，我们可以通过架构图来描述对系统的理解，通过流程图来描述对业务/流程的理解，通过类图来描述代码实现。通过监控图/表格来描述结果，这样你的PPT内容就会更加丰满，形式也更加漂亮。&lt;/p&gt;
+&lt;h2 id=&quot;6-动画太过花哨&quot;&gt;&lt;a href=&quot;#6-动画太过花哨&quot; class=&quot;headerlink&quot; title=&quot;6.动画太过花哨&quot;&gt;&lt;/a&gt;6.动画太过花哨&lt;/h2&gt;&lt;p&gt;既然我们是工程师，不是视觉设计师，所以那些花哨的动画就免了吧，毕竟这不是我们的专长，简单的淡出效果就挺好了。当然，如果你想要用动画来描述一些状态流转之类的，那么你可以去花点时间。&lt;/p&gt;
+&lt;h1 id=&quot;答辩时的常见问题&quot;&gt;&lt;a href=&quot;#答辩时的常见问题&quot; class=&quot;headerlink&quot; title=&quot;答辩时的常见问题&quot;&gt;&lt;/a&gt;答辩时的常见问题&lt;/h1&gt;&lt;h2 id=&quot;1-没有事先调试好投影&quot;&gt;&lt;a href=&quot;#1-没有事先调试好投影&quot; class=&quot;headerlink&quot; title=&quot;1.没有事先调试好投影&quot;&gt;&lt;/a&gt;1.没有事先调试好投影&lt;/h2&gt;&lt;p&gt;经常看见有的同学到答辩的时候才去调试投影仪，出了问题之后不得不借别人的电脑。这种事情以后还是要避免，其实只要提前做一下调试就可以了，花不了几分钟时间，但最起码可以避免现场糗个大的。&lt;/p&gt;
+&lt;h2 id=&quot;2-PPT没有预演，直接开讲&quot;&gt;&lt;a href=&quot;#2-PPT没有预演，直接开讲&quot; class=&quot;headerlink&quot; title=&quot;2.PPT没有预演，直接开讲&quot;&gt;&lt;/a&gt;2.PPT没有预演，直接开讲&lt;/h2&gt;&lt;p&gt;这也是很多人容易犯的错误。我们在写PPT的时候，可能会觉得思如泉涌，PPT很顺畅就做完了。但其实做完了是一回事，你能顺畅地讲出来又是一回事了，可能那时候你会发现自己的PPT怎么做的那么烂，连舌头都不灵活了…… 所以最好的方式是：写完PPT之后先给自己讲两遍，自己讲顺畅了再去给别人讲。&lt;/p&gt;
+&lt;h2 id=&quot;3-没有自我介绍&quot;&gt;&lt;a href=&quot;#3-没有自我介绍&quot; class=&quot;headerlink&quot; title=&quot;3.没有自我介绍&quot;&gt;&lt;/a&gt;3.没有自我介绍&lt;/h2&gt;&lt;p&gt;陌生人见面总是要打个招呼，做个自我介绍吧，有些同学一上来就直奔主题，一来容易搞得自己紧张，二来显得有点不礼貌。&lt;/p&gt;
+&lt;h2 id=&quot;4-紧张&quot;&gt;&lt;a href=&quot;#4-紧张&quot; class=&quot;headerlink&quot; title=&quot;4.紧张&quot;&gt;&lt;/a&gt;4.紧张&lt;/h2&gt;&lt;p&gt;这是很多人都会出现的问题，有的人紧张的连声调都变了。针对这个问题，我的建议是：1.开始讲PPT前，先做一个深呼吸；2. 站着讲。站着讲的一个好处是，你可以通过肢体动作调节自己的情绪和节奏。&lt;/p&gt;
+&lt;h2 id=&quot;5-代码没好好准备&quot;&gt;&lt;a href=&quot;#5-代码没好好准备&quot; class=&quot;headerlink&quot; title=&quot;5.代码没好好准备&quot;&gt;&lt;/a&gt;5.代码没好好准备&lt;/h2&gt;&lt;p&gt;很多同学只重视PPT，却没有认真准备代码，结果review代码的时候被虐，当然最终的结局也就不乐观。&lt;/p&gt;
+&lt;p&gt;最后，给大家推荐一本书，《&lt;a href=&quot;https://item.jd.com/11697566.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;乔布斯的魔力演讲&lt;/a&gt;》，相信这本书可以帮助你提高PPT及演讲能力。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演，同时也参加了其他同学的晋级答辩。在这过程中发现了很多问题，觉得有必要写出来总结一下了，以帮助同学们写好PPT和做好答辩工作。&lt;/p&gt;
+&lt;h1 id=&quot;PPT中的常见问题&quot;&gt;&lt;a href=
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读书笔记:微服务设计-建模</title>
+    <link href="http://fengfu.io/2016/08/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%AE%BE%E8%AE%A1-%E5%BB%BA%E6%A8%A1/"/>
+    <id>http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/</id>
+    <published>2016-08-12T12:52:17.000Z</published>
+    <updated>2016-08-13T13:16:47.828Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;1-什么样的服务是好服务&quot;&gt;&lt;a href=&quot;#1-什么样的服务是好服务&quot; class=&quot;headerlink&quot; title=&quot;1.什么样的服务是好服务&quot;&gt;&lt;/a&gt;1.什么样的服务是好服务&lt;/h1&gt;&lt;h2 id=&quot;1-高内聚&quot;&gt;&lt;a href=&quot;#1-高内聚&quot; class=&quot;headerlink&quot; title=&quot;1.高内聚&quot;&gt;&lt;/a&gt;1.高内聚&lt;/h2&gt;&lt;p&gt;  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。&lt;br&gt;  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。&lt;/p&gt;
+&lt;h2 id=&quot;2-低耦合&quot;&gt;&lt;a href=&quot;#2-低耦合&quot; class=&quot;headerlink&quot; title=&quot;2.低耦合&quot;&gt;&lt;/a&gt;2.低耦合&lt;/h2&gt;&lt;p&gt;  使用微服务最重要的一点是：能够独立修改及部署单个服务而不需要修改系统的其他部分。&lt;/p&gt;
+&lt;h1 id=&quot;2-限界上下文&quot;&gt;&lt;a href=&quot;#2-限界上下文&quot; class=&quot;headerlink&quot; title=&quot;2.限界上下文&quot;&gt;&lt;/a&gt;2.限界上下文&lt;/h1&gt;&lt;p&gt;  限界上下文(bounded context)这个概念来自于Eric Evans的《领域驱动设计》一书，Eric认为：一个给定的领域包含多个限界上下文，每个限界上下文中的东西分成2个部分，一部分不需要与外界通信，另一部分则需要。每个上下文都有明确的接口，该接口决定了它会暴露哪些模型给其他的上下文。当然本文作者更喜欢这个定义：一个由显示边界限定的特定职责。如果你想要从一个限界上下文中获取信息，或者向其发起请求，需要使用模型和它的显示边界进行通信。&lt;/p&gt;
+&lt;p&gt;  应该共享特定的模型，而不应该共享内部表示，这样就可以避免潜在的紧耦合风险。&lt;/p&gt;
+&lt;p&gt;  一般来讲，微服务应该清晰地和限界上下文相对应。&lt;/p&gt;
+&lt;h1 id=&quot;3-业务功能&quot;&gt;&lt;a href=&quot;#3-业务功能&quot; class=&quot;headerlink&quot; title=&quot;3.业务功能&quot;&gt;&lt;/a&gt;3.业务功能&lt;/h1&gt;&lt;p&gt;  在思考组织内的限界上下文时，不应该从共享数据的角度来考虑，应该从这些上下文能够提供的功能来考虑。首先要问自己：这个上下文是做什么用的，然后再考虑它需要什么样的数据。&lt;/p&gt;
+&lt;p&gt;  建模服务时，应该将这些功能作为关键操作提供给其协作者。&lt;/p&gt;
+&lt;h1 id=&quot;4-逐步划分上下文&quot;&gt;&lt;a href=&quot;#4-逐步划分上下文&quot; class=&quot;headerlink&quot; title=&quot;4.逐步划分上下文&quot;&gt;&lt;/a&gt;4.逐步划分上下文&lt;/h1&gt;&lt;p&gt;  先识别粗粒度上下文，然后当发现合适的缝隙后，再进一步划分出那些嵌套的上下文。&lt;/p&gt;
+&lt;p&gt;  对于嵌套上下文，一种方式是嵌套上下文不直接对外可见，另外一种方式是限界上下文被提升到顶层上下文的层次。这两种方式都具有其合理性，具体还要看组织机构的划分。比如服务A、服务B、服务C分别由不同团队维护，那么可能大家倾向于成为顶层上下文；如果由一个团队维护，那么嵌套架构会更合理。另外，从测试的角度，嵌套式上下文更便于测试，毕竟它对外暴露的服务更少。&lt;/p&gt;
+&lt;p&gt;另外一本书推荐：Vaughn Vernon的&lt;a href=&quot;http://item.jd.com/11423256.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《实现领域驱动设计》&lt;/a&gt;，这本书貌似卖得更好。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;图片说明：稻城-亚丁&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;稻城—亚丁因其独特而原始的自然环境、美丽风景被誉为“最后的香格里拉”，景点分为稻城和亚丁两部分，有雪山、冰川、峡谷、森林、草甸、湖泊等景观。除了珍珠海、牛奶海等冰川湖泊，稻城最令人向往的是驰名藏区的雪域神峰——稻城神峰，它由仙乃日、央迈勇、夏诺多吉三座神山组成，均位于亚丁自然保护区。人们把仙乃日比作大佛、把央迈勇比作少女，将夏诺多吉当作少年，三座神山就像三尊圣灵，这里也就成了藏民心中朝圣的圣地。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i1/2657627814/TB29IAuXaryQeBjSszdXXaL.XXa_!!2657627814.jpg&quot; alt=&quot;稻城-亚丁&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB24zkuXabyQeBjy1XbXXa9yXXa_!!2657627814.jpg&quot; alt=&quot;稻城-亚丁&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2GWAvXhHxQeBjy1zjXXa5YVXa_!!2657627814.jpg&quot; alt=&quot;稻城-亚丁&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;1-什么样的服务是好服务&quot;&gt;&lt;a href=&quot;#1-什么样的服务是好服务&quot; class=&quot;headerlink&quot; title=&quot;1.什么样的服务是好服务&quot;&gt;&lt;/a&gt;1.什么样的服务是好服务&lt;/h1&gt;&lt;h2 id=&quot;1-高内聚&quot;&gt;&lt;a href=&quot;#1-高内聚&quot; c
+    
+    </summary>
+    
+    
+      <category term="微服务" scheme="http://fengfu.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关键业务系统的JVM启动参数推荐2.0版[转]</title>
+    <link href="http://fengfu.io/2016/08/07/%E5%85%B3%E9%94%AE%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F%E7%9A%84JVM%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E6%8E%A8%E8%8D%902-0%E7%89%88-%E8%BD%AC/"/>
+    <id>http://fengfu.io/2016/08/07/关键业务系统的JVM启动参数推荐2-0版-转/</id>
+    <published>2016-08-07T02:20:22.000Z</published>
+    <updated>2016-08-07T02:25:15.901Z</updated>
+    
+    <content type="html">&lt;p&gt;注：本文转自SpringSide的作者江南白衣的博客“&lt;a href=&quot;http://calvin1978.blogcn.com/articles/jvmoption-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;关键业务系统的JVM启动参数推荐 2.0版&lt;/a&gt;”，如需转载，请尊重作者权利，注明原文出处，谢谢。&lt;/p&gt;
+&lt;p&gt;在关键的业务系统里，除了继续追求技术人员最爱的高吞吐与低延时之外，系统的稳定性与出现问题时排查的便捷性也很重要。&lt;/p&gt;
+&lt;p&gt;这是本文的一个原则，后面也会一次又一次的强调，所以与网上其他的文章略有不同，请调优高手和运维老大们多指引。&lt;/p&gt;
+&lt;p&gt;更新记录：&lt;/p&gt;
+&lt;p&gt;2.0版，增加 -XX:+PerfDisableSharedMem，GC日志指向/dev/shm，避免IO造成的JVM停顿。&lt;/p&gt;
+&lt;h1 id=&quot;前言1，资料&quot;&gt;&lt;a href=&quot;#前言1，资料&quot; class=&quot;headerlink&quot; title=&quot;前言1，资料&quot;&gt;&lt;/a&gt;前言1，资料&lt;/h1&gt;&lt;p&gt;学习开源项目的启动脚本是个不错的主意，比如&lt;a href=&quot;https://github.com/apache/cassandra/blob/trunk/conf/cassandra-env.sh&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Cassandra&lt;/a&gt;家的， 附送一篇&lt;a href=&quot;https://tobert.github.io/pages/als-cassandra-21-tuning-guide.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;解释它的文章&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://hllvm.group.iteye.com/group/topic/27945&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JVM调优的”标准参数”的各种陷阱&lt;/a&gt; R大的文章，在JDK6时写的，期待更新。&lt;/p&gt;
+&lt;p&gt;偶然翻到Linkedin工程师的&lt;a href=&quot;http://www.importnew.com/11336.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;一篇文章&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;更偶然翻到的&lt;a href=&quot;http://www.techpaste.com/2012/02/java-command-line-options-jvm-performance-improvement/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;一份不错的参数列表&lt;/a&gt;。&lt;/p&gt;
+&lt;h1 id=&quot;前言2，-XX-PrintFlagsFinal打印参数值&quot;&gt;&lt;a href=&quot;#前言2，-XX-PrintFlagsFinal打印参数值&quot; class=&quot;headerlink&quot; title=&quot;前言2， -XX:+PrintFlagsFinal打印参数值&quot;&gt;&lt;/a&gt;前言2， -XX:+PrintFlagsFinal打印参数值&lt;/h1&gt;&lt;p&gt;当你在网上兴冲冲找到一个可优化的参数时，先用-XX: +PrintFlagsFinal看看，它可能已经默认打开了，再找到一个，还是默认打开了…&lt;/p&gt;
+&lt;p&gt;JDK7与JDK8，甚至JDK7中的不同版本，有些参数值都不一样，所以不要轻信网上任何文章，一切以生产环境同版本的JDK打出来的为准。&lt;/p&gt;
+&lt;p&gt;经常以类似下面的语句去查看参数，偷懒不起应用，用-version代替。有些参数设置后会影响其他参数，所以查看时也把它带上。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;java -server -Xmx1024m -Xms1024m -XX:+UseConcMarkSweepGC -XX:+PrintFlagsFinal -version| grep ParallelGCThreads
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;前言3，关于默认值&quot;&gt;&lt;a href=&quot;#前言3，关于默认值&quot; class=&quot;headerlink&quot; title=&quot;前言3，关于默认值&quot;&gt;&lt;/a&gt;前言3，关于默认值&lt;/h1&gt;&lt;p&gt;JDK8会默认打开-XX:+TieredCompilation多层编译，而JDK7则不会。JDK7u40以后的版本会默认打开-XX:+OptimizeStringConcat优化字符串拼接，而之前的则不打开。&lt;/p&gt;
+&lt;p&gt;对于这些参数，我的建议是顺势而为，JDK在那个版本默认打开不打开总有它的理由。安全第一，没有很好的因由，不要随便因为网上某篇文章的推荐(包括你现在在读的这篇)就去设置。&lt;/p&gt;
+&lt;h1 id=&quot;1-性能篇&quot;&gt;&lt;a href=&quot;#1-性能篇&quot; class=&quot;headerlink&quot; title=&quot;1. 性能篇&quot;&gt;&lt;/a&gt;1. 性能篇&lt;/h1&gt;&lt;p&gt;先写一些不那么常见的，后面再来老生常谈。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-取消偏向锁-XX-UseBiasedLocking&quot;&gt;&lt;a href=&quot;#1-1-取消偏向锁-XX-UseBiasedLocking&quot; class=&quot;headerlink&quot; title=&quot;1.1 取消偏向锁 -XX:-UseBiasedLocking&quot;&gt;&lt;/a&gt;1.1 取消偏向锁 -XX:-UseBiasedLocking&lt;/h2&gt;&lt;p&gt;JDK1.6开始默认打开的偏向锁，在没有竞争的情况下，会取消线程同步的原语，比如那个所有方法都挂着synchronized关键字的StringBuffer，如果始终只有一条线程在访问它，就略过同步操作以获得性能提升。&lt;/p&gt;
+&lt;p&gt;但一旦有第二条线程访问这把锁，JVM就要撤销偏向锁恢复到未锁定线程的状态，用”-XX:+PrintSafepointStatistics -XX :P rintSafepointStatisticsCount=1” 可以看到不少RevokeBiasd的纪录，像GC一样，会Stop The World的干活，虽然只是很短很短的停顿，但对于多线程并发的应用，取消掉它反而有性能的提升和延时的极微的缩短，所以Cassandra就取消了它。&lt;/p&gt;
+&lt;h2 id=&quot;1-2-启动时访问并置零内存页面-XX-AlwaysPreTouch&quot;&gt;&lt;a href=&quot;#1-2-启动时访问并置零内存页面-XX-AlwaysPreTouch&quot; class=&quot;headerlink&quot; title=&quot;1.2 启动时访问并置零内存页面-XX:+AlwaysPreTouch&quot;&gt;&lt;/a&gt;1.2 启动时访问并置零内存页面-XX:+AlwaysPreTouch&lt;/h2&gt;&lt;p&gt;启动时就把参数里说好了的内存全部舔一遍，可能令得启动时慢上一点，但后面访问时会更流畅，比如页面会连续分配，比如不会在晋升新生代到老生代时才去申请页面使得GC停顿时间加长。不过这选项对32G之类的大堆才会更有感觉一点。&lt;/p&gt;
+&lt;h2 id=&quot;1-3-Djava-security-egd-file-dev-urandom&quot;&gt;&lt;a href=&quot;#1-3-Djava-security-egd-file-dev-urandom&quot; class=&quot;headerlink&quot; title=&quot;1.3 -Djava.security.egd=file:/dev/./urandom&quot;&gt;&lt;/a&gt;1.3 -Djava.security.egd=file:/dev/./urandom&lt;/h2&gt;&lt;p&gt;UUID.randomUUID() 有时候会很慢，Thread Dump一看居然被锁住了，原因是里面用了SecureRandom，要等待机器产生新的噪音(比如机器里的某个文件发生了变化)才肯产生新的随机数。因此最好让熵池里没有新的噪音因子时重用当前的因子。详见 &lt;a href=&quot;http://blog.csdn.net/xiaoxinyu316/article/details/39064003&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JVM上的随机数与熵池策略&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-4-XX-AutoBoxCacheMax-20000&quot;&gt;&lt;a href=&quot;#1-4-XX-AutoBoxCacheMax-20000&quot; class=&quot;headerlink&quot; title=&quot;1.4 -XX:AutoBoxCacheMax=20000&quot;&gt;&lt;/a&gt;1.4 -XX:AutoBoxCacheMax=20000&lt;/h2&gt;&lt;p&gt;Integer i = 3;这语句有着 int自动装箱成Integer的过程，JDK默认只缓存 -128 ~ +127的int 和 long，超出范围的数字就要即时构建新的Integer对象。设为20000后，我们应用的QPS从48,000提升到50,000，足足4%的影响。详见&lt;a href=&quot;http://blog.csdn.net/chengzhezhijian/article/details/9628251&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Java Integer(-128~127)值的==和equals比较产生的思考&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-5-XX-PerfDisableSharedMem&quot;&gt;&lt;a href=&quot;#1-5-XX-PerfDisableSharedMem&quot; class=&quot;headerlink&quot; title=&quot;1.5 -XX:+PerfDisableSharedMem&quot;&gt;&lt;/a&gt;1.5 -XX:+PerfDisableSharedMem&lt;/h2&gt;&lt;p&gt;Cassandra家的一个参数，一直没留意，直到发生高IO时的JVM停顿。原来每次进入安全点（比如GC）, JVM都会默默的在/tmp/hperf 目录写上一点statistics数据，如果刚好遇到PageCache刷盘，把文件阻塞了，就不能结束这个Stop the World的安全点了。用此参数可以禁止JVM写statistics数据，代价是VisualVM和jstat用不了，只能用JMX取数据，但在生产环境本来就不需要VisaulVM。详见&lt;a href=&quot;http://calvin1978.blogcn.com/articles/%20http://www.evanjones.ca/jvm-mmap-pause.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;The Four Month Bug: JVM statistics cause garbage collection pauses&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-6-不建议的参数&quot;&gt;&lt;a href=&quot;#1-6-不建议的参数&quot; class=&quot;headerlink&quot; title=&quot;1.6 不建议的参数&quot;&gt;&lt;/a&gt;1.6 不建议的参数&lt;/h2&gt;&lt;p&gt;-XX:+AggressiveOpts是一些还没默认打开的优化参数集合, -XX:AutoBoxCacheMax是其中的一项。但如前所述，关键系统里不建议打开。虽然通过-XX:+AggressiveOpts 与 -XX:-AggressiveOpts 的对比，目前才改变了三个参数，但为免以后某个版本的JDK里默默改变更多激进的配置，还是不要了。&lt;/p&gt;
+&lt;p&gt;Linkined那种黑科技，先要解锁VMOptions才能配置的就更不用说了，比如&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;-XX:+UnlockDiagnosticVMOptions -XX: ParGCCardsPerStrideChunk=32768
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;JIT Compile相关的参数，函数调用多少次之后开始编译的阀值，内联函数大小的阀值等等，不要乱改了。&lt;/p&gt;
+&lt;p&gt;-XX:+UseFastAccessorMethods，据说在多层编译下还慢了，所以是默认关闭的。&lt;/p&gt;
+&lt;h2 id=&quot;1-7-server&quot;&gt;&lt;a href=&quot;#1-7-server&quot; class=&quot;headerlink&quot; title=&quot;1.7 -server&quot;&gt;&lt;/a&gt;1.7 -server&lt;/h2&gt;&lt;p&gt;-server 与 -client的JVM默认参数完全不一样，虽然在Linux 64位JVM里默认会被认成server模式，但还是顺手写上吧。&lt;/p&gt;
+&lt;h2 id=&quot;1-8-GC策略&quot;&gt;&lt;a href=&quot;#1-8-GC策略&quot; class=&quot;headerlink&quot; title=&quot;1.8 GC策略&quot;&gt;&lt;/a&gt;1.8 GC策略&lt;/h2&gt;&lt;p&gt;为了稳健，还是8G以下的堆还是CMS好了，G1的细节实现起来难度太大，从理论提出到现在都做了六七年了。&lt;/p&gt;
+&lt;p&gt;CMS真正可设的东西也不多，详见&lt;a href=&quot;http://ifeve.com/useful-jvm-flags-part-7-cms-collector/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JVM实用参数（七）CMS收集器&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;-XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;因为我们的监控系统会通过JMX监控内存达到90%的状况（留点处理的时间），所以设置让它75%就开始跑了，早点开始也能避免Full GC等意外情况(概念重申，这种主动的CMS GC，和JVM的老生代、永久代、堆外内存完全不能分配内存了而强制Full GC是不同的概念)。为了让这个设置生效，还要设置-XX:+UseCMSInitiatingOccupancyOnly，否则75只被用来做开始的参考值，后面还是JVM自己算。&lt;/p&gt;
+&lt;p&gt;-XX:MaxTenuringThreshold=2，这是GC里改动效果最明显的一个参数了。对象在Survivor区熬过多少次Young GC后晋升到年老代，JDK7里看起来默认是6，跑起来好像变成了15。&lt;/p&gt;
+&lt;p&gt;Young GC是最大的应用停顿来源，而新生代里GC后存活对象的多少又直接影响停顿的时间，所以如果清楚Young GC的执行频率和应用里大部分临时对象的最长生命周期，可以把它设的更短一点，让其实不是临时对象的新生代长期对象赶紧晋升到年老代，别呆着。&lt;/p&gt;
+&lt;p&gt;用-XX:+PrintTenuringDistribution观察下，如果后面几代都差不多，就可以设小，比如JMeter里是2。而我们的两个系统里一个设了2，一个设了6。&lt;/p&gt;
+&lt;p&gt;-XX:+ExplicitGCInvokesConcurrent， 但不要-XX:+DisableExplicitGC， 比如&lt;a href=&quot;http://calvin1978.blogcn.com/articles/directbytebuffer.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Netty之堆外内存扫盲篇&lt;/a&gt;，可见禁了system.gc() 未必是好事，只要自己的代码里没有调它，也没用什么特别烂的类库，真有人调了总有调的原因。-XX+ExplicitGCInvokesConcurrent 则在full gc时，并不全程停顿，依然只在ygc和两个remark阶段停顿，详见&lt;a href=&quot;http://lovestblog.cn/blog/2015/05/07/system-gc/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JVM源码分析之SystemGC完全解读&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;-XX: ParallelRefProcEnabled , 默认为false，并行的处理Reference对象，如WeakReference，除非在GC log里出现Reference处理时间较长的日志，否则效果不会很明显，但我们总是要JVM尽量的并行，所以设了也就设了。&lt;/p&gt;
+&lt;h2 id=&quot;1-9-GC里不建议设的参数&quot;&gt;&lt;a href=&quot;#1-9-GC里不建议设的参数&quot; class=&quot;headerlink&quot; title=&quot;1.9 GC里不建议设的参数&quot;&gt;&lt;/a&gt;1.9 GC里不建议设的参数&lt;/h2&gt;&lt;p&gt;-XX:+CMSClassUnloadingEnabled，在CMS中清理永久代中的过期的Class而不等到Full GC，JDK7默认关闭而JDK8打开。看自己情况，比如有没有运行动态语言脚本如Groovy产生大量的临时类。它会增加CMS remark的暂停时间，所以如果新类加载并不频繁，这个参数还是不开的好。&lt;/p&gt;
+&lt;p&gt;用了CMS，新生代收集默认就是-XX:+UseParNewGC，不用自己设。&lt;/p&gt;
+&lt;p&gt;并发收集线程数，ParallelGCThreads＝8+( Processor - 8 ) ( 5/8 )， ConcGCThreads = (ParallelGCThreads + 3)/4，比如双CPU，六核，超线程就是24个处理器，小于8个处理器时ParallelGCThreads按处理器数量，大于时按上述公式ParallelGCThreads＝18， ConcGCThreads＝5。这线程数调整了变化也不大，还是别乱动了。&lt;/p&gt;
+&lt;p&gt;-XX:+CMSScavengeBeforeRemark，默认为关闭，在CMS remark前，先执行一次minor GC将新生代清掉，这样从老生代的对象引用到的新生代对象的个数就少了，停止全世界的CMS remark阶段就短一些。如果看到GC日志里remark阶段的时间超长，可以打开此项看看有没有效果，否则还是不要打开了，白白多了次GC。&lt;/p&gt;
+&lt;p&gt;-XX:CMSFullGCsBeforeCompaction，默认为0，即每次full gc都对老生代进行碎片整理压缩。Full GC 不同于 前面设置的75%老生代时触发的CMS GC，只在System.gc()，老生代达到100%，老生代碎片过大无法分配空间给新晋升的大对象这些特殊情况里发生，所以设为每次都进行碎片整理是合适的，详见此贴里R大的解释。&lt;/p&gt;
+&lt;h2 id=&quot;1-10-内存大小的设置&quot;&gt;&lt;a href=&quot;#1-10-内存大小的设置&quot; class=&quot;headerlink&quot; title=&quot;1.10 内存大小的设置&quot;&gt;&lt;/a&gt;1.10 内存大小的设置&lt;/h2&gt;&lt;p&gt;这些关于大小的参数，给人感觉是最踏实可控的。&lt;/p&gt;
+&lt;p&gt;其实JVM除了显式设置的-Xmx堆内存，还有一堆其他占内存的地方(堆外内存，线程栈，永久代，二进制代码cache)，在容量规划的时候要留意。&lt;/p&gt;
+&lt;p&gt;关键业务系统的服务器上内存一般都是够的，所以尽管设得宽松点。&lt;/p&gt;
+&lt;p&gt;-Xmx, -Xms, 堆内存大小，2～4G均可，再大了GC时间会拖长。&lt;/p&gt;
+&lt;p&gt;-Xmn or -XX:NewSize and -XX:MaxNewSize or -XX:NewRatio， JDK默认新生代占堆大小的1/3， 个人喜欢把对半分， 增大新生代的大小，能减少GC的频率（但也会加大每次GC的停顿时间），主要是看老生代里没多少长期对象的话，占2/3太多了。可以用-Xmn 直接赋值(等于-XX:NewSize and -XX:MaxNewSize同值的缩写)，或把NewRatio设为1来对半分(但如果想设置新生代比老生代大就只能用-Xmn)。&lt;/p&gt;
+&lt;p&gt;-XX: PermSize=128m -XX:MaxPermSize=512m （JDK7）现在的应用有Hibernate/Spring这些闹腾的家伙AOP之后类都比较多，可以一开始就把初始值从64M设到128M，并设一个更大的Max值以求保险。&lt;/p&gt;
+&lt;p&gt;-XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m（JDK8），JDK8的永生代几乎可用完机器的所有内存，同样设一个128M的初始值，512M的最大值保护一下。&lt;/p&gt;
+&lt;h2 id=&quot;1-11-其他内存大小等可选设置&quot;&gt;&lt;a href=&quot;#1-11-其他内存大小等可选设置&quot; class=&quot;headerlink&quot; title=&quot;1.11 其他内存大小等可选设置&quot;&gt;&lt;/a&gt;1.11 其他内存大小等可选设置&lt;/h2&gt;&lt;p&gt;-XX:SurvivorRatio 新生代中每个存活区的大小，默认为8，即1/10的新生代 1/(SurvivorRatio+2)，有人喜欢设小点省点给新生代，但要避免太小使得存活区放不下临时对象而要晋升到老生代，还是从GC Log里看实际情况了。&lt;/p&gt;
+&lt;p&gt;-Xss 在堆之外，线程占用栈内存，默认每条线程为1M（以前是256K）。除了方法调用出参入参的栈，逃逸分析后也会把只在该线程里可见的对象直接分配在线程栈里，而不是公共的Heap里，也就减少了新生代的GC频率。有人喜欢设小点节约内存开更多线程，但反正内存够也就不必要设小，有人喜欢再设大点。&lt;/p&gt;
+&lt;p&gt;-XX:MaxDirectMemorySize，堆外内存/直接内存的大小，默认为Heap区总内存减去一个Survivor区的大小，详见&lt;a href=&quot;http://calvin1978.blogcn.com/articles/directbytebuffer.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Netty之堆外内存扫盲篇&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;-XX:ReservedCodeCacheSize， JIT编译后二进制代码的存放区，满了之后就不再编译。JDK7默认不开多层编译48M，开了96M，而JDK8默认开多层编译256M。可以在JMX里看看CodeCache的大小，JDK7下的48M一般够了，也可以把它设大点，反正内存多。&lt;/p&gt;
+&lt;h1 id=&quot;2-监控篇&quot;&gt;&lt;a href=&quot;#2-监控篇&quot; class=&quot;headerlink&quot; title=&quot;2. 监控篇&quot;&gt;&lt;/a&gt;2. 监控篇&lt;/h1&gt;&lt;p&gt;JVM输出的各种日志，如果未指定路径，通常会生成到运行应用的相同目录，为了避免有时候在不同的地方执行启动脚本，一般将日志路径集中设到一个固定的地方。&lt;/p&gt;
+&lt;h2 id=&quot;2-1-XX-PrintCommandLineFlags&quot;&gt;&lt;a href=&quot;#2-1-XX-PrintCommandLineFlags&quot; class=&quot;headerlink&quot; title=&quot;2.1 -XX:+PrintCommandLineFlags&quot;&gt;&lt;/a&gt;2.1 -XX:+PrintCommandLineFlags&lt;/h2&gt;&lt;p&gt;运维有时会对启动参数做一些临时的更改，将每次启动的参数输出到stdout，将来有据可查。&lt;br&gt;打印出来的是命令行里设置了的参数以及因为这些参数隐式影响的参数，比如开了CMS后，-XX:+UseParNewGC也被自动打开。&lt;/p&gt;
+&lt;h2 id=&quot;2-2-XX-OmitStackTraceInFastThrow&quot;&gt;&lt;a href=&quot;#2-2-XX-OmitStackTraceInFastThrow&quot; class=&quot;headerlink&quot; title=&quot;2.2 -XX:-OmitStackTraceInFastThrow&quot;&gt;&lt;/a&gt;2.2 -XX:-OmitStackTraceInFastThrow&lt;/h2&gt;&lt;p&gt;为异常设置StackTrace是个昂贵的操作，所以当应用在相同地方抛出相同的异常N次(两万?)之后，JVM会对某些特定异常如NPE，数组越界等进行优化，不再带上异常栈。此时，你可能会看到日志里一条条Null Point Exception，而真正输出完整栈的日志早被滚动到不知哪里去了，也就完全不知道这NPE发生在什么地方，欲哭无泪。 所以，将它禁止吧。&lt;/p&gt;
+&lt;h2 id=&quot;2-3-coredump与-XX-ErrorFile&quot;&gt;&lt;a href=&quot;#2-3-coredump与-XX-ErrorFile&quot; class=&quot;headerlink&quot; title=&quot;2.3 coredump与 -XX:ErrorFile&quot;&gt;&lt;/a&gt;2.3 coredump与 -XX:ErrorFile&lt;/h2&gt;&lt;p&gt;JVM crash时，hotspot 会生成一个error文件，提供JVM状态信息的细节。如前所述，将其输出到固定目录，避免到时会到处找这文件。文件名中的%p会被自动替换为应用的PID&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;-XX:ErrorFile=${MYLOGDIR}/hs_err_%p.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;当然，更好的做法是生成coredump，从CoreDump能够转出Heap Dump 和 Thread Dump 还有crash的地方，非常实用。&lt;/p&gt;
+&lt;p&gt;在启动脚本里加上 ulimit -c unlimited或其他的设置方式，如果有root权限，用一下一下输出目录更好&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo &amp;quot;/{MYLOGDIR}/coredump.%p&amp;quot; &amp;gt; /proc/sys/kernel/core_pattern
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;什么？你不知道这东西什么用？看来你是没遇过JVM Segment Fault的幸福人。&lt;/p&gt;
+&lt;h2 id=&quot;2-4-XX-HeapDumpOnOutOfMemoryError&quot;&gt;&lt;a href=&quot;#2-4-XX-HeapDumpOnOutOfMemoryError&quot; class=&quot;headerlink&quot; title=&quot;2.4 -XX:+HeapDumpOnOutOfMemoryError&quot;&gt;&lt;/a&gt;2.4 -XX:+HeapDumpOnOutOfMemoryError&lt;/h2&gt;&lt;p&gt;在Out Of Memory，JVM快死快死掉的时候，输出Heap Dump到指定文件。不然开发很多时候还真不知道怎么重现错误。&lt;/p&gt;
+&lt;p&gt;路径只指向目录，JVM会保持文件名的唯一性，叫java_pid${pid}.hprof。如果指向文件，而文件已存在，反而不能写入。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${LOGDIR}/
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;2-5-GC日志&quot;&gt;&lt;a href=&quot;#2-5-GC日志&quot; class=&quot;headerlink&quot; title=&quot;2.5 GC日志&quot;&gt;&lt;/a&gt;2.5 GC日志&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;-Xloggc:/dev/shm/gc-myapplication.log -XX:+PrintGCDateStamps -XX:+PrintGCDetails
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;详见&lt;a href=&quot;http://ifeve.com/useful-jvm-flags-part-8-gc-logging/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JVM实用参数（八）GC日志&lt;/a&gt;，有人担心写GC日志会影响性能，但测试下来实在没什么影响，还是留一份用来排查好。&lt;/p&gt;
+&lt;p&gt;到后来，又发现如果遇上高IO的情况，如果GC的时候，操作系统正在flush pageCache 到磁盘，也可能导致GC log文件被锁住，从而让GC结束不了。所以把它指向了/dev/shm 这种内存中数据库，避免这种停顿，详见&lt;a href=&quot;http://calvin1978.blogcn.com/articles/%E2%80%9Chttps://engineering.linkedin.com/blog/2016/02/eliminating-large-jvm-gc-pauses-caused-by-background-io-traffic%E2%80%9D&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Eliminating Large JVM GC Pauses Caused by Background IO Traffic&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;另外还有一个-XX:+PrintGCApplicationStoppedTime -XX:+PrintGCApplicationConcurrentTime，它的名字没起好，它除了打印清晰的GC停顿时间外，还可以打印其他的停顿时间，比如取消偏向锁，class 被agent redefine，code deoptimization等等，有助于发现一些原来没想到的问题，建议也加上。如果真的发现了一些不知什么的停顿，再加上”-XX:+PrintSafepointStatistics -XX: PrintSafepointStatisticsCount=1” 找原因。&lt;/p&gt;
+&lt;p&gt;GC日志默认会在重启后清空，但有人担心长期运行不重启的应用会把文件弄得很大，有”-XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1M”的参数可以让日志滚动起来。但重启后的文件名太混乱太让人头痛，所以还是不加。&lt;/p&gt;
+&lt;h2 id=&quot;2-6-JMX&quot;&gt;&lt;a href=&quot;#2-6-JMX&quot; class=&quot;headerlink&quot; title=&quot;2.6 JMX&quot;&gt;&lt;/a&gt;2.6 JMX&lt;/h2&gt;&lt;p&gt; &lt;code&gt;-Dcom.sun.management.jmxremote.port=${MY_JMX_PORT} -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;以上设置，只让本地的Zabbix之类监控软件通过JMX监控JVM，不允许远程访问。&lt;/p&gt;
+&lt;p&gt;《关键业务系统的JVM启动参数推荐》，转载请保留链接。&lt;/p&gt;
+&lt;p&gt;谢谢看到这里，还是贴个图吧。&lt;/p&gt;
+&lt;p&gt;有关的…&lt;/p&gt;
+&lt;p&gt;2016-07-30 – 从dstat理解Linux性能监控体系&lt;br&gt;2016-04-29 – Java应用调优之－目标与资料篇&lt;br&gt;2016-04-28 – 另一份Java应用调优指南之－工具篇&lt;br&gt;2016-01-01 – 另一份Java应用调优指南之－前菜&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;注：本文转自SpringSide的作者江南白衣的博客“&lt;a href=&quot;http://calvin1978.blogcn.com/articles/jvmoption-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;关键业务系统的JVM启动参数
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读书笔记:微服务设计-入门</title>
+    <link href="http://fengfu.io/2016/07/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%AE%BE%E8%AE%A1/"/>
+    <id>http://fengfu.io/2016/07/30/读书笔记-微服务设计/</id>
+    <published>2016-07-30T03:11:37.000Z</published>
+    <updated>2016-08-07T08:30:08.820Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;该系列笔记的内容主要来源于人邮出版的《微服务设计》一书。&lt;/p&gt;
+&lt;h1 id=&quot;第一章-微服务&quot;&gt;&lt;a href=&quot;#第一章-微服务&quot; class=&quot;headerlink&quot; title=&quot;第一章 微服务&quot;&gt;&lt;/a&gt;第一章 微服务&lt;/h1&gt;&lt;h2 id=&quot;微服务的由来&quot;&gt;&lt;a href=&quot;#微服务的由来&quot; class=&quot;headerlink&quot; title=&quot;微服务的由来&quot;&gt;&lt;/a&gt;微服务的由来&lt;/h2&gt;&lt;p&gt;微服务不是发明出来的，而是随着领域驱动设计、持续交付、按需虚拟化、基础设施自动化、小型自治团队、大型集群系统这些实践的流行，从现实世界总结出来的。&lt;/p&gt;
+&lt;p&gt;拓展知识点：Eric Evans的《&lt;a href=&quot;http://item.jd.com/11961038.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;领域驱动设计&lt;/a&gt;》、Alistair Cookburn的&lt;a href=&quot;http://alistair.cockburn.us/hexagonal+architecture&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;六边形架构理论&lt;/a&gt;、Netflix的构建大型反脆弱系统&lt;/p&gt;
+&lt;h2 id=&quot;什么是微服务&quot;&gt;&lt;a href=&quot;#什么是微服务&quot; class=&quot;headerlink&quot; title=&quot;什么是微服务&quot;&gt;&lt;/a&gt;什么是微服务&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;微服务很小&lt;br&gt;在考虑微服务时，内聚性这一原则很重要，具体可以联想到单一职责原则(Single Responsibility Principle)。&lt;br&gt;微服务的边界如何划分？答案是根据业务的边界来确定服务的边界。&lt;br&gt;至于很小，多小算是小？这个事情仁者见仁智者见智，有的人说花2周的时间能够构建完就可以，有的人说你认为已经够小了就行，我的理解是：只要边界小到能够提供独立的服务就行了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;微服务是自治的&lt;br&gt;一个微服务就是一个独立的实体，一个微服务的部署或修改应该尽量避免对消费方的修改，一个很典型的例子就是有人在设计接口返回值的时候用枚举，这其实很坑的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;微服务的好处&quot;&gt;&lt;a href=&quot;#微服务的好处&quot; class=&quot;headerlink&quot; title=&quot;微服务的好处&quot;&gt;&lt;/a&gt;微服务的好处&lt;/h2&gt;&lt;h3 id=&quot;1-技术异构性&quot;&gt;&lt;a href=&quot;#1-技术异构性&quot; class=&quot;headerlink&quot; title=&quot;1.技术异构性&quot;&gt;&lt;/a&gt;1.技术异构性&lt;/h3&gt;&lt;p&gt;  服务端和消费端可以采用不同的技术。如果把dubbo看做一个微服务框架，那么它在技术异构性方面做得并不好。当然也有人对dubbo进行了改良，比如当当的&lt;a href=&quot;https://github.com/dangdangdotcom/dubbox&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;dubbox&lt;/a&gt;，它在dubbo协议基础上增加了REST接口，这样消费方就可以使用其他协议与dubbo进行交互了。&lt;/p&gt;
+&lt;h3 id=&quot;2-弹性&quot;&gt;&lt;a href=&quot;#2-弹性&quot; class=&quot;headerlink&quot; title=&quot;2.弹性&quot;&gt;&lt;/a&gt;2.弹性&lt;/h3&gt;&lt;p&gt;  弹性工程学的一个关键概念就是“舱壁”，比如轮船的水密舱。当一个舱进水时，通过关闭该舱来确保其它舱不进水，进而保证整条船的安全。在微服务中，一个服务A可能会消费下游的很多服务，如果下游的某个服务有问题，那么它不能影响A服务自身的运行的。&lt;/p&gt;
+&lt;h3 id=&quot;3-扩展&quot;&gt;&lt;a href=&quot;#3-扩展&quot; class=&quot;headerlink&quot; title=&quot;3.扩展&quot;&gt;&lt;/a&gt;3.扩展&lt;/h3&gt;&lt;p&gt;  对于单块服务来讲，即便是系统中某一个服务存在性能问题，那么也需要对整个系统进行扩展。如果使用较多的小服务，那么你只需要对存在性能问题的服务进行扩展就行了。&lt;/p&gt;
+&lt;h3 id=&quot;4-简化部署&quot;&gt;&lt;a href=&quot;#4-简化部署&quot; class=&quot;headerlink&quot; title=&quot;4.简化部署&quot;&gt;&lt;/a&gt;4.简化部署&lt;/h3&gt;&lt;p&gt;  对于线上服务来说，相对于代码量巨大的单块系统，微服务具有灵活的部署优势和更小的部署风险。这里引申出一个比较重要的部署原则就是：每次部署应尽量少地修改代码，这样才能减少两次部署之间的差异。&lt;/p&gt;
+&lt;h3 id=&quot;5-与组织机构更加匹配&quot;&gt;&lt;a href=&quot;#5-与组织机构更加匹配&quot; class=&quot;headerlink&quot; title=&quot;5.与组织机构更加匹配&quot;&gt;&lt;/a&gt;5.与组织机构更加匹配&lt;/h3&gt;&lt;p&gt;  说到系统与组织机构的关系，就不能不提康威定律。梅尔.康威在1968年4月的Datamation杂志上发表的一篇名为“How Do Committees Invent”的论文中提出：任何组织在设计一套系统时，所交付的设计方案在结构上都与该组织的沟通结构保持一致。&lt;br&gt;  这里暂时不对康威定律做过多描述，但最起码有一点是肯定的，相比于单体应用，为服务能够更好地在团队之间交接，尤其那些业务、团队频繁变动的公司。&lt;/p&gt;
+&lt;h3 id=&quot;6-可组合性&quot;&gt;&lt;a href=&quot;#6-可组合性&quot; class=&quot;headerlink&quot; title=&quot;6.可组合性&quot;&gt;&lt;/a&gt;6.可组合性&lt;/h3&gt;&lt;p&gt;  相比单体应用，为服务能够更方便地组合成新的微服务，这一点的思路跟乐高倒是有点相像。&lt;/p&gt;
+&lt;h3 id=&quot;7-可替代性&quot;&gt;&lt;a href=&quot;#7-可替代性&quot; class=&quot;headerlink&quot; title=&quot;7.可替代性&quot;&gt;&lt;/a&gt;7.可替代性&lt;/h3&gt;&lt;p&gt;  一个规模比较大的单体应用，相信很少有人敢替代它。但对于一个规模比较小的微服务来讲，重新实现或者删除这个服务的可行性就大大增加了。&lt;/p&gt;
+&lt;h2 id=&quot;微服务的不足&quot;&gt;&lt;a href=&quot;#微服务的不足&quot; class=&quot;headerlink&quot; title=&quot;微服务的不足&quot;&gt;&lt;/a&gt;微服务的不足&lt;/h2&gt;&lt;p&gt;  《微服务设计》这本书里面只是提到了微服务的好处，但是并没有提到微服务有哪些不足和挑战，这里自己做一些总结。&lt;/p&gt;
+&lt;h3 id=&quot;1-维护压力&quot;&gt;&lt;a href=&quot;#1-维护压力&quot; class=&quot;headerlink&quot; title=&quot;1.维护压力&quot;&gt;&lt;/a&gt;1.维护压力&lt;/h3&gt;&lt;p&gt;  首先从服务部署的角度，无论是单机多服务，还是单机单服务，都会运维量的增加。单机多服务意味着服务维护复杂性的增加。比如服务器load高了，那到底是哪个服务引起的呢？单机单服务意味着服务器数量的增加。&lt;br&gt;  另外，微服务之间存在着很强的关联关系，当系统出现异常时，很有可能是因为下游的系统异常导致的，这就需要我们做好服务的监控和治理，甚至问题排查。因此，一旦你开始引入微服务，那么你就要在最开始的时候好好规划服务的治理。&lt;/p&gt;
+&lt;h3 id=&quot;2-重复性劳动&quot;&gt;&lt;a href=&quot;#2-重复性劳动&quot; class=&quot;headerlink&quot; title=&quot;2.重复性劳动&quot;&gt;&lt;/a&gt;2.重复性劳动&lt;/h3&gt;&lt;p&gt;  重复性劳动是指你可能无法更多地像单体应用那样引用部分代码，毕竟服务之间是隔离的。当然你也可以通过抽取lib包这样的方式在微服务之间做到代码复用，但是那样就需要微服务的团队之间具有有效的沟通机制。&lt;/p&gt;
+&lt;h3 id=&quot;3-系统运行效率&quot;&gt;&lt;a href=&quot;#3-系统运行效率&quot; class=&quot;headerlink&quot; title=&quot;3.系统运行效率&quot;&gt;&lt;/a&gt;3.系统运行效率&lt;/h3&gt;&lt;p&gt;  微服务之间的交互是通过网络进行的，因此网络的效率、稳定性就变得更加重要。在单体应用中，我们不必担心模块之间交互的数据量、效率，但是在微服务中，服务与服务之间的效率将至关重要。&lt;/p&gt;
+&lt;h3 id=&quot;4-资源浪费&quot;&gt;&lt;a href=&quot;#4-资源浪费&quot; class=&quot;headerlink&quot; title=&quot;4.资源浪费&quot;&gt;&lt;/a&gt;4.资源浪费&lt;/h3&gt;&lt;p&gt;  一般来说，微服务推荐的部署方式是单机单服务，这也意味着更多的资源浪费。毕竟我们需要为操作系统、其他基础设施预留一些内存。在一个单体应用中，这些内存就可以共用。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;图片描述：人间净土-喀纳斯&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i1/2657627814/TB222KbuXXXXXbOXpXXXXXXXXXX_!!2657627814.jpg&quot; alt=&quot;喀纳斯_卧龙湾&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2na01uXXXXXXgXFXXXXXXXXXX_!!2657627814.jpg&quot; alt=&quot;喀纳斯_禾木&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;该系列笔记的内容主要来源于人邮出版的《微服务设计》一书。&lt;/p&gt;
+&lt;h1 id=&quot;第一章-微服务&quot;&gt;&lt;a href=&quot;#第一章-微服务&quot; c
+    
+    </summary>
+    
+    
+      <category term="微服务" scheme="http://fengfu.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CTO、技术总监、首席架构师的区别(转)</title>
+    <link href="http://fengfu.io/2016/06/30/CTO%E3%80%81%E6%8A%80%E6%9C%AF%E6%80%BB%E7%9B%91%E3%80%81%E9%A6%96%E5%B8%AD%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%84%E5%8C%BA%E5%88%AB-%E8%BD%AC/"/>
+    <id>http://fengfu.io/2016/06/30/CTO、技术总监、首席架构师的区别-转/</id>
+    <published>2016-06-30T10:15:38.000Z</published>
+    <updated>2016-06-30T10:21:43.848Z</updated>
+    
+    <content type="html">&lt;p&gt;注:本文转自微信号erpweixin(简化ERP)，如转载请注明原文地址。原文地址请点 &lt;a href=&quot;http://mp.weixin.qq.com/s?__biz=MjM5Njk2Mzg0MQ==&amp;amp;mid=2651072525&amp;amp;idx=1&amp;amp;sn=4a5147a1fe70e3531891caf8fba29bb6&amp;amp;scene=24&amp;amp;srcid=0630cwnSLIEbtxEJQFdjTnWv#rd&quot; title=&quot;CTO、技术总监、首席架构师的区别&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;：&lt;/p&gt;
+&lt;p&gt;经常有创业公司老板来拜访我，常常会拜托给我一句话：帮我找一个CTO。&lt;/p&gt;
+&lt;p&gt;我解释的多了，所以想把这个写下来，看看你到底需要的应该是啥。&lt;/p&gt;
+&lt;h2 id=&quot;一、高级程序员&quot;&gt;&lt;a href=&quot;#一、高级程序员&quot; class=&quot;headerlink&quot; title=&quot;一、高级程序员&quot;&gt;&lt;/a&gt;一、高级程序员&lt;/h2&gt;&lt;p&gt;如果你是一个刚刚创业的公司，公司没有专职产品经理和项目经理，你就是公司的产品经理，你如果对你现在的开发员能力不满，那么你只需要的是一个高级程序员。&lt;/p&gt;
+&lt;p&gt;你定义功能、你做计划推进和管理，他可以带1-2个副手把你规划的功能实现了，他是主力干活者，有技术难题也是他来亲自攻克解决。&lt;/p&gt;
+&lt;p&gt;所以，一个高级程序员，他的职责很清晰：&lt;/p&gt;
+&lt;p&gt;1、负责核心复杂功能的实现方案设计、编码实现&lt;br&gt;2、负责疑难BUG分析诊断、攻关解决&lt;/p&gt;
+&lt;h2 id=&quot;二、研发Leader&quot;&gt;&lt;a href=&quot;#二、研发Leader&quot; class=&quot;headerlink&quot; title=&quot;二、研发Leader&quot;&gt;&lt;/a&gt;二、研发Leader&lt;/h2&gt;&lt;p&gt;公司再长大些。如果你就有一个研发团队（含产品/开发/测试），你就一套主产品，而且你的研发团队小于15人，那么你需要的就是一个研发Leader。&lt;/p&gt;
+&lt;p&gt;因为你已经有了1-2个高级程序员，核心难题攻克和核心功能研发进度与质量保证，已经可以靠他们自身能力解决掉了。那么你需要研发Leader干什么。&lt;/p&gt;
+&lt;p&gt;研发Leader的职责是：&lt;/p&gt;
+&lt;p&gt;1、团队任务管理：开发工作量评估、开发任务分配&lt;/p&gt;
+&lt;p&gt;2、团队生产质量提升：代码审核、开发风险识别/报告/协调解决&lt;/p&gt;
+&lt;p&gt;3、团队生产力提升：代码模板研发与推广、最佳实践规范总结与推广、自动化研发生产工具研发与推广&lt;/p&gt;
+&lt;p&gt;4、团队专业力提升：招聘面试、新人指导、领导复盘总结改进&lt;/p&gt;
+&lt;h2 id=&quot;三、技术总监&quot;&gt;&lt;a href=&quot;#三、技术总监&quot; class=&quot;headerlink&quot; title=&quot;三、技术总监&quot;&gt;&lt;/a&gt;三、技术总监&lt;/h2&gt;&lt;p&gt;如果你的研发团队超过20人了，而且有多套主打产品线了，你可能已经有了多个研发Leader了，那么你需要一个技术总监。&lt;/p&gt;
+&lt;p&gt;技术总监的职责：&lt;/p&gt;
+&lt;p&gt;1、组建平台研发部，搭建公共技术平台，方便上面各条产品线开发。&lt;/p&gt;
+&lt;p&gt;2、通过技术平台、通过高一层的职权，管理和协调各个产品线组。现在每个产品线都应该有合格的研发Leader和高级程序员了。&lt;/p&gt;
+&lt;h2 id=&quot;四、首席架构师&quot;&gt;&lt;a href=&quot;#四、首席架构师&quot; class=&quot;headerlink&quot; title=&quot;四、首席架构师&quot;&gt;&lt;/a&gt;四、首席架构师&lt;/h2&gt;&lt;p&gt;因为你已经有了技术总监了，所以技术平台不错了。技术平台和各条产品线的协调互动，也是技术总监管着。&lt;/p&gt;
+&lt;p&gt;因为你已经有了各个产品线的高级程序员，他们在靠个人能力维持着核心功能模块的开发进度和代码质量。&lt;/p&gt;
+&lt;p&gt;因为你已经有了研发Leader，所以代码模板研发与推广、最佳实践规范总结与推广，这些事都已经在日常按份内职责开展了。&lt;/p&gt;
+&lt;p&gt;那么，啥时候需要首席架构师啊。&lt;/p&gt;
+&lt;p&gt;也就是说，需要分离管理族和专业族了。你会发现，这个阶段你的研发团队已经超过100来人了，需要有人专注来做架构规划、设计、日常维护。不能让研发总监和研发Leader又做管理又做技术一股脑都扔给他们，你就等着总结果产出。这是不对的。&lt;/p&gt;
+&lt;p&gt;需要从技术总监和研发Leader身上剥离职责了。让技术总监和研发Leader偏项目管理（管理族），把各个模块之间的架构设计工作，独立出一个岗位，就是架构师，来负责。&lt;/p&gt;
+&lt;p&gt;每个产品线都有架构师，在技术平台部门也有技术平台的架构师。那么，技术平台和业务产品线的架构互动，就是首席架构师在衔接了。让技术平台架构能够和产品业务系统的架构互相促进和支撑，就是首席架构师的份内之事。&lt;/p&gt;
+&lt;p&gt;架构师的职责是：&lt;/p&gt;
+&lt;p&gt;1、架构分析：从功能性需求中识别出需要增加的非功能性需求，好满足性能、可扩展、解耦/集成、安全、可运维、高可用、易部署、易更新。并且识别完非功能型需求，还要做技术选型、技术架构风险识别、技术实现工作量评估&lt;/p&gt;
+&lt;p&gt;2、架构设计与实现：非功能性模块的架构设计、接口设计、代码实现。所以需要的是有代码实现能力还要有架构思维的工程师，不需要画PPT的工程师&lt;/p&gt;
+&lt;p&gt;3、业务架构设计与实现：需要对跨系统的接口进行识别、实现、维护，需要对能写成公共代码类库的进行分析、识别、接口设计、实现、变更维护。&lt;/p&gt;
+&lt;p&gt;4、重构：架构师需要经常做Bug分析、非模板性和公共类库代码检查，以发现代码腐烂程度，以发现还有哪些代码没有做很好的架构与精心的代码设计。所以重构是经常性维护发生的，不是攒到某一刻动大手术，甚至推翻重做，那就不叫重构了。&lt;/p&gt;
+&lt;h2 id=&quot;五、CTO&quot;&gt;&lt;a href=&quot;#五、CTO&quot; class=&quot;headerlink&quot; title=&quot;五、CTO&quot;&gt;&lt;/a&gt;五、CTO&lt;/h2&gt;&lt;p&gt;你把架构师团队组织建立完成，再往大长，你才需要真正意义上的CTO了。否则你一开始就招真正的CTO，他也不满意，你的期望也不对。现在你的期望也对了，他的能力模型也正好和你的期望职能匹配了，你能给他的和他想要的也正好匹配了。&lt;/p&gt;
+&lt;p&gt;有的公司有软件系统产品副总裁，也有软件系统技术副总裁，而且把软件系统技术副总裁叫CTO，软件系统产品副总裁叫产品VP。这就很怪异。&lt;/p&gt;
+&lt;p&gt;真正的CTO，是软件产品和技术是统一管理的。&lt;/p&gt;
+&lt;p&gt;他做的事情，是商业、产品、技术、管理、团队相平衡的综合统管。&lt;/p&gt;
+&lt;p&gt;CTO的职责：&lt;/p&gt;
+&lt;p&gt;1、业绩达成：洞察客户需求，捕捉商业机会，规划技术产品，通过技术产品领导业务增长，有清晰的战略规划、主攻方向，带领团队实现组织目标&lt;/p&gt;
+&lt;p&gt;2、前沿与平台：到这个研发规模规模级别了，一定要有专门的团队做技术应用创新探索和前沿技术预研。而且要和技术平台团队、应用研发团队形成很好的联动作用，让创新原型试点能够很平滑的融入商业平台再让应用研发线规模化的使用起来。大量的前沿探索都死在了内部，做完试点就停滞了，这就需要CTO做好整体的衔接推动工作。&lt;/p&gt;
+&lt;p&gt;3、研发过程管理：站在全局立场来端到端改进业务流程，为业务增长提供方便&lt;/p&gt;
+&lt;p&gt;4、组织与人才建设：公司文化和价值观的传承；研发专业族团队梯队建制建设、研发管理族团队梯队建制建设；创建创新激发机制，激发研发人创新向前发展，激发黑马人脱颖而出&lt;/p&gt;
+&lt;p&gt;阿朱出品必属精品，阿朱出品必属精品，阿朱出品必属精品，阿朱出品必属精品，唉，现在好文章，都需要重要的话说四遍了&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;注:本文转自微信号erpweixin(简化ERP)，如转载请注明原文地址。原文地址请点 &lt;a href=&quot;http://mp.weixin.qq.com/s?__biz=MjM5Njk2Mzg0MQ==&amp;amp;mid=2651072525&amp;amp;idx=1&amp;amp;sn
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM 垃圾回收器CMS之各阶段总结</title>
+    <link href="http://fengfu.io/2016/06/21/JVM-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8CMS%E4%B9%8B%E5%90%84%E9%98%B6%E6%AE%B5%E6%95%B4%E7%90%86/"/>
+    <id>http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/</id>
+    <published>2016-06-21T07:50:22.000Z</published>
+    <updated>2016-06-22T07:26:56.848Z</updated>
+    
+    <content type="html">&lt;p&gt;先贴一张图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2HFD0qVXXXXblXpXXXXXXXXXX_!!2657627814.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-初始标记阶段-CMS-initial-mark&quot;&gt;&lt;a href=&quot;#1-初始标记阶段-CMS-initial-mark&quot; class=&quot;headerlink&quot; title=&quot;1.初始标记阶段(CMS-initial-mark)&quot;&gt;&lt;/a&gt;1.初始标记阶段(CMS-initial-mark)&lt;/h2&gt;&lt;p&gt;  这个阶段的主要任务是找到堆中所有的垃圾回收根节点对象，这个阶段会暂停所有的应用程序线程，即STW(Stop the world)。此阶段会打印1行日志，如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[GC [1 CMS-initial-mark: 2905437K(4096000K)] 3134625K(5916480K), 0.2551680 secs] [Times: user=0.26 sys=0.00, real=0.25 secs]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中第一组数据，第一对数据标识老年代实际占用的空间大小和老年代分配的空间大小，第二对数据标识整个堆的实际使用情况和分配的堆的空间。&lt;br&gt;细心的人可能发现了CMS-initial-mark前面的数字“1”，这个标志代表了STW，在后面的“重新标记”阶段，你也会发现这个标志。这正好与上面图中说明的阶段是对应的。&lt;/p&gt;
+&lt;h2 id=&quot;2-标记阶段-CMS-concurrent-mark&quot;&gt;&lt;a href=&quot;#2-标记阶段-CMS-concurrent-mark&quot; class=&quot;headerlink&quot; title=&quot;2.标记阶段(CMS-concurrent-mark)&quot;&gt;&lt;/a&gt;2.标记阶段(CMS-concurrent-mark)&lt;/h2&gt;&lt;p&gt;  这个阶段是和应用线程并发执行的，所谓并发收集器指的就是这个，主要作用是标记可达的对象。由于只是进行标记，所以不会对堆的占用产生实质的改变。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2016-06-21T16:38:53.911+0800: 367848.849: [CMS-concurrent-mark-start]
+2016-06-21T16:38:57.241+0800: 367852.178: [CMS-concurrent-mark: 2.787/3.329 secs] [Times: user=12.12 sys=0.64, real=3.33 secs]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个阶段会打印2行日志，第一行CMS-concurrent-mark-start标识标记阶段开始。第二行中的“2.787/3.329 secs”表示标记阶段的耗时。后面的“user=12.12”表示占用的cpu时间(此JVM运行的服务器CPU为4核)。&lt;/p&gt;
+&lt;h2 id=&quot;3-预清理阶段-CMS-concurrent-preclean&quot;&gt;&lt;a href=&quot;#3-预清理阶段-CMS-concurrent-preclean&quot; class=&quot;headerlink&quot; title=&quot;3.预清理阶段(CMS-concurrent-preclean)&quot;&gt;&lt;/a&gt;3.预清理阶段(CMS-concurrent-preclean)&lt;/h2&gt;&lt;p&gt;  在之前的标记阶段，标记和应用线程是并发执行的，因此有些对象的状态在标记后会发生改变。这个阶段只要是发现从新生代晋升的对象、新分配到老年代的对象以及在标记阶段被修改了的对象。&lt;br&gt;  这个阶段也会打印2行日志，跟标记阶段类似。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;2016-06-21T16:38:57.241+0800: 367852.178: [CMS-concurrent-preclean-start]&amp;#10;2016-06-21T16:38:57.718+0800: 367852.655: [CMS-concurrent-preclean: 0.342/0.477 secs] [Times: user=1.79 sys=0.10, real=0.48 secs]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;4-重新标记阶段&quot;&gt;&lt;a href=&quot;#4-重新标记阶段&quot; class=&quot;headerlink&quot; title=&quot;4.重新标记阶段&quot;&gt;&lt;/a&gt;4.重新标记阶段&lt;/h2&gt;&lt;p&gt;  可中断预清理阶段是在JDK1.5中加入的。这个阶段是CMS中比较复杂的一个阶段，因为在这个阶段，JVM会执行很多操作。&lt;br&gt;  首先是CMS-concurrent-abortable-preclean，可中断的预清理。我们可能要问，既然再上一个阶段已经执行了预清理了，为什么还要再做一次？我们知道，CMS是以获取最短停顿时间为目的的GC，所以简单说进行可中断预清理的目的就是希望尽量缩短停顿的时间。&lt;br&gt;  可中断预清理涉及几个参数：&lt;br&gt;  -XX:CMSMaxAbortablePrecleanTime：当abortable-preclean阶段执行达到这个时间时才会结束&lt;br&gt;  -XX:CMSScheduleRemarkEdenSizeThreshold（默认2m）：控制abortable-preclean阶段什么时候开始执行，即当eden使用达到此值时，才会开始abortable-preclean阶段&lt;br&gt;  -XX:CMSScheduleRemarkEdenPenetratio（默认50%）：控制abortable-preclean阶段什么时候结束执行&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;2016-06-21T16:38:57.718+0800: 367852.656: [CMS-concurrent-abortable-preclean-start]&amp;#10;2016-06-21T16:38:58.801+0800: 367853.738: [CMS-concurrent-abortable-preclean: 0.920/1.083 secs] [Times: user=4.06 sys=0.20, real=1.08 secs]&amp;#10;2016-06-21T16:38:58.808+0800: 367853.746: [GC[YG occupancy: 777901 K (1820480 K)]367853.746: [Rescan (parallel) , 0.1361120 secs]367853.882: [weak refs processing, 0.0005370 secs]367853.883: [scrub string table, 0.0044130 secs] [1 CMS-remark: 3034451K(4096000K)] 3812352K(5916480K), 0.1412750 secs] [Times: user=0.54 sys=0.00, real=0.14 secs]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  其次，是Rescan操作，此阶段暂停应用线程，对对象进行重新扫描并标记。通过上面的日志我们可以看到，在CMS-remark的时候有一次STW。另外，这个过程还会打印出弱引用处理、类卸载等过程的耗时。&lt;/p&gt;
+&lt;h2 id=&quot;5-清除阶段-CMS-concurrent-sweep&quot;&gt;&lt;a href=&quot;#5-清除阶段-CMS-concurrent-sweep&quot; class=&quot;headerlink&quot; title=&quot;5.清除阶段(CMS-concurrent-sweep)&quot;&gt;&lt;/a&gt;5.清除阶段(CMS-concurrent-sweep)&lt;/h2&gt;&lt;p&gt;  这个阶段开始进行垃圾的清理工作，此时应用线程被重新激活，回收线程与应用线程并发运行，那些无效的对象被清理掉。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;2016-06-21T16:38:58.950+0800: 367853.888: [CMS-concurrent-sweep-start]&amp;#10;2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-sweep: 5.656/6.900 secs] [Times: user=25.88 sys=1.28, real=6.90 secs]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;6-初始标记阶段-CMS-concurrent-reset&quot;&gt;&lt;a href=&quot;#6-初始标记阶段-CMS-concurrent-reset&quot; class=&quot;headerlink&quot; title=&quot;6.初始标记阶段(CMS-concurrent-reset)&quot;&gt;&lt;/a&gt;6.初始标记阶段(CMS-concurrent-reset)&lt;/h2&gt;&lt;p&gt;  这是CMS一个回收周期的最后一个阶段，在这个阶段，CMS会清除内部状态，为下次回收做准备。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-reset-start]&amp;#10;2016-06-21T16:39:05.860+0800: 367860.798: [CMS-concurrent-reset: 0.010/0.010 secs] [Times: user=0.04 sys=0.00, real=0.01 secs]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  至此，一个CMS周期结束。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;先贴一张图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2HFD0qVXXXXblXpXXXXXXXXXX_!!2657627814.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>性能调优工具-Java Mission Control</title>
+    <link href="http://fengfu.io/2016/05/20/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-Java-Mission-Control/"/>
+    <id>http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/</id>
+    <published>2016-05-20T06:59:20.000Z</published>
+    <updated>2016-08-25T02:53:36.776Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。&lt;/p&gt;
+&lt;p&gt;另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不同，JMC使用了JVM内部特定的基于事件的接口，几乎不会给应用造成额外的压力（默认设置下，对性能影响小于1%），因此可以用在负载很高的生产环境中。&lt;/p&gt;
+&lt;p&gt;本文就来简单介绍一下使用JMC来监测JVM性能。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注意：需要下载Oracle Jdk 7u40以后的版本，OpenJdk无效，切记！&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-目标JVM配置&quot;&gt;&lt;a href=&quot;#2-目标JVM配置&quot; class=&quot;headerlink&quot; title=&quot;2.目标JVM配置&quot;&gt;&lt;/a&gt;2.目标JVM配置&lt;/h2&gt;&lt;p&gt;在被监控的JVM（目标JVM）上需要开启以下Java Options才能对其进行监控，对于Tomcat来说，在JAVA_OPTS或CATALINA_OPTS中加入以下代码即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.ssl=false
+-Djava.rmi.server.hostname=192.168.32.11
+-Dcom.sun.management.jmxremote.port=7777
+-Dcom.sun.management.jmxremote
+-XX:+UnlockCommercialFeatures
+-XX:+FlightRecorder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。&lt;br&gt;com.sun.management.jmxremote：启用JMX远程监控。&lt;br&gt;com.sun.management.jmxremote.port：JMX远程监控的端口。&lt;br&gt;com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。&lt;br&gt;com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。&lt;br&gt;在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：&lt;/p&gt;
+&lt;p&gt;jmxremote.access：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;admin readwrite \
+  create com.sun.management.*,com.oracle.jrockit.* \
+  unregister
+monitor readonly
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;表示admin有操作权限（比如调用GC等操作），monitor只有查看权限，不能进行任何操作。&lt;br&gt;jmxremote.password：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;admin test
+monitor test    
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;表示有两个用户，admin和monitor，密码分别是test和test。&lt;/p&gt;
+&lt;p&gt;-XX:+UnlockCommercialFeatures：开启商业特性，默认这个选项是关闭的。&lt;br&gt;-XX:+FlightRecorder：开启飞行记录器。&lt;/p&gt;
+&lt;p&gt;上述参数配置完毕，重新启动tomcat即可。&lt;/p&gt;
+&lt;h2 id=&quot;3-连接远程JVM&quot;&gt;&lt;a href=&quot;#3-连接远程JVM&quot; class=&quot;headerlink&quot; title=&quot;3.连接远程JVM&quot;&gt;&lt;/a&gt;3.连接远程JVM&lt;/h2&gt;&lt;p&gt;双击本地%JDK_HOME%\bin\jmc.exe，点击左侧“创建新定制JVM连接”图标， &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2h8gqpXXXXXbUXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在弹出的窗口中输入远程JVM的IP地址和端口号：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i2/2657627814/TB29LQKpXXXXXX3XXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;选择“启动JMX控制台”，点击“完成”。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2hE_PpXXXXXcRXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;进入JMC主界面：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB2mAEGpXXXXXaHXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在左侧飞行记录器的菜单上点击右键，选择“启动飞行记录”，进入到启动飞行记录的界面，在此界面设置飞行记录的文件路径、记录时长(固定时长或固定间隔)：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;设置监控的事件：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在此界面可以设置监控的详细设置，并点击“完成”&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;现在你可以愉快地使用JFR的强大功能了。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java Instrumentation研究之动态植入</title>
+    <link href="http://fengfu.io/2016/04/25/Java-Instrumentation%E7%A0%94%E7%A9%B6-2/"/>
+    <id>http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/</id>
+    <published>2016-04-25T02:20:43.000Z</published>
+    <updated>2016-05-20T06:54:50.378Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1.前言&quot;&gt;&lt;/a&gt;1.前言&lt;/h2&gt;&lt;p&gt;前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。&lt;/p&gt;
+&lt;h2 id=&quot;2-关于agentmain&quot;&gt;&lt;a href=&quot;#2-关于agentmain&quot; class=&quot;headerlink&quot; title=&quot;2.关于agentmain&quot;&gt;&lt;/a&gt;2.关于agentmain&lt;/h2&gt;&lt;p&gt;在Java SE6的Instrumentation 当中，有一个跟 premain“并驾齐驱”的“agentmain”方法，可以在main函数开始运行之后再运行。&lt;br&gt;跟premain函数一样， 开发者可以编写一个含有“agentmain”函数的Java类：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public static void agentmain(String agentArgs, Instrumentation inst);          [1] 
+public static void agentmain(String agentArgs);              [2]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;[1]的优先级比[2]高，将会被优先执行。&lt;/p&gt;
+&lt;p&gt;跟前文提到的premain函数一样，我们可以在agentmain方法中对类进行各种操作。其中的agentArgs和Inst的用法跟premain相同。&lt;br&gt;与“Premain-Class”类似，我们必须在manifest文件里面设置“Agent-Class”来指定包含agentmain函数的类。&lt;br&gt;可是，跟premain不同的是，agentmain需要在main函数开始运行后才启动，这样的时机应该如何确定呢，这样的功能又如何实现呢？&lt;br&gt;在 Java SE6 文档当中，我们也许无法在java.lang.instrument包相关的文档部分看到明确的介绍，更加无法看到具体的应用agnetmain的例子。不过，在 Java SE6的新特性里面，有一个不太起眼的地方，揭示了agentmain的用法。这就是Java SE6当中提供的Attach API。&lt;/p&gt;
+&lt;h2 id=&quot;3-关于Attach-API&quot;&gt;&lt;a href=&quot;#3-关于Attach-API&quot; class=&quot;headerlink&quot; title=&quot;3.关于Attach API&quot;&gt;&lt;/a&gt;3.关于Attach API&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://docs.oracle.com/javase/7/docs/jdk/api/attach/spec/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Attach API&lt;/a&gt;不是Java的标准API，而是Sun公司提供的一套扩展API，用来向目标JVM“附着”（Attach）代理工具程序的。有了它，我们可以方便地监控一个JVM，运行一个外加的代理程序。&lt;br&gt;Attach API很简单，只有2个主要的类，都在com.sun.tools.attach包里面：VirtualMachine代表一个Java虚拟机，也就是程序需要监控的目标虚拟机，提供了JVM枚举，Attach动作和Detach动作（Attach 动作的相反行为，从JVM 上面解除一个代理）等等 ; VirtualMachineDescriptor则是一个描述虚拟机的容器类，配合VirtualMachine类完成各种功能。&lt;/p&gt;
+&lt;h2 id=&quot;4-agentmain实现步骤&quot;&gt;&lt;a href=&quot;#4-agentmain实现步骤&quot; class=&quot;headerlink&quot; title=&quot;4.agentmain实现步骤&quot;&gt;&lt;/a&gt;4.agentmain实现步骤&lt;/h2&gt;&lt;p&gt;与Permain类似，agentmain方式同样需要提供一个agent jar，并且这个jar需要满足：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在manifest中指定Agent-Class属性，值为代理类全路径；&lt;/li&gt;
+&lt;li&gt;代理类需要提供public static void agentmain(String args, Instrumentation inst)或public static void agentmain(String args)方法。并且再二者同时存在时以前者优先。args和inst和premain中的一致。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Attach API中的VirtualMachine代表一个运行中的VM，其提供了loadAgent()方法，可以在运行时动态加载一个代理jar，这样就可以实现类似premain的效果了。&lt;/p&gt;
+&lt;h2 id=&quot;5-agentmain实例&quot;&gt;&lt;a href=&quot;#5-agentmain实例&quot; class=&quot;headerlink&quot; title=&quot;5.agentmain实例&quot;&gt;&lt;/a&gt;5.agentmain实例&lt;/h2&gt;&lt;p&gt;与上文一样，我们要通过Java Instrumentation实现对某个类中所有方法执行时间的统计，只不过不同的是：这次我们采用动态Instrumentation的方式。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;编写一个简单的测试类Test，以便于后面我们通过动态代理实现方法计时功能；&lt;/li&gt;
+&lt;li&gt;编写Agent实现类SampleTransformer，实现ClassFileTransformer接口。代码同上篇文章一样，这里不再赘述。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;编写Agent入口类DynamicAgent，实现agentmain方法：&lt;/p&gt;
+&lt;p&gt; public static void agentmain(String args, Instrumentation inst)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;编写一个测试入口类SampleApp，能够长时间驻留，便于我们测试动态植入功能；本例中我们通过键盘数据接收用户的输入数据。只要用户输入不为“bye”，那么就会执行Test类的test()方法；在系统刚刚启动的时候，我们没有利用动态植入实现对test()方法的计时；当执行动态植入后，再执行test()方法，我们就能看到屏幕除了输出原test()方法输出的“hello world”之外，还额外输出了test()方法的运行计时。这就能够证明植入代码生效了；&lt;/li&gt;
+&lt;li&gt;设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；&lt;/li&gt;
+&lt;li&gt;打包得到DynamicAgent-1.0-SNAPSHOT.jar；&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;执行SampleApp，启动应用：&lt;/p&gt;
+&lt;p&gt; java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在交互窗口输入test，我们可以看到系统输出：Hello World!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;得到SampleApp的进程id，比如1234；&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;执行AgentLoader，启动动态代理：&lt;/p&gt;
+&lt;p&gt; java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;大功告成，一个简单的动态植入功能就实现了~&lt;br&gt;本实例的代码可以点 &lt;a href=&quot;(http://fengfu.io/attach/DynamicAgent.zip&quot;&gt;这里&lt;/a&gt;) 下载。&lt;/p&gt;
+&lt;h2 id=&quot;6-说明&quot;&gt;&lt;a href=&quot;#6-说明&quot; class=&quot;headerlink&quot; title=&quot;6.说明&quot;&gt;&lt;/a&gt;6.说明&lt;/h2&gt;&lt;p&gt;实例虽然简单，但是在代码编写过程中还是遇到了几个坑，贴出来供大家参考：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果动态植入需要通过javassist去修改某些类，那么需要在MANIFEST.MF中设置Can-Retransform-Classes和Can-Redefine-Classes为true；&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;要动态修改的类Test不要跟测试入口类SampleApp放在一个类文件中，否则代理启动动态修改Class时会报如下异常：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;java.lang.reflect.InvocationTargetException
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+at java.lang.reflect.Method.invoke(Unknown Source)
+at sun.instrument.InstrumentationImpl.loadClassAndStartAgent(Unknown Source)
+at sun.instrument.InstrumentationImpl.loadClassAndCallAgentmain(Unknown Source)
+Caused by: java.lang.UnsupportedOperationException: class redefinition failed: attempted to add a method
+at sun.instrument.InstrumentationImpl.retransformClasses0(Native Method)
+at sun.instrument.InstrumentationImpl.retransformClasses(Unknown Source)
+at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
+... 6 more
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;分析原因，是因为SampleApp正在运行中，而JVM是不允许reload一个正在运行时的类的。一旦classloader加载了一个class，在运行时就不能重新加载这个class的另一个版本。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1.前言&quot;&gt;&lt;/a&gt;1.前言&lt;/h2&gt;&lt;p&gt;前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java Instrumentation研究之premain</title>
+    <link href="http://fengfu.io/2016/04/24/Java-Instrumentation%E7%A0%94%E7%A9%B6-1/"/>
+    <id>http://fengfu.io/2016/04/24/Java-Instrumentation研究-1/</id>
+    <published>2016-04-24T07:30:14.000Z</published>
+    <updated>2016-04-26T10:19:46.770Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;作为一个软件工程师，你有没有遇到过以下场景：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;为了排查线上问题，非常迫切地想要知道系统中某个方法的运行数据，为此只能临时修改代码，打印日志；&lt;/li&gt;
+&lt;li&gt;为了查找系统瓶颈，你需要知道某个方法的耗时，为此你只能在方法头尾处记录时间戳，并打印日志或者记录到监控中；&lt;/li&gt;
+&lt;li&gt;……&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为了实现上述种种临时需求，你需要修改代码、发布、查看日志。或许，这些场景对于作为码农的你已经习以为常，但是世界是懒人创造的，那有没有一种方式能够避免我们这种重复又无任何积累的劳动呢？答案是有的。&lt;/p&gt;
+&lt;p&gt;最近，公司的大神 &lt;a href=&quot;http://www.cnblogs.com/yuyijq/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;余昭辉&lt;/a&gt; 发布了一个新的应用QTracer watch，可以支持通过简单的配置，查看系统运行时的数据。而实现这一点，竟然不用像以前一样在系统中添加一行代码并发布。这种高大上的技术实现立马让我对神的仰慕之情增加了几分。但仰慕归仰慕，对于神作我们还是需要知道其原理的。&lt;/p&gt;
+&lt;p&gt;通过了解，清楚了这高大上的技术实现来自于Java的Instrumentation(植入)。&lt;/p&gt;
+&lt;h2 id=&quot;2-Java-Instrumentation简介&quot;&gt;&lt;a href=&quot;#2-Java-Instrumentation简介&quot; class=&quot;headerlink&quot; title=&quot;2.Java Instrumentation简介&quot;&gt;&lt;/a&gt;2.Java Instrumentation简介&lt;/h2&gt;&lt;p&gt;Instrumentation是Java SE5的新特性，它把Java的instrument功能从本地代码中解放出来，使之可以用Java代码的方式解决问题。使用Instrumentation，开发者可以构建一个独立于应用程序的代理程序（Agent），用来监测和协助运行在JVM上的程序，甚至能够替换和修改某些类的定义。有了这样的功能，我们就可以实现更为灵活的运行时虚拟机监控和Java类操作了，这样的特性实际上提供了一种虚拟机级别支持的AOP实现方式，使得我们无需对原有代码做任何升级和改动，就可以实现某些 AOP 的功能了。&lt;br&gt;在Java SE6里面，instrument包被赋予了更强大的功能：启动后的instrument、本地代码（native code）instrument，以及动态改变classpath等。这些改变意味着Java具有了更强的动态控制、解释能力，使得Java语言变得更加灵活多变。&lt;br&gt;在Java SE6里面，最大的改变是运行时的Instrumentation成为可能。在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE 6的新特性改变了这种情况，通过Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到 instrumentation的目的。&lt;br&gt;另外，对native的Instrumentation也是Java SE6的一个崭新的功能，这使以前无法完成的功能–对native接口的instrumentation。我们可以在Java SE6中，通过一个或者一系列的prefix添加而得以完成。&lt;br&gt;最后，Java SE6里的Instrumentation也增加了动态添加classpath的功能。所有这些新的功能，都使得instrument包的功能更加丰富，从而使Java语言本身更加强大。&lt;/p&gt;
+&lt;h2 id=&quot;3-Java-Instrumentation原理&quot;&gt;&lt;a href=&quot;#3-Java-Instrumentation原理&quot; class=&quot;headerlink&quot; title=&quot;3.Java Instrumentation原理&quot;&gt;&lt;/a&gt;3.Java Instrumentation原理&lt;/h2&gt;&lt;p&gt;“java.lang.instrument”包的具体实现，依赖于JVMTI。JVMTI（Java Virtual Machine Tool Interface）是一套由 Java虚拟机提供的，为JVM相关的工具提供的本地编程接口集合。JVMTI是从Java SE5开始引入，整合和取代了以前使用的 Java Virtual Machine Profiler Interface (JVMPI) 和 the Java Virtual Machine Debug Interface (JVMDI)，而在Java SE6中，JVMPI和JVMDI已经消失了。JVMTI提供了一套“代理”程序机制，可以支持第三方工具程序以代理的方式连接和访问JVM，并利用JVMTI提供的丰富的编程接口，完成很多跟JVM相关的功能。事实上，java.lang.instrument包的实现，也就是基于这种机制的：在Instrumentation的实现当中，存在一个JVMTI的代理程序，通过调用JVMTI当中Java类相关的函数来完成Java类的动态操作。除开Instrumentation功能外，JVMTI还在虚拟机内存管理，线程控制，方法和变量操作等等方面提供了大量有价值的函数，具体可以参考&lt;a href=&quot;http://docs.oracle.com/javase/7/docs/platform/jvmti/jvmti.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JVMTI官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;4-Java-Instrumentation实现步骤&quot;&gt;&lt;a href=&quot;#4-Java-Instrumentation实现步骤&quot; class=&quot;headerlink&quot; title=&quot;4.Java Instrumentation实现步骤&quot;&gt;&lt;/a&gt;4.Java Instrumentation实现步骤&lt;/h2&gt;&lt;p&gt;在Java SE5时代，Instrument只提供了premain（命令行）一种方式，即在真正的应用程序（包含main方法的程序）main方法启动前启动一个代理程序。而在Java SE6中则包含两种应用Instrumentation的方式：premain（命令行）和agentmain（运行时）。在本文中，我们首先研究premain方式。&lt;br&gt;要实现premain方式，我们要遵循的步骤如下：&lt;br&gt;1）编写Agent实现类，实现ClassFileTransformer接口。ClassFileTransformer中声明了一个方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public byte[] transform(
+ClassLoader loader, 
+String className, 
+Class cBR, 
+java.security.ProtectionDomain pD, 
+byte[] classfileBuffer) throws IllegalClassFormatException
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;通过这个方法，代理可以得到虚拟机载入的类的字节码（通过 classfileBuffer 参数）。代理的各种功能一般是通过操作这一串字节码得以实现的。&lt;/p&gt;
+&lt;p&gt;2）编写Agent入口类，实现premain方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public static void premain(String agentArgs, Instrumentation inst)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3）打包Agent：将上述步骤1中声明的Java类打包成一个jar文件，并在META-INF/MANIFEST.MF文件中加入“Premain-Class”来指定此Java类（注意此处需要声明全路径）；&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Manifest-Version: 1.0
+Premain-Class: io.fengfu.learning.instrument.SampleAgent
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最终我们打包得到SampleAgent.jar。&lt;/p&gt;
+&lt;p&gt;4）执行命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;java -javaagent:SampleAgent-1.0-SNAPSHOT.jar -cp /home/fengfu/SampleAgent/SampleAgent-1.0-SNAPSHOT.jar;/home/fengfu/SampleAgent/lib/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;java选项中有-javaagent:xx，xx就是你的agent jar，java通过此选项加载agent,由agent来监控classpath下的应用。&lt;br&gt;如果你的Agent类引入别的包，那么需要使用-cp参数指定包的路径，否则在执行java命令时，会报找不到类的错误。&lt;/p&gt;
+&lt;h2 id=&quot;5-Java-Instrumentation实例-premain&quot;&gt;&lt;a href=&quot;#5-Java-Instrumentation实例-premain&quot; class=&quot;headerlink&quot; title=&quot;5.Java Instrumentation实例(premain)&quot;&gt;&lt;/a&gt;5.Java Instrumentation实例(premain)&lt;/h2&gt;&lt;p&gt;本实例基于javassist实现了对某个类中所有方法执行时间的统计，具体代码请点击 &lt;a href=&quot;http://fengfu.io/attach/SampleAgent.zip&quot;&gt;这里&lt;/a&gt; 下载。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-引言&quot;&gt;&lt;a href=&quot;#1-引言&quot; class=&quot;headerlink&quot; title=&quot;1.引言&quot;&gt;&lt;/a&gt;1.引言&lt;/h2&gt;&lt;p&gt;作为一个软件工程师，你有没有遇到过以下场景：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;为了排查线上问题，非常迫切地想要知道系统中某个方法的
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浅谈软件工程师的职业发展方向</title>
+    <link href="http://fengfu.io/2016/04/11/%E6%B5%85%E8%B0%88%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91/"/>
+    <id>http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/</id>
+    <published>2016-04-11T09:31:37.000Z</published>
+    <updated>2016-04-12T10:47:23.882Z</updated>
+    
+    <content type="html">&lt;p&gt;今天在跟团队一个工作了2年多的同学做绩效面谈时，该同学问了我一个问题：自己现在比较迷茫，不知道该往哪个方向发展……&lt;/p&gt;
+&lt;p&gt;相信这是很多有一定工作经验的同学都会有的困惑，很多人每隔几年(一般是3年)就会遇到瓶颈，也会面临着新的选择。这时候，他们都会看不清方向，感到迷茫。如果这个问题得不到解决，那么他的成长就会受到制约，甚至停滞不前。在工作中的表现就是比较沉默甚至消极，严重者则选择离职，寻求新的方向（其实是开始新的轮回……）。此时，如果有人能够根据他们的特点帮助他们选择适合他们的方向，或者给出建议，那么相信他会走出迷雾，豁然开朗，这样团队的稳定性会得到加强。&lt;/p&gt;
+&lt;p&gt;所以今天简单总结一下软件工程师的职业发展方向，以帮助迷茫的同学早日走出混沌状态。&lt;/p&gt;
+&lt;h2 id=&quot;1-技术专家&quot;&gt;&lt;a href=&quot;#1-技术专家&quot; class=&quot;headerlink&quot; title=&quot;1.技术专家&quot;&gt;&lt;/a&gt;1.技术专家&lt;/h2&gt;&lt;p&gt;技术专家这个方向对于软件工程师来讲应该是比较容易实现的一个目标，因为这是外在因素影响最小的一个，我们所需要的就是专注和毅力。&lt;br&gt;在技术发展百花齐放、日新月异的今天，我们工作中可能会用到很多的技术，但是很多人只是把自己局限在“用”的层面上，并没有继续去深入研究和改进，更有人只是“知其然不知其所以然”，这样就失去了进一步积累的机会。&lt;br&gt;作家格拉德威尔在《异数》一书中指出：”人们眼中的天才之所以卓越非凡，并非天资超人一等，而是付出了持续不断的努力。1万小时的锤炼是任何人从平凡变成超凡的必要条件”。我们做个简单的算术题：如果每天工作八个小时，一周工作五天，那么成为一个领域的专家至少需要五年。&lt;br&gt;5年，看起来貌似时间很长，但是试想一下，如果我们借着工作的机会深入研究某个技术栈的原理，并在此基础上加以实践，那么我们只要不断地积累，最终是有机会成为这方面的专家的。在我身边就有这样的例子：以前我的团队中有个非常内向的小伙子（就叫他HX吧），刚来公司的时候各方面资质很平庸，平时寡言少语，也缺乏自信。在做一个项目时，我们采用了hbase作为系统存储。因为之前对hbase缺乏了解，所以项目过程中踩了很多的坑，于是HX同学就不停地填坑，甚至工作之外的时间都贡献了出去。2年过去了，虽然我们的项目早已结束，但是HX却从未放弃对hbase的研究，相反他经常翻看hbase的代码，并经常去hbase社区查看别人的讨论。现在HX已经成为了公司中对hbase最熟悉的人，并开始往hbase社区提交代码。在公司中他也已经小有名气，其他事业部的开发遇到hbase相关的问题也会来找他了解。虽然他现在还算不是hbase的专家，但是很明显，他现在已经度过了最难熬的时间，已经进入了收获期，只要他继续坚持下去，相信会取得更大的成绩。&lt;br&gt;这是身边真真切切的例子，虽然每个人的情况不完全一样，但是很多时候，我们是可以从别人的故事中找到自己的期待。&lt;/p&gt;
+&lt;h2 id=&quot;2-业务专家&quot;&gt;&lt;a href=&quot;#2-业务专家&quot; class=&quot;headerlink&quot; title=&quot;2.业务专家&quot;&gt;&lt;/a&gt;2.业务专家&lt;/h2&gt;&lt;p&gt;业务专家这个方向也比较好理解，我们长时间接触某一块业务，耳濡目染，久而久之也就会对这个业务比较熟悉甚至精通了。这个方向，其实我们仔细观察一下，身边也能找出很多的例子。我有一个认识了十几年的前同事，他从毕业开始就在做银行的信贷系统，现在还在做。目前他自己拥有一个几十人的开发团队，在国家开发银行驻场帮国开行做信贷系统，小日子过得很滋润。再回想自己曾经做过银行的外汇系统，最开始跟着中国银行学习业务，边学习边做系统，2年之后系统成熟了，业务熟悉了，就开始给建行做系统。但建行做外汇业务起步比较晚，于是我一个开发给银行的人讲业务，那种成就感你自己可以设想一下。&lt;br&gt;当然，这个方向也需要保持专注，跟上面讲的技术专家是一样的，你需要不断的积累。现在很多同学总是不停地在各个公司跳来跳去，薪水是涨上去了，但是在行业领域却没有太多的积累，从个人发展来讲，这迟早会成为一个限制因素。&lt;/p&gt;
+&lt;h2 id=&quot;3-技术经理&quot;&gt;&lt;a href=&quot;#3-技术经理&quot; class=&quot;headerlink&quot; title=&quot;3.技术经理&quot;&gt;&lt;/a&gt;3.技术经理&lt;/h2&gt;&lt;p&gt;我们身边有这么一类人，各方面能力都比较均衡，比如技术、沟通能力、组织能力。这样的人经过一段时间的锻炼后，可能会被任命为小组长，承担一些管理性的工作。再经过一段时间的历练，有些人可能不太适合这个方向，于是转向其他方向，剩下的做的还不错的人则继续升级，管理更大的团队，于是就成了技术经理。&lt;br&gt;技术经理的要求不同于前面的2个职位，保持专注就可以；而技术经理的要求就比较广泛，因为你管理的是技术团队，所以技术你不能扔；同时你管的是人，所以人际关系的相关技能你也要提升，比如沟通能力、组织能力，甚至你还要了解心理学、组织行为学等内容。这时候，全方位地充电就成了一个比较好的选择。&lt;/p&gt;
+&lt;h2 id=&quot;4-架构师&quot;&gt;&lt;a href=&quot;#4-架构师&quot; class=&quot;headerlink&quot; title=&quot;4.架构师&quot;&gt;&lt;/a&gt;4.架构师&lt;/h2&gt;&lt;p&gt;现在还有个名词叫“T型人才”。T型人才是指按知识结构区分出来的一种新型人才类型。用字母“T”来表示他们的知识结构特点。“—”表示有广博的知识面，“|”表示知识的深度。两者的结合，既有较深的专业知识，又有广博的知识面，这类集深与博于一身的人才。这种人才结构不仅在纵向的专业知识上具有较深的理解能力和独到见解，而且在横向上具备比较广泛的一般性知识修养。&lt;br&gt;我理解，架构师就是属于这种人才。他们经过长时间的技术积累，在某个方向上已经具备了比较深厚的沉淀，同时在技术体系上也得到了逐步的完善，于是成为了上天入地无所不能的架构师。&lt;br&gt;一般来讲，要成为T型人才，最好是先成为那道“|”，再成为那到“——”，这样根基会比较扎实。&lt;br&gt;所以对于要立志成为架构师的同学来说，最好先做一个技术专家，在技术专家的基础上，再扩大知识面，最终成为架构师。&lt;/p&gt;
+&lt;h2 id=&quot;5-CTO&quot;&gt;&lt;a href=&quot;#5-CTO&quot; class=&quot;headerlink&quot; title=&quot;5.CTO&quot;&gt;&lt;/a&gt;5.CTO&lt;/h2&gt;&lt;p&gt;CTO我还是不写了，仰望吧……&lt;/p&gt;
+&lt;p&gt;喷了这么多，最后简单梳理了各个方向的能力模型，希望抛砖引玉，引发你的思考。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/imgextra/i3/2657627814/TB2r8UGmVXXXXXPXXXXXXXXXXXX_!!2657627814.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天在跟团队一个工作了2年多的同学做绩效面谈时，该同学问了我一个问题：自己现在比较迷茫，不知道该往哪个方向发展……&lt;/p&gt;
+&lt;p&gt;相信这是很多有一定工作经验的同学都会有的困惑，很多人每隔几年(一般是3年)就会遇到瓶颈，也会面临着新的选择。这时候，他们都会看不清方向，感到迷茫
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术栈选型原则</title>
+    <link href="http://fengfu.io/2016/03/22/%E6%8A%80%E6%9C%AF%E6%A0%88%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99/"/>
+    <id>http://fengfu.io/2016/03/22/技术栈选型原则/</id>
+    <published>2016-03-22T06:55:20.000Z</published>
+    <updated>2016-04-12T10:42:04.242Z</updated>
+    
+    <content type="html">&lt;p&gt;未完成&lt;/p&gt;
+&lt;p&gt;2个能力&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足需求的能力：开源产品满足自身功能、性能的能力(开发效率？运行效率？)；需求，梳理自身的业务、技术需求；&lt;/li&gt;
+&lt;li&gt;自身技术团队维护开源产品的能力；学习曲线以及公司内部的技术支持；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;3个关注点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;社区成熟度（用户数、bug数）、活跃度（contributors、releases）、技术支持（论坛、文档等）；&lt;/li&gt;
+&lt;li&gt;成功案例；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;避免过度炫技&lt;br&gt;不要因为一个人的喜好而舍弃掉整个技术团队，在任何时候这都是非常愚蠢的事情&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;未完成&lt;/p&gt;
+&lt;p&gt;2个能力&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足需求的能力：开源产品满足自身功能、性能的能力(开发效率？运行效率？)；需求，梳理自身的业务、技术需求；&lt;/li&gt;
+&lt;li&gt;自身技术团队维护开源产品的能力；学习曲线以及公司内部的技术支持；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;
+    
+    </summary>
+    
+    
+      <category term="架构" scheme="http://fengfu.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM触发FullGC的情况总结</title>
+    <link href="http://fengfu.io/2016/03/08/JVM%E8%A7%A6%E5%8F%91FullGC%E7%9A%84%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93/"/>
+    <id>http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/</id>
+    <published>2016-03-08T14:53:56.000Z</published>
+    <updated>2016-03-11T04:00:03.198Z</updated>
+    
+    <content type="html">&lt;p&gt;FullGC是Java应用中一个不容忽视的问题，因为FullGC会引起应用停顿，所以它对那些响应时间要求比较高的应用的影响还是非常大的。&lt;br&gt;当然，如果要解决FullGC的问题，我们首先需要知道在什么情况下会引起FullGC，这样才能对症下药，避免FullGC的出现。&lt;/p&gt;
+&lt;p&gt;下面的总结是针对于系统自动进行FullGC的情况分析，不包含System.gc操作。&lt;/p&gt;
+&lt;h2 id=&quot;1-老年代空间不足&quot;&gt;&lt;a href=&quot;#1-老年代空间不足&quot; class=&quot;headerlink&quot; title=&quot;1. 老年代空间不足&quot;&gt;&lt;/a&gt;1. 老年代空间不足&lt;/h2&gt;&lt;p&gt;JVM中堆空间主要由新生代和老年代组成。新创建的对象大多在新生代中创建，当对象经过几次Minor GC依然存活，才有机会被转入老年代。这时问题就来了，如果此时老年代的空间不足以容纳从新生代转入的对象，那么JVM就会进行FullGC，以清理老年代的空间。如果进行FullGC后老年代依然无法容纳转入对象，那么系统就会抛出：java.lang.OutOfMemoryError: Java heap space的异常，相比大家都比较熟悉了。&lt;/p&gt;
+&lt;h2 id=&quot;2-永久代空间不足&quot;&gt;&lt;a href=&quot;#2-永久代空间不足&quot; class=&quot;headerlink&quot; title=&quot;2. 永久代空间不足&quot;&gt;&lt;/a&gt;2. 永久代空间不足&lt;/h2&gt;&lt;p&gt;永久代(Permanent Generation)一般是用来存放类信息、字符串常量的地方，如果我们永久代设置的空间比较小无法容纳足够的类信息时，或者因为频繁热加载类信息，又或者存储了太多的字符串常量，那么系统就会触发FullGC，以清理永久代。如果FullGC之后永久代还无法容纳足够的信息，那么系统就会抛出：java.lang.OutOfMemoryError: PermGen space的异常，眼熟吧:)&lt;/p&gt;
+&lt;h2 id=&quot;3-promotion-failed和concurrent-mode-failure&quot;&gt;&lt;a href=&quot;#3-promotion-failed和concurrent-mode-failure&quot; class=&quot;headerlink&quot; title=&quot;3. promotion failed和concurrent mode failure&quot;&gt;&lt;/a&gt;3. promotion failed和concurrent mode failure&lt;/h2&gt;&lt;p&gt;promotion failed是指在进行Minor GC时，新生代中的对象从Eden区往survivor区转移，但是survivor区放不下，只能放入老年代，但是悲催的是老年代也放不下，这时就会出现promotion failed的情况，系统会触发FullGC以清理空间。&lt;/p&gt;
+&lt;p&gt;concurrent mode failure是指在进行CMS GC的过程中有对象要放入老年代，但是老年代空间不够引起的。 &lt;/p&gt;
+&lt;h2 id=&quot;4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间&quot;&gt;&lt;a href=&quot;#4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间&quot; class=&quot;headerlink&quot; title=&quot;4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间&quot;&gt;&lt;/a&gt;4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间&lt;/h2&gt;&lt;p&gt;这是一个较为复杂的触发情况，Hotspot为了避免由于新生代对象晋升到旧生代导致旧生代空间不足的现象，在进行Minor GC时，做了一个判断，如果之前统计所得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间，那么就直接触发Full GC。&lt;br&gt;例如程序第一次触发Minor GC后，有6MB的对象晋升到旧生代，那么当下一次Minor GC发生时，首先检查旧生代的剩余空间是否大于6MB，如果小于6MB，则执行Full GC。&lt;br&gt;当新生代采用PS GC时，方式稍有不同，PS GC是在Minor GC后也会检查，例如上面的例子中第一次Minor GC后，PS GC会检查此时旧生代的剩余空间是否大于6MB，如小于，则触发对旧生代的回收。&lt;br&gt;除了以上4种状况外，对于使用RMI来进行RPC或管理的Sun JDK应用而言，默认情况下会一小时执行一次Full GC。可通过在启动时通过- java -Dsun.rmi.dgc.client.gcInterval=3600000来设置Full GC执行的间隔时间或通过-XX:+ DisableExplicitGC来禁止RMI调用System.gc。&lt;/p&gt;
+&lt;p&gt;明确了FullGC出现的原理，我们就能根据JVM垃圾回收的情况来判断系统到底是因为什么原因出现了FullGC，也就能对症下药，避免FullGC的出现。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;FullGC是Java应用中一个不容忽视的问题，因为FullGC会引起应用停顿，所以它对那些响应时间要求比较高的应用的影响还是非常大的。&lt;br&gt;当然，如果要解决FullGC的问题，我们首先需要知道在什么情况下会引起FullGC，这样才能对症下药，避免FullGC的出现。&lt;/
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://fengfu.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>你若懂我，该有多好</title>
+    <link href="http://fengfu.io/2016/02/28/%E4%BD%A0%E8%8B%A5%E6%87%82%E6%88%91%E8%AF%A5%E6%9C%89%E5%A4%9A%E5%A5%BD/"/>
+    <id>http://fengfu.io/2016/02/28/你若懂我该有多好/</id>
+    <published>2016-02-27T23:38:00.000Z</published>
+    <updated>2016-02-27T13:48:38.573Z</updated>
+    
+    <content type="html">&lt;p&gt;每个人都有一个死角，&lt;br&gt;自己走不出来，&lt;br&gt;别人也闯不进去。&lt;br&gt;我把最深沉的秘密放在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一道伤口，&lt;br&gt;或深或浅，&lt;br&gt;盖上布，&lt;br&gt;以为不存在。&lt;br&gt;我把最殷红的血涂在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一场爱恋，&lt;br&gt;用心，用情，用力，&lt;br&gt;感动也感伤。&lt;br&gt;我把最炙热的心情藏在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一行泪，&lt;br&gt;喝下冰冷的水，&lt;br&gt;酝酿成的热泪。&lt;br&gt;我把最辛酸的委屈汇在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一段告白，&lt;br&gt;忐忑，不安，&lt;br&gt;却包含真心和勇气。&lt;br&gt;我把最抒情的语言用在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;你永远也看不见我最爱你的时候，&lt;br&gt;因为我只有在看不见你的时候，&lt;br&gt;才最爱你。&lt;/p&gt;
+&lt;p&gt;同样，你永远也看不见我最寂寞的时候，&lt;br&gt;因为我只有在你看不见我的时候，&lt;br&gt;才最寂寞。&lt;/p&gt;
+&lt;p&gt;也许，我太会隐藏自己的悲伤，&lt;br&gt;也许，我太会安慰自己的伤痕。&lt;br&gt;从阴雨走到艳阳，&lt;br&gt;我路过泥泞，路过风。&lt;/p&gt;
+&lt;p&gt;一路走来，&lt;br&gt;你若懂我，&lt;br&gt;该有多好。&lt;/p&gt;
+&lt;p&gt;(作者：莫言)&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;每个人都有一个死角，&lt;br&gt;自己走不出来，&lt;br&gt;别人也闯不进去。&lt;br&gt;我把最深沉的秘密放在那里，&lt;br&gt;你不懂我，我不怪你。&lt;/p&gt;
+&lt;p&gt;每个人都有一道伤口，&lt;br&gt;或深或浅，&lt;br&gt;盖上布，&lt;br&gt;以为不存在。&lt;br&gt;我把最殷红的血涂在那里，&lt;br&gt;你不懂我，我不怪
+    
+    </summary>
+    
+    
+      <category term="人生" scheme="http://fengfu.io/tags/%E4%BA%BA%E7%94%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ATPCO项目总结-管理篇</title>
+    <link href="http://fengfu.io/2015/12/29/ATPCO%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93-%E7%AE%A1%E7%90%86%E7%AF%87/"/>
+    <id>http://fengfu.io/2015/12/29/ATPCO项目总结-管理篇/</id>
+    <published>2015-12-29T12:41:09.000Z</published>
+    <updated>2016-02-27T13:50:58.409Z</updated>
+    
+    <content type="html">&lt;p&gt;ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。&lt;/p&gt;
+&lt;p&gt;ATPCO项目经历的这接近1年的时间里，有很多的感触，写出来做个总结吧。今天写的是管理方面。&lt;/p&gt;
+&lt;h2 id=&quot;1-反应速度&quot;&gt;&lt;a href=&quot;#1-反应速度&quot; class=&quot;headerlink&quot; title=&quot;1. 反应速度&quot;&gt;&lt;/a&gt;1. 反应速度&lt;/h2&gt;&lt;p&gt;项目启动最初，由于与ATPCO的商务合同没有签订，项目只投入了一个人进行研究，推动缓慢。加之团队对公布运价业务不熟悉，给了其他团队切入的机会，并最终导致了2个团队持续竞争的局面。虽然从公司的角度，一个重要的项目由2个团队做是降低风险的举措，但是由此带来的内部消耗也是比较大的，这也导致了后面的核心员工离职。&lt;br&gt;从这件事情来讲，对于任何事情，都要保持足够的敏感度和反应速度。互联网行业竞争激烈，需要快速反应。qunar内部的狼性文化也要求团队能够快速响应、灵活机动，这样才能更快地响应形势的变化。&lt;/p&gt;
+&lt;h2 id=&quot;2-团队组建&quot;&gt;&lt;a href=&quot;#2-团队组建&quot; class=&quot;headerlink&quot; title=&quot;2. 团队组建&quot;&gt;&lt;/a&gt;2. 团队组建&lt;/h2&gt;&lt;p&gt;从团队组建上，有2点做得比较好，1点做得不好。&lt;br&gt;先说说做得好的地方：&lt;br&gt;1)在项目初期就把产品经理、技术拉到一个会议室封闭，这样带来的好处是沟通效率很高，项目有问题的时候大家在屋里吼一嗓子就能很快解决问题。当然弊端是十几个人在一个屋子里面，有的时候3、4组人一起说话的时候，那感觉就跟菜市场一样了。&lt;br&gt;2)投入精兵强将。项目开始封闭时，项目人员短缺，无奈之下，把部门里面6个TL中的4个拉了进来。此举起到了很好的效果，不仅解决了人力的问题，而且每个人都在自己负责的事情上做出了很好的成绩。这也应了那句话：兵不在多，在于精。&lt;br&gt;再说说做得不好的地方：&lt;br&gt;1)添油战术不可取：ATPCO项目专业性很强，新人的学习门槛很高，所以在往团队增加人手的时候，最好一次性给够。添油战术对这个项目最大的弊端就是新人需要花很久去学习（最少1个月时间入门），如果每个新来的人都要经历一个学习过程，那么所带来的成本和消耗就比较大了。&lt;/p&gt;
+&lt;h2 id=&quot;3-沟通&quot;&gt;&lt;a href=&quot;#3-沟通&quot; class=&quot;headerlink&quot; title=&quot;3. 沟通&quot;&gt;&lt;/a&gt;3. 沟通&lt;/h2&gt;&lt;p&gt;再来说说沟通，沟通一直是管理工作中非常重要的一环，沟通做不好，工作难以开展不说，也会造成人员流失。&lt;br&gt;1）内部沟通&lt;br&gt;先说说内部沟通。&lt;br&gt;团队中每一个人都是一个独立的个体，具备不同的性格和不同的处事方式，每个人的诉求也是不一样的，所以对待每个人的方式也应该因人而异。但是，无论对谁，首先应该了解他的诉求。每个人来到公司都是有自己的诉求的，比如有的人比较关心技术积累、有的人关心成长空间、有的人关心薪水、有的人关心关系简单……如果不了解每个人的需求，那么可能就无法投其所好，给其所要。久而久之，如果这个人不主动跟你沟通，你又不能及时发现问题，那么久而久之，欲求不满的他可能就会闪人了。&lt;br&gt;2）外部沟通&lt;br&gt;下面的这些话不展开了说，说得太明白没意思。&lt;br&gt;有人的地方就有江湖，&lt;br&gt;有人的地方就有利益，&lt;br&gt;看不明白的就看利益。&lt;/p&gt;
+&lt;p&gt;你不可能只靠自己和团队，还需要外围的资源的支持，讲利益互换。你对别人有利，你才有机会，此处省略一万字……&lt;/p&gt;
+&lt;p&gt;公司大了，就像一个社会，你会遇到形形色色的人，你喜欢的，你讨厌的；你佩服的，你无视的……无论遇到什么样的人，都应该平和对待。一花一世界，一叶一菩提，每个人都值得尊重。&lt;/p&gt;
+&lt;h2 id=&quot;4-用人&quot;&gt;&lt;a href=&quot;#4-用人&quot; class=&quot;headerlink&quot; title=&quot;4. 用人&quot;&gt;&lt;/a&gt;4. 用人&lt;/h2&gt;&lt;p&gt;管理就是把合适的人用在合适的位置上，不合适的人要尽快替换，让合适的人顶上去。&lt;br&gt;这里要说的是招聘，不同的项目，对人的要求是不一样的。针对项目的招聘工作，一定要清楚需要什么样的人，严格按照要求招聘。如果招到的人不合适，不仅浪费时间浪费资源，对项目、对应聘者都会产生不利影响。ATPCO是一个专业性很强的项目，学习门槛很高，对人的学习、理解、沟通能力要求都很高，甚至心理素质。项目组成立半年多以来，项目组成员几进几出。有的人适应不了环境自己离职，有的人则是胜任不了被淘汰，这其实都是损失。&lt;/p&gt;
+&lt;h2 id=&quot;5-分工&quot;&gt;&lt;a href=&quot;#5-分工&quot; class=&quot;headerlink&quot; title=&quot;5. 分工&quot;&gt;&lt;/a&gt;5. 分工&lt;/h2&gt;&lt;p&gt;首先是将系统拆分，每个人负责独立的事情。在系统建设初期，可以采用服务化的方式将功能拆分，以加快开发速度。但是到了项目后期，系统稳定后，可以再把服务聚合起来。&lt;/p&gt;
+&lt;p&gt;其次是要把合适的人放在合适的位置上。那怎么知道这个人适合这个位置呢？前面说到我们已经做了系统拆分，那么根据拆分后的系统来分析各系统需要什么样的能力？比如航路引擎需要对算法比较熟悉，规则系统需要很强的学习能力和技术功底，搜索引擎需要对分布式和性能优化比较熟悉。明确了各个位置需要的能力后，就可以去找相应的人了。&lt;/p&gt;
+&lt;p&gt;第三是要能够做好backup，如果你不希望在关键时刻因为关键人物不在而导致业务受影响，那么就尽量避免出现单点。如果人手短缺万不得已，那么TL可以加强团队代码review，熟悉每个子系统的逻辑，这样能够确保在关键时刻其他人能够顶上，同时也能够帮助团队提升技术能力。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;ATPCO项目从1月初开始投入人力进行研究，4月份进入封闭状态，7月初上线第一版，到现在已经8个月的时间了。在这段时间里，公布运价出票量由最初的10提升到了30%，目前日出票量已经达到了4000+，较好地提升了qunar国际机票的竞争力。&lt;/p&gt;
+&lt;p&gt;ATPCO项目经历的
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://fengfu.io/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+</feed>
