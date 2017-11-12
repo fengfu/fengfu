@@ -1228,6 +1228,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/22/服务化架构-服务的限流/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/22/服务化架构-服务的限流/" itemprop="url">服务化架构-服务的限流</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T11:20:23+08:00">
+                2017-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/22/服务化架构-服务的限流/" class="leancloud_visitors" data-flag-title="服务化架构-服务的限流">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-什么是限流"><a href="#1-什么是限流" class="headerlink" title="1. 什么是限流"></a>1. 什么是限流</h1><p>顾名思义，限流就是限制请求量，当用户请求量达到设定的阈值之后，对超出部分的请求进行拒绝或者延时处理。</p>
+<h1 id="2-为什么要限流"><a href="#2-为什么要限流" class="headerlink" title="2.为什么要限流"></a>2.为什么要限流</h1><p>限流是服务提供方进行自我保护的一种手段。如果对用户请求量不做限制，那么过多的请求很有可能会将服务器有限的资源消耗殆尽，最终导致服务器宕机，进而引发雪崩。所以对于高可用的系统来讲，限流是一种必不可少的手段。</p>
+<h1 id="3-限流算法"><a href="#3-限流算法" class="headerlink" title="3. 限流算法"></a>3. 限流算法</h1><h2 id="3-1-令牌桶-Token-bucket"><a href="#3-1-令牌桶-Token-bucket" class="headerlink" title="3.1 令牌桶(Token bucket)"></a>3.1 令牌桶(Token bucket)</h2><p>令牌桶算法的基本过程如下:</p>
+<ol>
+<li>每秒会有 r 个令牌放入桶中，或者说，每过 1/r 秒桶中增加一个令牌;</li>
+<li>桶中最多存放 b 个令牌，如果桶满了，新放入的令牌会被丢弃;</li>
+<li>当一个 n 字节的数据包到达时，消耗 n 个令牌，然后发送该数据包;</li>
+<li>如果桶中可用令牌小于 n，则该数据包将被缓存或丢弃;</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4584/38326639342_90a3a6881d.jpg" alt=""></p>
+<p>令牌桶算法的实现，可以借助于Google guava的RateLimiter实现，使用SmoothBursty模式。具体实现将在后面的blog中进行详细说明。</p>
+<h2 id="3-2-漏桶-Leaky-bucket"><a href="#3-2-漏桶-Leaky-bucket" class="headerlink" title="3.2 漏桶(Leaky bucket)"></a>3.2 漏桶(Leaky bucket)</h2><p>漏桶算法强制一个常量的输出速率而不管输入数据流的突发性,当输入空闲时，该算法不执行任何动作.就像用一个底部开了个洞的漏桶接水一样,水进入到漏桶里,桶里的水通过下面的孔以固定的速率流出,当水流入速度过大会直接溢出,可以看出漏桶算法能强行限制数据的传输速率.如下图所示:<br><img src="https://farm5.staticflickr.com/4583/37643209824_71df07e1e7.jpg" alt=""></p>
+<p>漏桶的实现，可以使用Guava RateLimiter的SmoothWarmingUp模式实现。</p>
+<h2 id="3-3-令牌桶与漏桶算法的比较"><a href="#3-3-令牌桶与漏桶算法的比较" class="headerlink" title="3.3 令牌桶与漏桶算法的比较"></a>3.3 令牌桶与漏桶算法的比较</h2><p>令牌桶算法能够允许一定程度的流量突增，要令牌桶中存在令牌，那么就允许突发地传输数据直到达到用户配置的上限，因此它适合于具有突发特性的流量。<br>漏桶算法能够强行限制数据的传输速率，因此更适合进行平滑限流的应用场景，比如限制下载速率。</p>
+<h1 id="4-限流方式"><a href="#4-限流方式" class="headerlink" title="4. 限流方式"></a>4. 限流方式</h1><h2 id="4-1-单机限流"><a href="#4-1-单机限流" class="headerlink" title="4.1 单机限流"></a>4.1 单机限流</h2><p>单机限流一般使用在对硬件资源进行保护的场景中，避免服务器过载而宕机，引发进一步的雪崩。比如对访问量进行限流。有同学可能会问了，我评估一个集群总体的阈值，用集群限流不也可以吗？这里面存在的隐患是，如果负载均衡策略不够均衡，可能会导致部分服务器存在热点，那么那些流量仍然有可能将这台热点服务器打挂掉，从而引发雪崩。</p>
+<h2 id="4-2-集群限流"><a href="#4-2-集群限流" class="headerlink" title="4.2 集群限流"></a>4.2 集群限流</h2><p>集群限流的方式一般会使用在某些外部资源存在访问限制的情况下，比如依赖的第三方系统限制了请求的访问量，那么上游的系统就需要在请求第三方系统前进行全局的限流，避免对方因过载而拒绝服务。比如说抓取。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/11/使用JRebel远程热部署Class/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1798,149 +1944,6 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/11/23/服务化架构-注册与发现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/23/服务化架构-注册与发现/" itemprop="url">服务化架构-注册与发现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-23T14:21:40+08:00">
-                2016-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/11/23/服务化架构-注册与发现/" class="leancloud_visitors" data-flag-title="服务化架构-注册与发现">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h1><p>在分布式系统中，服务提供端和消费端彼此不知道对方的存在，因此需要有一种机制来确保消费端能够找到提供端并进行调用。一般来说，提供端需要将自己能够提供的服务信息暴露出来，这样消费端通过检索就能找到自己需要的服务并建立连接进行调用。所以，对于服务提供端来讲，需要具备以下功能：</p>
-<ol>
-<li>服务注册：将服务信息暴露出来，供消费端查找和使用</li>
-<li>取消注册：即注销服务的注册信息</li>
-</ol>
-<p>同时，对于消费端来说，则需要：</p>
-<ol>
-<li>服务检索：按一定条件查找服务信息，如按应用、接口、IP等检索</li>
-<li>服务订阅：订阅特定的服务，为后面的服务调用和治理做前期准备</li>
-<li>取消订阅：取消指定服务的订阅</li>
-</ol>
-<h1 id="结构组成"><a href="#结构组成" class="headerlink" title="结构组成"></a>结构组成</h1><p>在这种情况下，注册中心的概念就被提了出来。</p>
-<p>同时，系统间调用需要能够根据服务的运行状态(如上下线状态、负载、响应时间、网络情况等)而灵活调整调用端与服务端的组合。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1991,7 +1994,7 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
