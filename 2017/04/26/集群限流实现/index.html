@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="架构," />
 
 
 
@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
-<meta name="keywords" content="Java">
+<meta name="description" content="在上一篇文章中，提到了限流的方式分为单机限流和集群限流，在这篇文章中，就来看一下集群限流如何实现。 对于集群限流，我们一般会考虑以下三方面：  分布式：能够进行全局限流，尤其在访问受限制的资源的情况下。比如某个第三方接口只允许每秒100次的访问量，但我们的应用是部署在多台服务器上，在这种情况下，就需要进行全局限流了； 滑动窗口：能够避免流量突变(比如洪峰)对系统的影响。比如我们限制了1秒的访问量不">
+<meta name="keywords" content="架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java Instrumentation研究之动态植入">
-<meta property="og:url" content="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/index.html">
+<meta property="og:title" content="集群限流实现">
+<meta property="og:url" content="http://fengfu.io/2017/04/26/集群限流实现/index.html">
 <meta property="og:site_name" content="宁静·致远">
-<meta property="og:description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
-<meta property="og:updated_time" content="2017-04-12T03:07:03.000Z">
+<meta property="og:description" content="在上一篇文章中，提到了限流的方式分为单机限流和集群限流，在这篇文章中，就来看一下集群限流如何实现。 对于集群限流，我们一般会考虑以下三方面：  分布式：能够进行全局限流，尤其在访问受限制的资源的情况下。比如某个第三方接口只允许每秒100次的访问量，但我们的应用是部署在多台服务器上，在这种情况下，就需要进行全局限流了； 滑动窗口：能够避免流量突变(比如洪峰)对系统的影响。比如我们限制了1秒的访问量不">
+<meta property="og:updated_time" content="2017-11-16T12:15:01.507Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java Instrumentation研究之动态植入">
-<meta name="twitter:description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
+<meta name="twitter:title" content="集群限流实现">
+<meta name="twitter:description" content="在上一篇文章中，提到了限流的方式分为单机限流和集群限流，在这篇文章中，就来看一下集群限流如何实现。 对于集群限流，我们一般会考虑以下三方面：  分布式：能够进行全局限流，尤其在访问受限制的资源的情况下。比如某个第三方接口只允许每秒100次的访问量，但我们的应用是部署在多台服务器上，在这种情况下，就需要进行全局限流了； 滑动窗口：能够避免流量突变(比如洪峰)对系统的影响。比如我们限制了1秒的访问量不">
 
 
 
@@ -133,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/"/>
+  <link rel="canonical" href="http://fengfu.io/2017/04/26/集群限流实现/"/>
 
 
 
 
 
-  <title>Java Instrumentation研究之动态植入 | 宁静·致远</title>
+  <title>集群限流实现 | 宁静·致远</title>
   
 
 
@@ -292,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/26/集群限流实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
@@ -309,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java Instrumentation研究之动态植入</h1>
+          <h1 class="post-title" itemprop="name headline">集群限流实现</h1>
         
 
         <div class="post-meta">
@@ -321,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-25T10:20:43+08:00">
-                2016-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T14:55:35+08:00">
+                2017-04-26
               </time>
             
 
@@ -339,7 +339,7 @@
 
           
           
-             <span id="/2016/04/25/Java-Instrumentation研究-2/" class="leancloud_visitors" data-flag-title="Java Instrumentation研究之动态植入">
+             <span id="/2017/04/26/集群限流实现/" class="leancloud_visitors" data-flag-title="集群限流实现">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -370,64 +370,50 @@
       
 
       
-        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumentation。但是在实际的很多的情况下，我们没有办法在虚拟机启动之时就为其设定代理，这样实际上限制了instrument的应用。而Java SE6的新特性改变了这种情况，通过agentmain和Java Tool API中的attach方式，我们可以很方便地在运行过程中动态地设置加载代理类，以达到instrumentation的目的。本文就是对Java动态Instrumentation的实现进行研究。</p>
-<h2 id="2-关于agentmain"><a href="#2-关于agentmain" class="headerlink" title="2.关于agentmain"></a>2.关于agentmain</h2><p>在Java SE6的Instrumentation 当中，有一个跟 premain“并驾齐驱”的“agentmain”方法，可以在main函数开始运行之后再运行。<br>跟premain函数一样， 开发者可以编写一个含有“agentmain”函数的Java类：</p>
-<pre><code>public static void agentmain(String agentArgs, Instrumentation inst);          [1] 
-public static void agentmain(String agentArgs);              [2]
-</code></pre><p>[1]的优先级比[2]高，将会被优先执行。</p>
-<p>跟前文提到的premain函数一样，我们可以在agentmain方法中对类进行各种操作。其中的agentArgs和Inst的用法跟premain相同。<br>与“Premain-Class”类似，我们必须在manifest文件里面设置“Agent-Class”来指定包含agentmain函数的类。<br>可是，跟premain不同的是，agentmain需要在main函数开始运行后才启动，这样的时机应该如何确定呢，这样的功能又如何实现呢？<br>在 Java SE6 文档当中，我们也许无法在java.lang.instrument包相关的文档部分看到明确的介绍，更加无法看到具体的应用agnetmain的例子。不过，在 Java SE6的新特性里面，有一个不太起眼的地方，揭示了agentmain的用法。这就是Java SE6当中提供的Attach API。</p>
-<h2 id="3-关于Attach-API"><a href="#3-关于Attach-API" class="headerlink" title="3.关于Attach API"></a>3.关于Attach API</h2><p><a href="http://docs.oracle.com/javase/7/docs/jdk/api/attach/spec/index.html" target="_blank" rel="external">Attach API</a>不是Java的标准API，而是Sun公司提供的一套扩展API，用来向目标JVM“附着”（Attach）代理工具程序的。有了它，我们可以方便地监控一个JVM，运行一个外加的代理程序。<br>Attach API很简单，只有2个主要的类，都在com.sun.tools.attach包里面：VirtualMachine代表一个Java虚拟机，也就是程序需要监控的目标虚拟机，提供了JVM枚举，Attach动作和Detach动作（Attach 动作的相反行为，从JVM 上面解除一个代理）等等 ; VirtualMachineDescriptor则是一个描述虚拟机的容器类，配合VirtualMachine类完成各种功能。</p>
-<h2 id="4-agentmain实现步骤"><a href="#4-agentmain实现步骤" class="headerlink" title="4.agentmain实现步骤"></a>4.agentmain实现步骤</h2><p>与Permain类似，agentmain方式同样需要提供一个agent jar，并且这个jar需要满足：</p>
+        <p>在<a href="http://fengfu.io/2017/04/22/%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84-%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%99%90%E6%B5%81/">上一篇文章</a>中，提到了限流的方式分为单机限流和集群限流，在这篇文章中，就来看一下集群限流如何实现。</p>
+<p>对于集群限流，我们一般会考虑以下三方面：</p>
 <ol>
-<li>在manifest中指定Agent-Class属性，值为代理类全路径；</li>
-<li>代理类需要提供public static void agentmain(String args, Instrumentation inst)或public static void agentmain(String args)方法。并且再二者同时存在时以前者优先。args和inst和premain中的一致。</li>
+<li>分布式：能够进行全局限流，尤其在访问受限制的资源的情况下。比如某个第三方接口只允许每秒100次的访问量，但我们的应用是部署在多台服务器上，在这种情况下，就需要进行全局限流了；</li>
+<li>滑动窗口：能够避免流量突变(比如洪峰)对系统的影响。比如我们限制了1秒的访问量不能超过100，但很有可能出现一种情况就是前900毫秒没有任何请求，但900毫秒的时候突然来了100个请求；在第2秒的前100毫秒又来了100个请求。这也就意味着在200毫秒的时间涌入了200个请求。这种情况也很有可能把系统打挂掉。</li>
+<li>最小请求间隔：为了避免请求太频繁，还需要限制调用端的请求时间间隔，如果时间间隔太短，同样也需要限制；</li>
 </ol>
-<p>Attach API中的VirtualMachine代表一个运行中的VM，其提供了loadAgent()方法，可以在运行时动态加载一个代理jar，这样就可以实现类似premain的效果了。</p>
-<h2 id="5-agentmain实例"><a href="#5-agentmain实例" class="headerlink" title="5.agentmain实例"></a>5.agentmain实例</h2><p>与上文一样，我们要通过Java Instrumentation实现对某个类中所有方法执行时间的统计，只不过不同的是：这次我们采用动态Instrumentation的方式。</p>
+<p>对于分布式的限流，需要使用分布式存储来存放请求的状态数据，在这里，我们使用Redis作为存储引擎。</p>
+<h2 id="第一版实现"><a href="#第一版实现" class="headerlink" title="第一版实现"></a>第一版实现</h2><p>限流的标准实现一般是使用令牌桶算法，实现思路如下：</p>
 <ol>
-<li>编写一个简单的测试类Test，以便于后面我们通过动态代理实现方法计时功能；</li>
-<li>编写Agent实现类SampleTransformer，实现ClassFileTransformer接口。代码同上篇文章一样，这里不再赘述。</li>
-<li><p>编写Agent入口类DynamicAgent，实现agentmain方法：</p>
-<p> public static void agentmain(String args, Instrumentation inst)</p>
-</li>
-<li><p>编写Agent加载类AgentLoader，以通过Attach API中的VirtualMachine来动态加载我们编写的代理jar；</p>
-</li>
-<li>编写一个测试入口类SampleApp，能够长时间驻留，便于我们测试动态植入功能；本例中我们通过键盘数据接收用户的输入数据。只要用户输入不为“bye”，那么就会执行Test类的test()方法；在系统刚刚启动的时候，我们没有利用动态植入实现对test()方法的计时；当执行动态植入后，再执行test()方法，我们就能看到屏幕除了输出原test()方法输出的“hello world”之外，还额外输出了test()方法的运行计时。这就能够证明植入代码生效了；</li>
-<li>设置MANIFEST.MF文件，指定Agent-Class、Can-Retransform-Classes、Can-Redefine-Classes等属性。在本实例所付的代码中，是通过maven配置的，具体请参考附件中的代码；</li>
-<li>打包得到DynamicAgent-1.0-SNAPSHOT.jar；</li>
-<li><p>执行SampleApp，启动应用：</p>
-<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar io.fengfu.learning.instrument.SampleApp</p>
-</li>
+<li>每个接口都有一个对应的令牌桶，桶中含有若干令牌；</li>
+<li>当用户发起请求的时候，首先从桶中获取一个令牌。在获取令牌的时候，首先会检查桶中剩余的令牌；</li>
+<li>如果桶是空的，则表明已经达到上限，请求将被阻塞住；</li>
+<li>反之，从桶中移除一个令牌，执行用户请求；</li>
+<li>随着时间推移，按照一定的频率往桶里放入令牌，直到达到容量上限。</li>
 </ol>
-<p>在交互窗口输入test，我们可以看到系统输出：Hello World!</p>
+<p>这种算法的好处在于占用存储空间小，每个接口只需要一个整形计数器即可，不足之处在于：需要有额外的处理程序往桶里放令牌。如果系统有很多的接口，那也就意味着系统需要有很多的桶，而且每个桶都需要按照固定的速率放入令牌，那么这不仅会增加系统的压力，也会增加系统的复杂性。于是我们可以在此基础上进行优化：</p>
+<h2 id="改进实现"><a href="#改进实现" class="headerlink" title="改进实现"></a>改进实现</h2><ol>
+<li>每个接口有2个对应的key：令牌桶和桶被填充满时的时间戳；</li>
+<li>当接口被访问的时候，读取对应的时间戳；</li>
+<li>计算从上次访问到现在该请求可以获取的令牌数量；</li>
+<li>如果满足要求，请求继续执行。</li>
+</ol>
+<p>不幸的是，这个算法也存在缺陷：我们需要同步令牌桶和时间戳的状态，如果同步失败，这种方案将会失效。Redis可以通过批量操作来保证原子操作，但计算用户可以获取多少令牌的时候，我们需要与Redis有两次交互：第一次获取上次访问的时间戳，第二次设置令牌的数量。如果你不想钻研Redis Lua脚本，恐怕我们无法在一个原子操作中实现上述需求。鉴于此，如果有2个客户端在同一时间来校验用户请求的时候，我们可能会得到下面的执行顺序：</p>
 <ol>
-<li>得到SampleApp的进程id，比如1234；</li>
-<li><p>执行AgentLoader，启动动态代理：</p>
-<p> java -cp /home/fengfu/DynamicAgent/target/DynamicAgent-1.0-SNAPSHOT.jar;/usr/local/jdk1.7/lib/tools.jar;/.m2/repository/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar  io.fengfu.learning.instrument.AgentLoader 1234</p>
-</li>
-<li><p>在SampleApp的交互窗口再次输入test，我们可以看到系统输出：Hello World!，同时也输出：Call to method test took 3001 ms.</p>
-</li>
+<li>用户有足够的令牌来执行一个请求；</li>
+<li>前后请求的间隔内，并没有新的令牌放入桶中；</li>
+<li>客户端1获得存储的时间戳和令牌数量；</li>
+<li>客户端2获得存储的时间戳和令牌数量；</li>
+<li>客户端1通过计算断定令牌足够，放行请求，通知redis清空令牌桶；</li>
+<li>客户端2通过计算也断定令牌足够，放行请求，通知redis清空令牌桶；</li>
 </ol>
-<p>大功告成，一个简单的动态植入功能就实现了~<br>本实例的代码可以点 <a href="(http://fengfu.io/attach/DynamicAgent.zip">这里</a>) 下载。</p>
-<h2 id="6-说明"><a href="#6-说明" class="headerlink" title="6.说明"></a>6.说明</h2><p>实例虽然简单，但是在代码编写过程中还是遇到了几个坑，贴出来供大家参考：</p>
+<p>无需多言，上述方案完全失效了，显然这情况并不是我们想要的。</p>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p>幸运的是，Redis有另外一种数据结构可以避免上述竞态条件-Sorted Set。下面是实现思路：</p>
 <ol>
-<li>如果动态植入需要通过javassist去修改某些类，那么需要在MANIFEST.MF中设置Can-Retransform-Classes和Can-Redefine-Classes为true；</li>
-<li><p>要动态修改的类Test不要跟测试入口类SampleApp放在一个类文件中，否则代理启动动态修改Class时会报如下异常：</p>
-<pre><code>java.lang.reflect.InvocationTargetException
-at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-at java.lang.reflect.Method.invoke(Unknown Source)
-at sun.instrument.InstrumentationImpl.loadClassAndStartAgent(Unknown Source)
-at sun.instrument.InstrumentationImpl.loadClassAndCallAgentmain(Unknown Source)
-Caused by: java.lang.UnsupportedOperationException: class redefinition failed: attempted to add a method
-at sun.instrument.InstrumentationImpl.retransformClasses0(Native Method)
-at sun.instrument.InstrumentationImpl.retransformClasses(Unknown Source)
-at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
-... 6 more
-</code></pre></li>
+<li>每个接口都有一个对应的Sorted Set，set中key和value是唯一的，key和value都为请求提交时的时间戳；</li>
+<li>当客户端提交请求时，首先将某个时间间隔前的元素全部清除，这个操作可以使用Redis的ZREMRANGEBYSCORE命令实现；</li>
+<li>使用ZRANGE(0, -1)命令获取set中剩余的所有元素；</li>
+<li>使用ZADD命令将当前请求的时间戳添加到set中；</li>
+<li>设置TTL给set；TTL=限制请求的时间间隔。</li>
 </ol>
-<p>分析原因，是因为SampleApp正在运行中，而JVM是不允许reload一个正在运行时的类的。一旦classloader加载了一个class，在运行时就不能重新加载这个class的另一个版本。</p>
+<p>进行完上述所有操作后，计算获取到的元素数量，如果超出限制，则拒绝请求；</p>
+<p>同时，获取获取的元素中最大的时间戳，与当前请求时间做比较。如果间隔太小，则拒绝请求；</p>
+<p>这种方案的好处是所有的redis请求都可以使用MULTI命令作为一个原子操作。这意味着如果两个客户端请求相同的接口，是能够避免前面提到的竞态条件出现的。</p>
 
       
     </div>
@@ -445,7 +431,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
         </div>
       
@@ -458,8 +444,8 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" rel="next" title="性能调优工具-Java Mission Control">
-                <i class="fa fa-chevron-left"></i> 性能调优工具-Java Mission Control
+              <a href="/2017/06/13/Linux性能分析工具/" rel="next" title="Linux性能分析工具">
+                <i class="fa fa-chevron-left"></i> Linux性能分析工具
               </a>
             
           </div>
@@ -468,8 +454,8 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/24/Java-Instrumentation研究-1/" rel="prev" title="Java Instrumentation研究之premain">
-                Java Instrumentation研究之premain <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/23/服务化架构-服务降级/" rel="prev" title="服务化架构-服务降级">
+                服务化架构-服务降级 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -620,7 +606,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关于agentmain"><span class="nav-number">2.</span> <span class="nav-text">2.关于agentmain</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-关于Attach-API"><span class="nav-number">3.</span> <span class="nav-text">3.关于Attach API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-agentmain实现步骤"><span class="nav-number">4.</span> <span class="nav-text">4.agentmain实现步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-agentmain实例"><span class="nav-number">5.</span> <span class="nav-text">5.agentmain实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-说明"><span class="nav-number">6.</span> <span class="nav-text">6.说明</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一版实现"><span class="nav-number">1.</span> <span class="nav-text">第一版实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进实现"><span class="nav-number">2.</span> <span class="nav-text">改进实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳实践"><span class="nav-number">3.</span> <span class="nav-text">最佳实践</span></a></li></ol></div>
             
 
           </div>
