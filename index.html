@@ -289,6 +289,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/11/29/Sonar自定义插件开发指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/29/Sonar自定义插件开发指南/" itemprop="url">Sonar自定义插件开发指南</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T17:13:16+08:00">
+                2017-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/29/Sonar自定义插件开发指南/" class="leancloud_visitors" data-flag-title="Sonar自定义插件开发指南">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Sonar简介"><a href="#1-Sonar简介" class="headerlink" title="1 Sonar简介"></a>1 Sonar简介</h2><p>SonarQube是一个非常流行和强大的静态代码检查工具。它可以针对很多语言进行分析，比如Java、C#、JavaScript、PL/SQL等。SonarQube中默认提供了很多代码检查规则，但是有时候我们需要根据自己的需求编写规则，这篇文章会涵盖如何编写自定义规则的各个步骤。</p>
+<h2 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2 环境准备"></a>2 环境准备</h2><ul>
+<li>JDK 1.8</li>
+<li>Intellij Idea</li>
+<li>Maven 3.x或更高</li>
+<li>SonarQube 5.6</li>
+<li>Sonar-runner-dist 2.4</li>
+</ul>
+<h2 id="3-开发步骤"><a href="#3-开发步骤" class="headerlink" title="3 开发步骤"></a>3 开发步骤</h2><h3 id="3-1-创建Plugin项目"><a href="#3-1-创建Plugin项目" class="headerlink" title="3.1 创建Plugin项目"></a>3.1 创建Plugin项目</h3><p> 首先创建一个SonarPlugin项目，建议从SonarSource官方github站点下载模板项目，这样不至于遗漏配置。下载的地址是：<a href="https://github.com/SonarSource/sonar-custom-plugin-example" target="_blank" rel="external">下载链接</a></p>
+<h3 id="3-2-引入Pom依赖"><a href="#3-2-引入Pom依赖" class="headerlink" title="3.2 引入Pom依赖"></a>3.2 引入Pom依赖</h3><p>将模板项目中的pom文件修改为自己项目对应的名称，比如groupId、artifactId、version、name、description，其他的不必修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">    &lt;groupId&gt;com.qunar.sonar&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;qunar-java&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">    &lt;packaging&gt;sonar-plugin&lt;/packaging&gt;</div><div class="line"></div><div class="line">    &lt;name&gt;Qunar SonarQube Java Rules&lt;/name&gt;</div><div class="line">    &lt;description&gt;Qunar Java Rules for SonarQube&lt;/description&gt;</div><div class="line">    &lt;inceptionYear&gt;2016&lt;/inceptionYear&gt;</div><div class="line"></div><div class="line">    &lt;properties&gt;</div><div class="line">        &lt;sonar.version&gt;6.3&lt;/sonar.version&gt; &lt;!-- this 6.3 is only required to be compliant with SonarLint and it is required</div><div class="line">			even if you just want to be compliant with SonarQube 5.6 --&gt;</div><div class="line">        &lt;java.plugin.version&gt;4.10.0.10260&lt;/java.plugin.version&gt;</div><div class="line">        &lt;sslr.version&gt;1.21&lt;/sslr.version&gt;</div><div class="line">        &lt;gson.version&gt;2.6.2&lt;/gson.version&gt;</div><div class="line">    &lt;/properties&gt;</div><div class="line"></div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;!--请不要调整下面三项依赖的顺序，避免查看依赖的类时无法查看源码--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.sonarqube&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sonar-plugin-api&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;sonar.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;provided&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.java&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;java-frontend&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;java.plugin.version&#125;&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.java&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sonar-java-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;!--&lt;type&gt;sonar-plugin&lt;/type&gt;--&gt;</div><div class="line">            &lt;version&gt;$&#123;java.plugin.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;provided&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--请不要调整上述三项依赖的顺序，避免查看依赖的类时无法查看源码--&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.sslr-squid-bridge&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sslr-squid-bridge&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;2.6.1&lt;/version&gt;</div><div class="line">            &lt;exclusions&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.codehaus.sonar.sslr&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;sslr-core&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.codehaus.sonar&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;sonar-plugin-api&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.codehaus.sonar.sslr&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;sslr-xpath&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">            &lt;/exclusions&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.java&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;java-checks-testkit&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;java.plugin.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;gson&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;gson.version&#125;&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.sslr&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sslr-testing-harness&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;sslr.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.6.2&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.11&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.assertj&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;3.6.2&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;0.9.30&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line"></div><div class="line">    &lt;build&gt;</div><div class="line">        &lt;plugins&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.sonarsource.sonar-packaging-maven-plugin&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;sonar-packaging-maven-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;1.17&lt;/version&gt;</div><div class="line">                &lt;extensions&gt;true&lt;/extensions&gt;</div><div class="line">                &lt;configuration&gt;</div><div class="line">                    &lt;pluginKey&gt;qunar-java&lt;/pluginKey&gt;</div><div class="line">                    &lt;pluginName&gt;QunarJava&lt;/pluginName&gt;</div><div class="line">                    &lt;pluginClass&gt;com.qunar.sonar.java.JavaRulesPlugin&lt;/pluginClass&gt;</div><div class="line">                    &lt;sonarLintSupported&gt;true&lt;/sonarLintSupported&gt;</div><div class="line">                    &lt;sonarQubeMinVersion&gt;5.6&lt;/sonarQubeMinVersion&gt; &lt;!-- allow to depend on API 6.x but run on LTS --&gt;</div><div class="line">                &lt;/configuration&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line"></div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;3.6.0&lt;/version&gt;</div><div class="line">                &lt;configuration&gt;</div><div class="line">                    &lt;source&gt;1.8&lt;/source&gt;</div><div class="line">                    &lt;target&gt;1.8&lt;/target&gt;</div><div class="line">                &lt;/configuration&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line"></div><div class="line">            &lt;!-- only required to run UT - these are UT dependencies --&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;2.10&lt;/version&gt;</div><div class="line">                &lt;executions&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;id&gt;copy&lt;/id&gt;</div><div class="line">                        &lt;phase&gt;test-compile&lt;/phase&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;copy&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                        &lt;configuration&gt;</div><div class="line">                            &lt;artifactItems&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;commons-collections4&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.0&lt;/version&gt;</div><div class="line">                                    &lt;type&gt;jar&lt;/type&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;javax&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;javaee-api&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;6.0&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                            &lt;/artifactItems&gt;</div><div class="line">                            &lt;outputDirectory&gt;$&#123;project.build.directory&#125;/test-jars&lt;/outputDirectory&gt;</div><div class="line">                        &lt;/configuration&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                &lt;/executions&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line">        &lt;/plugins&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line"></div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<h3 id="3-3-编写具体的Rule"><a href="#3-3-编写具体的Rule" class="headerlink" title="3.3 编写具体的Rule"></a>3.3 编写具体的Rule</h3><p>一个自定义规则的实现，首先在规则类前面使用@Rule注解声明规则的相关信息，比如key、name、description、priority、tag。其次要继承IssuableSubscriptionVisitor或者继承BaseTreeVisitor并实现JavaFileScanner接口，这两种实现方式存在一些差异，IssuableSubscriptionVisitor是一个抽象类，继承自SubscriptionVisitor，而SubscriptionVisitor则实现了JavaFileScanner接口；而BaseTreeVisitor则是实现了TreeVisitor接口。相比来说，JavaFileScanner更偏底层一些，直接是面向Java文件的分析，而TreeVisitor则是针对于Java文件的语法结构了，比如类、防止、赋值语句、catch块之类的了。一般情况下，推荐使用继承IssuableSubscriptionVisitor的方式，因为这个类的封装层次更高，更简便。在规则类中，你只需要重载nodesToVisit和visitNode方法就可以了。<br>nodesToVisit方法是说明该规则做检查的类型集合，比如METHOD_INVOCATION（方法调用）、CATCH（catch块）、MEMBER_SELECT（属性选择）等。比如下面的代码，就是对源码中的方法调用做规则检查。<br>visitNode是自定义规则中的核心部分，你所要实现的代码检查逻辑就是在这个方法中完成的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">import com.google.common.collect.ImmutableList;</div><div class="line">import com.qunar.sonar.java.util.QualifiedNameUtil;</div><div class="line">import org.sonar.check.Priority;</div><div class="line">import org.sonar.check.Rule;</div><div class="line">import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;</div><div class="line">import org.sonar.plugins.java.api.tree.MethodInvocationTree;</div><div class="line">import org.sonar.plugins.java.api.tree.Tree;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by fengfu on 2017/11/10.</div><div class="line"> */</div><div class="line">@Rule(</div><div class="line">        key = &quot;DisallowedFDUsageCheck&quot;,</div><div class="line">        name = &quot;Qunar Flight disallowed FD usage in InfoCenter check&quot;,</div><div class="line">        description = &quot;Some kinds of usage for FD are forbidden in Flight BU of Qunar.com.&quot;,</div><div class="line">        priority = Priority.BLOCKER,</div><div class="line">        tags = &#123;&quot;bug&quot;&#125;</div><div class="line">)</div><div class="line">public class DisallowedFDUsageCheck extends IssuableSubscriptionVisitor &#123;</div><div class="line">    private static final String[] FORBIDDEN_METHODS = &#123;</div><div class="line">            &quot;Infocenter.reloadFDData&quot;, &quot;Infocenter.getFliterDateFDData&quot;,</div><div class="line">            &quot;Infocenter.getFDData&quot;, &quot;Infocenter.getValidFDPrice&quot;,</div><div class="line">            &quot;Infocenter.getFDPrice&quot;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public List&lt;Tree.Kind&gt; nodesToVisit() &#123;</div><div class="line">        return ImmutableList.of(Tree.Kind.METHOD_INVOCATION);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void visitNode(Tree tree) &#123;</div><div class="line">        MethodInvocationTree mTree = (MethodInvocationTree)tree;</div><div class="line">        String methodName = QualifiedNameUtil.fullQualifiedName(mTree.methodSelect());</div><div class="line"></div><div class="line">        if (isForbiddenMethod(methodName))&#123;</div><div class="line">            reportIssue(tree, methodName + &quot;已被禁用，详情请查看Wiki:http://wiki.corp.qunar.com/confluence/pages/viewpage.action?pageId=182623492&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        super.visitNode(tree);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static boolean isForbiddenMethod(String methodName) &#123;</div><div class="line">        for (String name : FORBIDDEN_METHODS) &#123;</div><div class="line">            if (name.equals(methodName)) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void leaveNode(Tree tree) &#123;</div><div class="line">        super.leaveNode(tree);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然如果一些复杂的业务规则，可能你不得不实现JavaFileScanner接口了。如下面的代码所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">import com.qunar.sonar.java.util.QualifiedNameUtil;</div><div class="line">import org.sonar.api.utils.log.Logger;</div><div class="line">import org.sonar.api.utils.log.Loggers;</div><div class="line">import org.sonar.check.Priority;</div><div class="line">import org.sonar.check.Rule;</div><div class="line">import org.sonar.plugins.java.api.JavaFileScanner;</div><div class="line">import org.sonar.plugins.java.api.JavaFileScannerContext;</div><div class="line">import org.sonar.plugins.java.api.tree.*;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by fengfu on 2017/2/27.</div><div class="line"> */</div><div class="line">@Rule(</div><div class="line">        key = &quot;QunarFlightDisallowedClassCheck&quot;,</div><div class="line">        name = &quot;Qunar Flight disallowed class check&quot;,</div><div class="line">        description = &quot;Some classes are forbidden in Flight BU of Qunar.com.&quot;,</div><div class="line">        priority = Priority.BLOCKER,</div><div class="line">        tags = &#123;&quot;bug&quot;&#125;</div><div class="line">)</div><div class="line">public class DisallowedClassCheck extends BaseTreeVisitor implements JavaFileScanner &#123;</div><div class="line">    private static Logger logger = Loggers.get(DisallowedClassCheck.class);</div><div class="line">    private final String IMPORT_NAME = &quot;com.qunar.base.meerkat.monitor.QMonitor&quot;;</div><div class="line"></div><div class="line">    public void scanFile(JavaFileScannerContext context) &#123;</div><div class="line">        logger.info(&quot;Start to scan file &#123;&#125;&quot;, context.getFile().getName());</div><div class="line">        CompilationUnitTree cut = context.getTree();</div><div class="line"></div><div class="line">        for (ImportClauseTree importClauseTree : cut.imports())&#123;</div><div class="line">            ImportTree importTree = null;</div><div class="line">            if (importClauseTree.is(Tree.Kind.IMPORT)) &#123;</div><div class="line">                importTree = (ImportTree) importClauseTree;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if (importTree == null || importTree.isStatic()) &#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            String importName = QualifiedNameUtil.fullQualifiedName(importTree.qualifiedIdentifier());</div><div class="line"></div><div class="line">            if (IMPORT_NAME.equals(importName))&#123;</div><div class="line">                logger.error(&quot;Disallowed class &#123;&#125; found.&quot;, IMPORT_NAME);</div><div class="line">                context.reportIssue(this, importTree, IMPORT_NAME + &quot;已被禁用.&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        scan(cut);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-4-单元测试"><a href="#3-4-单元测试" class="headerlink" title="3.4 单元测试"></a>3.4 单元测试</h3><p>规则检查代码写完之后，就可以针对这个规则进行单元测试了。单元测试的方法比较简单，就是使用JUnit框架编写test case，针对特定的目标文件，调用Sonar提供的JavaCheckVerifier.verify方法进行测试，示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import com.qunar.flight.sonar.java.checks.DisallowedClassCheck;</div><div class="line">import org.junit.Test;</div><div class="line">import org.sonar.java.checks.verifier.JavaCheckVerifier;</div><div class="line"></div><div class="line">public class DisallowedClassCheckTest &#123;</div><div class="line">    @Test</div><div class="line">    public void test() &#123;</div><div class="line">        JavaCheckVerifier.verify(&quot;src/test/files/flight/DisallowedClassCase.java&quot;, new DisallowedClassCheck());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果目标文件存在问题，那么控制台会打印出问题在目标文件中的位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">java.lang.AssertionError: Unexpected at [4]</div><div class="line"></div><div class="line">	at org.sonar.java.checks.verifier.CheckVerifier.assertMultipleIssue(CheckVerifier.java:209)</div><div class="line">	at org.sonar.java.checks.verifier.CheckVerifier.checkIssues(CheckVerifier.java:181)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.scanFile(JavaCheckVerifier.java:274)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.scanFile(JavaCheckVerifier.java:256)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.scanFile(JavaCheckVerifier.java:222)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.verify(JavaCheckVerifier.java:105)</div><div class="line">	at com.qunar.flight.sonar.java.checks.test.DisallowedClassCheckTest.test(DisallowedClassCheckTest.java:10)</div></pre></td></tr></table></figure></p>
+<p>如果目标文件中不存在任何问题，会提示“java.lang.IllegalStateException: At least one issue expected”，意思就是目标文件中需要至少存在一个规则所要检查的问题。</p>
+<h3 id="3-5-编写RulesList"><a href="#3-5-编写RulesList" class="headerlink" title="3.5 编写RulesList"></a>3.5 编写RulesList</h3><p>单元测试完成之后，就可以往RuleList的集合中中添加自定义规则规则了。这个RuleList只是一个简单的集合类，包含了所有你需要注册到Sonar中的规则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">import com.google.common.collect.ImmutableList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import com.qunar.flight.sonar.java.checks.DisallowedClassCheck;</div><div class="line">import com.qunar.flight.sonar.java.checks.DisallowedFDUsageCheck;</div><div class="line">import com.qunar.flight.sonar.java.checks.GuavaCacheLoaderReturnNullCheck;</div><div class="line">import org.sonar.plugins.java.api.JavaCheck;</div><div class="line"></div><div class="line">public final class RulesList &#123;</div><div class="line"></div><div class="line">  private RulesList() &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public static List&lt;Class&gt; getChecks() &#123;</div><div class="line">    return ImmutableList.&lt;Class&gt;builder().addAll(getJavaChecks()).addAll(getJavaTestChecks()).build();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 在此方法中添加需要注册的规则</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; getJavaChecks() &#123;</div><div class="line">    return ImmutableList.&lt;Class&lt;? extends JavaCheck&gt;&gt;builder()</div><div class="line">      .add(DisallowedClassCheck.class)</div><div class="line">      .add(GuavaCacheLoaderReturnNullCheck.class)</div><div class="line">      .add(DisallowedFDUsageCheck.class)</div><div class="line"></div><div class="line">      .build();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; getJavaTestChecks() &#123;</div><div class="line">    return ImmutableList.&lt;Class&lt;? extends JavaCheck&gt;&gt;builder()</div><div class="line">      .build();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-6-编写CustomRulesDefinition"><a href="#3-6-编写CustomRulesDefinition" class="headerlink" title="3.6 编写CustomRulesDefinition"></a>3.6 编写CustomRulesDefinition</h3><p>CustomRulesDefinition可以理解为自定义规则集的元数据，在这个类中，首先要声明自定义规则集的repository，另外还需要将相应的规则集加入到前面声明的repository中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div></pre></td><td class="code"><pre><div class="line">mport com.google.common.annotations.VisibleForTesting;</div><div class="line">import com.google.common.collect.Iterables;</div><div class="line">import com.google.common.io.Resources;</div><div class="line">import com.google.gson.Gson;</div><div class="line">import org.apache.commons.lang.StringUtils;</div><div class="line">import org.sonar.api.rule.RuleStatus;</div><div class="line">import org.sonar.api.rules.RuleType;</div><div class="line">import org.sonar.api.server.debt.DebtRemediationFunction;</div><div class="line">import org.sonar.api.server.rule.RulesDefinition;</div><div class="line">import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;</div><div class="line">import org.sonar.api.utils.AnnotationUtils;</div><div class="line">import org.sonar.check.Cardinality;</div><div class="line">import org.sonar.squidbridge.annotations.RuleTemplate;</div><div class="line"></div><div class="line">import javax.annotation.Nullable;</div><div class="line">import java.io.IOException;</div><div class="line">import java.net.URL;</div><div class="line">import java.nio.charset.StandardCharsets;</div><div class="line">import org.sonar.plugins.java.Java;</div><div class="line">import java.util.List;</div><div class="line">import java.util.Locale;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Declare rule metadata in server repository of rules.</div><div class="line"> * That allows to list the rules in the page &quot;Rules&quot;.</div><div class="line"> */</div><div class="line">public class JavaRulesDefinition implements RulesDefinition &#123;</div><div class="line"></div><div class="line">    // don&apos;t change that because the path is hard coded in CheckVerifier</div><div class="line">    private static final String RESOURCE_BASE_PATH = &quot;/org/sonar/l10n/java/rules/squid&quot;;</div><div class="line"></div><div class="line">    public static final String REPOSITORY_KEY = &quot;qunar-java&quot;;</div><div class="line"></div><div class="line">    private final Gson gson = new Gson();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void define(Context context) &#123;</div><div class="line">        NewRepository repository = context</div><div class="line">                .createRepository(REPOSITORY_KEY, Java.KEY)//定义Repository key</div><div class="line">                .setName(&quot;QunarJava&quot;);//定义Repository名称</div><div class="line"></div><div class="line">        List&lt;Class&gt; checks = RulesList.getChecks();//获取自定义的check列表</div><div class="line">        new RulesDefinitionAnnotationLoader().load(repository, Iterables.toArray(checks, Class.class));//获取注解信息</div><div class="line"></div><div class="line">        for (Class ruleClass : checks) &#123;</div><div class="line">            newRule(ruleClass, repository);//将规则添加到Repository中</div><div class="line">        &#125;</div><div class="line">        repository.done();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @VisibleForTesting</div><div class="line">    protected void newRule(Class&lt;?&gt; ruleClass, NewRepository repository) &#123;</div><div class="line"></div><div class="line">        org.sonar.check.Rule ruleAnnotation = AnnotationUtils.getAnnotation(ruleClass, org.sonar.check.Rule.class);</div><div class="line">        if (ruleAnnotation == null) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;No Rule annotation was found on &quot; + ruleClass);</div><div class="line">        &#125;</div><div class="line">        String ruleKey = ruleAnnotation.key();</div><div class="line">        if (StringUtils.isEmpty(ruleKey)) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;No key is defined in Rule annotation of &quot; + ruleClass);</div><div class="line">        &#125;</div><div class="line">        NewRule rule = repository.rule(ruleKey);</div><div class="line">        if (rule == null) &#123;</div><div class="line">            throw new IllegalStateException(&quot;No rule was created for &quot; + ruleClass + &quot; in &quot; + repository.key());</div><div class="line">        &#125;</div><div class="line">        ruleMetadata(ruleClass, rule);</div><div class="line"></div><div class="line">        rule.setTemplate(AnnotationUtils.getAnnotation(ruleClass, RuleTemplate.class) != null);</div><div class="line">        if (ruleAnnotation.cardinality() == Cardinality.MULTIPLE) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;Cardinality is not supported, use the RuleTemplate annotation instead for &quot; + ruleClass);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private String ruleMetadata(Class&lt;?&gt; ruleClass, NewRule rule) &#123;</div><div class="line">        String metadataKey = rule.key();</div><div class="line">        org.sonar.java.RspecKey rspecKeyAnnotation = AnnotationUtils.getAnnotation(ruleClass, org.sonar.java.RspecKey.class);</div><div class="line">        if (rspecKeyAnnotation != null) &#123;</div><div class="line">            metadataKey = rspecKeyAnnotation.value();</div><div class="line">            rule.setInternalKey(metadataKey);</div><div class="line">        &#125;</div><div class="line">        addHtmlDescription(rule, metadataKey);</div><div class="line">        addMetadata(rule, metadataKey);</div><div class="line">        return metadataKey;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void addMetadata(NewRule rule, String metadataKey) &#123;</div><div class="line">        URL resource = JavaRulesDefinition.class.getResource(RESOURCE_BASE_PATH + &quot;/&quot; + metadataKey + &quot;_java.json&quot;);</div><div class="line">        if (resource != null) &#123;</div><div class="line">            RuleMetatada metatada = gson.fromJson(readResource(resource), RuleMetatada.class);</div><div class="line">            rule.setSeverity(metatada.defaultSeverity.toUpperCase(Locale.US));</div><div class="line">            rule.setName(metatada.title);</div><div class="line">            rule.addTags(metatada.tags);</div><div class="line">            rule.setType(RuleType.valueOf(metatada.type));</div><div class="line">            rule.setStatus(RuleStatus.valueOf(metatada.status.toUpperCase(Locale.US)));</div><div class="line">            if (metatada.remediation != null) &#123;</div><div class="line">                rule.setDebtRemediationFunction(metatada.remediation.remediationFunction(rule.debtRemediationFunctions()));</div><div class="line">                rule.setGapDescription(metatada.remediation.linearDesc);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void addHtmlDescription(NewRule rule, String metadataKey) &#123;</div><div class="line">        URL resource = JavaRulesDefinition.class.getResource(RESOURCE_BASE_PATH + &quot;/&quot; + metadataKey + &quot;_java.html&quot;);</div><div class="line">        if (resource != null) &#123;</div><div class="line">            rule.setHtmlDescription(readResource(resource));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static String readResource(URL resource) &#123;</div><div class="line">        try &#123;</div><div class="line">            return Resources.toString(resource, StandardCharsets.UTF_8);</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            throw new IllegalStateException(&quot;Failed to read: &quot; + resource, e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static class RuleMetatada &#123;</div><div class="line">        String title;</div><div class="line">        String status;</div><div class="line">        @Nullable</div><div class="line">        Remediation remediation;</div><div class="line"></div><div class="line">        String type;</div><div class="line">        String[] tags;</div><div class="line">        String defaultSeverity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static class Remediation &#123;</div><div class="line">        String func;</div><div class="line">        String constantCost;</div><div class="line">        String linearDesc;</div><div class="line">        String linearOffset;</div><div class="line">        String linearFactor;</div><div class="line"></div><div class="line">        public DebtRemediationFunction remediationFunction(DebtRemediationFunctions drf) &#123;</div><div class="line">            if (func.startsWith(&quot;Constant&quot;)) &#123;</div><div class="line">                return drf.constantPerIssue(constantCost.replace(&quot;mn&quot;, &quot;min&quot;));</div><div class="line">            &#125;</div><div class="line">            if (&quot;Linear&quot;.equals(func)) &#123;</div><div class="line">                return drf.linear(linearFactor.replace(&quot;mn&quot;, &quot;min&quot;));</div><div class="line">            &#125;</div><div class="line">            return drf.linearWithOffset(linearFactor.replace(&quot;mn&quot;, &quot;min&quot;), linearOffset.replace(&quot;mn&quot;, &quot;min&quot;));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-7-编写CustomJavaFileCheckRegistrar"><a href="#3-7-编写CustomJavaFileCheckRegistrar" class="headerlink" title="3.7 编写CustomJavaFileCheckRegistrar"></a>3.7 编写CustomJavaFileCheckRegistrar</h3><p>CustomJavaFileCheckRegistrar要实现CheckRegistrar接口。CustomJavaFileCheckRegistrar类的作用是注册代码扫描时需要的规则类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">import java.util.List;</div><div class="line">import org.sonar.plugins.java.api.CheckRegistrar;</div><div class="line">import org.sonar.plugins.java.api.JavaCheck;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Provide the &quot;checks&quot; (implementations of rules) classes that are going be executed during</div><div class="line"> * source code analysis.</div><div class="line"> *</div><div class="line"> * This class is a batch extension by implementing the &#123;@link org.sonar.plugins.java.api.CheckRegistrar&#125; interface.</div><div class="line"> */</div><div class="line">public class JavaFileCheckRegistrar implements CheckRegistrar &#123;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Register the classes that will be used to instantiate checks during analysis.</div><div class="line">   */</div><div class="line">  @Override</div><div class="line">  public void register(RegistrarContext registrarContext) &#123;</div><div class="line">    // Call to registerClassesForRepository to associate the classes with the correct repository key</div><div class="line">    registrarContext.registerClassesForRepository(JavaRulesDefinition.REPOSITORY_KEY, checkClasses(), testCheckClasses());</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Lists all the main checks provided by the plugin</div><div class="line">   */</div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; checkClasses() &#123;</div><div class="line">    return RulesList.getJavaChecks();//返回RulesList中定义的checks</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Lists all the test checks provided by the plugin</div><div class="line">   */</div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; testCheckClasses() &#123;</div><div class="line">    return RulesList.getJavaTestChecks();//返回RulesList中定义的check classes</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-8-编写CustomJavaRulesPlugin"><a href="#3-8-编写CustomJavaRulesPlugin" class="headerlink" title="3.8 编写CustomJavaRulesPlugin"></a>3.8 编写CustomJavaRulesPlugin</h3><p>这个类是Sonar插件的入口，它继承了org.sonar.api.SonarPlugin类，包含了SonarQube启动时需要实例化的server扩展（CustomRulesDefinition）和代码分析时需要实例化的批量扩展（JavaFileCheckRegistrar）。</p>
+<p>这个类基本不需要修改（除包名外），按照以下内容copy一份即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import org.sonar.api.Plugin;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Entry point of your plugin containing your custom rules</div><div class="line"> */</div><div class="line">public class JavaRulesPlugin implements Plugin &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void define(Context context) &#123;</div><div class="line"></div><div class="line">    // server extensions -&gt; objects are instantiated during server startup</div><div class="line">    context.addExtension(CustomRulesDefinition.class);</div><div class="line"></div><div class="line">    // batch extensions -&gt; objects are instantiated during code analysis</div><div class="line">    context.addExtension(CustomJavaFileCheckRegistrar.class);</div><div class="line"></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此，一个Sonar自定义插件所需的代码工作就结束了。剩下的就是进行整合性的测试，毕竟单元测试通过不代表插件不会对现有系统造成影响，有时候插件中的错误会导致SonarQube启动失败的。</p>
+<h2 id="5-整合测试"><a href="#5-整合测试" class="headerlink" title="5 整合测试"></a>5 整合测试</h2><p>通过mvn package命令编译、打包，形成jar文件。将jar文件上传到SonarQube extensions/plugins目录下，重启SonarQube服务即可完成Sonar自定义规则插件的部署。部署结束，通过SonarQube bin目录下的脚本重启SonarQube，如果SonarQube启动成功，说明插件没问题，整合测试成功，你可以在sonar的rules模块中，搜索到自定义的规则了。</p>
+<p><img src="https://farm5.staticflickr.com/4566/38001442235_a562e60306.jpg" alt=""></p>
+<h2 id="6-启用规则"><a href="#6-启用规则" class="headerlink" title="6 启用规则"></a>6 启用规则</h2><p>插件部署到SonarQube之后，默认是不启用的，需要在SonarQube的管理界面中启用规则，才能让此规则在代码检查过程中生效。</p>
+<p><img src="https://farm5.staticflickr.com/4524/38888239671_35af64c4bf.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/11/14/git命令大全/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2018,215 +2181,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/11/使用JRebel远程热部署Class/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/11/使用JRebel远程热部署Class/" itemprop="url">使用 jrebel 远程部署开发环境的 dubbo 服务</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T21:08:09+08:00">
-                2017-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/04/11/使用JRebel远程热部署Class/" class="leancloud_visitors" data-flag-title="使用 jrebel 远程部署开发环境的 dubbo 服务">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本文转自<a href="http://wulfric.me/2017/04/jrebel/" target="_blank" rel="external">http://wulfric.me/2017/04/jrebel/</a> ，如果转载请尊重原作者版权。</p>
-<blockquote>
-<p>声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" title="姓名标示-非商业性-禁止改作4.0国际" target="_blank" rel="external">CC BY-NC-ND 4.0</a> 授权。</p>
-</blockquote>
-<p><img src="https://zeroturnaround.com/wp-content/uploads/2011/02/jrebel-dl.png" alt="jrebel"></p>
-<p>在开发 java 程序的时候，如果改动非常频繁，每次改动都要重新打包、部署，对于很重的应用（比如本文所说的 dubbo provider 服务），这样反复的流程十分消耗精力和热情。我们需要一个工具，当代码作改动之后能够立即看到效果。Java 在 1.4 的时候引入了 HotSwap 技术，允许调试者使用同一个类标识来更新类的字节码。这意味着所有对象都可以引用一个更新后的类，并在它们的方法被调用的时候执行新的代码，这就避免了无论何时只要有类的字节码被修改就要重载容器的这种要求<sup id="fnref:hotswap-jrebel"><a href="#fn:hotswap-jrebel">1</a></sup>。不幸的是，这种重定义仅限于修改方法体—除了方法体之外，它既不能添加方法或域，也不能修改其他任何东西。</p>
-<p>和 PHP 这样的脚本语言不一样，Java 部署是一个令人心烦的问题。一个运行中的 Java 程序相当于一辆在公路上奔跑的汽车，而 HotSwap 技术只能让你更换坐垫，但是让你想要更换轮胎的时候，HotSwap 就帮不上忙了，这个时候你只能停下来，换掉轮胎，再重新启动。而对于 PHP 来说，每个请求都会新开一个进程加载所有的 .php 文件编译和执行，所以不存在这个问题。运行 PHP 程序相当于给静止的汽车拍照，你大可以换完轮胎之后再拍照，这没有任何不良影响。（这个比喻可能不太恰当，却很有趣：在比喻中，静态的语言看起来是运动的，而动态语言看起来是静止的）</p>
-<p><a href="https://zeroturnaround.com/software/jrebel/" target="_blank" rel="external">JRebel</a> 是 java 的热部署插件，它监控已编译的 .class 文件，只要有变动，就立即更新在部署好的应用上，能够实现实时查看代码变化的功能。</p>
-<p><img src="https://zeroturnaround.com/wp-content/uploads/2016/11/JR_devcycle_2016_c.png" alt="skip build, package and deploy"></p>
-<p>skip build, package and deploy</p>
-<p>HotSwap 是工作在虚拟机层面上，且依赖于 JVM 的内部运作，JRebel 用到了 JVM 的两个显著的功能特征—抽象的字节码和类加载器。类加载器允许 JRebel 辨别出类被加载的时刻，然后实时地翻译字节码，用以在虚拟机和可执行代码之间创建另一个抽象层<sup id="fnref:hotswap-jrebel:1"><a href="#fn:hotswap-jrebel">1</a></sup>。这种技术也应用在 zeroturnaround 家其他的工具，比如 xrebel。</p>
-<p>如果继续使用上面的比喻，JRebel 相当于在汽车运行过程中，先额外生成一个轮胎，然后以迅雷之势替换掉目标轮胎—汽车不需要停止装载和再启动。</p>
-<h2 id="安装和使用"><a href="#安装和使用" class="headerlink" title="安装和使用"></a>安装和使用</h2><p>JRebel 的安装参照官网即可，我是直接在 Intellij 的插件中心安装的，速度比较慢，插件也比较大，挂了代理才下载完成。下载完毕重启 IDE 即可使用。</p>
-<p>JRebel 是收费插件，第一次打开的时候需要激活，网上有各种神奇教程可以参考。其实这个插件官方提供了免费的激活码，只要需要你注册一个<a href="https://my.jrebel.com/" target="_blank" rel="external">帐号</a>，并关联一个 twitter 或者 facebook 帐号即可。jrebel 需要这个关联帐号的写权限，会定期发送使用统计到你的 timeline，你可以使用一个小号来关联。</p>
-<p>安装和激活完毕之后，就可以在 IDE 的配置页看到 JRebel 选项了。</p>
-<p><a href="http://wulfric.qiniudn.com/java/jrebel-preference.png-origin.webp" target="_blank" rel="external"><img src="http://wulfric.qiniudn.com/java/jrebel-preference.png-article.webp" alt="jrebel preference"></a></p>
-<p>jrebel preference</p>
-<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>为了能够比较熟悉该插件的使用，建议按照官方教程，先通过 IDE 本地启动，再通过命令行启动，然后尝试部署到远端服务器。</p>
-<p>当在 console 窗口观察到这些输出之后，说明应用正确启用了 JRebel 插件。</p>
-<pre><code>2017-04-01 16:27:31 JRebel:  #############################################################
-2017-04-01 16:27:31 JRebel:
-2017-04-01 16:27:31 JRebel:  JRebel Agent 7.0.6 (201703201213)
-2017-04-01 16:27:31 JRebel:  (c) Copyright ZeroTurnaround AS, Estonia, Tartu.
-2017-04-01 16:27:31 JRebel:
-2017-04-01 16:27:31 JRebel:  Over the last 2 days JRebel prevented
-2017-04-01 16:27:31 JRebel:  at least 0 redeploys/restarts saving you about 0 hours.
-2017-04-01 16:27:31 JRebel:
-2017-04-01 16:27:31 JRebel:  JRebel started in remote server mode.
-2017-04-01 16:27:31 JRebel:
-2017-04-01 16:27:31 JRebel:
-2017-04-01 16:27:31 JRebel:  #############################################################
-</code></pre><h3 id="IDE-运行"><a href="#IDE-运行" class="headerlink" title="IDE 运行"></a>IDE 运行</h3><p>IDE 运行本地应用最简单。参见<a href="https://zeroturnaround.com/software/jrebel/quickstart/intellij/?run=ide#!/server-configuration" target="_blank" rel="external">官方教程</a>。</p>
-<ol>
-<li>执行<span class="codespan">mvn clean</span>清空 target 目录；</li>
-<li>打开 「View &gt; Tool Windows &gt; JRebel」调出 JRebel Panel 编辑窗，点击「generate rebel.xml」按钮选中需要监控和热部署的模块。因为是本地执行，所以另外一个「generate rebel-remote.xml」 不需要选中；</li>
-<li>将以前通过 「Run ‘MyApp’」或者「Debug ‘MyApp’」来运行的命令改成「Run with JRebel ‘MyApp’」或者「Debug with JRebel ‘MyApp’」即可；</li>
-<li>修改代码，然后在「Build」菜单下选择合适的构建选项（只构建单个文件/构建模块/构建项目）；</li>
-<li>访问接口，查看结果是否实时改变。</li>
-</ol>
-<h3 id="命令行运行"><a href="#命令行运行" class="headerlink" title="命令行运行"></a>命令行运行</h3><p>在 JRebel 设置页的「Startup」标签中选择「Run locally from command line」， 选择合适的 jvm 和目标环境。我的 dubbo 使用了 netty 部署，所以选择了「Standalone application」，给出的启动参数如下。</p>
-<pre><code># agentpath 是必需的，foo.bar.MyApp 是你要运行的程序
-java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-ide-idea/lib/jrebel6/lib/libjrebel64.dylib foo.bar.MyApp
-</code></pre><p>P.S.: 注意上面的「Application Support」需要换成「Application\ Support」。</p>
-<p>dubbo 一般推荐使用 start.sh 脚本来启动应用，我们编辑 start.sh 文件，在启动的具体位置那里，将「-agentpath:…」添加在 java 后面，大致如下。</p>
-<pre><code>java -agentpath:... $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS -classpath ...
-</code></pre><p>各种目标环境的配置方法有着或大或小的区别，请按照自己的目标环境跟着 JRebel 给的配置方案来设置。</p>
-<ol>
-<li>配置启动参数，如上所述；</li>
-<li>选择需要热部署的模块；</li>
-<li>执行<span class="codespan">start.sh</span>部署应用；</li>
-<li>Run with JRebel ‘MyApp’；</li>
-<li>修改代码，构建改动的文件；</li>
-<li>访问接口，查看结果是否实时改变。</li>
-</ol>
-<p>从输出结果可以看到，JRebel 接管了 console。</p>
-<h3 id="远程服务器运行"><a href="#远程服务器运行" class="headerlink" title="远程服务器运行"></a>远程服务器运行</h3><p>官方<a href="https://zeroturnaround.com/software/jrebel/quickstart/intellij/?run=remote#!/server-configuration" target="_blank" rel="external">教程1</a>，<a href="https://manuals.zeroturnaround.com/jrebel/remoteserver/intellij.html" target="_blank" rel="external">教程2</a>更好<sup id="fnref:jrebel-doc"><a href="#fn:jrebel-doc">2</a></sup>。</p>
-<p>同上，在 JRebel 配置页选择「Run on a remote server」，根据给出的建议配置好启动项。</p>
-<pre><code>java -agentpath:... -Drebel.remoting_plugin=true ... -jar ...
-</code></pre><p>在 JRebel 配置页添加远程服务器地址，注意要是能够 http 访问的 url 才可以。</p>
-<figure><a class="post-image" rel="post-image" href=""><img src="https://manuals.zeroturnaround.com/jrebel/_images/intellij-add-remote-server.png" alt="添加远程服务器" title="添加远程服务器"></a><br></figure>
-
-<p>添加远程服务器</p>
-<ol>
-<li>配置启动参数和添加远程服务器，如上所述；</li>
-<li>选择需要热部署的模块，注意这个时候「generate rebel.xml」和「generate rebel-remote.xml」 两个都要选中；</li>
-<li>将包含 rebel.xml 和 rebel-remote.xml 的代码部署到远程服务器。本地打包并上传，或者代码上传并在远程服务器打包都可以；</li>
-<li>在远程服务器上<span class="codespan">start.sh</span>启动应用；</li>
-<li>修改代码，构建改动的文件；</li>
-<li>访问接口，查看结果是否实时改变。</li>
-</ol>
-<p>P.S.: 教程1似乎有些问题，远端启动应用后，本地不需要再「Run with JRebel ‘MyApp’」了。</p>
-<p>P.S.: 在官方教程里，「Run with JRebel ‘MyApp’」和「generate rebel.xml」checkbox 的图标一模一样，注意区分：有的是让你启动，有的是选中。</p>
-<p>P.S.: JRebel 对 Spring 的 bean 注入默认就有很好的支持，参见 <a href="https://zeroturnaround.com/software/jrebel/learn/jrebel-spring-integration/" target="_blank" rel="external">JRebel Spring</a>。它可以根据 xml 文件或者注解自动重新装载 bean。还支持动态实时地在 Spring 中添加 bean 和依赖。</p>
-<ol>
-<li><p>HotSwap 和 JRebel 原理<a href="https://dzone.com/articles/reloading-java-classes-401" target="_blank" rel="external">原文</a>，<a href="http://www.hollischuang.com/archives/598" target="_blank" rel="external">译文</a> <a href="#fnref:hotswap-jrebel">↩</a> <a href="#fnref:hotswap-jrebel:1">↩<sup>2</sup></a></p>
-</li>
-<li><p>参照官方的<a href="https://manuals.zeroturnaround.com/jrebel/index.html" target="_blank" rel="external">详细使用文档</a>是更好的选择 <a href="#fnref:jrebel-doc">↩</a></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2277,7 +2231,7 @@ java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-id
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
