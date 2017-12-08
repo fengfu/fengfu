@@ -289,6 +289,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/12/08/使用SonarLint进行代码检查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/08/使用SonarLint进行代码检查/" itemprop="url">使用SonarLint编写高质量代码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-08T18:40:25+08:00">
+                2017-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/08/使用SonarLint进行代码检查/" class="leancloud_visitors" data-flag-title="使用SonarLint编写高质量代码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Sonarqube是一个功能非常强大的代码质量检查、管理的工具。能够识别多种常用的编程语言，并能够通过设置不同的Rule<br>Sonar是一个代码质量管理的开源工具，它通过插件的形式能够识别常见的多种编程语言（例如Java, C#, PHP, Pythod等）代码质量问题。Sonar可以帮你分析出以下代码质量问题：<br>1.不遵循代码标准；<br>2.潜在的缺陷，比如空指针、bug；<br>3.代码重复；<br>4.注释率不足或过高；<br>5.糟糕的复杂度，比如if/循环嵌套太多、类/方法太大；<br>6.缺乏单元测试；</p>
+<p>在公司中，一般是把SonarQube部署在服务器端，当开发人员提交代码时，Jenkins触发SonarQube进行代码检查，开发人员根据代码检查结果进行问题修复。但是这样，开发人员往往只会关注被阻断的代码问题，对于Sonar提示的设计、性能方面的问题往往视而不见。<br>所幸现在SonarSource开发了SonarLint插件，可以在IDE(Intellij Idea、Eclipse)中嵌入，这样开发人员不仅能使用SonarLint中内置的代码检查规则进行代码检查，也可以连接到远端服务器拉取远端规则。有了它，我们就可以在编写代码的过程中根据SonarLint的提示编写高质量代码了。</p>
+<p>下面，将以Intellij Idea为基础介绍SonarLint插件的使用。</p>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><p>在Idea的Plugins界面搜索“SonarLint”，在检索结果列表页找到对应的SonarLint，点击右侧的“Install”按钮，安装完毕重启Idea后即可完成插件的安装。</p>
+<p><img src="https://farm5.staticflickr.com/4634/38195936814_d3318454b4_b.jpg" alt="安装插件"></p>
+<h2 id="2-代码检查"><a href="#2-代码检查" class="headerlink" title="2. 代码检查"></a>2. 代码检查</h2><p>SonarLint插件安装后，就可以使用它对Idea中的项目进行代码检查了。SonarLint能够对单个文件、整个项目、从VCS（版本控制系统，比如git、svn等）拉取的被修改文件这3类进行检查。</p>
+<p>开启SonarLint的检查有3个入口：</p>
+<ol>
+<li>Analyze-&gt;SonarLint，如下图：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4558/38195610794_c63be62dd8_b.jpg" alt=""></p>
+<ol>
+<li>在打开的文件编辑区域点击右键，在弹出的上下文菜单中选择，如下图：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4562/38875276892_7c0f79c2a4_z.jpg" alt=""></p>
+<p>此方式只能对当前文件进行检查。</p>
+<ol>
+<li>编辑区底部的Panel，这里可以在”Current file” Tab区域对当前文件进行检查，也可以在“Project files”Tab区域对文件进行全量和从VCS（版本控制系统，比如git、svn等）拉取的被修改文件进行检查，如下图：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4519/38196120834_fa47b16e02_b.jpg" alt=""></p>
+<p>执行代码检查后，在下面的SonarLint Panel区域就能显示代码检查的结果了：</p>
+<p><img src="https://farm5.staticflickr.com/4566/38024453305_b355b33948_z.jpg" alt=""></p>
+<h2 id="3-远程配置"><a href="#3-远程配置" class="headerlink" title="3. 远程配置"></a>3. 远程配置</h2><p>前面提到的代码检查，默认使用SonarLint内置的规则。我们也可以连接远端的SonarQube服务器，拉取服务器上配置的规则对代码进行检查，这样就能与代码提交时触发的检查规则保持一致了，具体方式如下：</p>
+<ol>
+<li>首先在下图的界面点击“+”创建新的SonarQube Server：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4557/38024453645_871bb2cd83.jpg" alt=""></p>
+<ol>
+<li>在New SonarQube Server界面中选择右侧的选项，并输入SonarQube URL，点击next：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4557/27134414809_a16b3fc406_b.jpg" alt=""></p>
+<ol>
+<li>在Authentication界面选择Login/Password，并输入用户名和密码：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4532/27134414729_f52684145d_b.jpg" alt=""></p>
+<p>验证通过后点击Finish即可完成SonarQube Server的配置。</p>
+<ol>
+<li>在SonarLint界面选择Server中配置的project，要与当前项目一致，否则可能会拉取错误的规则配置。</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4739/38875276722_f5b65063f0_b.jpg" alt=""></p>
+<p>经过上面4步，你就可以通过SonarLint拉取的服务器上的代码规则进行代码检查了。Have fun:)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/11/29/Sonar自定义插件开发指南/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -376,7 +547,7 @@
 <li>JDK 1.8</li>
 <li>Intellij Idea</li>
 <li>Maven 3.x或更高</li>
-<li>SonarQube 5.6</li>
+<li>SonarQube LTS 5.6</li>
 <li>Sonar-runner-dist 2.4</li>
 </ul>
 <h2 id="3-开发步骤"><a href="#3-开发步骤" class="headerlink" title="3 开发步骤"></a>3 开发步骤</h2><h3 id="3-1-创建Plugin项目"><a href="#3-1-创建Plugin项目" class="headerlink" title="3.1 创建Plugin项目"></a>3.1 创建Plugin项目</h3><p> 首先创建一个SonarPlugin项目，建议从SonarSource官方github站点下载模板项目，这样不至于遗漏配置。下载的地址是：<a href="https://github.com/SonarSource/sonar-custom-plugin-example" target="_blank" rel="external">下载链接</a></p>
@@ -404,6 +575,7 @@
 <p><img src="https://farm5.staticflickr.com/4566/38001442235_a562e60306.jpg" alt=""></p>
 <h2 id="6-启用规则"><a href="#6-启用规则" class="headerlink" title="6 启用规则"></a>6 启用规则</h2><p>插件部署到SonarQube之后，默认是不启用的，需要在SonarQube的管理界面中启用规则，才能让此规则在代码检查过程中生效。</p>
 <p><img src="https://farm5.staticflickr.com/4524/38888239671_35af64c4bf.jpg" alt=""></p>
+<p>至此，Sonar插件开发的流程就介绍完了。如前面所言，SonarQube是个强大的代码检查工具，一篇文章是无法介绍完的，尤其Sonar的语法树部分，涵盖了各种语言各种语法的方方面面，大家可以通过Sonar的<a href="https://docs.sonarqube.org/display/SONAR/" target="_blank" rel="external">官方文档</a>了解更多的细节。</p>
 
           
         
@@ -2035,152 +2207,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/22/服务化架构-服务的限流/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/22/服务化架构-服务的限流/" itemprop="url">服务化架构-服务的限流</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T11:20:23+08:00">
-                2017-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/04/22/服务化架构-服务的限流/" class="leancloud_visitors" data-flag-title="服务化架构-服务的限流">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1-什么是限流"><a href="#1-什么是限流" class="headerlink" title="1. 什么是限流"></a>1. 什么是限流</h1><p>顾名思义，限流就是限制请求量，当用户请求量达到设定的阈值之后，对超出部分的请求进行拒绝或者延时处理。</p>
-<h1 id="2-为什么要限流"><a href="#2-为什么要限流" class="headerlink" title="2.为什么要限流"></a>2.为什么要限流</h1><p>限流是服务提供方进行自我保护的一种手段。如果对用户请求量不做限制，那么过多的请求很有可能会将服务器有限的资源消耗殆尽，最终导致服务器宕机，进而引发雪崩。所以对于高可用的系统来讲，限流是一种必不可少的手段。</p>
-<h1 id="3-限流算法"><a href="#3-限流算法" class="headerlink" title="3. 限流算法"></a>3. 限流算法</h1><h2 id="3-1-令牌桶-Token-bucket"><a href="#3-1-令牌桶-Token-bucket" class="headerlink" title="3.1 令牌桶(Token bucket)"></a>3.1 令牌桶(Token bucket)</h2><p>令牌桶算法的基本过程如下:</p>
-<ol>
-<li>每秒会有 r 个令牌放入桶中，或者说，每过 1/r 秒桶中增加一个令牌;</li>
-<li>桶中最多存放 b 个令牌，如果桶满了，新放入的令牌会被丢弃;</li>
-<li>当一个 n 字节的数据包到达时，消耗 n 个令牌，然后发送该数据包;</li>
-<li>如果桶中可用令牌小于 n，则该数据包将被缓存或丢弃;</li>
-</ol>
-<p><img src="https://farm5.staticflickr.com/4584/38326639342_90a3a6881d.jpg" alt=""></p>
-<p>令牌桶算法的实现，可以借助于Google guava的RateLimiter实现，使用SmoothBursty模式。具体实现将在后面的blog中进行详细说明。</p>
-<h2 id="3-2-漏桶-Leaky-bucket"><a href="#3-2-漏桶-Leaky-bucket" class="headerlink" title="3.2 漏桶(Leaky bucket)"></a>3.2 漏桶(Leaky bucket)</h2><p>漏桶算法强制一个常量的输出速率而不管输入数据流的突发性,当输入空闲时，该算法不执行任何动作.就像用一个底部开了个洞的漏桶接水一样,水进入到漏桶里,桶里的水通过下面的孔以固定的速率流出,当水流入速度过大会直接溢出,可以看出漏桶算法能强行限制数据的传输速率.如下图所示:<br><img src="https://farm5.staticflickr.com/4583/37643209824_71df07e1e7.jpg" alt=""></p>
-<p>漏桶的实现，可以使用Guava RateLimiter的SmoothWarmingUp模式实现。</p>
-<h2 id="3-3-令牌桶与漏桶算法的比较"><a href="#3-3-令牌桶与漏桶算法的比较" class="headerlink" title="3.3 令牌桶与漏桶算法的比较"></a>3.3 令牌桶与漏桶算法的比较</h2><p>令牌桶算法能够允许一定程度的流量突增，要令牌桶中存在令牌，那么就允许突发地传输数据直到达到用户配置的上限，因此它适合于具有突发特性的流量。<br>漏桶算法能够强行限制数据的传输速率，因此更适合进行平滑限流的应用场景，比如限制下载速率。</p>
-<h1 id="4-限流方式"><a href="#4-限流方式" class="headerlink" title="4. 限流方式"></a>4. 限流方式</h1><h2 id="4-1-单机限流"><a href="#4-1-单机限流" class="headerlink" title="4.1 单机限流"></a>4.1 单机限流</h2><p>单机限流一般使用在对硬件资源进行保护的场景中，避免服务器过载而宕机，引发进一步的雪崩。比如对访问量进行限流。有同学可能会问了，我评估一个集群总体的阈值，用集群限流不也可以吗？这里面存在的隐患是，如果负载均衡策略不够均衡，可能会导致部分服务器存在热点，那么那些流量仍然有可能将这台热点服务器打挂掉，从而引发雪崩。</p>
-<h2 id="4-2-集群限流"><a href="#4-2-集群限流" class="headerlink" title="4.2 集群限流"></a>4.2 集群限流</h2><p>集群限流的方式一般会使用在某些外部资源存在访问限制的情况下，比如依赖的第三方系统限制了请求的访问量，那么上游的系统就需要在请求第三方系统前进行全局的限流，避免对方因过载而拒绝服务。比如说抓取。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2231,7 +2257,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
