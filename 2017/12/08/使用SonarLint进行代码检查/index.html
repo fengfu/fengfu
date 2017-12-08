@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Sonarqube是一个功能非常强大的代码质量检查、管理的工具。能够识别多种常用的编程语言，并能够通过设置不同的RuleSonar是一个代码质量管理的开源工具，它通过插件的形式能够识别常见的多种编程语言（例如Java, C#, PHP, Pythod等）代码质量问题。Sonar可以帮你分析出以下代码质量问题：1.不遵循代码标准；2.潜在的缺陷，比如空指针、bug；3.代码重复；4.注释率不足或过高">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用SonarLint编写高质量代码">
+<meta property="og:url" content="http://fengfu.io/2017/12/08/使用SonarLint进行代码检查/index.html">
+<meta property="og:site_name" content="宁静·致远">
+<meta property="og:description" content="Sonarqube是一个功能非常强大的代码质量检查、管理的工具。能够识别多种常用的编程语言，并能够通过设置不同的RuleSonar是一个代码质量管理的开源工具，它通过插件的形式能够识别常见的多种编程语言（例如Java, C#, PHP, Pythod等）代码质量问题。Sonar可以帮你分析出以下代码质量问题：1.不遵循代码标准；2.潜在的缺陷，比如空指针、bug；3.代码重复；4.注释率不足或过高">
+<meta property="og:image" content="https://farm5.staticflickr.com/4634/38195936814_d3318454b4_b.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4558/38195610794_c63be62dd8_b.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4562/38875276892_7c0f79c2a4_z.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4519/38196120834_fa47b16e02_b.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4566/38024453305_b355b33948_z.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4557/38024453645_871bb2cd83.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4557/27134414809_a16b3fc406_b.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4532/27134414729_f52684145d_b.jpg">
+<meta property="og:image" content="https://farm5.staticflickr.com/4739/38875276722_f5b65063f0_b.jpg">
+<meta property="og:updated_time" content="2017-12-08T12:30:03.609Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用SonarLint编写高质量代码">
+<meta name="twitter:description" content="Sonarqube是一个功能非常强大的代码质量检查、管理的工具。能够识别多种常用的编程语言，并能够通过设置不同的RuleSonar是一个代码质量管理的开源工具，它通过插件的形式能够识别常见的多种编程语言（例如Java, C#, PHP, Pythod等）代码质量问题。Sonar可以帮你分析出以下代码质量问题：1.不遵循代码标准；2.潜在的缺陷，比如空指针、bug；3.代码重复；4.注释率不足或过高">
+<meta name="twitter:image" content="https://farm5.staticflickr.com/4634/38195936814_d3318454b4_b.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fengfu.io/2017/12/08/使用SonarLint进行代码检查/"/>
+
+
+
+
+
+  <title>使用SonarLint编写高质量代码 | 宁静·致远</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宁静·致远</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-rss">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            RSS
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/12/08/使用SonarLint进行代码检查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用SonarLint编写高质量代码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-08T18:40:25+08:00">
+                2017-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/08/使用SonarLint进行代码检查/" class="leancloud_visitors" data-flag-title="使用SonarLint编写高质量代码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Sonarqube是一个功能非常强大的代码质量检查、管理的工具。能够识别多种常用的编程语言，并能够通过设置不同的Rule<br>Sonar是一个代码质量管理的开源工具，它通过插件的形式能够识别常见的多种编程语言（例如Java, C#, PHP, Pythod等）代码质量问题。Sonar可以帮你分析出以下代码质量问题：<br>1.不遵循代码标准；<br>2.潜在的缺陷，比如空指针、bug；<br>3.代码重复；<br>4.注释率不足或过高；<br>5.糟糕的复杂度，比如if/循环嵌套太多、类/方法太大；<br>6.缺乏单元测试；</p>
+<p>在公司中，一般是把SonarQube部署在服务器端，当开发人员提交代码时，Jenkins触发SonarQube进行代码检查，开发人员根据代码检查结果进行问题修复。但是这样，开发人员往往只会关注被阻断的代码问题，对于Sonar提示的设计、性能方面的问题往往视而不见。<br>所幸现在SonarSource开发了SonarLint插件，可以在IDE(Intellij Idea、Eclipse)中嵌入，这样开发人员不仅能使用SonarLint中内置的代码检查规则进行代码检查，也可以连接到远端服务器拉取远端规则。有了它，我们就可以在编写代码的过程中根据SonarLint的提示编写高质量代码了。</p>
+<p>下面，将以Intellij Idea为基础介绍SonarLint插件的使用。</p>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><p>在Idea的Plugins界面搜索“SonarLint”，在检索结果列表页找到对应的SonarLint，点击右侧的“Install”按钮，安装完毕重启Idea后即可完成插件的安装。</p>
+<p><img src="https://farm5.staticflickr.com/4634/38195936814_d3318454b4_b.jpg" alt="安装插件"></p>
+<h2 id="2-代码检查"><a href="#2-代码检查" class="headerlink" title="2. 代码检查"></a>2. 代码检查</h2><p>SonarLint插件安装后，就可以使用它对Idea中的项目进行代码检查了。SonarLint能够对单个文件、整个项目、从VCS（版本控制系统，比如git、svn等）拉取的被修改文件这3类进行检查。</p>
+<p>开启SonarLint的检查有3个入口：</p>
+<ol>
+<li>Analyze-&gt;SonarLint，如下图：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4558/38195610794_c63be62dd8_b.jpg" alt=""></p>
+<ol>
+<li>在打开的文件编辑区域点击右键，在弹出的上下文菜单中选择，如下图：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4562/38875276892_7c0f79c2a4_z.jpg" alt=""></p>
+<p>此方式只能对当前文件进行检查。</p>
+<ol>
+<li>编辑区底部的Panel，这里可以在”Current file” Tab区域对当前文件进行检查，也可以在“Project files”Tab区域对文件进行全量和从VCS（版本控制系统，比如git、svn等）拉取的被修改文件进行检查，如下图：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4519/38196120834_fa47b16e02_b.jpg" alt=""></p>
+<p>执行代码检查后，在下面的SonarLint Panel区域就能显示代码检查的结果了：</p>
+<p><img src="https://farm5.staticflickr.com/4566/38024453305_b355b33948_z.jpg" alt=""></p>
+<h2 id="3-远程配置"><a href="#3-远程配置" class="headerlink" title="3. 远程配置"></a>3. 远程配置</h2><p>前面提到的代码检查，默认使用SonarLint内置的规则。我们也可以连接远端的SonarQube服务器，拉取服务器上配置的规则对代码进行检查，这样就能与代码提交时触发的检查规则保持一致了，具体方式如下：</p>
+<ol>
+<li>首先在下图的界面点击“+”创建新的SonarQube Server：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4557/38024453645_871bb2cd83.jpg" alt=""></p>
+<ol>
+<li>在New SonarQube Server界面中选择右侧的选项，并输入SonarQube URL，点击next：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4557/27134414809_a16b3fc406_b.jpg" alt=""></p>
+<ol>
+<li>在Authentication界面选择Login/Password，并输入用户名和密码：</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4532/27134414729_f52684145d_b.jpg" alt=""></p>
+<p>验证通过后点击Finish即可完成SonarQube Server的配置。</p>
+<ol>
+<li>在SonarLint界面选择Server中配置的project，要与当前项目一致，否则可能会拉取错误的规则配置。</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4739/38875276722_f5b65063f0_b.jpg" alt=""></p>
+<p>经过上面4步，你就可以通过SonarLint拉取的服务器上的代码规则进行代码检查了。Have fun:)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/29/Sonar自定义插件开发指南/" rel="prev" title="Sonar自定义插件开发指南">
+                Sonar自定义插件开发指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDkyMy83NDcy"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="宁静·致远" />
+          <p class="site-author-name" itemprop="name">宁静·致远</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装"><span class="nav-number">1.</span> <span class="nav-text">1. 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-代码检查"><span class="nav-number">2.</span> <span class="nav-text">2. 代码检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-远程配置"><span class="nav-number">3.</span> <span class="nav-text">3. 远程配置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宁静·致远</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("pq7j7M6jaVzlRAhO3VhuFy1O-gzGzoHsz", "Fqlk4xsApzNKqC5HV87nMkix");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
