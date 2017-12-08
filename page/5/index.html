@@ -289,6 +289,283 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/02/08/线程初始化参数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/08/线程初始化参数/" itemprop="url">线程初始化参数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-08T20:41:09+08:00">
+                2015-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/02/08/线程初始化参数/" class="leancloud_visitors" data-flag-title="线程初始化参数">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>线程池创建时，有3个参数比较关键，分别是：corePoolSize、maximumPoolSize，还有一个queueSize。</p>
+<p>corePoolSize</p>
+<p>线程池基本大小，即在任务没有需要执行的时候线程池的大小。在刚刚创建了ThreadPoolExecutor的时候，线程并不会立即启动，只有在有任务提交的时候才会启动；除非你调用了prestartCoreThread/prestartAllCoreThreads。</p>
+<p>maximumPoolSize</p>
+<p>线程池中允许的最大线程数，即线程池中运行的线程不可能超过这个数量。</p>
+<p>queueSize</p>
+<p>线程池队列大小，即排队的队列容量。</p>
+<p>如果线程池中线程已达到corePoolSize，并且还有新的任务提交，那么线程池首先将任务存到队列中排队。如果队列也满了，那么线程池将继续在增加 线程，直到达到maximumPoolSize。到这里细心的同学可能会问了：如果队列没设置大小呢？那么我只能告诉你：看运气吧，如果任务少，你的队列 顶多长一些；如果任务很多，那么很可能你要oom了O(∩_∩)O</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/02/03/架构设计原则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/03/架构设计原则/" itemprop="url">架构设计原则</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-03T19:48:09+08:00">
+                2015-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/02/03/架构设计原则/" class="leancloud_visitors" data-flag-title="架构设计原则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-单一职责原则-Single-Responsibility-Principle"><a href="#1-单一职责原则-Single-Responsibility-Principle" class="headerlink" title="1. 单一职责原则(Single Responsibility Principle)"></a>1. 单一职责原则(Single Responsibility Principle)</h2><p>简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。</p>
+<h2 id="2-里氏替换原则-Liskov-Substitution-Principle"><a href="#2-里氏替换原则-Liskov-Substitution-Principle" class="headerlink" title="2. 里氏替换原则(Liskov Substitution Principle)"></a>2. 里氏替换原则(Liskov Substitution Principle)</h2><p>原则：子类可以扩展父类的功能，但不能改变父类原有的功能。具体总结为以下2点：</p>
+<p>1) 子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。<br>2) 子类中可以增加自己特有的方法。</p>
+<p>例如，当类B继承类A时，除添加新的方法完成新增功能外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。</p>
+<h2 id="3-依赖倒置原则-Dependency-Inversion-Principle"><a href="#3-依赖倒置原则-Dependency-Inversion-Principle" class="headerlink" title="3. 依赖倒置原则(Dependency Inversion Principle)"></a>3. 依赖倒置原则(Dependency Inversion Principle)</h2><p>DIP(Dependency Inversion Priciple)，如果你觉得陌生的话，那么IOC(Inversion of Control，控制反转)你一定不会陌生，Spring的核心思想啊。一句话：面向接口编程。</p>
+<p>1) 底层模块尽量都要有抽象类或接口，或者两者都有;<br>2) 变量的声明类型尽量是抽象类或接口;<br>3) 使用继承时遵循里氏替换原则。</p>
+<h2 id="4-接口隔离原则-Interface-Segregation-Principle"><a href="#4-接口隔离原则-Interface-Segregation-Principle" class="headerlink" title="4. 接口隔离原则(Interface Segregation Principle)"></a>4. 接口隔离原则(Interface Segregation Principle)</h2><p>不要创建过大的接口类，即接口中的方法不要过多。本着高内聚的原则，将接口中的方法归类，拆分为几个独立的接口。</p>
+<h2 id="5-迪米特法则"><a href="#5-迪米特法则" class="headerlink" title="5. 迪米特法则"></a>5. 迪米特法则</h2><p>也叫最少知道原则，原则是一个对象应该对其他对象保持最少的了解，出发点是降低类与类之间的耦合度。</p>
+<h2 id="6-开闭原则-Open-Closed-Principle"><a href="#6-开闭原则-Open-Closed-Principle" class="headerlink" title="6. 开闭原则(Open Closed Principle)"></a>6. 开闭原则(Open Closed Principle)</h2><p>对扩展开放，对修改关闭。这个原则很虚，虚得感觉跟没说一样，索性总结一句：遵循前面5条原则，就相当于遵循了开闭原则O(∩_∩)O</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/01/28/第一篇Markdown/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -594,7 +871,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

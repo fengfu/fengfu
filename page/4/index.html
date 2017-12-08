@@ -289,6 +289,286 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/03/22/技术栈选型原则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/03/22/技术栈选型原则/" itemprop="url">技术栈选型原则</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-22T14:55:20+08:00">
+                2016-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/03/22/技术栈选型原则/" class="leancloud_visitors" data-flag-title="技术栈选型原则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>未完成</p>
+<p>2个能力</p>
+<ol>
+<li>满足需求的能力：开源产品满足自身功能、性能的能力(开发效率？运行效率？)；需求，梳理自身的业务、技术需求；</li>
+<li>自身技术团队维护开源产品的能力；学习曲线以及公司内部的技术支持；</li>
+</ol>
+<p>3个关注点</p>
+<ol>
+<li>社区成熟度（用户数、bug数）、活跃度（contributors、releases）、技术支持（论坛、文档等）；</li>
+<li>成功案例；</li>
+</ol>
+<p>避免过度炫技<br>不要因为一个人的喜好而舍弃掉整个技术团队，在任何时候这都是非常愚蠢的事情</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/03/08/JVM触发FullGC的情况总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/03/08/JVM触发FullGC的情况总结/" itemprop="url">JVM触发FullGC的情况总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-08T22:53:56+08:00">
+                2016-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/03/08/JVM触发FullGC的情况总结/" class="leancloud_visitors" data-flag-title="JVM触发FullGC的情况总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>FullGC是Java应用中一个不容忽视的问题，因为FullGC会引起应用停顿，所以它对那些响应时间要求比较高的应用的影响还是非常大的。<br>当然，如果要解决FullGC的问题，我们首先需要知道在什么情况下会引起FullGC，这样才能对症下药，避免FullGC的出现。</p>
+<p>下面的总结是针对于系统自动进行FullGC的情况分析，不包含System.gc操作。</p>
+<h2 id="1-老年代空间不足"><a href="#1-老年代空间不足" class="headerlink" title="1. 老年代空间不足"></a>1. 老年代空间不足</h2><p>JVM中堆空间主要由新生代和老年代组成。新创建的对象大多在新生代中创建，当对象经过几次Minor GC依然存活，才有机会被转入老年代。这时问题就来了，如果此时老年代的空间不足以容纳从新生代转入的对象，那么JVM就会进行FullGC，以清理老年代的空间。如果进行FullGC后老年代依然无法容纳转入对象，那么系统就会抛出：java.lang.OutOfMemoryError: Java heap space的异常，相比大家都比较熟悉了。</p>
+<h2 id="2-永久代空间不足"><a href="#2-永久代空间不足" class="headerlink" title="2. 永久代空间不足"></a>2. 永久代空间不足</h2><p>永久代(Permanent Generation)一般是用来存放类信息、字符串常量的地方，如果我们永久代设置的空间比较小无法容纳足够的类信息时，或者因为频繁热加载类信息，又或者存储了太多的字符串常量，那么系统就会触发FullGC，以清理永久代。如果FullGC之后永久代还无法容纳足够的信息，那么系统就会抛出：java.lang.OutOfMemoryError: PermGen space的异常，眼熟吧:)</p>
+<h2 id="3-promotion-failed和concurrent-mode-failure"><a href="#3-promotion-failed和concurrent-mode-failure" class="headerlink" title="3. promotion failed和concurrent mode failure"></a>3. promotion failed和concurrent mode failure</h2><p>promotion failed是指在进行Minor GC时，新生代中的对象从Eden区往survivor区转移，但是survivor区放不下，只能放入老年代，但是悲催的是老年代也放不下，这时就会出现promotion failed的情况，系统会触发FullGC以清理空间。</p>
+<p>concurrent mode failure是指在进行CMS GC的过程中有对象要放入老年代，但是老年代空间不够引起的。 </p>
+<h2 id="4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间"><a href="#4-统计得到的Minor-GC晋升到旧生代的平均大小大于旧生代的剩余空间" class="headerlink" title="4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间"></a>4. 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间</h2><p>这是一个较为复杂的触发情况，Hotspot为了避免由于新生代对象晋升到旧生代导致旧生代空间不足的现象，在进行Minor GC时，做了一个判断，如果之前统计所得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间，那么就直接触发Full GC。<br>例如程序第一次触发Minor GC后，有6MB的对象晋升到旧生代，那么当下一次Minor GC发生时，首先检查旧生代的剩余空间是否大于6MB，如果小于6MB，则执行Full GC。<br>当新生代采用PS GC时，方式稍有不同，PS GC是在Minor GC后也会检查，例如上面的例子中第一次Minor GC后，PS GC会检查此时旧生代的剩余空间是否大于6MB，如小于，则触发对旧生代的回收。<br>除了以上4种状况外，对于使用RMI来进行RPC或管理的Sun JDK应用而言，默认情况下会一小时执行一次Full GC。可通过在启动时通过- java -Dsun.rmi.dgc.client.gcInterval=3600000来设置Full GC执行的间隔时间或通过-XX:+ DisableExplicitGC来禁止RMI调用System.gc。</p>
+<p>明确了FullGC出现的原理，我们就能根据JVM垃圾回收的情况来判断系统到底是因为什么原因出现了FullGC，也就能对症下药，避免FullGC的出现。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/02/28/你若懂我该有多好/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2263,283 +2543,6 @@ Hello, Fengfu, I&apos;m BB8.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/02/08/线程初始化参数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/02/08/线程初始化参数/" itemprop="url">线程初始化参数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-08T20:41:09+08:00">
-                2015-02-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015/02/08/线程初始化参数/" class="leancloud_visitors" data-flag-title="线程初始化参数">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>线程池创建时，有3个参数比较关键，分别是：corePoolSize、maximumPoolSize，还有一个queueSize。</p>
-<p>corePoolSize</p>
-<p>线程池基本大小，即在任务没有需要执行的时候线程池的大小。在刚刚创建了ThreadPoolExecutor的时候，线程并不会立即启动，只有在有任务提交的时候才会启动；除非你调用了prestartCoreThread/prestartAllCoreThreads。</p>
-<p>maximumPoolSize</p>
-<p>线程池中允许的最大线程数，即线程池中运行的线程不可能超过这个数量。</p>
-<p>queueSize</p>
-<p>线程池队列大小，即排队的队列容量。</p>
-<p>如果线程池中线程已达到corePoolSize，并且还有新的任务提交，那么线程池首先将任务存到队列中排队。如果队列也满了，那么线程池将继续在增加 线程，直到达到maximumPoolSize。到这里细心的同学可能会问了：如果队列没设置大小呢？那么我只能告诉你：看运气吧，如果任务少，你的队列 顶多长一些；如果任务很多，那么很可能你要oom了O(∩_∩)O</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/02/03/架构设计原则/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/02/03/架构设计原则/" itemprop="url">架构设计原则</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-03T19:48:09+08:00">
-                2015-02-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015/02/03/架构设计原则/" class="leancloud_visitors" data-flag-title="架构设计原则">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-单一职责原则-Single-Responsibility-Principle"><a href="#1-单一职责原则-Single-Responsibility-Principle" class="headerlink" title="1. 单一职责原则(Single Responsibility Principle)"></a>1. 单一职责原则(Single Responsibility Principle)</h2><p>简而言之，就是一个类只负责一个职责。则样做的好处就是类的职责比较单一，可以降低类的复杂度，简单为美。代码的可读性提高了，维护的复杂性降低了。</p>
-<h2 id="2-里氏替换原则-Liskov-Substitution-Principle"><a href="#2-里氏替换原则-Liskov-Substitution-Principle" class="headerlink" title="2. 里氏替换原则(Liskov Substitution Principle)"></a>2. 里氏替换原则(Liskov Substitution Principle)</h2><p>原则：子类可以扩展父类的功能，但不能改变父类原有的功能。具体总结为以下2点：</p>
-<p>1) 子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。<br>2) 子类中可以增加自己特有的方法。</p>
-<p>例如，当类B继承类A时，除添加新的方法完成新增功能外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。</p>
-<h2 id="3-依赖倒置原则-Dependency-Inversion-Principle"><a href="#3-依赖倒置原则-Dependency-Inversion-Principle" class="headerlink" title="3. 依赖倒置原则(Dependency Inversion Principle)"></a>3. 依赖倒置原则(Dependency Inversion Principle)</h2><p>DIP(Dependency Inversion Priciple)，如果你觉得陌生的话，那么IOC(Inversion of Control，控制反转)你一定不会陌生，Spring的核心思想啊。一句话：面向接口编程。</p>
-<p>1) 底层模块尽量都要有抽象类或接口，或者两者都有;<br>2) 变量的声明类型尽量是抽象类或接口;<br>3) 使用继承时遵循里氏替换原则。</p>
-<h2 id="4-接口隔离原则-Interface-Segregation-Principle"><a href="#4-接口隔离原则-Interface-Segregation-Principle" class="headerlink" title="4. 接口隔离原则(Interface Segregation Principle)"></a>4. 接口隔离原则(Interface Segregation Principle)</h2><p>不要创建过大的接口类，即接口中的方法不要过多。本着高内聚的原则，将接口中的方法归类，拆分为几个独立的接口。</p>
-<h2 id="5-迪米特法则"><a href="#5-迪米特法则" class="headerlink" title="5. 迪米特法则"></a>5. 迪米特法则</h2><p>也叫最少知道原则，原则是一个对象应该对其他对象保持最少的了解，出发点是降低类与类之间的耦合度。</p>
-<h2 id="6-开闭原则-Open-Closed-Principle"><a href="#6-开闭原则-Open-Closed-Principle" class="headerlink" title="6. 开闭原则(Open Closed Principle)"></a>6. 开闭原则(Open Closed Principle)</h2><p>对扩展开放，对修改关闭。这个原则很虚，虚得感觉跟没说一样，索性总结一句：遵循前面5条原则，就相当于遵循了开闭原则O(∩_∩)O</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2590,7 +2593,7 @@ Hello, Fengfu, I&apos;m BB8.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

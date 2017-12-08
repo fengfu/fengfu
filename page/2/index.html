@@ -289,6 +289,361 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/22/服务化架构-服务的限流/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/22/服务化架构-服务的限流/" itemprop="url">服务化架构-服务的限流</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T11:20:23+08:00">
+                2017-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/22/服务化架构-服务的限流/" class="leancloud_visitors" data-flag-title="服务化架构-服务的限流">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-什么是限流"><a href="#1-什么是限流" class="headerlink" title="1. 什么是限流"></a>1. 什么是限流</h1><p>顾名思义，限流就是限制请求量，当用户请求量达到设定的阈值之后，对超出部分的请求进行拒绝或者延时处理。</p>
+<h1 id="2-为什么要限流"><a href="#2-为什么要限流" class="headerlink" title="2.为什么要限流"></a>2.为什么要限流</h1><p>限流是服务提供方进行自我保护的一种手段。如果对用户请求量不做限制，那么过多的请求很有可能会将服务器有限的资源消耗殆尽，最终导致服务器宕机，进而引发雪崩。所以对于高可用的系统来讲，限流是一种必不可少的手段。</p>
+<h1 id="3-限流算法"><a href="#3-限流算法" class="headerlink" title="3. 限流算法"></a>3. 限流算法</h1><h2 id="3-1-令牌桶-Token-bucket"><a href="#3-1-令牌桶-Token-bucket" class="headerlink" title="3.1 令牌桶(Token bucket)"></a>3.1 令牌桶(Token bucket)</h2><p>令牌桶算法的基本过程如下:</p>
+<ol>
+<li>每秒会有 r 个令牌放入桶中，或者说，每过 1/r 秒桶中增加一个令牌;</li>
+<li>桶中最多存放 b 个令牌，如果桶满了，新放入的令牌会被丢弃;</li>
+<li>当一个 n 字节的数据包到达时，消耗 n 个令牌，然后发送该数据包;</li>
+<li>如果桶中可用令牌小于 n，则该数据包将被缓存或丢弃;</li>
+</ol>
+<p><img src="https://farm5.staticflickr.com/4584/38326639342_90a3a6881d.jpg" alt=""></p>
+<p>令牌桶算法的实现，可以借助于Google guava的RateLimiter实现，使用SmoothBursty模式。具体实现将在后面的blog中进行详细说明。</p>
+<h2 id="3-2-漏桶-Leaky-bucket"><a href="#3-2-漏桶-Leaky-bucket" class="headerlink" title="3.2 漏桶(Leaky bucket)"></a>3.2 漏桶(Leaky bucket)</h2><p>漏桶算法强制一个常量的输出速率而不管输入数据流的突发性,当输入空闲时，该算法不执行任何动作.就像用一个底部开了个洞的漏桶接水一样,水进入到漏桶里,桶里的水通过下面的孔以固定的速率流出,当水流入速度过大会直接溢出,可以看出漏桶算法能强行限制数据的传输速率.如下图所示:<br><img src="https://farm5.staticflickr.com/4583/37643209824_71df07e1e7.jpg" alt=""></p>
+<p>漏桶的实现，可以使用Guava RateLimiter的SmoothWarmingUp模式实现。</p>
+<h2 id="3-3-令牌桶与漏桶算法的比较"><a href="#3-3-令牌桶与漏桶算法的比较" class="headerlink" title="3.3 令牌桶与漏桶算法的比较"></a>3.3 令牌桶与漏桶算法的比较</h2><p>令牌桶算法能够允许一定程度的流量突增，要令牌桶中存在令牌，那么就允许突发地传输数据直到达到用户配置的上限，因此它适合于具有突发特性的流量。<br>漏桶算法能够强行限制数据的传输速率，因此更适合进行平滑限流的应用场景，比如限制下载速率。</p>
+<h1 id="4-限流方式"><a href="#4-限流方式" class="headerlink" title="4. 限流方式"></a>4. 限流方式</h1><h2 id="4-1-单机限流"><a href="#4-1-单机限流" class="headerlink" title="4.1 单机限流"></a>4.1 单机限流</h2><p>单机限流一般使用在对硬件资源进行保护的场景中，避免服务器过载而宕机，引发进一步的雪崩。比如对访问量进行限流。有同学可能会问了，我评估一个集群总体的阈值，用集群限流不也可以吗？这里面存在的隐患是，如果负载均衡策略不够均衡，可能会导致部分服务器存在热点，那么那些流量仍然有可能将这台热点服务器打挂掉，从而引发雪崩。</p>
+<h2 id="4-2-集群限流"><a href="#4-2-集群限流" class="headerlink" title="4.2 集群限流"></a>4.2 集群限流</h2><p>集群限流的方式一般会使用在某些外部资源存在访问限制的情况下，比如依赖的第三方系统限制了请求的访问量，那么上游的系统就需要在请求第三方系统前进行全局的限流，避免对方因过载而拒绝服务。比如说抓取。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/11/使用JRebel远程热部署Class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/11/使用JRebel远程热部署Class/" itemprop="url">使用 jrebel 远程部署开发环境的 dubbo 服务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T21:08:09+08:00">
+                2017-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/11/使用JRebel远程热部署Class/" class="leancloud_visitors" data-flag-title="使用 jrebel 远程部署开发环境的 dubbo 服务">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文转自<a href="http://wulfric.me/2017/04/jrebel/" target="_blank" rel="external">http://wulfric.me/2017/04/jrebel/</a> ，如果转载请尊重原作者版权。</p>
+<blockquote>
+<p>声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" title="姓名标示-非商业性-禁止改作4.0国际" target="_blank" rel="external">CC BY-NC-ND 4.0</a> 授权。</p>
+</blockquote>
+<p><img src="https://zeroturnaround.com/wp-content/uploads/2011/02/jrebel-dl.png" alt="jrebel"></p>
+<p>在开发 java 程序的时候，如果改动非常频繁，每次改动都要重新打包、部署，对于很重的应用（比如本文所说的 dubbo provider 服务），这样反复的流程十分消耗精力和热情。我们需要一个工具，当代码作改动之后能够立即看到效果。Java 在 1.4 的时候引入了 HotSwap 技术，允许调试者使用同一个类标识来更新类的字节码。这意味着所有对象都可以引用一个更新后的类，并在它们的方法被调用的时候执行新的代码，这就避免了无论何时只要有类的字节码被修改就要重载容器的这种要求<sup id="fnref:hotswap-jrebel"><a href="#fn:hotswap-jrebel">1</a></sup>。不幸的是，这种重定义仅限于修改方法体—除了方法体之外，它既不能添加方法或域，也不能修改其他任何东西。</p>
+<p>和 PHP 这样的脚本语言不一样，Java 部署是一个令人心烦的问题。一个运行中的 Java 程序相当于一辆在公路上奔跑的汽车，而 HotSwap 技术只能让你更换坐垫，但是让你想要更换轮胎的时候，HotSwap 就帮不上忙了，这个时候你只能停下来，换掉轮胎，再重新启动。而对于 PHP 来说，每个请求都会新开一个进程加载所有的 .php 文件编译和执行，所以不存在这个问题。运行 PHP 程序相当于给静止的汽车拍照，你大可以换完轮胎之后再拍照，这没有任何不良影响。（这个比喻可能不太恰当，却很有趣：在比喻中，静态的语言看起来是运动的，而动态语言看起来是静止的）</p>
+<p><a href="https://zeroturnaround.com/software/jrebel/" target="_blank" rel="external">JRebel</a> 是 java 的热部署插件，它监控已编译的 .class 文件，只要有变动，就立即更新在部署好的应用上，能够实现实时查看代码变化的功能。</p>
+<p><img src="https://zeroturnaround.com/wp-content/uploads/2016/11/JR_devcycle_2016_c.png" alt="skip build, package and deploy"></p>
+<p>skip build, package and deploy</p>
+<p>HotSwap 是工作在虚拟机层面上，且依赖于 JVM 的内部运作，JRebel 用到了 JVM 的两个显著的功能特征—抽象的字节码和类加载器。类加载器允许 JRebel 辨别出类被加载的时刻，然后实时地翻译字节码，用以在虚拟机和可执行代码之间创建另一个抽象层<sup id="fnref:hotswap-jrebel:1"><a href="#fn:hotswap-jrebel">1</a></sup>。这种技术也应用在 zeroturnaround 家其他的工具，比如 xrebel。</p>
+<p>如果继续使用上面的比喻，JRebel 相当于在汽车运行过程中，先额外生成一个轮胎，然后以迅雷之势替换掉目标轮胎—汽车不需要停止装载和再启动。</p>
+<h2 id="安装和使用"><a href="#安装和使用" class="headerlink" title="安装和使用"></a>安装和使用</h2><p>JRebel 的安装参照官网即可，我是直接在 Intellij 的插件中心安装的，速度比较慢，插件也比较大，挂了代理才下载完成。下载完毕重启 IDE 即可使用。</p>
+<p>JRebel 是收费插件，第一次打开的时候需要激活，网上有各种神奇教程可以参考。其实这个插件官方提供了免费的激活码，只要需要你注册一个<a href="https://my.jrebel.com/" target="_blank" rel="external">帐号</a>，并关联一个 twitter 或者 facebook 帐号即可。jrebel 需要这个关联帐号的写权限，会定期发送使用统计到你的 timeline，你可以使用一个小号来关联。</p>
+<p>安装和激活完毕之后，就可以在 IDE 的配置页看到 JRebel 选项了。</p>
+<p><a href="http://wulfric.qiniudn.com/java/jrebel-preference.png-origin.webp" target="_blank" rel="external"><img src="http://wulfric.qiniudn.com/java/jrebel-preference.png-article.webp" alt="jrebel preference"></a></p>
+<p>jrebel preference</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>为了能够比较熟悉该插件的使用，建议按照官方教程，先通过 IDE 本地启动，再通过命令行启动，然后尝试部署到远端服务器。</p>
+<p>当在 console 窗口观察到这些输出之后，说明应用正确启用了 JRebel 插件。</p>
+<pre><code>2017-04-01 16:27:31 JRebel:  #############################################################
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  JRebel Agent 7.0.6 (201703201213)
+2017-04-01 16:27:31 JRebel:  (c) Copyright ZeroTurnaround AS, Estonia, Tartu.
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  Over the last 2 days JRebel prevented
+2017-04-01 16:27:31 JRebel:  at least 0 redeploys/restarts saving you about 0 hours.
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  JRebel started in remote server mode.
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:
+2017-04-01 16:27:31 JRebel:  #############################################################
+</code></pre><h3 id="IDE-运行"><a href="#IDE-运行" class="headerlink" title="IDE 运行"></a>IDE 运行</h3><p>IDE 运行本地应用最简单。参见<a href="https://zeroturnaround.com/software/jrebel/quickstart/intellij/?run=ide#!/server-configuration" target="_blank" rel="external">官方教程</a>。</p>
+<ol>
+<li>执行<span class="codespan">mvn clean</span>清空 target 目录；</li>
+<li>打开 「View &gt; Tool Windows &gt; JRebel」调出 JRebel Panel 编辑窗，点击「generate rebel.xml」按钮选中需要监控和热部署的模块。因为是本地执行，所以另外一个「generate rebel-remote.xml」 不需要选中；</li>
+<li>将以前通过 「Run ‘MyApp’」或者「Debug ‘MyApp’」来运行的命令改成「Run with JRebel ‘MyApp’」或者「Debug with JRebel ‘MyApp’」即可；</li>
+<li>修改代码，然后在「Build」菜单下选择合适的构建选项（只构建单个文件/构建模块/构建项目）；</li>
+<li>访问接口，查看结果是否实时改变。</li>
+</ol>
+<h3 id="命令行运行"><a href="#命令行运行" class="headerlink" title="命令行运行"></a>命令行运行</h3><p>在 JRebel 设置页的「Startup」标签中选择「Run locally from command line」， 选择合适的 jvm 和目标环境。我的 dubbo 使用了 netty 部署，所以选择了「Standalone application」，给出的启动参数如下。</p>
+<pre><code># agentpath 是必需的，foo.bar.MyApp 是你要运行的程序
+java -agentpath:/Users/xxxx/Library/Application Support/IntelliJIdea2017.1/jr-ide-idea/lib/jrebel6/lib/libjrebel64.dylib foo.bar.MyApp
+</code></pre><p>P.S.: 注意上面的「Application Support」需要换成「Application\ Support」。</p>
+<p>dubbo 一般推荐使用 start.sh 脚本来启动应用，我们编辑 start.sh 文件，在启动的具体位置那里，将「-agentpath:…」添加在 java 后面，大致如下。</p>
+<pre><code>java -agentpath:... $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS -classpath ...
+</code></pre><p>各种目标环境的配置方法有着或大或小的区别，请按照自己的目标环境跟着 JRebel 给的配置方案来设置。</p>
+<ol>
+<li>配置启动参数，如上所述；</li>
+<li>选择需要热部署的模块；</li>
+<li>执行<span class="codespan">start.sh</span>部署应用；</li>
+<li>Run with JRebel ‘MyApp’；</li>
+<li>修改代码，构建改动的文件；</li>
+<li>访问接口，查看结果是否实时改变。</li>
+</ol>
+<p>从输出结果可以看到，JRebel 接管了 console。</p>
+<h3 id="远程服务器运行"><a href="#远程服务器运行" class="headerlink" title="远程服务器运行"></a>远程服务器运行</h3><p>官方<a href="https://zeroturnaround.com/software/jrebel/quickstart/intellij/?run=remote#!/server-configuration" target="_blank" rel="external">教程1</a>，<a href="https://manuals.zeroturnaround.com/jrebel/remoteserver/intellij.html" target="_blank" rel="external">教程2</a>更好<sup id="fnref:jrebel-doc"><a href="#fn:jrebel-doc">2</a></sup>。</p>
+<p>同上，在 JRebel 配置页选择「Run on a remote server」，根据给出的建议配置好启动项。</p>
+<pre><code>java -agentpath:... -Drebel.remoting_plugin=true ... -jar ...
+</code></pre><p>在 JRebel 配置页添加远程服务器地址，注意要是能够 http 访问的 url 才可以。</p>
+<figure><a class="post-image" rel="post-image" href=""><img src="https://manuals.zeroturnaround.com/jrebel/_images/intellij-add-remote-server.png" alt="添加远程服务器" title="添加远程服务器"></a><br></figure>
+
+<p>添加远程服务器</p>
+<ol>
+<li>配置启动参数和添加远程服务器，如上所述；</li>
+<li>选择需要热部署的模块，注意这个时候「generate rebel.xml」和「generate rebel-remote.xml」 两个都要选中；</li>
+<li>将包含 rebel.xml 和 rebel-remote.xml 的代码部署到远程服务器。本地打包并上传，或者代码上传并在远程服务器打包都可以；</li>
+<li>在远程服务器上<span class="codespan">start.sh</span>启动应用；</li>
+<li>修改代码，构建改动的文件；</li>
+<li>访问接口，查看结果是否实时改变。</li>
+</ol>
+<p>P.S.: 教程1似乎有些问题，远端启动应用后，本地不需要再「Run with JRebel ‘MyApp’」了。</p>
+<p>P.S.: 在官方教程里，「Run with JRebel ‘MyApp’」和「generate rebel.xml」checkbox 的图标一模一样，注意区分：有的是让你启动，有的是选中。</p>
+<p>P.S.: JRebel 对 Spring 的 bean 注入默认就有很好的支持，参见 <a href="https://zeroturnaround.com/software/jrebel/learn/jrebel-spring-integration/" target="_blank" rel="external">JRebel Spring</a>。它可以根据 xml 文件或者注解自动重新装载 bean。还支持动态实时地在 Spring 中添加 bean 和依赖。</p>
+<ol>
+<li><p>HotSwap 和 JRebel 原理<a href="https://dzone.com/articles/reloading-java-classes-401" target="_blank" rel="external">原文</a>，<a href="http://www.hollischuang.com/archives/598" target="_blank" rel="external">译文</a> <a href="#fnref:hotswap-jrebel">↩</a> <a href="#fnref:hotswap-jrebel:1">↩<sup>2</sup></a></p>
+</li>
+<li><p>参照官方的<a href="https://manuals.zeroturnaround.com/jrebel/index.html" target="_blank" rel="external">详细使用文档</a>是更好的选择 <a href="#fnref:jrebel-doc">↩</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/03/06/Spring Xml扩展机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1617,299 +1972,6 @@ future.setCallback(new ResponseCallback(){
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/08/22/晋级Review归来话答辩/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/22/晋级Review归来话答辩/" itemprop="url">晋级Review归来话答辩</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-22T09:50:26+08:00">
-                2016-08-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/08/22/晋级Review归来话答辩/" class="leancloud_visitors" data-flag-title="晋级Review归来话答辩">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>每半年一次的晋级季结束了，这次自己团队的同学有参加晋级的，需要帮他们过PPT以及预演，同时也参加了其他同学的晋级答辩。在这过程中发现了很多问题，觉得有必要写出来总结一下了，以帮助同学们写好PPT和做好答辩工作。</p>
-<h1 id="PPT中的常见问题"><a href="#PPT中的常见问题" class="headerlink" title="PPT中的常见问题"></a>PPT中的常见问题</h1><h2 id="1-没有大纲"><a href="#1-没有大纲" class="headerlink" title="1.没有大纲"></a>1.没有大纲</h2><p>写PPT跟上学的时候写作文有点类似，我们需要先把大纲列出来，否则写出来的内容就容易有缺失，内容也不连贯。这样的PPT在讲的时候也会让你很纠结，听众更难受。</p>
-<h2 id="2-前后不连贯"><a href="#2-前后不连贯" class="headerlink" title="2.前后不连贯"></a>2.前后不连贯</h2><p>一个好的PPT，前后之间应该有关联，不应该彼此孤立。很多时候，我们需要通过前面的片子来引出后面的内容，也就是俗话说的“抛砖引玉”。典型的场景比如：通过项目特点/难点，引出后面的挑战/遇到的问题，最后引出如何解决。这样下来，整个PPT就会顺畅很多。</p>
-<h2 id="3-重要内容有遗漏"><a href="#3-重要内容有遗漏" class="headerlink" title="3.重要内容有遗漏"></a>3.重要内容有遗漏</h2><p>此处说的重要内容是指契合公司文化的内容，比如去哪儿来说，推崇工程师文化，那么你平时的工作中，通过工具提升工作效率，或者开发一些组件这样的事情就比较值得拿出来说。但是有些人可能觉得这些事情不重要而忽略，那么就是一种损失。</p>
-<p>其实任何工作都是这样，你如果只是做好本职工作（自扫门前雪），这本身就是一个基本要求，你做好是应该的。但是如果你对自己要求高一些，站在整个团队的角度，或者站在整个公司的角度看待问题或者做一些事情，那么这个事情的高度就会更高一些，做出的成绩可能也会更大。所以从这一点来讲，作为工程师，在做事的态度和方式上，也应该立足高远才好。</p>
-<h2 id="4-文字太多"><a href="#4-文字太多" class="headerlink" title="4.文字太多"></a>4.文字太多</h2><p>一页PPT最好不要超过30字，这是一个基本原则，希望能够尽量遵守。因为人是视觉动物，当看到密密麻麻的字的时候，首先会选择放弃。我们来看一下下面这张PPT，看到的第一眼你是什么感觉？<br><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB2BPAMaxmJ.eBjy0FhXXbBdFXa_!!2657627814.png" alt=""></p>
-<p>再来看这张：</p>
-<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2ta.PaCqJ.eBjy1zbXXbx8FXa_!!2657627814.png" alt=""></p>
-<p>相比上一张，是不是清爽了很多？</p>
-<p>另外，关于PPT的文字，给大家的建议是用微软雅黑，微软雅黑无论在表现汉字还是字母数字都比较圆润，看起来比较舒服。尽量不要用宋体，因为宋体边缘较窄，会给人带来视觉上的沉重感。</p>
-<h2 id="5-没有图表"><a href="#5-没有图表" class="headerlink" title="5.没有图表"></a>5.没有图表</h2><p>俗话说，一图胜千言。作为工程师，我们可以通过架构图来描述对系统的理解，通过流程图来描述对业务/流程的理解，通过类图来描述代码实现。通过监控图/表格来描述结果，这样你的PPT内容就会更加丰满，形式也更加漂亮。</p>
-<h2 id="6-动画太过花哨"><a href="#6-动画太过花哨" class="headerlink" title="6.动画太过花哨"></a>6.动画太过花哨</h2><p>既然我们是工程师，不是视觉设计师，所以那些花哨的动画就免了吧，毕竟这不是我们的专长，简单的淡出效果就挺好了。当然，如果你想要用动画来描述一些状态流转之类的，那么你可以去花点时间。</p>
-<h1 id="答辩时的常见问题"><a href="#答辩时的常见问题" class="headerlink" title="答辩时的常见问题"></a>答辩时的常见问题</h1><h2 id="1-没有事先调试好投影"><a href="#1-没有事先调试好投影" class="headerlink" title="1.没有事先调试好投影"></a>1.没有事先调试好投影</h2><p>经常看见有的同学到答辩的时候才去调试投影仪，出了问题之后不得不借别人的电脑。这种事情以后还是要避免，其实只要提前做一下调试就可以了，花不了几分钟时间，但最起码可以避免现场糗个大的。</p>
-<h2 id="2-PPT没有预演，直接开讲"><a href="#2-PPT没有预演，直接开讲" class="headerlink" title="2.PPT没有预演，直接开讲"></a>2.PPT没有预演，直接开讲</h2><p>这也是很多人容易犯的错误。我们在写PPT的时候，可能会觉得思如泉涌，PPT很顺畅就做完了。但其实做完了是一回事，你能顺畅地讲出来又是一回事了，可能那时候你会发现自己的PPT怎么做的那么烂，连舌头都不灵活了…… 所以最好的方式是：写完PPT之后先给自己讲两遍，自己讲顺畅了再去给别人讲。</p>
-<h2 id="3-没有自我介绍"><a href="#3-没有自我介绍" class="headerlink" title="3.没有自我介绍"></a>3.没有自我介绍</h2><p>陌生人见面总是要打个招呼，做个自我介绍吧，有些同学一上来就直奔主题，一来容易搞得自己紧张，二来显得有点不礼貌。</p>
-<h2 id="4-紧张"><a href="#4-紧张" class="headerlink" title="4.紧张"></a>4.紧张</h2><p>这是很多人都会出现的问题，有的人紧张的连声调都变了。针对这个问题，我的建议是：1.开始讲PPT前，先做一个深呼吸；2. 站着讲。站着讲的一个好处是，你可以通过肢体动作调节自己的情绪和节奏。</p>
-<h2 id="5-代码没好好准备"><a href="#5-代码没好好准备" class="headerlink" title="5.代码没好好准备"></a>5.代码没好好准备</h2><p>很多同学只重视PPT，却没有认真准备代码，结果review代码的时候被虐，当然最终的结局也就不乐观。</p>
-<p>最后，给大家推荐一本书，《<a href="https://item.jd.com/11697566.html" target="_blank" rel="external">乔布斯的魔力演讲</a>》，相信这本书可以帮助你提高PPT及演讲能力。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/08/12/读书笔记-微服务设计-建模/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/12/读书笔记-微服务设计-建模/" itemprop="url">读书笔记:微服务设计-建模</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-12T20:52:17+08:00">
-                2016-08-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/08/12/读书笔记-微服务设计-建模/" class="leancloud_visitors" data-flag-title="读书笔记:微服务设计-建模">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1-什么样的服务是好服务"><a href="#1-什么样的服务是好服务" class="headerlink" title="1.什么样的服务是好服务"></a>1.什么样的服务是好服务</h1><h2 id="1-高内聚"><a href="#1-高内聚" class="headerlink" title="1.高内聚"></a>1.高内聚</h2><p>  说到高内聚，还是得提一下单一职责原则(Single Responsibility Principle)。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障，而避免出现这一问题的方法便是遵循单一职责原则。<br>  那如何来做到服务的高内聚呢？首先要确定问题域的边界，其次将相同边界的相关行为放在一个地方。</p>
-<h2 id="2-低耦合"><a href="#2-低耦合" class="headerlink" title="2.低耦合"></a>2.低耦合</h2><p>  使用微服务最重要的一点是：能够独立修改及部署单个服务而不需要修改系统的其他部分。</p>
-<h1 id="2-限界上下文"><a href="#2-限界上下文" class="headerlink" title="2.限界上下文"></a>2.限界上下文</h1><p>  限界上下文(bounded context)这个概念来自于Eric Evans的《领域驱动设计》一书，Eric认为：一个给定的领域包含多个限界上下文，每个限界上下文中的东西分成2个部分，一部分不需要与外界通信，另一部分则需要。每个上下文都有明确的接口，该接口决定了它会暴露哪些模型给其他的上下文。当然本文作者更喜欢这个定义：一个由显示边界限定的特定职责。如果你想要从一个限界上下文中获取信息，或者向其发起请求，需要使用模型和它的显示边界进行通信。</p>
-<p>  应该共享特定的模型，而不应该共享内部表示，这样就可以避免潜在的紧耦合风险。</p>
-<p>  一般来讲，微服务应该清晰地和限界上下文相对应。</p>
-<h1 id="3-业务功能"><a href="#3-业务功能" class="headerlink" title="3.业务功能"></a>3.业务功能</h1><p>  在思考组织内的限界上下文时，不应该从共享数据的角度来考虑，应该从这些上下文能够提供的功能来考虑。首先要问自己：这个上下文是做什么用的，然后再考虑它需要什么样的数据。</p>
-<p>  建模服务时，应该将这些功能作为关键操作提供给其协作者。</p>
-<h1 id="4-逐步划分上下文"><a href="#4-逐步划分上下文" class="headerlink" title="4.逐步划分上下文"></a>4.逐步划分上下文</h1><p>  先识别粗粒度上下文，然后当发现合适的缝隙后，再进一步划分出那些嵌套的上下文。</p>
-<p>  对于嵌套上下文，一种方式是嵌套上下文不直接对外可见，另外一种方式是限界上下文被提升到顶层上下文的层次。这两种方式都具有其合理性，具体还要看组织机构的划分。比如服务A、服务B、服务C分别由不同团队维护，那么可能大家倾向于成为顶层上下文；如果由一个团队维护，那么嵌套架构会更合理。另外，从测试的角度，嵌套式上下文更便于测试，毕竟它对外暴露的服务更少。</p>
-<p>另外一本书推荐：Vaughn Vernon的<a href="http://item.jd.com/11423256.html" target="_blank" rel="external">《实现领域驱动设计》</a>，这本书貌似卖得更好。</p>
-<p><em>图片说明：稻城-亚丁</em></p>
-<p>稻城—亚丁因其独特而原始的自然环境、美丽风景被誉为“最后的香格里拉”，景点分为稻城和亚丁两部分，有雪山、冰川、峡谷、森林、草甸、湖泊等景观。除了珍珠海、牛奶海等冰川湖泊，稻城最令人向往的是驰名藏区的雪域神峰——稻城神峰，它由仙乃日、央迈勇、夏诺多吉三座神山组成，均位于亚丁自然保护区。人们把仙乃日比作大佛、把央迈勇比作少女，将夏诺多吉当作少年，三座神山就像三尊圣灵，这里也就成了藏民心中朝圣的圣地。</p>
-<p><img src="https://img.alicdn.com/imgextra/i1/2657627814/TB29IAuXaryQeBjSszdXXaL.XXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
-<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB24zkuXabyQeBjy1XbXXa9yXXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2GWAvXhHxQeBjy1zjXXa5YVXa_!!2657627814.jpg" alt="稻城-亚丁"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1960,7 +2022,7 @@ future.setCallback(new ResponseCallback(){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
