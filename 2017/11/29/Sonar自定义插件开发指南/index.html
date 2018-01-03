@@ -103,7 +103,7 @@
 <meta property="og:description" content="1 Sonar简介SonarQube是一个非常流行和强大的静态代码检查工具。它可以针对很多语言进行分析，比如Java、C#、JavaScript、PL/SQL等。SonarQube中默认提供了很多代码检查规则，但是有时候我们需要根据自己的需求编写规则，这篇文章会涵盖如何编写自定义规则的各个步骤。 2 环境准备 JDK 1.8 Intellij Idea Maven 3.x或更高 SonarQube">
 <meta property="og:image" content="https://farm5.staticflickr.com/4566/38001442235_a562e60306.jpg">
 <meta property="og:image" content="https://farm5.staticflickr.com/4524/38888239671_35af64c4bf.jpg">
-<meta property="og:updated_time" content="2017-12-07T10:48:09.107Z">
+<meta property="og:updated_time" content="2017-12-08T03:01:08.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sonar自定义插件开发指南">
 <meta name="twitter:description" content="1 Sonar简介SonarQube是一个非常流行和强大的静态代码检查工具。它可以针对很多语言进行分析，比如Java、C#、JavaScript、PL/SQL等。SonarQube中默认提供了很多代码检查规则，但是有时候我们需要根据自己的需求编写规则，这篇文章会涵盖如何编写自定义规则的各个步骤。 2 环境准备 JDK 1.8 Intellij Idea Maven 3.x或更高 SonarQube">
@@ -378,7 +378,7 @@
 <li>JDK 1.8</li>
 <li>Intellij Idea</li>
 <li>Maven 3.x或更高</li>
-<li>SonarQube 5.6</li>
+<li>SonarQube LTS 5.6</li>
 <li>Sonar-runner-dist 2.4</li>
 </ul>
 <h2 id="3-开发步骤"><a href="#3-开发步骤" class="headerlink" title="3 开发步骤"></a>3 开发步骤</h2><h3 id="3-1-创建Plugin项目"><a href="#3-1-创建Plugin项目" class="headerlink" title="3.1 创建Plugin项目"></a>3.1 创建Plugin项目</h3><p> 首先创建一个SonarPlugin项目，建议从SonarSource官方github站点下载模板项目，这样不至于遗漏配置。下载的地址是：<a href="https://github.com/SonarSource/sonar-custom-plugin-example" target="_blank" rel="external">下载链接</a></p>
@@ -406,6 +406,7 @@
 <p><img src="https://farm5.staticflickr.com/4566/38001442235_a562e60306.jpg" alt=""></p>
 <h2 id="6-启用规则"><a href="#6-启用规则" class="headerlink" title="6 启用规则"></a>6 启用规则</h2><p>插件部署到SonarQube之后，默认是不启用的，需要在SonarQube的管理界面中启用规则，才能让此规则在代码检查过程中生效。</p>
 <p><img src="https://farm5.staticflickr.com/4524/38888239671_35af64c4bf.jpg" alt=""></p>
+<p>至此，Sonar插件开发的流程就介绍完了。如前面所言，SonarQube是个强大的代码检查工具，一篇文章是无法介绍完的，尤其Sonar的语法树部分，涵盖了各种语言各种语法的方方面面，大家可以通过Sonar的<a href="https://docs.sonarqube.org/display/SONAR/" target="_blank" rel="external">官方文档</a>了解更多的细节。</p>
 
       
     </div>
@@ -435,6 +436,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/08/使用SonarLint进行代码检查/" rel="next" title="使用SonarLint编写高质量代码">
+                <i class="fa fa-chevron-left"></i> 使用SonarLint编写高质量代码
+              </a>
             
           </div>
 
@@ -546,7 +551,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -617,7 +622,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
