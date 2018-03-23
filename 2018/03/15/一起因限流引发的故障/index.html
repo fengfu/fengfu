@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="高可用," />
 
 
 
@@ -94,26 +94,17 @@
 
 
 
-<meta name="description" content="1.引言最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。 另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不">
-<meta name="keywords" content="Java">
+<meta name="description" content="1.前言限流是保证系统高可用性的一项很重要的举措，但是任何事情都有利弊，限流措施如果使用不当，有可能会引起比较大的问题，反而导致系统可用性降低。 2.详细经过上周，我们负责的一个入口系统的几台服务器突然收到大量的线程池满的告警，根据以往的经验，初步判断是上游请求量激增导致的。通过监控也印证了我们的判断，因为激增的流量比较大，为保护集群，避免出现雪崩，我们开启了限流措施。本来这是保证集群可用性的一种">
+<meta name="keywords" content="高可用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="性能调优工具-Java Mission Control">
-<meta property="og:url" content="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/index.html">
+<meta property="og:title" content="一起因限流引发的故障">
+<meta property="og:url" content="http://fengfu.io/2018/03/15/一起因限流引发的故障/index.html">
 <meta property="og:site_name" content="宁静·致远">
-<meta property="og:description" content="1.引言最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。 另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2h8gqpXXXXXbUXXXXXXXXXXXX_!!2657627814.png">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i2/2657627814/TB29LQKpXXXXXX3XXXXXXXXXXXX_!!2657627814.png">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2hE_PpXXXXXcRXXXXXXXXXXXX_!!2657627814.png">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB2mAEGpXXXXXaHXXXXXXXXXXXX_!!2657627814.png">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png">
-<meta property="og:image" content="https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png">
-<meta property="og:updated_time" content="2017-04-12T03:07:03.000Z">
+<meta property="og:description" content="1.前言限流是保证系统高可用性的一项很重要的举措，但是任何事情都有利弊，限流措施如果使用不当，有可能会引起比较大的问题，反而导致系统可用性降低。 2.详细经过上周，我们负责的一个入口系统的几台服务器突然收到大量的线程池满的告警，根据以往的经验，初步判断是上游请求量激增导致的。通过监控也印证了我们的判断，因为激增的流量比较大，为保护集群，避免出现雪崩，我们开启了限流措施。本来这是保证集群可用性的一种">
+<meta property="og:updated_time" content="2018-03-23T07:39:36.678Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="性能调优工具-Java Mission Control">
-<meta name="twitter:description" content="1.引言最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&amp;gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。 另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不">
-<meta name="twitter:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png">
+<meta name="twitter:title" content="一起因限流引发的故障">
+<meta name="twitter:description" content="1.前言限流是保证系统高可用性的一项很重要的举措，但是任何事情都有利弊，限流措施如果使用不当，有可能会引起比较大的问题，反而导致系统可用性降低。 2.详细经过上周，我们负责的一个入口系统的几台服务器突然收到大量的线程池满的告警，根据以往的经验，初步判断是上游请求量激增导致的。通过监控也印证了我们的判断，因为激增的流量比较大，为保护集群，避免出现雪崩，我们开启了限流措施。本来这是保证集群可用性的一种">
 
 
 
@@ -142,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/"/>
+  <link rel="canonical" href="http://fengfu.io/2018/03/15/一起因限流引发的故障/"/>
 
 
 
 
 
-  <title>性能调优工具-Java Mission Control | 宁静·致远</title>
+  <title>一起因限流引发的故障 | 宁静·致远</title>
   
 
 
@@ -301,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/05/20/性能调优工具-Java-Mission-Control/">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/03/15/一起因限流引发的故障/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
@@ -318,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">性能调优工具-Java Mission Control</h1>
+          <h1 class="post-title" itemprop="name headline">一起因限流引发的故障</h1>
         
 
         <div class="post-meta">
@@ -330,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-20T14:59:20+08:00">
-                2016-05-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T20:56:05+08:00">
+                2018-03-15
               </time>
             
 
@@ -348,7 +339,7 @@
 
           
           
-             <span id="/2016/05/20/性能调优工具-Java-Mission-Control/" class="leancloud_visitors" data-flag-title="性能调优工具-Java Mission Control">
+             <span id="/2018/03/15/一起因限流引发的故障/" class="leancloud_visitors" data-flag-title="一起因限流引发的故障">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,46 +370,16 @@
       
 
       
-        <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>最近1年多的时间，因为需要排查线上应用出现的性能问题，会借助一些工具如JProfiler、Yourkit，但是这些工具都具有商业性质，使用时难免受到限制。后来发现Oracle Jdk(version&gt;=7u40)中自带了一个Java Mission Control(以下简称JMC)的应用，也可以实现JVM的监控。</p>
-<p>另外，与JProfiler等使用JVMPI/JVMTI方式实现的工具不同，JMC使用了JVM内部特定的基于事件的接口，几乎不会给应用造成额外的压力（默认设置下，对性能影响小于1%），因此可以用在负载很高的生产环境中。</p>
-<p>本文就来简单介绍一下使用JMC来监测JVM性能。</p>
-<p><em>注意：需要下载Oracle Jdk 7u40以后的版本，OpenJdk无效，切记！</em></p>
-<h2 id="2-目标JVM配置"><a href="#2-目标JVM配置" class="headerlink" title="2.目标JVM配置"></a>2.目标JVM配置</h2><p>在被监控的JVM（目标JVM）上需要开启以下Java Options才能对其进行监控，对于Tomcat来说，在JAVA_OPTS或CATALINA_OPTS中加入以下代码即可：</p>
-<pre><code>-Dcom.sun.management.jmxremote.authenticate=false
--Dcom.sun.management.jmxremote.ssl=false
--Djava.rmi.server.hostname=192.168.32.11
--Dcom.sun.management.jmxremote.port=7777
--Dcom.sun.management.jmxremote
--XX:+UnlockCommercialFeatures
--XX:+FlightRecorder
-</code></pre><p>java.rmi.server.hostname：如果要允许其它机器监控该程序，必须设定，否则就只能在本机监控该程序。<br>com.sun.management.jmxremote：启用JMX远程监控。<br>com.sun.management.jmxremote.port：JMX远程监控的端口。<br>com.sun.management.jmxremote.ssl：将此配置设置为 true 时，将使用服务器证书通过 SSL 来保护通信。<br>com.sun.management.jmxremote.authenticate：是否开启权限控制，如果设置为true，需要指定两个文件：jmxremote.password和jmxremote.access，password文件主要是配置用户名和密码，access主要是配置权限（可读或者读写）。<br>在Tomcat的bin目录下增加下面两个文件：jmxremote.password和jmxremote.access，格式如下：</p>
-<p>jmxremote.access：</p>
-<pre><code>admin readwrite \
-  create com.sun.management.*,com.oracle.jrockit.* \
-  unregister
-monitor readonly
-</code></pre><p>表示admin有操作权限（比如调用GC等操作），monitor只有查看权限，不能进行任何操作。<br>jmxremote.password：</p>
-<pre><code>admin test
-monitor test    
-</code></pre><p>表示有两个用户，admin和monitor，密码分别是test和test。</p>
-<p>-XX:+UnlockCommercialFeatures：开启商业特性，默认这个选项是关闭的。<br>-XX:+FlightRecorder：开启飞行记录器。</p>
-<p>上述参数配置完毕，重新启动tomcat即可。</p>
-<h2 id="3-连接远程JVM"><a href="#3-连接远程JVM" class="headerlink" title="3.连接远程JVM"></a>3.连接远程JVM</h2><p>双击本地%JDK_HOME%\bin\jmc.exe，点击左侧“创建新定制JVM连接”图标， </p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2L_MapXXXXXaGXFXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2h8gqpXXXXXbUXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p>在弹出的窗口中输入远程JVM的IP地址和端口号：</p>
-<p><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB29LQKpXXXXXX3XXXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p>选择“启动JMX控制台”，点击“完成”。</p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2hE_PpXXXXXcRXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p>进入JMC主界面：</p>
-<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2mAEGpXXXXXaHXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p>在左侧飞行记录器的菜单上点击右键，选择“启动飞行记录”，进入到启动飞行记录的界面，在此界面设置飞行记录的文件路径、记录时长(固定时长或固定间隔)：</p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2xSsHpXXXXXafXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p>设置监控的事件：</p>
-<p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2TJcEpXXXXXaKXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p>在此界面可以设置监控的详细设置，并点击“完成”</p>
-<p><img src="https://img.alicdn.com/imgextra/i2/2657627814/TB2DiMkpXXXXXcsXpXXXXXXXXXX_!!2657627814.png" alt=""></p>
-<p>现在你可以愉快地使用JFR的强大功能了。</p>
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>限流是保证系统高可用性的一项很重要的举措，但是任何事情都有利弊，限流措施如果使用不当，有可能会引起比较大的问题，反而导致系统可用性降低。</p>
+<h2 id="2-详细经过"><a href="#2-详细经过" class="headerlink" title="2.详细经过"></a>2.详细经过</h2><p>上周，我们负责的一个入口系统的几台服务器突然收到大量的线程池满的告警，根据以往的经验，初步判断是上游请求量激增导致的。通过监控也印证了我们的判断，因为激增的流量比较大，为保护集群，避免出现雪崩，我们开启了限流措施。本来这是保证集群可用性的一种常见措施，但因为其中某些环节做得不够细致，导致了后面故障的发生。</p>
+<p>开启了限流措施之后，我们很快就收到了另外一个监控(搜索结果为空率)的告警。此监控是反映系统返回结果为空的比例的，当这个比例超过设定的阈值就会告警。当时这个告警飙升到了40%多，这个比例是非常恐怖的，意味着接近一半的搜索没有结果了。当时我们立刻断定是限流的影响，为了保护集群，同时不影响用户体验，我们将限流阈值调高，这时搜索为空率监控开始下降。</p>
+<p>5分钟后，上游系统同事反馈系统请求量在下降，我们自己的监控也有所体现，为了避免伤害用户，我们关掉了限流，于是故障恢复。</p>
+<h2 id="3-故障分析"><a href="#3-故障分析" class="headerlink" title="3.故障分析"></a>3.故障分析</h2><h3 id="3-1-Hash策略不合理"><a href="#3-1-Hash策略不合理" class="headerlink" title="3.1 Hash策略不合理"></a>3.1 Hash策略不合理</h3><p>事后分析原因，发现是平台上有个代理商发布了一个错误的航线价格，这个价格非常低，导致大量的用户前来搜索和购买。由于我们的集群是根据航线+日期进行hash，导致短时间内，特定的几台机器收到了大量的请求，导致机器负载过高，最终不可用。如果能够让集群的请求分布更加均匀，那么也不会导致雪崩的风险而不得不限流。</p>
+<h3 id="3-2-限流措施不合理"><a href="#3-2-限流措施不合理" class="headerlink" title="3.2 限流措施不合理"></a>3.2 限流措施不合理</h3><p>故障以前系统的限流措施是：被限流后，请求立即返回为空的结果。但这里更加合理的措施是：如果被限流，让请求在队列里面等待一会再尝试请求。这样能够达到削峰的效果，让请求更加平滑，同时也降低对用户体验的伤害。</p>
+<h3 id="3-3-请求合并不合理"><a href="#3-3-请求合并不合理" class="headerlink" title="3.3 请求合并不合理"></a>3.3 请求合并不合理</h3><p>为减轻对后端系统的压力，我们系统中保留了本地缓存，这样能够针对相同的请求使用缓存，也能提高缓存的利用率。但因为系统单次请求的结果集比较大，为降低对本地缓存的占用，我们并未将最终结果进行缓存，而是缓存了初始结果，这样就意味着在利用缓存的时候，还需要在本地经过一些计算才能返回结果，这无疑增加了系统的压力。</p>
+<p>所以后续我们可以做进一步优化，在一个时间片内，如果存在相同的请求，如果结果还没有计算出来，就等结果计算出来再返回；如果结果已经计算出来并在缓存中有效，直接返回结果即可。这样也能进一步降低系统的负载。</p>
+<h3 id="3-4-限流粒度太粗"><a href="#3-4-限流粒度太粗" class="headerlink" title="3.4 限流粒度太粗"></a>3.4 限流粒度太粗</h3><p>故障以前系统是对所有请求进行限流，但故障时，只是某条航线收到了大量的请求，其余航线请求是正常的。开启限流之后，虽然大量的问题航线请求被限制住了，但同时也限制了正常的用户请求。所以在限流的粒度上，我们还可以做得更加细致。当然这里有个前提，就是我们需要在第一时间知道哪条航线请求量飙升，这样才能有针对性地进行限流。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>高可用是一个很大的话题，就其中的限流措施来说，也可以做得非常细致。这里只是针对本次故障做一个简单的总结，对此如果你有任何意见或建议，还望不吝赐教。</p>
 
       
     </div>
@@ -436,7 +397,7 @@ monitor test
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/高可用/" rel="tag"># 高可用</a>
           
         </div>
       
@@ -449,18 +410,14 @@ monitor test
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/" rel="next" title="JVM 垃圾回收器CMS之各阶段总结">
-                <i class="fa fa-chevron-left"></i> JVM 垃圾回收器CMS之各阶段总结
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/25/Java-Instrumentation研究-2/" rel="prev" title="Java Instrumentation研究之动态植入">
-                Java Instrumentation研究之动态植入 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/02/StringBuilder你应该知道的几件事情/" rel="prev" title="StringBuilder你应该知道的几件事情">
+                StringBuilder你应该知道的几件事情 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -611,7 +568,7 @@ monitor test
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.</span> <span class="nav-text">1.引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-目标JVM配置"><span class="nav-number">2.</span> <span class="nav-text">2.目标JVM配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-连接远程JVM"><span class="nav-number">3.</span> <span class="nav-text">3.连接远程JVM</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-详细经过"><span class="nav-number">2.</span> <span class="nav-text">2.详细经过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-故障分析"><span class="nav-number">3.</span> <span class="nav-text">3.故障分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Hash策略不合理"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Hash策略不合理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-限流措施不合理"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 限流措施不合理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-请求合并不合理"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 请求合并不合理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-限流粒度太粗"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 限流粒度太粗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-number">4.</span> <span class="nav-text">4. 总结</span></a></li></ol></div>
             
 
           </div>

@@ -289,6 +289,146 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/03/15/一起因限流引发的故障/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/15/一起因限流引发的故障/" itemprop="url">一起因限流引发的故障</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T20:56:05+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/15/一起因限流引发的故障/" class="leancloud_visitors" data-flag-title="一起因限流引发的故障">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>限流是保证系统高可用性的一项很重要的举措，但是任何事情都有利弊，限流措施如果使用不当，有可能会引起比较大的问题，反而导致系统可用性降低。</p>
+<h2 id="2-详细经过"><a href="#2-详细经过" class="headerlink" title="2.详细经过"></a>2.详细经过</h2><p>上周，我们负责的一个入口系统的几台服务器突然收到大量的线程池满的告警，根据以往的经验，初步判断是上游请求量激增导致的。通过监控也印证了我们的判断，因为激增的流量比较大，为保护集群，避免出现雪崩，我们开启了限流措施。本来这是保证集群可用性的一种常见措施，但因为其中某些环节做得不够细致，导致了后面故障的发生。</p>
+<p>开启了限流措施之后，我们很快就收到了另外一个监控(搜索结果为空率)的告警。此监控是反映系统返回结果为空的比例的，当这个比例超过设定的阈值就会告警。当时这个告警飙升到了40%多，这个比例是非常恐怖的，意味着接近一半的搜索没有结果了。当时我们立刻断定是限流的影响，为了保护集群，同时不影响用户体验，我们将限流阈值调高，这时搜索为空率监控开始下降。</p>
+<p>5分钟后，上游系统同事反馈系统请求量在下降，我们自己的监控也有所体现，为了避免伤害用户，我们关掉了限流，于是故障恢复。</p>
+<h2 id="3-故障分析"><a href="#3-故障分析" class="headerlink" title="3.故障分析"></a>3.故障分析</h2><h3 id="3-1-Hash策略不合理"><a href="#3-1-Hash策略不合理" class="headerlink" title="3.1 Hash策略不合理"></a>3.1 Hash策略不合理</h3><p>事后分析原因，发现是平台上有个代理商发布了一个错误的航线价格，这个价格非常低，导致大量的用户前来搜索和购买。由于我们的集群是根据航线+日期进行hash，导致短时间内，特定的几台机器收到了大量的请求，导致机器负载过高，最终不可用。如果能够让集群的请求分布更加均匀，那么也不会导致雪崩的风险而不得不限流。</p>
+<h3 id="3-2-限流措施不合理"><a href="#3-2-限流措施不合理" class="headerlink" title="3.2 限流措施不合理"></a>3.2 限流措施不合理</h3><p>故障以前系统的限流措施是：被限流后，请求立即返回为空的结果。但这里更加合理的措施是：如果被限流，让请求在队列里面等待一会再尝试请求。这样能够达到削峰的效果，让请求更加平滑，同时也降低对用户体验的伤害。</p>
+<h3 id="3-3-请求合并不合理"><a href="#3-3-请求合并不合理" class="headerlink" title="3.3 请求合并不合理"></a>3.3 请求合并不合理</h3><p>为减轻对后端系统的压力，我们系统中保留了本地缓存，这样能够针对相同的请求使用缓存，也能提高缓存的利用率。但因为系统单次请求的结果集比较大，为降低对本地缓存的占用，我们并未将最终结果进行缓存，而是缓存了初始结果，这样就意味着在利用缓存的时候，还需要在本地经过一些计算才能返回结果，这无疑增加了系统的压力。</p>
+<p>所以后续我们可以做进一步优化，在一个时间片内，如果存在相同的请求，如果结果还没有计算出来，就等结果计算出来再返回；如果结果已经计算出来并在缓存中有效，直接返回结果即可。这样也能进一步降低系统的负载。</p>
+<h3 id="3-4-限流粒度太粗"><a href="#3-4-限流粒度太粗" class="headerlink" title="3.4 限流粒度太粗"></a>3.4 限流粒度太粗</h3><p>故障以前系统是对所有请求进行限流，但故障时，只是某条航线收到了大量的请求，其余航线请求是正常的。开启限流之后，虽然大量的问题航线请求被限制住了，但同时也限制了正常的用户请求。所以在限流的粒度上，我们还可以做得更加细致。当然这里有个前提，就是我们需要在第一时间知道哪条航线请求量飙升，这样才能有针对性地进行限流。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>高可用是一个很大的话题，就其中的限流措施来说，也可以做得非常细致。这里只是针对本次故障做一个简单的总结，对此如果你有任何意见或建议，还望不吝赐教。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/01/02/StringBuilder你应该知道的几件事情/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2036,180 +2176,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/04/26/集群限流实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/26/集群限流实现/" itemprop="url">集群限流实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T14:55:35+08:00">
-                2017-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/04/26/集群限流实现/" class="leancloud_visitors" data-flag-title="集群限流实现">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在<a href="http://fengfu.io/2017/04/22/%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84-%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%99%90%E6%B5%81/">上一篇文章</a>中，提到了限流的方式分为单机限流和集群限流，在这篇文章中，就来看一下集群限流如何实现。</p>
-<p>对于集群限流，我们一般会考虑以下三方面：</p>
-<ol>
-<li>分布式：能够进行全局限流，尤其在访问受限制的资源的情况下。比如某个第三方接口只允许每秒100次的访问量，但我们的应用是部署在多台服务器上，在这种情况下，就需要进行全局限流了；</li>
-<li>滑动窗口：能够避免流量突变(比如洪峰)对系统的影响。比如我们限制了1秒的访问量不能超过100，但很有可能出现一种情况就是前900毫秒没有任何请求，但900毫秒的时候突然来了100个请求；在第2秒的前100毫秒又来了100个请求。这也就意味着在200毫秒的时间涌入了200个请求。这种情况也很有可能把系统打挂掉。</li>
-<li>最小请求间隔：为了避免请求太频繁，还需要限制调用端的请求时间间隔，如果时间间隔太短，同样也需要限制；</li>
-</ol>
-<p>对于分布式的限流，需要使用分布式存储来存放请求的状态数据，在这里，我们使用Redis作为存储引擎。</p>
-<h2 id="第一版实现"><a href="#第一版实现" class="headerlink" title="第一版实现"></a>第一版实现</h2><p>限流的标准实现一般是使用令牌桶算法，实现思路如下：</p>
-<ol>
-<li>每个接口都有一个对应的令牌桶，桶中含有若干令牌；</li>
-<li>当用户发起请求的时候，首先从桶中获取一个令牌。在获取令牌的时候，首先会检查桶中剩余的令牌；</li>
-<li>如果桶是空的，则表明已经达到上限，请求将被阻塞住；</li>
-<li>反之，从桶中移除一个令牌，执行用户请求；</li>
-<li>随着时间推移，按照一定的频率往桶里放入令牌，直到达到容量上限。</li>
-</ol>
-<p>这种算法的好处在于占用存储空间小，每个接口只需要一个整形计数器即可，不足之处在于：需要有额外的处理程序往桶里放令牌。如果系统有很多的接口，那也就意味着系统需要有很多的桶，而且每个桶都需要按照固定的速率放入令牌，那么这不仅会增加系统的压力，也会增加系统的复杂性。于是我们可以在此基础上进行优化：</p>
-<h2 id="改进实现"><a href="#改进实现" class="headerlink" title="改进实现"></a>改进实现</h2><ol>
-<li>每个接口有2个对应的key：令牌桶和桶被填充满时的时间戳；</li>
-<li>当接口被访问的时候，读取对应的时间戳；</li>
-<li>计算从上次访问到现在该请求可以获取的令牌数量；</li>
-<li>如果满足要求，请求继续执行。</li>
-</ol>
-<p>不幸的是，这个算法也存在缺陷：我们需要同步令牌桶和时间戳的状态，如果同步失败，这种方案将会失效。Redis可以通过批量操作来保证原子操作，但计算用户可以获取多少令牌的时候，我们需要与Redis有两次交互：第一次获取上次访问的时间戳，第二次设置令牌的数量。如果你不想钻研Redis Lua脚本，恐怕我们无法在一个原子操作中实现上述需求。鉴于此，如果有2个客户端在同一时间来校验用户请求的时候，我们可能会得到下面的执行顺序：</p>
-<ol>
-<li>用户有足够的令牌来执行一个请求；</li>
-<li>前后请求的间隔内，并没有新的令牌放入桶中；</li>
-<li>客户端1获得存储的时间戳和令牌数量；</li>
-<li>客户端2获得存储的时间戳和令牌数量；</li>
-<li>客户端1通过计算断定令牌足够，放行请求，通知redis清空令牌桶；</li>
-<li>客户端2通过计算也断定令牌足够，放行请求，通知redis清空令牌桶；</li>
-</ol>
-<p>无需多言，上述方案完全失效了，显然这情况并不是我们想要的。</p>
-<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p>幸运的是，Redis有另外一种数据结构可以避免上述竞态条件-Sorted Set。下面是实现思路：</p>
-<ol>
-<li>每个接口都有一个对应的Sorted Set，set中key和value是唯一的，key和value都为请求提交时的时间戳；</li>
-<li>当客户端提交请求时，首先将某个时间间隔前的元素全部清除，这个操作可以使用Redis的ZREMRANGEBYSCORE命令实现；</li>
-<li>使用ZRANGE(0, -1)命令获取set中剩余的所有元素；</li>
-<li>使用ZADD命令将当前请求的时间戳添加到set中；</li>
-<li>设置TTL给set；TTL=限制请求的时间间隔。</li>
-</ol>
-<p>进行完上述所有操作后，计算获取到的元素数量，如果超出限制，则拒绝请求；</p>
-<p>同时，获取获取的元素中最大的时间戳，与当前请求时间做比较。如果间隔太小，则拒绝请求；</p>
-<p>这种方案的好处是所有的redis请求都可以使用MULTI命令作为一个原子操作。这意味着如果两个客户端请求相同的接口，是能够避免前面提到的竞态条件出现的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2260,7 +2226,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2273,7 +2239,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
