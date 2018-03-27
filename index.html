@@ -373,6 +373,7 @@
           
             <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>说起Guava Cache，很多人都不会陌生，它是Google Guava工具包中的一个非常方便易用的本地化缓存实现，基于LRU算法实现，支持多种缓存过期策略。由于Guava的大量使用，Guava Cache也得到了大量的应用。但是，Guava Cache的性能一定是最好的吗？也许，曾经，它的性能是非常不错的。但所谓长江后浪推前浪，总会有更加优秀的技术出现。今天，我就来介绍一个比Guava Cache性能更高的缓存框架：Caffeine。</p>
 <p>下面的内容是转载的一篇译文，如果需要查看译文原文，请点击<a href="https://segmentfault.com/a/1190000008751999" target="_blank" rel="external">这里</a>,英语好的同学也可以直接查看<a href="http://highscalability.com/blog/2016/1/25/design-of-a-modern-cache.html" target="_blank" rel="external">英文原作</a>。</p>
+<p>==========以下是原文内容==========</p>
 <p>缓存是提升性能的通用方法，现在大多数的缓存实现都使用了经典的技术。这篇文章中，我们会发掘<a href="https://github.com/ben-manes/caffeine" target="_blank" rel="external">Caffeine</a>中的现代的实现方法。Caffeine是一个开源的Java缓存库，它能提供高命中率和出色的并发能力。期望读者们能被这些想法激发，进而将它们应用到任何你喜欢的编程语言中。</p>
 <h2 id="驱逐策略"><a href="#驱逐策略" class="headerlink" title="驱逐策略"></a>驱逐策略</h2><p>缓存的驱逐策略是为了预测哪些数据在短期内最可能被再次用到，从而提升缓存的命中率。由于简洁的实现、高效的运行时表现以及在常规的使用场景下有不错的命中率，LRU（Least Recently Used）策略或许是最流行的驱逐策略。但LRU通过历史数据来预测未来是局限的，它会认为最后到来的数据是最可能被再次访问的，从而给与它最高的优先级。</p>
 <p>现代缓存扩展了对历史数据的使用，结合就近程度（recency）和访问频次（frequency）来更好的预测数据。其中一种保留历史信息的方式是使用popularity sketch（一种压缩、概率性的数据结构）来从一大堆访问事件中定位频繁的访问者。可以参考<a href="http://dimacs.rutgers.edu/~graham/pubs/papers/cmsoft.pdf" target="_blank" rel="external">CountMin Sketch</a>算法，它由计数矩阵和多个哈希方法实现。发生一次读取时，矩阵中每行对应的计数器增加计数，估算频率时，取数据对应是所有行中计数的最小值。这个方法让我们从空间、效率、以及适配矩阵的长宽引起的哈希碰撞的错误率上做权衡。</p>
