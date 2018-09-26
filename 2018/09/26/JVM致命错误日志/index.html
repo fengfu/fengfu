@@ -101,7 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2018/09/26/JVM致命错误日志/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="翻译:曲风富 译者注：本文翻译自Oracle官方文档，有一定英文能力者建议查看原文：https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html 当JVM出现致命错误时，会生成一个包含有错误信息以及出错时系统状态的日志文件。 本附录包含以下内容：  1 致命错误日志的位置 2 致命错误日志描述 3 头部格式 4">
-<meta property="og:updated_time" content="2018-09-26T03:01:17.122Z">
+<meta property="og:updated_time" content="2018-09-26T03:13:38.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM致命错误日志">
 <meta name="twitter:description" content="翻译:曲风富 译者注：本文翻译自Oracle官方文档，有一定英文能力者建议查看原文：https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html 当JVM出现致命错误时，会生成一个包含有错误信息以及出错时系统状态的日志文件。 本附录包含以下内容：  1 致命错误日志的位置 2 致命错误日志描述 3 头部格式 4">
@@ -467,8 +467,8 @@
 <table>
 <thead>
 <tr>
-<th><strong>线程状态</strong></th>
-<th><strong>描述</strong></th>
+<th>线程状态</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
@@ -530,30 +530,9 @@
 <p>下面是一个输出示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Java Threads: ( =&gt; current thread )</div><div class="line">  0x080c8da0 JavaThread &quot;Low Memory Detector&quot; daemon [_thread_blocked, id=21147]</div><div class="line">  0x080c7988 JavaThread &quot;CompilerThread0&quot; daemon [_thread_blocked, id=21146]</div><div class="line">  0x080c6a48 JavaThread &quot;Signal Dispatcher&quot; daemon [_thread_blocked, id=21145]</div><div class="line">  0x080bb5f8 JavaThread &quot;Finalizer&quot; daemon [_thread_blocked, id=21144]</div><div class="line">  0x080ba940 JavaThread &quot;Reference Handler&quot; daemon [_thread_blocked, id=21143]</div><div class="line">=&gt;0x0805ac88 JavaThread &quot;main [_thread_in_native, id=21139]</div><div class="line">Other Threads:</div><div class="line">  0x080b6070 VMThread [id=21142]</div><div class="line">  0x080ca088 WatcherThread [id=21148]</div></pre></td></tr></table></figure></p>
 <p>有关线程类型和线程状态的描述请见<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvki" target="_blank" rel="external">C.4 Thread Section Format</a>.</p>
 <h3 id="C-5-2-VM状态"><a href="#C-5-2-VM状态" class="headerlink" title="C.5.2 VM状态"></a>C.5.2 VM状态</h3><p>接下来的信息是VM状态，描述了整个虚拟机的状态。下面的表格描述了VM的一般状态。</p>
-<table>
-<thead>
-<tr>
-<th><strong>VM一般状态</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>not at a safepoint</td>
-<td>正常执行</td>
-</tr>
-<tr>
-<td>at safepoint</td>
-<td>所有线程被阻塞在VM中以等待特殊VM操作完成</td>
-</tr>
-<tr>
-<td>synchronizing</td>
-<td>请求了一个特殊的VM操作，VM正在等待VM中所有的线程阻塞</td>
-</tr>
-</tbody>
-</table>
+<p>| <strong>VM一般状态</strong> | <strong>描述</strong> |<br>| not at a safepoint | 正常执行 |<br>| at safepoint | 所有线程被阻塞在VM中以等待特殊VM操作完成 |<br>| synchronizing | 请求了一个特殊的VM操作，VM正在等待VM中所有的线程阻塞 |</p>
 <p>VM状态输出是错误日志中的单行输出，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VM state:not at safepoint (normal execution)</div></pre></td></tr></table></figure></p>
-<h4 id="C-5-3-互斥锁和监视器"><a href="#C-5-3-互斥锁和监视器" class="headerlink" title="C.5.3 互斥锁和监视器"></a><strong>C.5.3 互斥锁和监视器</strong></h4><p>错误日志中的下一个信息是当前由线程拥有的互斥锁和监视器的列表。 这些互斥锁是VM内部锁，而不是与Java对象关联的监视器。 下面的示例显示了在保持VM锁定时发生crash时输出的外观。对于每个锁，日志包含锁的名称，其所有者以及VM内部互斥结构的地址及其操作系统锁。通常，此信息仅对非常熟悉HotSpot VM的用户有用。 所有者线程可以交叉引用到线程列表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">VM Mutex/Monitor currently owned by a thread:</div><div class="line"></div><div class="line">([mutex/lock_event])[0x007357b0/0x0000031c] Threads_lock - owner thread: 0x00996318</div><div class="line"></div><div class="line">[0x00735978/0x000002e0] Heap_lock - owner thread: 0x00736218</div></pre></td></tr></table></figure></p>
+<h4 id="C-5-3-互斥锁和监视器"><a href="#C-5-3-互斥锁和监视器" class="headerlink" title="C.5.3 互斥锁和监视器**"></a>C.5.3 互斥锁和监视器**</h4><p>错误日志中的下一个信息是当前由线程拥有的互斥锁和监视器的列表。 这些互斥锁是VM内部锁，而不是与Java对象关联的监视器。 下面的示例显示了在保持VM锁定时发生crash时输出的外观。对于每个锁，日志包含锁的名称，其所有者以及VM内部互斥结构的地址及其操作系统锁。通常，此信息仅对非常熟悉HotSpot VM的用户有用。 所有者线程可以交叉引用到线程列表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">VM Mutex/Monitor currently owned by a thread:</div><div class="line"></div><div class="line">([mutex/lock_event])[0x007357b0/0x0000031c] Threads_lock - owner thread: 0x00996318</div><div class="line"></div><div class="line">[0x00735978/0x000002e0] Heap_lock - owner thread: 0x00736218</div></pre></td></tr></table></figure></p>
 <h3 id="C-5-4-堆摘要"><a href="#C-5-4-堆摘要" class="headerlink" title="C.5.4 堆摘要"></a>C.5.4 堆摘要</h3><p>下一个信息是堆的摘要。 输出取决于垃圾收集（GC）配置。 在此示例中，使用串行收集器，禁用类数据共享，并且tenured generation为空。 这可能表示致命错误发生在早期或启动期间，并且GC尚未将任何对象提升为终身代。 以下是此输出的示例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Heap</div><div class="line"> def new generation   total 576K, used 161K [0x46570000, 0x46610000, 0x46a50000)</div><div class="line">  eden space 512K,  31% used [0x46570000, 0x46598768, 0x465f0000)</div><div class="line">  from space 64K,   0% used [0x465f0000, 0x465f0000, 0x46600000)</div><div class="line">  to   space 64K,   0% used [0x46600000, 0x46600000, 0x46610000)</div><div class="line"> tenured generation   total 1408K, used 0K [0x46a50000, 0x46bb0000, 0x4a570000)</div><div class="line">   the space 1408K,   0% used [0x46a50000, 0x46a50000, 0x46a50200, 0x46bb0000)</div><div class="line"> compacting perm gen  total 8192K, used 1319K [0x4a570000, 0x4ad70000, 0x4e570000)</div><div class="line">   the space 8192K,  16% used [0x4a570000, 0x4a6b9d48, 0x4a6b9e00, 0x4ad70000)</div><div class="line">No shared spaces configured.</div></pre></td></tr></table></figure></p>
 <h3 id="C-5-5-内存映射"><a href="#C-5-5-内存映射" class="headerlink" title="C.5.5 内存映射"></a>C.5.5 内存映射</h3><p>日志中的下一个信息是crash时的虚拟内存区域列表。对于大型应用程序，此列表可能很长。调试一些crash时，内存映射非常有用，因为它可以告诉你实际使用的库，它们在内存中的位置，以及堆，堆栈和保护页的位置。</p>
 <p>内存映射的格式是特定于操作系统的。 在Solaris操作系统上，将打印基本地址和库名称。 在Linux系统上，打印进程内存映射（/proc/pid/maps）。 在Windows系统上，将打印每个库的基址和结束地址。 在Linux/x86上生成以下示例输出。 注意，为了简洁起见，示例中省略了大多数行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Dynamic libraries:</div><div class="line">08048000-08056000 r-xp 00000000 03:05 259171     /h/jdk6/bin/java</div><div class="line">08056000-08058000 rw-p 0000d000 03:05 259171     /h/jdk6/bin/java</div><div class="line">08058000-0818e000 rwxp 00000000 00:00 0</div><div class="line">40000000-40013000 r-xp 00000000 03:0a 400046     /lib/ld-2.2.5.so</div><div class="line">40013000-40014000 rw-p 00013000 03:0a 400046     /lib/ld-2.2.5.so</div><div class="line">40014000-40015000 r--p 00000000 00:00 0</div><div class="line">Lines omitted.</div><div class="line">4123d000-4125a000 rwxp 00001000 00:00 0</div><div class="line">4125a000-4125f000 rwxp 00000000 00:00 0</div><div class="line">4125f000-4127b000 rwxp 00023000 00:00 0</div><div class="line">4127b000-4127e000 ---p 00003000 00:00 0</div><div class="line">4127e000-412fb000 rwxp 00006000 00:00 0</div><div class="line">412fb000-412fe000 ---p 00083000 00:00 0</div><div class="line">412fe000-4137b000 rwxp 00086000 00:00 0</div><div class="line">Lines omitted.</div><div class="line">44600000-46570000 rwxp 00090000 00:00 0</div><div class="line">46570000-46610000 rwxp 00000000 00:00 0</div><div class="line">46610000-46a50000 rwxp 020a0000 00:00 0</div><div class="line">46a50000-46bb0000 rwxp 00000000 00:00 0</div><div class="line">46bb0000-4a570000 rwxp 02640000 00:00 0</div><div class="line">Lines omitted.</div></pre></td></tr></table></figure></p>
@@ -577,110 +556,11 @@
 <p>下一个信息指定VM在启动时标识的CPU体系结构和功能，如以下示例所示。</p>
 <p>CPU:total 2 family 6, cmov, cx8, fxsr, mmx, sse | | |&lt;—– CPU features —-&gt;| | | | +— processor family (IA32 only): | 3 - i386 | 4 - i486 | 5 - Pentium | 6 - PentiumPro, PII, PIII | 15 - Pentium 4 +———— Total number of CPUs</p>
 <p>下表显示了SPARC系统上可能的CPU功能。</p>
-<h4 id="SPARC-Features"><a href="#SPARC-Features" class="headerlink" title="SPARC Features"></a>SPARC Features</h4><table>
-<thead>
-<tr>
-<th><strong>SPARC Feature</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>has_v8</td>
-<td>Supports v8 instructions.支持第8版指令</td>
-</tr>
-<tr>
-<td>has_v9</td>
-<td>Supports v9 instructions.支持第9版指令</td>
-</tr>
-<tr>
-<td>has_vis1</td>
-<td>Supports visualization instructions.支持可视化指令</td>
-</tr>
-<tr>
-<td>has_vis2</td>
-<td>Supports visualization instructions.支持可视化指令</td>
-</tr>
-<tr>
-<td>is_ultra3</td>
-<td>UltraSparc III.</td>
-</tr>
-<tr>
-<td>no-muldiv</td>
-<td>No hardware integer multiply and divide.没有硬件整数乘法和除法</td>
-</tr>
-<tr>
-<td>no-fsmuld</td>
-<td>No multiply-add and multiply-subtract instructions.没有乘加和乘减指令</td>
-</tr>
-</tbody>
-</table>
+<h4 id="SPARC-Features"><a href="#SPARC-Features" class="headerlink" title="SPARC Features"></a>SPARC Features</h4><p>| <strong>SPARC Feature</strong> | <strong>Description</strong> |<br>| has_v8 | Supports v8 instructions.支持第8版指令 |<br>| has_v9 | Supports v9 instructions.支持第9版指令 |<br>| has_vis1 | Supports visualization instructions.支持可视化指令 |<br>| has_vis2 | Supports visualization instructions.支持可视化指令 |<br>| is_ultra3 | UltraSparc III. |<br>| no-muldiv | No hardware integer multiply and divide.没有硬件整数乘法和除法 |<br>| no-fsmuld | No multiply-add and multiply-subtract instructions.没有乘加和乘减指令 |</p>
 <p>下表显示了Inter/IA32系统上可能的CPU功能。</p>
-<h4 id="Intel-IA32-Features"><a href="#Intel-IA32-Features" class="headerlink" title="Intel/IA32 Features"></a>Intel/IA32 Features</h4><table>
-<thead>
-<tr>
-<th><strong>Intel/IA32 Feature</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cmov</td>
-<td>Supports cmov instruction.支持cmov指令</td>
-</tr>
-<tr>
-<td>cx8</td>
-<td>Supports cmpxchg8b instruction.支持cmpxchg8b指令</td>
-</tr>
-<tr>
-<td>fxsr</td>
-<td>Supports fxsave and fxrstor.支持fssave和fxrstor</td>
-</tr>
-<tr>
-<td>mmx</td>
-<td>Supports MMX.支持MMX</td>
-</tr>
-<tr>
-<td>sse</td>
-<td>Supports SSE extensions.支持SSE扩展</td>
-</tr>
-<tr>
-<td>sse2</td>
-<td>Supports SSE2 extensions.支持SSE2扩展</td>
-</tr>
-<tr>
-<td>ht</td>
-<td>Supports Hyper-Threading Technology.支持超线程技术</td>
-</tr>
-</tbody>
-</table>
+<h4 id="Intel-IA32-Features"><a href="#Intel-IA32-Features" class="headerlink" title="Intel/IA32 Features"></a>Intel/IA32 Features</h4><p>| <strong>Intel/IA32 Feature</strong> | <strong>Description</strong> |<br>| cmov | Supports cmov instruction.支持cmov指令 |<br>| cx8 | Supports cmpxchg8b instruction.支持cmpxchg8b指令 |<br>| fxsr | Supports fxsave and fxrstor.支持fssave和fxrstor |<br>| mmx | Supports MMX.支持MMX |<br>| sse | Supports SSE extensions.支持SSE扩展 |<br>| sse2 | Supports SSE2 extensions.支持SSE2扩展 |<br>| ht | Supports Hyper-Threading Technology.支持超线程技术 |</p>
 <p>下表显示了AMD64/EM64T系统上可能的CPU功能。</p>
-<h4 id="AMD64-EM64T-Features"><a href="#AMD64-EM64T-Features" class="headerlink" title="AMD64/EM64T Features"></a>AMD64/EM64T Features</h4><table>
-<thead>
-<tr>
-<th><strong>AMD64/EM64T Feature</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>amd64</td>
-<td>AMD Opteron, Athlon64, and so forth.AMD Opteron, Athlon64等</td>
-</tr>
-<tr>
-<td>em64t</td>
-<td>Intel EM64T processor.Inter EM64T处理器</td>
-</tr>
-<tr>
-<td>3dnow</td>
-<td>Supports 3DNow extension.支持3DNow扩展</td>
-</tr>
-<tr>
-<td>ht</td>
-<td>Supports Hyper-Threading Technology.支持超线程技术</td>
-</tr>
-</tbody>
-</table>
+<h4 id="AMD64-EM64T-Features"><a href="#AMD64-EM64T-Features" class="headerlink" title="AMD64/EM64T Features"></a>AMD64/EM64T Features</h4><p>| <strong>AMD64/EM64T Feature</strong> | <strong>Description</strong> |<br>| amd64 | AMD Opteron, Athlon64, and so forth.AMD Opteron, Athlon64等 |<br>| em64t | Intel EM64T processor.Inter EM64T处理器 |<br>| 3dnow | Supports 3DNow extension.支持3DNow扩展 |<br>| ht | Supports Hyper-Threading Technology.支持超线程技术 |</p>
 <p>错误日志中下一个信息是内存信息，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">                                                        unused swap space</div><div class="line">                                total amount of swap space      |</div><div class="line">                      unused physical memory         |          |</div><div class="line">  total amount of physical memory     |              |          |</div><div class="line">       page size            |         |              |          |</div><div class="line">           v                v         v              v          v</div><div class="line">Memory: 4k page, physical 513604k(11228k free), swap 530104k(497504k free)</div></pre></td></tr></table></figure></p>
 <p>某些系统要求交换空间至少是实际物理内存大小的两倍，而其他系统则没有任何此类要求。作为一般规则，如果物理内存和交换空间几乎都已满，则有充分的理由怀疑crash是由于内存不足造成的。</p>
 <p>在Linux系统上，内核可以将大多数未使用的物理内存转换为文件缓存。当需要更多内存时，Linux内核会将缓存内存返回给应用程序。这由内核透明地处理，但它确实意味着当仍有足够的可用物理内存时，致命错误处理程序报告的未使用物理内存量可能接近于零。</p>
@@ -867,7 +747,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-1-致命错误日志的位置"><span class="nav-number">1.</span> <span class="nav-text">C.1 致命错误日志的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-2-致命错误日志描述"><span class="nav-number">2.</span> <span class="nav-text">C.2 致命错误日志描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-3-头部格式"><span class="nav-number">3.</span> <span class="nav-text">C.3 头部格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-4-线程区域格式"><span class="nav-number">4.</span> <span class="nav-text">C.4 线程区域格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-1-线程信息"><span class="nav-number">4.1.</span> <span class="nav-text">C.4.1 线程信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-2-信号信息"><span class="nav-number">4.2.</span> <span class="nav-text">C.4.2 信号信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-3-寄存器上下文"><span class="nav-number">4.3.</span> <span class="nav-text">C.4.3 寄存器上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-4-机器指令"><span class="nav-number">4.4.</span> <span class="nav-text">C.4.4 机器指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-5-线程栈"><span class="nav-number">4.5.</span> <span class="nav-text">C.4.5 线程栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-6-进一步的细节"><span class="nav-number">4.6.</span> <span class="nav-text">C.4.6 进一步的细节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-5-进程区域格式"><span class="nav-number">5.</span> <span class="nav-text">C.5 进程区域格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-1-线程列表"><span class="nav-number">5.1.</span> <span class="nav-text">C.5.1 线程列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-2-VM状态"><span class="nav-number">5.2.</span> <span class="nav-text">C.5.2 VM状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-5-3-互斥锁和监视器"><span class="nav-number">5.2.1.</span> <span class="nav-text">C.5.3 互斥锁和监视器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-4-堆摘要"><span class="nav-number">5.3.</span> <span class="nav-text">C.5.4 堆摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-5-内存映射"><span class="nav-number">5.4.</span> <span class="nav-text">C.5.5 内存映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-6-VM参数和环境变量"><span class="nav-number">5.5.</span> <span class="nav-text">C.5.6 VM参数和环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-7-信号处理程序"><span class="nav-number">5.6.</span> <span class="nav-text">C.5.7 信号处理程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-6-系统区域格式"><span class="nav-number">6.</span> <span class="nav-text">C.6 系统区域格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SPARC-Features"><span class="nav-number">6.0.1.</span> <span class="nav-text">SPARC Features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Intel-IA32-Features"><span class="nav-number">6.0.2.</span> <span class="nav-text">Intel/IA32 Features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AMD64-EM64T-Features"><span class="nav-number">6.0.3.</span> <span class="nav-text">AMD64/EM64T Features</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-1-致命错误日志的位置"><span class="nav-number">1.</span> <span class="nav-text">C.1 致命错误日志的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-2-致命错误日志描述"><span class="nav-number">2.</span> <span class="nav-text">C.2 致命错误日志描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-3-头部格式"><span class="nav-number">3.</span> <span class="nav-text">C.3 头部格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-4-线程区域格式"><span class="nav-number">4.</span> <span class="nav-text">C.4 线程区域格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-1-线程信息"><span class="nav-number">4.1.</span> <span class="nav-text">C.4.1 线程信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-2-信号信息"><span class="nav-number">4.2.</span> <span class="nav-text">C.4.2 信号信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-3-寄存器上下文"><span class="nav-number">4.3.</span> <span class="nav-text">C.4.3 寄存器上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-4-机器指令"><span class="nav-number">4.4.</span> <span class="nav-text">C.4.4 机器指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-5-线程栈"><span class="nav-number">4.5.</span> <span class="nav-text">C.4.5 线程栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-4-6-进一步的细节"><span class="nav-number">4.6.</span> <span class="nav-text">C.4.6 进一步的细节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-5-进程区域格式"><span class="nav-number">5.</span> <span class="nav-text">C.5 进程区域格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-1-线程列表"><span class="nav-number">5.1.</span> <span class="nav-text">C.5.1 线程列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-2-VM状态"><span class="nav-number">5.2.</span> <span class="nav-text">C.5.2 VM状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-5-3-互斥锁和监视器"><span class="nav-number">5.2.1.</span> <span class="nav-text">C.5.3 互斥锁和监视器**</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-4-堆摘要"><span class="nav-number">5.3.</span> <span class="nav-text">C.5.4 堆摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-5-内存映射"><span class="nav-number">5.4.</span> <span class="nav-text">C.5.5 内存映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-6-VM参数和环境变量"><span class="nav-number">5.5.</span> <span class="nav-text">C.5.6 VM参数和环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-5-7-信号处理程序"><span class="nav-number">5.6.</span> <span class="nav-text">C.5.7 信号处理程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-6-系统区域格式"><span class="nav-number">6.</span> <span class="nav-text">C.6 系统区域格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SPARC-Features"><span class="nav-number">6.0.1.</span> <span class="nav-text">SPARC Features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Intel-IA32-Features"><span class="nav-number">6.0.2.</span> <span class="nav-text">Intel/IA32 Features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AMD64-EM64T-Features"><span class="nav-number">6.0.3.</span> <span class="nav-text">AMD64/EM64T Features</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
