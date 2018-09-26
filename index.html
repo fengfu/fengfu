@@ -289,6 +289,663 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/09/26/JVM致命错误日志/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/26/JVM致命错误日志/" itemprop="url">JVM致命错误日志</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-26T10:29:58+08:00">
+                2018-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/26/JVM致命错误日志/" class="leancloud_visitors" data-flag-title="JVM致命错误日志">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>翻译:曲风富</p>
+<p><em>译者注：本文翻译自Oracle官方文档，有一定英文能力者建议查看原文：</em><br><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html" target="_blank" rel="external">https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html</a></p>
+<p>当JVM出现致命错误时，会生成一个包含有错误信息以及出错时系统状态的日志文件。</p>
+<p>本附录包含以下内容：</p>
+<ul>
+<li><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbwcy" target="_blank" rel="external">1 致命错误日志的位置</a></li>
+<li><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbmuz" target="_blank" rel="external">2 致命错误日志描述</a></li>
+<li><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#header" target="_blank" rel="external">3 头部格式</a></li>
+<li><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvki" target="_blank" rel="external">4 线程部分格式</a></li>
+<li><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvkd" target="_blank" rel="external">5 进程部分格式</a></li>
+<li><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvla" target="_blank" rel="external">6 系统部分格式</a></li>
+</ul>
+<h2 id="C-1-致命错误日志的位置"><a href="#C-1-致命错误日志的位置" class="headerlink" title="C.1 致命错误日志的位置"></a>C.1 致命错误日志的位置</h2><p>产品标志-XX:ErrorFile=<em>file</em> 可用于指定文件的创建位置，其中<em>file</em>表示文件位置的完整路径。文件变量中的子字符串%%将转换为%，子字符串%p将转换为进程的进程ID。</p>
+<p>在下面的示例中，错误日志文件将写入目录/var/log/java，并将命名为java_error{pid}.log。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -XX:ErrorFile=/var/log/java/java_error%p.log</div></pre></td></tr></table></figure></p>
+<p>如果未指定-XX:ErrorFile=file标志，则默认情况下文件名为hs<em>err</em>{pid}.log，其中pid是进程的进程ID。</p>
+<p>此外，如果未指定-XX:ErrorFile=file标志，系统将尝试在进程的工作目录中创建该文件。如果无法在工作目录中创建文件（空间不足，权限问题或其他问题），则会在操作系统的临时目录中创建该文件。在Solaris OS和Linux上，临时目录是/tmp。 在Windows上，临时目录由TMP环境变量的值指定; 如果未定义该环境变量，则使用TEMP环境变量的值。</p>
+<h2 id="C-2-致命错误日志描述"><a href="#C-2-致命错误日志描述" class="headerlink" title="C.2 致命错误日志描述"></a>C.2 致命错误日志描述</h2><p>错误日志包含致命错误发生时获取的信息，包括以下可能的信息：</p>
+<ul>
+<li>引发致命错误的操作异常或信号</li>
+<li>版本和配置信息</li>
+<li>引发致命错误和线程堆栈跟踪的线程的详细信息</li>
+<li>正在运行的线程列表及其状态</li>
+<li>有关堆的摘要信息</li>
+<li>已加载的本地库列表</li>
+<li>命令行参数</li>
+<li>环境变量</li>
+<li>有关操作系统和CPU的详细信息</li>
+</ul>
+<p><em>注 - 在某些情况下，只有这些信息的子集输出到错误日志。这可能会发生在致命错误非常严重，以至于错误的处理程序无法恢复并报告所有细节。</em></p>
+<p>错误日志是一个文本文件，包含以下部分：</p>
+<ul>
+<li>标题，提供crash的简要说明。<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#header" target="_blank" rel="external">3 Header Format</a></li>
+<li>包含线程信息的部分。<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvki" target="_blank" rel="external">4 Thread Section Format</a></li>
+<li>包含进程信息的部分。<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvkd" target="_blank" rel="external">5 Process Section Format</a></li>
+<li>包含系统信息的部分。<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvla" target="_blank" rel="external">6 System Section Format</a></li>
+</ul>
+<p><em>注 - 请注意，此处描述的致命错误日志的格式基于JDK7格式，可能与其他版本有所不同。</em></p>
+<h2 id="C-3-头部格式"><a href="#C-3-头部格式" class="headerlink" title="C.3 头部格式"></a>C.3 头部格式</h2><p>每个致命错误日志文件开头的头部区域都包含问题的简要说明。这部分头部信息也打印到标准输出，可能会显示在应用程序的输出日志中。</p>
+<p>头部信息包含指向HotSpot虚拟机错误报告页面的链接，用户可以在其中提交错误报告。</p>
+<p>以下是crash日志的示例头部信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line"># An unexpected error has been detected by Java Runtime Environment:</div><div class="line">#</div><div class="line">#  SIGSEGV (0xb) at pc=0x417789d7, pid=21139, tid=1024</div><div class="line">#</div><div class="line"># Java VM: Java HotSpot(TM) Client VM (1.6.0-rc-b63 mixed mode, sharing)</div><div class="line"># Problematic frame:</div><div class="line"># C  [libNativeSEGV.so+0x9d7]</div><div class="line">#</div><div class="line"># If you would like to submit a bug report, please visit:</div><div class="line">#   http://java.sun.com/webapps/bugreport/crash.jsp</div><div class="line">#</div></pre></td></tr></table></figure></p>
+<p>此示例显示VM在一个意外信号上crash。下一行描述了信号的类型，产生信号的程序计数器（pc），进程ID和线程ID，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#  SIGSEGV (0xb) at pc=0x417789d7, pid=21139, tid=1024</div><div class="line">      |      |           |             |         +--- thread id</div><div class="line">      |      |           |             +------------- process id</div><div class="line">      |      |           +--------------------------- program counter</div><div class="line">      |      |                                        (instruction pointer)</div><div class="line">      |      +--------------------------------------- signal number</div><div class="line">      +---------------------------------------------- signal name</div></pre></td></tr></table></figure></p>
+<p>下一行包含VM版本（Client VM或Server VM），指示应用程序是以混合模式还是解释模式运行，以及是否启用了类文件共享的指示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># Java VM: Java HotSpot(TM) Client VM (1.6.0-rc-b63 mixed mode, sharing)</div></pre></td></tr></table></figure></p>
+<p>下一个信息是导致crash的函数帧，如下所示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># Problematic frame:</div><div class="line"># C  [libNativeSEGV.so+0x9d7]</div><div class="line">  |              +-- Same as pc, but represented as library name and offset.</div><div class="line">  |                  For position-independent libraries (JVM and most shared</div><div class="line">  |                  libraries), it is possible to inspect the instructions</div><div class="line">  |                  that caused the crash without a debugger or core file</div><div class="line">  |                  by using a disassembler to dump instructions near the</div><div class="line">  |                  offset.</div><div class="line">  +----------------- Frame type</div></pre></td></tr></table></figure></p>
+<p>在该示例中，C帧类型指示本机C帧。下表显示了可能的帧类型。</p>
+<table>
+<thead>
+<tr>
+<th><strong>帧类型</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C</td>
+<td>本地C帧</td>
+</tr>
+<tr>
+<td>j</td>
+<td>解释执行的Java帧</td>
+</tr>
+<tr>
+<td>V</td>
+<td>虚拟机帧</td>
+</tr>
+<tr>
+<td>v</td>
+<td>VM生成的stub帧</td>
+</tr>
+<tr>
+<td>J</td>
+<td>其他的帧类型，包含被编译过的Java帧</td>
+</tr>
+</tbody>
+</table>
+<p>内部错误将导致VM错误处理程序生成类似的错误转储。但是头部格式不尽相同。 示例中的内部错误是guarantee()失败，断言失败，ShouldNotReachHere()等。 以下是如何在头部信息中查找内部错误的示例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line"># An unexpected error has been detected by HotSpot Virtual Machine:</div><div class="line">#</div><div class="line"># Internal Error (4F533F4C494E55583F491418160E43505000F5), pid=10226, tid=16384</div><div class="line">#</div><div class="line"># Java VM: Java HotSpot(TM) Client VM (1.6.0-rc-b63 mixed mode)</div></pre></td></tr></table></figure></p>
+<p>在上面的头部信息中，没有信号名称或信号编号。相反，第二行现在包含文本”内部错误”和长十六进制字符串。 此十六进制字符串对检测到错误的源模块和行号进行编码。 通常，此”错误字符串”仅对在HotSpot虚拟机上工作的工程师有用。</p>
+<p>错误字符串对行号进行编码，因此随着每次代码更改和释放而更改。一个版本中某一个带有给定错误字符串的crash（例如1.6.0）可能与更新版本中的相同crash（例如1.6.0_01）不对应，即使他们的错误字符串相匹配。</p>
+<p><em>注意 - 不要认为在一个与错误字符串相关的情况下工作的解决方案或解决方案将在与相同错误字符串相关的另一个情况下工作。 注意以下事实：</em></p>
+<p><em>•具有相同根本原因的错误可能具有不同的错误字符串。</em></p>
+<p><em>•具有相同错误字符的错误可能具有完全不同的根本原因。</em></p>
+<p><em>因此，在排除错误时，不应将错误字符串用作唯一的标准。</em></p>
+<h2 id="C-4-线程区域格式"><a href="#C-4-线程区域格式" class="headerlink" title="C.4 线程区域格式"></a>C.4 线程区域格式</h2><p>本节包含有关刚刚crash的线程的信息。如果多个线程同时crash，则只打印一个线程。</p>
+<h3 id="C-4-1-线程信息"><a href="#C-4-1-线程信息" class="headerlink" title="C.4.1 线程信息"></a>C.4.1 线程信息</h3><p>线程部分的第一部分显示了引发致命错误的线程，如下所示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Current thread (0x0805ac88):  JavaThread &quot;main&quot; [_thread_in_native, id=21139]</div><div class="line">                    |             |         |            |          +-- ID</div><div class="line">                    |             |         |            +------------- state</div><div class="line">                    |             |         +-------------------------- name</div><div class="line">                    |             +------------------------------------ type</div><div class="line">                    +-------------------------------------------------- pointer</div></pre></td></tr></table></figure></p>
+<p>线程指针是指向Java VM内部线程结构的指针，这通常没什么意义，除非你正在调试实时Java VM或核心文件。</p>
+<p>以下列表显示了可能的线程类型。</p>
+<ul>
+<li>JavaThread</li>
+<li>VMThread</li>
+<li>CompilerThread</li>
+<li>GCTaskThread</li>
+<li>WatcherThread</li>
+<li>ConcurrentMarkSweepThread</li>
+</ul>
+<p>下面的表格描述了重要的线程状态：</p>
+<table>
+<thead>
+<tr>
+<th><strong>线程状态</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_thread_uninitialized</td>
+<td>线程未创建。仅在内存损坏的情况下才会发生这种情况</td>
+</tr>
+<tr>
+<td>_thread_new</td>
+<td>已创建线程但尚未启动</td>
+</tr>
+<tr>
+<td>_thread_in_native</td>
+<td>线程正在运行本机代码。该错误可能是本机代码中的错误</td>
+</tr>
+<tr>
+<td>_thread_in_vm</td>
+<td>线程正在运行VM代码</td>
+</tr>
+<tr>
+<td>_thread_in_Java</td>
+<td>线程正在运行解释或编译的Java代码</td>
+</tr>
+<tr>
+<td>_thread_blocked</td>
+<td>线程被block</td>
+</tr>
+<tr>
+<td>…_trans</td>
+<td>如果上述任何状态后跟字符串_trans，则表示该线程正在更改为其他状态</td>
+</tr>
+</tbody>
+</table>
+<p>输出中的线程ID是本地线程标识符。</p>
+<p>如果Java线程是守护线程，则在线程状态之前打印字符串守护程序。</p>
+<h3 id="C-4-2-信号信息"><a href="#C-4-2-信号信息" class="headerlink" title="C.4.2 信号信息"></a>C.4.2 信号信息</h3><p>错误日志中的下一个信息描述了导致VM终止的意外信号。在Windows系统中，输出显示如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">siginfo: ExceptionCode=0xc0000005, reading address 0xd8ffecf1</div></pre></td></tr></table></figure></p>
+<p>在上面的示例中，异常代码为0xc0000005（ACCESS_VIOLATION），当线程尝试读取地址0xd8ffecf1时发生异常。</p>
+<p>在Solaris OS和Linux系统中，信号编号（si_signo）和信号代码（si_code）用于标识异常，如下所示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">siginfo:si_signo=11, si_errno=0, si_code=1, si_addr=0x00004321</div></pre></td></tr></table></figure></p>
+<h3 id="C-4-3-寄存器上下文"><a href="#C-4-3-寄存器上下文" class="headerlink" title="C.4.3 寄存器上下文"></a>C.4.3 寄存器上下文</h3><p>错误日志中的下一个信息显示致命错误时的寄存器上下文。此输出的确切格式取决于处理器。以下示例显示了Intel（IA32）处理器的输出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Registers:</div><div class="line">EAX=0x00004321, EBX=0x41779dc0, ECX=0x080b8d28, EDX=0x00000000</div><div class="line">ESP=0xbfffc1e0, EBP=0xbfffc1f8, ESI=0x4a6b9278, EDI=0x0805ac88</div><div class="line">EIP=0x417789d7, CR2=0x00004321, EFLAGS=0x00010216</div></pre></td></tr></table></figure></p>
+<p>与日志中的指令信息结合使用时，寄存器值可能很有用，如下所述。</p>
+<h3 id="C-4-4-机器指令"><a href="#C-4-4-机器指令" class="headerlink" title="C.4.4 机器指令"></a>C.4.4 机器指令</h3><p>在寄存器值之后，错误日志包含堆栈顶部，随后是系统crash时程序计数器（PC）附近的32字节指令（操作码）。可以使用反汇编程序对这些操作码进行解码，以生成crash位置周围的指令。请注意，IA32和AMD64指令的长度可变，因此在crashPC之前无法始终可靠地解码指令。</p>
+<p><em>译者注：可以使用</em><a href="https://onlinedisassembler.com/odaweb/" target="_blank" rel="external"><em>https://onlinedisassembler.com/odaweb/</em></a><em>这种在线工具对指令进行反汇编，当然你也可以使用udis86(</em><a href="http://udis86.sourceforge.net/" target="_blank" rel="external"><em>http://udis86.sourceforge.net</em></a><em>)，前提是你需要安装gcc自行编译才能使用。</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Top of Stack: (sp=0xbfffc1e0)</div><div class="line">0xbfffc1e0:   00000000 00000000 0818d068 00000000</div><div class="line">0xbfffc1f0:   00000044 4a6b9278 bfffd208 41778a10</div><div class="line">0xbfffc200:   00004321 00000000 00000cd8 0818d328</div><div class="line">0xbfffc210:   00000000 00000000 00000004 00000003</div><div class="line">0xbfffc220:   00000000 4000c78c 00000004 00000000</div><div class="line">0xbfffc230:   00000000 00000000 00180003 00000000</div><div class="line">0xbfffc240:   42010322 417786ec 00000000 00000000</div><div class="line">0xbfffc250:   4177864c 40045250 400131e8 00000000</div><div class="line">Instructions: (pc=0x417789d7)</div><div class="line">0x417789c7:   ec 14 e8 72 ff ff ff 81 c3 f2 13 00 00 8b 45 08</div><div class="line">0x417789d7:   0f b6 00 88 45 fb 8d 83 6f ee ff ff 89 04 24 e8</div></pre></td></tr></table></figure></p>
+<h3 id="C-4-5-线程栈"><a href="#C-4-5-线程栈" class="headerlink" title="C.4.5 线程栈"></a>C.4.5 线程栈</h3><p>在可能的情况下，错误日志中的下一个输出是线程堆栈。这包括基址和堆栈顶部的地址，当前堆栈指针以及线程可用的未使用堆栈的数量。在可能的情况下，遵循堆栈帧，最多打印100帧。 对于C/C++帧，也可以打印库名称。 重要的是要注意，在某些致命错误条件下，堆栈可能已损坏，在这种情况下，此详细信息可能不可用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Stack: [0x00040000,0x00080000),  sp=0x0007f9f8,  free space=254k</div><div class="line">Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)</div><div class="line">V  [jvm.dll+0x83d77]</div><div class="line">C  [App.dll+0x1047]</div><div class="line">j  Test.foo()V+0</div><div class="line">j  Test.main([Ljava/lang/String;)V+0</div><div class="line">v  ~StubRoutines::call_stub</div><div class="line">V  [jvm.dll+0x80f13]</div><div class="line">V  [jvm.dll+0xd3842]</div><div class="line">V  [jvm.dll+0x80de4]</div><div class="line">C  [java.exe+0x14c0]</div><div class="line">C  [java.exe+0x64cd]</div><div class="line">C  [kernel32.dll+0x214c7]</div><div class="line">Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)</div><div class="line">j  Test.foo()V+0</div><div class="line">j  Test.main([Ljava/lang/String;)V+0</div><div class="line">v  ~StubRoutines::call_stub</div></pre></td></tr></table></figure></p>
+<p>日志包含了2个线程栈：</p>
+<ul>
+<li>第一个线程堆栈是Native帧，它打印显示所有函数调用的本地线程。但是，此线程堆栈不考虑运行时编译器内联的Java方法; 如果方法是内联的，它们似乎是父级堆栈框架的一部分。</li>
+</ul>
+<p>本地帧的线程堆栈中的信息提供有关crash原因的重要信息。通过从上到下分析列表中的库，通常可以确定哪个库可能导致问题并将其报告给负责该库的相应组织。</p>
+<ul>
+<li>第二个线程栈是Java帧，它打印包含内联方法的Java帧，跳过本地帧。根据crash情况，可能无法打印本地线程栈，但可能会打印Java帧。</li>
+</ul>
+<h3 id="C-4-6-进一步的细节"><a href="#C-4-6-进一步的细节" class="headerlink" title="C.4.6 进一步的细节"></a>C.4.6 进一步的细节</h3><p>如果错误发生在VM线程或编译器线程中，则可能会打印更多详细信息。例如，在VM线程的情况下，如果VM线程在致命错误时执行VM操作，则打印VM操作。 在下面的输出示例中，编译器线程引发了致命错误。 该任务是编译器任务，HotSpot Client VM正在编译方法hs101t004Thread.ackermann。</p>
+<p>Current CompileTask:</p>
+<p>HotSpot Client Compiler:754   b</p>
+<p>nsk.jvmti.scenarios.hotswap.HS101.hs101t004Thread.ackermann(IJ)J (42 bytes)</p>
+<p>对于HotSpot Server VM，编译器任务的输出略有不同，但也包括完整的类名和方法。</p>
+<h2 id="C-5-进程区域格式"><a href="#C-5-进程区域格式" class="headerlink" title="C.5 进程区域格式"></a>C.5 进程区域格式</h2><p>进程部分在线程部分之后打印。它包含有关整个进程的信息，包括进程的线程列表和内存使用情况。</p>
+<h3 id="C-5-1-线程列表"><a href="#C-5-1-线程列表" class="headerlink" title="C.5.1 线程列表"></a>C.5.1 线程列表</h3><p>线程列表包括VM知道的线程。 这包括所有Java线程和一些VM内部线程，但不包括未附加到VM的用户应用程序创建的任何本地线程。 输出格式如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">=&gt;0x0805ac88 JavaThread &quot;main&quot; [_thread_in_native, id=21139]</div><div class="line">|      |         |        |             |             +----- ID</div><div class="line">|      |         |        |             +------------------- state</div><div class="line">|      |         |        |                                  (JavaThread only)</div><div class="line">|      |         |        +--------------------------------- name</div><div class="line">|      |         +------------------------------------------ type</div><div class="line">|      +---------------------------------------------------- pointer</div><div class="line">+------------------------------------------------------ &quot;=&gt;&quot; current thread</div></pre></td></tr></table></figure></p>
+<p>下面是一个输出示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Java Threads: ( =&gt; current thread )</div><div class="line">  0x080c8da0 JavaThread &quot;Low Memory Detector&quot; daemon [_thread_blocked, id=21147]</div><div class="line">  0x080c7988 JavaThread &quot;CompilerThread0&quot; daemon [_thread_blocked, id=21146]</div><div class="line">  0x080c6a48 JavaThread &quot;Signal Dispatcher&quot; daemon [_thread_blocked, id=21145]</div><div class="line">  0x080bb5f8 JavaThread &quot;Finalizer&quot; daemon [_thread_blocked, id=21144]</div><div class="line">  0x080ba940 JavaThread &quot;Reference Handler&quot; daemon [_thread_blocked, id=21143]</div><div class="line">=&gt;0x0805ac88 JavaThread &quot;main [_thread_in_native, id=21139]</div><div class="line">Other Threads:</div><div class="line">  0x080b6070 VMThread [id=21142]</div><div class="line">  0x080ca088 WatcherThread [id=21148]</div></pre></td></tr></table></figure></p>
+<p>有关线程类型和线程状态的描述请见<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html#gbvki" target="_blank" rel="external">C.4 Thread Section Format</a>.</p>
+<h3 id="C-5-2-VM状态"><a href="#C-5-2-VM状态" class="headerlink" title="C.5.2 VM状态"></a>C.5.2 VM状态</h3><p>接下来的信息是VM状态，描述了整个虚拟机的状态。下面的表格描述了VM的一般状态。</p>
+<table>
+<thead>
+<tr>
+<th><strong>VM一般状态</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>not at a safepoint</td>
+<td>正常执行</td>
+</tr>
+<tr>
+<td>at safepoint</td>
+<td>所有线程被阻塞在VM中以等待特殊VM操作完成</td>
+</tr>
+<tr>
+<td>synchronizing</td>
+<td>请求了一个特殊的VM操作，VM正在等待VM中所有的线程阻塞</td>
+</tr>
+</tbody>
+</table>
+<p>VM状态输出是错误日志中的单行输出，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VM state:not at safepoint (normal execution)</div></pre></td></tr></table></figure></p>
+<h4 id="C-5-3-互斥锁和监视器"><a href="#C-5-3-互斥锁和监视器" class="headerlink" title="C.5.3 互斥锁和监视器"></a><strong>C.5.3 互斥锁和监视器</strong></h4><p>错误日志中的下一个信息是当前由线程拥有的互斥锁和监视器的列表。 这些互斥锁是VM内部锁，而不是与Java对象关联的监视器。 下面的示例显示了在保持VM锁定时发生crash时输出的外观。对于每个锁，日志包含锁的名称，其所有者以及VM内部互斥结构的地址及其操作系统锁。通常，此信息仅对非常熟悉HotSpot VM的用户有用。 所有者线程可以交叉引用到线程列表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">VM Mutex/Monitor currently owned by a thread:</div><div class="line"></div><div class="line">([mutex/lock_event])[0x007357b0/0x0000031c] Threads_lock - owner thread: 0x00996318</div><div class="line"></div><div class="line">[0x00735978/0x000002e0] Heap_lock - owner thread: 0x00736218</div></pre></td></tr></table></figure></p>
+<h3 id="C-5-4-堆摘要"><a href="#C-5-4-堆摘要" class="headerlink" title="C.5.4 堆摘要"></a>C.5.4 堆摘要</h3><p>下一个信息是堆的摘要。 输出取决于垃圾收集（GC）配置。 在此示例中，使用串行收集器，禁用类数据共享，并且tenured generation为空。 这可能表示致命错误发生在早期或启动期间，并且GC尚未将任何对象提升为终身代。 以下是此输出的示例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Heap</div><div class="line"> def new generation   total 576K, used 161K [0x46570000, 0x46610000, 0x46a50000)</div><div class="line">  eden space 512K,  31% used [0x46570000, 0x46598768, 0x465f0000)</div><div class="line">  from space 64K,   0% used [0x465f0000, 0x465f0000, 0x46600000)</div><div class="line">  to   space 64K,   0% used [0x46600000, 0x46600000, 0x46610000)</div><div class="line"> tenured generation   total 1408K, used 0K [0x46a50000, 0x46bb0000, 0x4a570000)</div><div class="line">   the space 1408K,   0% used [0x46a50000, 0x46a50000, 0x46a50200, 0x46bb0000)</div><div class="line"> compacting perm gen  total 8192K, used 1319K [0x4a570000, 0x4ad70000, 0x4e570000)</div><div class="line">   the space 8192K,  16% used [0x4a570000, 0x4a6b9d48, 0x4a6b9e00, 0x4ad70000)</div><div class="line">No shared spaces configured.</div></pre></td></tr></table></figure></p>
+<h3 id="C-5-5-内存映射"><a href="#C-5-5-内存映射" class="headerlink" title="C.5.5 内存映射"></a>C.5.5 内存映射</h3><p>日志中的下一个信息是crash时的虚拟内存区域列表。对于大型应用程序，此列表可能很长。调试一些crash时，内存映射非常有用，因为它可以告诉你实际使用的库，它们在内存中的位置，以及堆，堆栈和保护页的位置。</p>
+<p>内存映射的格式是特定于操作系统的。 在Solaris操作系统上，将打印基本地址和库名称。 在Linux系统上，打印进程内存映射（/proc/pid/maps）。 在Windows系统上，将打印每个库的基址和结束地址。 在Linux/x86上生成以下示例输出。 注意，为了简洁起见，示例中省略了大多数行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Dynamic libraries:</div><div class="line">08048000-08056000 r-xp 00000000 03:05 259171     /h/jdk6/bin/java</div><div class="line">08056000-08058000 rw-p 0000d000 03:05 259171     /h/jdk6/bin/java</div><div class="line">08058000-0818e000 rwxp 00000000 00:00 0</div><div class="line">40000000-40013000 r-xp 00000000 03:0a 400046     /lib/ld-2.2.5.so</div><div class="line">40013000-40014000 rw-p 00013000 03:0a 400046     /lib/ld-2.2.5.so</div><div class="line">40014000-40015000 r--p 00000000 00:00 0</div><div class="line">Lines omitted.</div><div class="line">4123d000-4125a000 rwxp 00001000 00:00 0</div><div class="line">4125a000-4125f000 rwxp 00000000 00:00 0</div><div class="line">4125f000-4127b000 rwxp 00023000 00:00 0</div><div class="line">4127b000-4127e000 ---p 00003000 00:00 0</div><div class="line">4127e000-412fb000 rwxp 00006000 00:00 0</div><div class="line">412fb000-412fe000 ---p 00083000 00:00 0</div><div class="line">412fe000-4137b000 rwxp 00086000 00:00 0</div><div class="line">Lines omitted.</div><div class="line">44600000-46570000 rwxp 00090000 00:00 0</div><div class="line">46570000-46610000 rwxp 00000000 00:00 0</div><div class="line">46610000-46a50000 rwxp 020a0000 00:00 0</div><div class="line">46a50000-46bb0000 rwxp 00000000 00:00 0</div><div class="line">46bb0000-4a570000 rwxp 02640000 00:00 0</div><div class="line">Lines omitted.</div></pre></td></tr></table></figure></p>
+<p>上述内存映射中的行的格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">40049000-4035c000 r-xp 00000000 03:05 824473      /jdk1.5/jre/lib/i386/client/libjvm.so</div><div class="line">|&lt;-------------&gt;|  ^      ^       ^     ^        |&lt;-----------------------------------&gt;|</div><div class="line">  Memory region    |      |       |     |                           |</div><div class="line">                   |      |       |     |                           |</div><div class="line">  Permission   --- +      |       |     |                           |</div><div class="line">    r: read               |       |     |                           |</div><div class="line">    w: write              |       |     |                           |</div><div class="line">    x: execute            |       |     |                           |</div><div class="line">    p: private            |       |     |                           |</div><div class="line">    s: share              |       |     |                           |</div><div class="line">                          |       |     |                           |</div><div class="line">  File offset   ----------+       |     |                           |</div><div class="line">                                  |     |                           |</div><div class="line">  Major ID and minor ID of -------+     |                           |</div><div class="line">  the device where the file             |                           |</div><div class="line">  is located (i.e. /dev/hda5)           |                           |</div><div class="line">                                        |                           |</div><div class="line">  inode number  ------------------------+                           |</div><div class="line">                                                                    |</div><div class="line">  File name  -------------------------------------------------------+</div></pre></td></tr></table></figure></p>
+<p>在内存映射输出中，每个库都有两个虚拟内存区域：一个用于代码，另一个用于数据。 代码段的权限标记为r-xp（可读，可执行，私有），数据段的权限为rw-p（可读，可写，私有）。</p>
+<p>Java堆已经包含在输出中的堆摘要中，但是验证为堆保留的实际内存区域是否与堆摘要中的值匹配以及属性是否设置为rwxp可能很有用。</p>
+<p>线程堆栈通常在内存映射中显示为两个背对背区域，一个具有权限— p（保护页面），另一个具有权限rwxp（实际堆栈空间）。 此外，了解防护页面大小或堆栈大小很有用。 例如，在该存储器映射中，堆栈位于4127b000到412fb000。</p>
+<p>在Windows系统上，内存映射输出是每个已加载模块的加载和结束地址，如下例所示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Dynamic libraries:</div><div class="line">0x00400000 - 0x0040c000     c:\jdk6\bin\java.exe</div><div class="line">0x77f50000 - 0x77ff7000     C:\WINDOWS\System32\ntdll.dll</div><div class="line">0x77e60000 - 0x77f46000     C:\WINDOWS\system32\kernel32.dll</div><div class="line">0x77dd0000 - 0x77e5d000     C:\WINDOWS\system32\ADVAPI32.dll</div><div class="line">0x78000000 - 0x78087000     C:\WINDOWS\system32\RPCRT4.dll</div><div class="line">0x77c10000 - 0x77c63000     C:\WINDOWS\system32\MSVCRT.dll</div><div class="line">0x08000000 - 0x08183000     c:\jdk6\jre\bin\client\jvm.dll</div><div class="line">0x77d40000 - 0x77dcc000     C:\WINDOWS\system32\USER32.dll</div><div class="line">0x7e090000 - 0x7e0d1000     C:\WINDOWS\system32\GDI32.dll</div><div class="line">0x76b40000 - 0x76b6c000     C:\WINDOWS\System32\WINMM.dll</div><div class="line">0x6d2f0000 - 0x6d2f8000     c:\jdk6\jre\bin\hpi.dll</div><div class="line">0x76bf0000 - 0x76bfb000     C:\WINDOWS\System32\PSAPI.DLL</div><div class="line">0x6d680000 - 0x6d68c000     c:\jdk6\jre\bin\verify.dll</div><div class="line">0x6d370000 - 0x6d38d000     c:\jdk6\jre\bin\java.dll</div><div class="line">0x6d6a0000 - 0x6d6af000     c:\jdk6\jre\bin\zip.dll</div><div class="line">0x10000000 - 0x10032000     C:\bugs\crash2\App.dll</div></pre></td></tr></table></figure></p>
+<h3 id="C-5-6-VM参数和环境变量"><a href="#C-5-6-VM参数和环境变量" class="headerlink" title="C.5.6 VM参数和环境变量"></a>C.5.6 VM参数和环境变量</h3><p>错误日志中的下一个信息是VM参数列表，后跟环境变量列表。 例子如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">VM Arguments:</div><div class="line">java_command: NativeSEGV 2</div><div class="line">Environment Variables:</div><div class="line">JAVA_HOME=/h/jdk</div><div class="line">PATH=/h/jdk/bin:.:/h/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:</div><div class="line">     /usr/dist/local/exe:/usr/dist/exe:/bin:/usr/sbin:/usr/ccs/bin:</div><div class="line">     /usr/ucb:/usr/bsd:/usr/etc:/etc:/usr/dt/bin:/usr/openwin/bin:</div><div class="line">     /usr/sbin:/sbin:/h:/net/prt-web/prt/bin</div><div class="line">USERNAME=user</div><div class="line">LD_LIBRARY_PATH=/h/jdk6/jre/lib/i386/client:/h/jdk6/jre/lib/i386:</div><div class="line">     /h/jdk6/jre/../lib/i386:/h/bugs/NativeSEGV</div><div class="line">SHELL=/bin/tcsh</div><div class="line">DISPLAY=:0.0</div><div class="line">HOSTTYPE=i386-linux</div><div class="line">OSTYPE=linux</div><div class="line">ARCH=Linux</div><div class="line">MACHTYPE=i386</div></pre></td></tr></table></figure></p>
+<p>请注意，环境变量列表不是完整列表，而是适用于Java VM的环境变量的子集。</p>
+<h3 id="C-5-7-信号处理程序"><a href="#C-5-7-信号处理程序" class="headerlink" title="C.5.7 信号处理程序"></a>C.5.7 信号处理程序</h3><p>在Solaris OS和Linux上，错误日志中的下一个信息是信号处理程序列表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Signal Handlers:</div><div class="line">SIGSEGV: [libjvm.so+0x3aea90], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGBUS: [libjvm.so+0x3aea90], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGFPE: [libjvm.so+0x304e70], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGPIPE: [libjvm.so+0x304e70], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGILL: [libjvm.so+0x304e70], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000</div><div class="line">SIGUSR2: [libjvm.so+0x306e80], sa_mask[0]=0x80000000, sa_flags=0x10000004</div><div class="line">SIGHUP: [libjvm.so+0x3068a0], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGINT: [libjvm.so+0x3068a0], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGQUIT: [libjvm.so+0x3068a0], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGTERM: [libjvm.so+0x3068a0], sa_mask[0]=0xfffbfeff, sa_flags=0x10000004</div><div class="line">SIGUSR2: [libjvm.so+0x306e80], sa_mask[0]=0x80000000, sa_flags=0x10000004</div></pre></td></tr></table></figure></p>
+<h2 id="C-6-系统区域格式"><a href="#C-6-系统区域格式" class="headerlink" title="C.6 系统区域格式"></a>C.6 系统区域格式</h2><p>错误日志中的最后一部分是系统信息。 输出是特定于操作系统的，但通常包括操作系统版本，CPU信息和有关内存配置的摘要信息。</p>
+<p>以下示例显示Solaris 9 OS系统上的输出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">---------------  S Y S T E M  ---------------</div><div class="line">OS:                       Solaris 9 12/05 s9s_u5wos_08b SPARC</div><div class="line">           Copyright 2005 Sun Microsystems, Inc.  All Rights Reserved.</div><div class="line">                        Use is subject to license terms.</div><div class="line">                           Assembled 21 November 2005</div><div class="line">uname:SunOS 5.9 Generic_112233-10 sun4u  (T2 libthread)</div><div class="line">rlimit: STACK 8192k, CORE infinity, NOFILE 65536, AS infinity</div><div class="line">load average:0.41 0.14 0.09</div><div class="line">CPU:total 2 has_v8, has_v9, has_vis1, has_vis2, is_ultra3</div><div class="line"></div><div class="line">Memory: 8k page, physical 2097152k(1394472k free)</div><div class="line">vm_info: Java HotSpot(TM) Client VM (1.5-internal) for solaris-sparc,</div><div class="line"></div><div class="line">built on Aug 12 2005 10:22:32 by unknown with unknown Workshop:0x550</div></pre></td></tr></table></figure></p>
+<p>在Solaris OS和Linux上，操作系统信息包含在文件/etc/*发行版中。此文件描述了运行应用程序的系统类型，在某些情况下，信息字符串可能包含修补程序级别。某些系统升级未反映在/etc/*发布文件中。在Linux系统上尤其如此，用户可以在其中重建系统的任何部分。</p>
+<p>在Solaris OS上，uname系统调用用于获取内核的名称。 还会打印线程库（T1或T2）。</p>
+<p>在Linux系统上，uname系统调用也用于获取内核名称。 还会打印libc版本和线程库类型。 一个例子如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">uname:Linux 2.4.18-3smp #1 SMP Thu Apr 18 07:27:31 EDT 2002 i686</div><div class="line"></div><div class="line">libc:glibc 2.2.5 stable linuxthreads (floating stack)</div><div class="line"></div><div class="line">    |&lt;- glibc version -&gt;|&lt;--  pthread type       --&gt;|</div></pre></td></tr></table></figure></p>
+<p>在Linux上有三种可能的线程类型，即linuxthreads（固定栈），linuxthreads（浮动栈）和NPTL。它们通常安装在/lib，/lib/i686和/lib/tls中。</p>
+<p>了解线程类型很有用。例如，如果crash似乎与pthread有关，那么你可以通过选择不同的pthread库来解决问题。可以通过设置LD_LIBRARY_PATH或LD_ASSUME_KERNEL来选择不同的pthread库（和libc）。</p>
+<p>glibc版本通常不包括补丁级别。 rpm -q glibc命令可能会提供更详细的版本信息。</p>
+<p>在Solaris OS和Linux上，下一个信息是rlimit信息。请注意，VM的默认栈大小通常小于系统限制，例子如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">rlimit: STACK 8192k, CORE 0k, NPROC 4092, NOFILE 1024, AS infinity</div><div class="line">             |          |         |           |           virtual memory (-v)</div><div class="line">             |          |         |           +--- max open files (ulimit -n)</div><div class="line">             |          |         +----------- max user processes (ulimit -u)</div><div class="line">             |          +------------------------- core dump size (ulimit -c)</div><div class="line">             +---------------------------------------- stack size (ulimit -s)</div><div class="line">load average:0.04 0.05 0.02</div></pre></td></tr></table></figure></p>
+<p>下一个信息指定VM在启动时标识的CPU体系结构和功能，如以下示例所示。</p>
+<p>CPU:total 2 family 6, cmov, cx8, fxsr, mmx, sse | | |&lt;—– CPU features —-&gt;| | | | +— processor family (IA32 only): | 3 - i386 | 4 - i486 | 5 - Pentium | 6 - PentiumPro, PII, PIII | 15 - Pentium 4 +———— Total number of CPUs</p>
+<p>下表显示了SPARC系统上可能的CPU功能。</p>
+<h4 id="SPARC-Features"><a href="#SPARC-Features" class="headerlink" title="SPARC Features"></a>SPARC Features</h4><table>
+<thead>
+<tr>
+<th><strong>SPARC Feature</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>has_v8</td>
+<td>Supports v8 instructions.支持第8版指令</td>
+</tr>
+<tr>
+<td>has_v9</td>
+<td>Supports v9 instructions.支持第9版指令</td>
+</tr>
+<tr>
+<td>has_vis1</td>
+<td>Supports visualization instructions.支持可视化指令</td>
+</tr>
+<tr>
+<td>has_vis2</td>
+<td>Supports visualization instructions.支持可视化指令</td>
+</tr>
+<tr>
+<td>is_ultra3</td>
+<td>UltraSparc III.</td>
+</tr>
+<tr>
+<td>no-muldiv</td>
+<td>No hardware integer multiply and divide.没有硬件整数乘法和除法</td>
+</tr>
+<tr>
+<td>no-fsmuld</td>
+<td>No multiply-add and multiply-subtract instructions.没有乘加和乘减指令</td>
+</tr>
+</tbody>
+</table>
+<p>下表显示了Inter/IA32系统上可能的CPU功能。</p>
+<h4 id="Intel-IA32-Features"><a href="#Intel-IA32-Features" class="headerlink" title="Intel/IA32 Features"></a>Intel/IA32 Features</h4><table>
+<thead>
+<tr>
+<th><strong>Intel/IA32 Feature</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cmov</td>
+<td>Supports cmov instruction.支持cmov指令</td>
+</tr>
+<tr>
+<td>cx8</td>
+<td>Supports cmpxchg8b instruction.支持cmpxchg8b指令</td>
+</tr>
+<tr>
+<td>fxsr</td>
+<td>Supports fxsave and fxrstor.支持fssave和fxrstor</td>
+</tr>
+<tr>
+<td>mmx</td>
+<td>Supports MMX.支持MMX</td>
+</tr>
+<tr>
+<td>sse</td>
+<td>Supports SSE extensions.支持SSE扩展</td>
+</tr>
+<tr>
+<td>sse2</td>
+<td>Supports SSE2 extensions.支持SSE2扩展</td>
+</tr>
+<tr>
+<td>ht</td>
+<td>Supports Hyper-Threading Technology.支持超线程技术</td>
+</tr>
+</tbody>
+</table>
+<p>下表显示了AMD64/EM64T系统上可能的CPU功能。</p>
+<h4 id="AMD64-EM64T-Features"><a href="#AMD64-EM64T-Features" class="headerlink" title="AMD64/EM64T Features"></a>AMD64/EM64T Features</h4><table>
+<thead>
+<tr>
+<th><strong>AMD64/EM64T Feature</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>amd64</td>
+<td>AMD Opteron, Athlon64, and so forth.AMD Opteron, Athlon64等</td>
+</tr>
+<tr>
+<td>em64t</td>
+<td>Intel EM64T processor.Inter EM64T处理器</td>
+</tr>
+<tr>
+<td>3dnow</td>
+<td>Supports 3DNow extension.支持3DNow扩展</td>
+</tr>
+<tr>
+<td>ht</td>
+<td>Supports Hyper-Threading Technology.支持超线程技术</td>
+</tr>
+</tbody>
+</table>
+<p>错误日志中下一个信息是内存信息，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">                                                        unused swap space</div><div class="line">                                total amount of swap space      |</div><div class="line">                      unused physical memory         |          |</div><div class="line">  total amount of physical memory     |              |          |</div><div class="line">       page size            |         |              |          |</div><div class="line">           v                v         v              v          v</div><div class="line">Memory: 4k page, physical 513604k(11228k free), swap 530104k(497504k free)</div></pre></td></tr></table></figure></p>
+<p>某些系统要求交换空间至少是实际物理内存大小的两倍，而其他系统则没有任何此类要求。作为一般规则，如果物理内存和交换空间几乎都已满，则有充分的理由怀疑crash是由于内存不足造成的。</p>
+<p>在Linux系统上，内核可以将大多数未使用的物理内存转换为文件缓存。当需要更多内存时，Linux内核会将缓存内存返回给应用程序。这由内核透明地处理，但它确实意味着当仍有足够的可用物理内存时，致命错误处理程序报告的未使用物理内存量可能接近于零。</p>
+<p>错误日志的SYSTEM部分中的最终信息是vm_info，它是嵌入在libjvm.so/jvm.dll中的版本字符串。 每个Java VM都有自己唯一的vm_info字符串。 如果你对特定Java VM是否生成致命错误日志有疑问，请检查版本字符串。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/09/26/系统Crash问题排查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/26/系统Crash问题排查/" itemprop="url">系统Crash问题排查</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-26T09:30:08+08:00">
+                2018-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/26/系统Crash问题排查/" class="leancloud_visitors" data-flag-title="系统Crash问题排查">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>翻译：曲风富</p>
+<p><em>译者注：本文翻译自Oracle官方文档，有一定英文能力者建议查看原文：</em><br><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/crashes.html" target="_blank" rel="external">https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/crashes.html</a></p>
+<p>本章节提供针对系统crash诊断的某些特定过程的信息和指南。</p>
+<p>崩溃或致命错误会导致进程异常退出。导致crash的原因有很多，比如HotSpot VM、系统库、Java SE库或API、应用本地代码甚至操作系统中的某个bug，都有可能会导致crash。外部因素，诸如系统资源耗尽也可能会导致crash。</p>
+<p>由HotSpot VM或Java SE库中的代码中的bug引发的        比较少见。因此本章节将针对如何检查crash提供一些建议。在某些情况下，围绕一个crash现象努力直到bug被诊断出来并修复是有可能的。</p>
+<p>通常分析crash的第一步是定位到致命错误的日志。这个日志是一个文本文件，是HotSpot VM在crash时生成的。如何定位到这个文件以及此日志的详细描述，请参见这篇文章：<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html" target="_blank" rel="external">Appendix C, Fatal Error Log</a>。</p>
+<h2 id="1-crash采样"><a href="#1-crash采样" class="headerlink" title="1 crash采样"></a>1 crash采样</h2><p>本节提供了一些演示如何使用error log去找到crash原因的例子。</p>
+<h3 id="1-1-确定crash发生的位置"><a href="#1-1-确定crash发生的位置" class="headerlink" title="1.1 确定crash发生的位置"></a>1.1 确定crash发生的位置</h3><p>Crash日志的头部指出了有问题的帧。</p>
+<p>如果帧类型是本地帧并且不是操作系统本地帧，那么说明问题可能出自本地库并且不是Java虚拟机导致。解决这种crash的第一步是查看crash发生处的本地帧的代码。根据本地库的代码，这里有3个选项：</p>
+<ol>
+<li>如果本地库由你的应用提供，那么请检查你的本地库的代码。-Xcheck:jni可以帮你很多本地bug。详情请见：<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/clopts.html#gbmtq" target="_blank" rel="external">2.1 </a><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/clopts.html#gbmtq" target="_blank" rel="external">-Xcheck:jni</a><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/clopts.html#gbmtq" target="_blank" rel="external"> Option</a>；</li>
+<li>如果你应用中使用的本地库由第三方提供，建议向第三方提供bug report，并提供致命错误日志；</li>
+<li>如果本地库是JRE的一部分，那么请向Java社区提交bug report，并确保库的名称明确无误，以便bug report被分派给正确的开发人员。</li>
+</ol>
+<p>如果错误日志中的顶部帧信息显示是其他类型的帧，请向Java社区提交bug report、错误日志以及如何复现问题的相关信息。</p>
+<p>另外，请参阅本章剩余的内容。</p>
+<h2 id="1-2-本地代码中Crash"><a href="#1-2-本地代码中Crash" class="headerlink" title="1.2 本地代码中Crash"></a>1.2 本地代码中Crash</h2><p>如果致命错误日志显示crash发生在本地库，那么很有可能是本地代码或者JNI库代码中的bug导致。Crash当然也可能是其他的原因导致，但是对库、core文件、crash导出文件的分析是一个好的开端。例如，思考一下下面的从致命错误日志头部提取出来的信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># An unexpected error has been detected by HotSpot Virtual Machine:</div><div class="line">#</div><div class="line">#  SIGSEGV (0xb) at pc=0x417789d7, pid=21139, tid=1024</div><div class="line">#</div><div class="line"># Java VM: Java HotSpot(TM) Server VM (6-beta2-b63 mixed mode)</div><div class="line"># Problematic frame:</div><div class="line"># C  [libApplication.so+0x9d7]</div></pre></td></tr></table></figure>
+<p>在这个例子中，一个在libApplication.so库中执行的线程发生了SIGSEGV错误。</p>
+<p>在某些场景中某个本地库中的bug显示在Java虚拟机中crash。请看下面的crash：一个Java线程在_thread_in_vm状态下失败(即它在Java VM代码中执行)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># An unexpected error has been detected by HotSpot Virtual Machine:</div><div class="line">#</div><div class="line">#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x08083d77, pid=3700, tid=2896</div><div class="line">#</div><div class="line"># Java VM: Java HotSpot(TM) Client VM (1.5-internal mixed mode)</div><div class="line"># Problematic frame:</div><div class="line"># V  [jvm.dll+0x83d77]</div><div class="line"></div><div class="line">---------------  T H R E A D  ---------------</div><div class="line"></div><div class="line">Current thread (0x00036960):  JavaThread &amp;quot;main&amp;quot; [_thread_in_vm, id=2896]</div><div class="line"> :</div><div class="line">Stack: [0x00040000,0x00080000),  sp=0x0007f9f8,  free space=254k</div><div class="line">Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)</div><div class="line">V  [jvm.dll+0x83d77]</div><div class="line">C  [App.dll+0x1047]          &lt;========= C/native frame</div><div class="line">j  Test.foo()V+0</div><div class="line">j  Test.main([Ljava/lang/String;)V+0</div><div class="line">v  ~StubRoutines::call_stub</div><div class="line">V  [jvm.dll+0x80f13]</div><div class="line">V  [jvm.dll+0xd3842]</div><div class="line">V  [jvm.dll+0x80de4]</div><div class="line">V  [jvm.dll+0x87cd2]</div><div class="line">C  [java.exe+0x14c0]</div><div class="line">C  [java.exe+0x64cd]</div><div class="line">C  [kernel32.dll+0x214c7]</div><div class="line"> :</div></pre></td></tr></table></figure>
+<p>在这个case中，栈跟踪显示一个在App.dll中的本地程序调用了VM(可能通过JNI)。</p>
+<p>如果你遇到了一个在本地库中的crash(如上面所述的例子)，如果可能的话，你可以使用本地的调试程序链接到core文件或者crash导出文件。本地调试程序有dbx、gdb或windbg，因操作系统而异。</p>
+<p>另一个方法是在启动时将-Xcheck:jni添加到启动命令行中(参见<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/clopts.html#gbmtq" target="_blank" rel="external">B.2.1 </a><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/clopts.html#gbmtq" target="_blank" rel="external">-Xcheck:jni</a><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/clopts.html#gbmtq" target="_blank" rel="external"> Option</a>)。这个选项不保证发现所有的JNI代码中的问题，但它可以帮你定位到很多的问题。</p>
+<p>如果crash的本地库是Java运行环境的一部分(如awt.dll, net.dll等)，那么很可能你遇到了一个Java库或API的bug。如果经过进一步分析之后你断定这是个Java库或API的bug，请收集尽可能多的数据并提交bug或寻求Java技术支持。详情参见<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/bugreports.html" target="_blank" rel="external">Chapter 7, Submitting Bug Reports</a>。</p>
+<h3 id="1-3-栈溢出导致Crash"><a href="#1-3-栈溢出导致Crash" class="headerlink" title="1.3 栈溢出导致Crash"></a>1.3 栈溢出导致Crash</h3><p>Java语言代码中的栈溢出(也叫爆栈)会导致线程抛出java.lang.StackOverflowError。换句话说，C和C++写入时达到了栈的末尾并且引发了栈溢出。这个致命错误导致了进程终止。</p>
+<p>在HotSpot实现中，Java方法与C/C++本地代码共享栈帧，也就是用户本地代码和虚拟机本身。Java方法生成代码来检查栈空间有可用的到栈尾的固定距离，来确保本地代码在不超出栈空间的情况下能够被执行。这个到栈尾的距离被称为”Shadow Pages”。这个距离是可调节的，这样应用需要比默认值更大的距离时就可以增加Shadow page的尺寸。增大Shadow pages的选项是-XX:StackShadowpages=<em>n</em>，n的值要大于shadow pages在当前平台下的默认值。</p>
+<p>如果你的应用出现了分段错误，而且没有生成core文件或error日志(见<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/felog.html" target="_blank" rel="external">Appendix C, Fatal Error Log</a>)或在Windows系统中发现STACK_OVERFLOW_ERROR或”An irrecoverable stack overflow has occurred”消息，这说明StackShadowPages已经耗尽需要扩容。</p>
+<p>如果你想要增大StackShadowPages 的值，你也需要使用-Xss参数增加默认线程栈大小。增加线程栈大小可能会导致能够创建的线程数的减少。默认线程栈大小根据平台差异从256K到1024K不等。</p>
+<p>下面的代码片段来自于Windows系统的一个致命错误日志，其中的一个线程引发了本地代码中的栈溢出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># An unexpected error has been detected by HotSpot Virtual Machine:</div><div class="line">#</div><div class="line">#  EXCEPTION_STACK_OVERFLOW (0xc00000fd) at pc=0x10001011, pid=296, tid=2940</div><div class="line">#</div><div class="line"># Java VM: Java HotSpot(TM) Client VM (1.6-internal mixed mode, sharing)</div><div class="line"># Problematic frame:</div><div class="line"># C  [App.dll+0x1011]</div><div class="line">#</div><div class="line"></div><div class="line">---------------  T H R E A D  ---------------</div><div class="line"></div><div class="line">Current thread (0x000367c0):  JavaThread &amp;quot;main&amp;quot; [_thread_in_native, id=2940]</div><div class="line">:</div><div class="line">Stack: [0x00040000,0x00080000),  sp=0x00041000,  free space=4k</div><div class="line">Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)</div><div class="line">C  [App.dll+0x1011]</div><div class="line">C  [App.dll+0x1020]</div><div class="line">C  [App.dll+0x1020]</div><div class="line">:</div><div class="line">C  [App.dll+0x1020]</div><div class="line">C  [App.dll+0x1020]</div><div class="line">...&lt;more frames&gt;...</div><div class="line"></div><div class="line">Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)</div><div class="line">j  Test.foo()V+0</div><div class="line">j  Test.main([Ljava/lang/String;)V+0</div><div class="line">v  ~StubRoutines::call_stub</div></pre></td></tr></table></figure></p>
+<p>下面是上面的日志包含的信息：</p>
+<ul>
+<li>异常是EXCEPTION_STACK_OVERFLOW；</li>
+<li>线程的状态是_thread_in_native，说明线程正在执行本地或者JNI代码；</li>
+<li>栈信息显示，栈的可用空间是4K(Windows中单页的大小)。另外，栈指针(Stack pointer, sp)在0x00041000的位置，已经很接近栈尾了(0x00040000)(译者注: java线程栈是从高地址往低地址方向走的)；</li>
+<li>本地帧的输出显示一个递归的本地函数是这个case的问题；</li>
+<li>标注…<more frames="">…表明还有更多的帧存在但没有被输出。最多可输出100帧。</more></li>
+</ul>
+<p><em>译者注：关于栈溢出的问题，感兴趣的同学可以进一步阅读这篇文章：</em><a href="https://www.jianshu.com/p/debef4f69a90" target="_blank" rel="external">https://www.jianshu.com/p/debef4f69a90</a>。</p>
+<h3 id="1-4-HotSpot编译线程中Crash"><a href="#1-4-HotSpot编译线程中Crash" class="headerlink" title="1.4 HotSpot编译线程中Crash"></a>1.4 HotSpot编译线程中Crash</h3><p>如果错误日志中显示crash时当前Java线程的名称是CompilerThread0, CompilerThread1, 或AdapterCompiler，那么可能你遇到了一个编译bug。这种情况下你有必要临时性地切换编译器(例如把HotSpot Server VM替换成HotSpot Client VM，反之亦然)，或者将引发crash的方法从编译过程中排除。详情见：<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/crashes.html#gbyzd" target="_blank" rel="external">4.2.1 Crash in HotSpot Compiler Thread or Compiled Code</a>。</p>
+<h3 id="1-5-编译的代码中Crash"><a href="#1-5-编译的代码中Crash" class="headerlink" title="1.5 编译的代码中Crash"></a>1.5 编译的代码中Crash</h3><p>如果编译的代码中发生crash，那么你可能遇到了编译器bug导致了错误的代码生成的问题。你可以识别出一个在被编译的代码中出现的crash，如果有问题的帧被标注为代码J(代表被编译的Java帧)。下面是一个这样的crash例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># An unexpected error has been detected by HotSpot Virtual Machine:</div><div class="line">#</div><div class="line">#  SIGSEGV (0xb) at pc=0x0000002a99eb0c10, pid=6106, tid=278546</div><div class="line">#</div><div class="line"># Java VM: Java HotSpot(TM) 64-Bit Server VM (1.6.0-beta-b51 mixed mode)</div><div class="line"># Problematic frame:</div><div class="line"># J  org.foobar.Scanner.body()V</div><div class="line">#</div><div class="line">:</div><div class="line">Stack: [0x0000002aea560000,0x0000002aea660000),  sp=0x0000002aea65ddf0,</div><div class="line">  free space=1015k</div><div class="line">Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)</div><div class="line">J  org.foobar.Scanner.body()V</div><div class="line"></div><div class="line">[error occurred during error reporting, step 120, id 0xb]</div></pre></td></tr></table></figure></p>
+<p>需要注意的是一个完整的线程栈无法提供。输出行”error occurred during error reporting”表示在尝试获得栈跟踪的时候出错了(本示例中可能是栈损坏)。</p>
+<p>这种情况下你有必要临时性地切换编译器(例如把HotSpot Server VM替换成HotSpot Client VM，反之亦然)，或者将引发crash的方法从编译过程中排除。在本示例中，不太可能将编译器将64位Server VM切换，因为将其切换至32位Client VM不太可行。</p>
+<h3 id="1-6-VMThread中Crash"><a href="#1-6-VMThread中Crash" class="headerlink" title="1.6 VMThread中Crash"></a>1.6 VMThread中Crash</h3><p>如果log输出显示当前线程是VMThread，那么请在日志中的THREAD区域寻找包含VM_Operation的行。VMThread是HotSpot虚拟机中一个特殊的线程。它向虚拟机中提交诸如GC这种特殊的任务。如果VM_Operation显示其操作是垃圾回收，那么很有可能你遇到了诸如堆损坏的问题。</p>
+<p>Crash也有可能有GC问题引起，但这可以等价于一些其他问题(比如编译器或运行期bug)导致堆中的对象引用处于不连续或者不正确的状态。在这个场景中，尽可能多地收集与环境相关的信息，并尝试可能的替代方案。如果这个问题是GC相关，你可能需要临时性地修改GC配置作为替代方案。这方面的内容在<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/crashes.html#gbyzq" target="_blank" rel="external">4.2.2 Crash During Garbage Collection</a>中有讨论。</p>
+<h2 id="2-寻求替代方案"><a href="#2-寻求替代方案" class="headerlink" title="2 寻求替代方案"></a>2 寻求替代方案</h2><p>如果是重要的应用发生了crash，并且是由HotSpot VM中的bug引发，那么你应该快速寻找一个替代方案。本节的目标是给出一些可能的替代方案。如果crash的应用是部署在JDK最近的发布版本上，那么这个crash事件应该报告给Oracle。</p>
+<p>如果关键应用程序发生崩溃，并且崩溃似乎是由HotSpot VM中的错误引起的，那么可能需要快速找到临时解决方法。 本节的目的是提出一些可能的解决方法。 如果使用最新版本的JDK部署的应用程序发生崩溃，则应始终向Oracle报告崩溃</p>
+<p><em>注意 - 即使本节中的相关内容成功消除了崩溃，但是问题的解决方案不是固定的，而是临时解决方案。 寻求电话支持或提交包含了能说明问题的原始配置的BUG报告。</em></p>
+<h3 id="2-1-在HotSpot编译线程或编译代码中crash"><a href="#2-1-在HotSpot编译线程或编译代码中crash" class="headerlink" title="2.1 在HotSpot编译线程或编译代码中crash"></a>2.1 在HotSpot编译线程或编译代码中crash</h3><p>如果致命错误日志显示crash发生在编译器线程中, 则可能是遇到了编译器 bug (但并非总是如此)。同样, 如果在编译后的代码中crash, 则可能是因为编译器生成了不正确的代码所致。</p>
+<p>在HotSpot VM (-client选项) 的情况下, 编译器线程以 CompilerThread0 的形式出现在错误日志中。在HotSpot Server VM中, 则有多个编译器线程, 它们在错误日志文件中显示为 CompilerThread0、CompilerThread1 和 AdapterThread。</p>
+<p>下面是 J2SE 5.0 开发过程中遇到和修复的编译器bug的错误日志片段。日志文件显示使用了HotSpot Server VM, 并且崩溃发生在 CompilerThread1 中。此外, 日志文件显示当前 CompileTask 是 java.lang.Thread.setPriority方法的编译。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># An unexpected error has been detected by HotSpot Virtual Machine:</div><div class="line">#</div><div class="line">:</div><div class="line"># Java VM: Java HotSpot(TM) Server VM (1.5-internal-debug mixed mode)</div><div class="line">:</div><div class="line">---------------  T H R E A D  ---------------</div><div class="line"></div><div class="line">Current thread (0x001e9350): JavaThread &quot;CompilerThread1&quot; daemon [_thread_in_vm, id=20]</div><div class="line"></div><div class="line">Stack: [0xb2500000,0xb2580000),  sp=0xb257e500,  free space=505k</div><div class="line"></div><div class="line">Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)</div><div class="line"></div><div class="line">V  [libjvm.so+0xc3b13c]</div><div class="line">:</div><div class="line"></div><div class="line">Current CompileTask:</div><div class="line">opto: 11      java.lang.Thread.setPriority(I)V (53 bytes)</div><div class="line"></div><div class="line">---------------  P R O C E S S  ---------------</div><div class="line"></div><div class="line">Java Threads: ( =&gt; current thread )</div><div class="line">  0x00229930 JavaThread &quot;Low Memory Detector&quot; daemon [_thread_blocked, id=21]</div><div class="line">=&gt;0x001e9350 JavaThread &quot;CompilerThread1&quot; daemon [_thread_in_vm, id=20]</div><div class="line"> :</div></pre></td></tr></table></figure></p>
+<p>在这种情况下, 有两种潜在的变通方法：</p>
+<ul>
+<li>蛮力方法: 更改jvm配置, 以便使用-client选项运行应用程序以指定HotSpot Client VM;</li>
+<li>假定bug仅在setPriority方法的编译过程中发生, 并将此方法从编译中排除。</li>
+</ul>
+<p>在某些环境中配置第一种方法（使用-client选项）可能很简单。在其他情况下，如果配置复杂或者无法轻松访问配置VM的命令行，则可能会更加困难。通常，从HotSpot Server VM切换到HotSpot Client VM也会降低应用程序的峰值性能。 根据环境的不同，在诊断和修复实际问题之前，这可能是可以接受的。</p>
+<p>第二种方法（从编译中排除方法）需要在应用程序的工作目录中创建文件.hotspot_compiler。 以下是此文件的示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">exclude    java/lang/Thread    setPriority</div></pre></td></tr></table></figure></p>
+<p>通常，此文件的格式为exclude CLASS METHOD，其中CLASS是类（使用包名称完全限定），METHOD是方法的名称。构造方法指定为<init>，静态初始化程序指定为<clinit>。</clinit></init></p>
+<p>_注意 - .HOTSPOT<em>COMPILER文件是一个不受支持的接口。 此处仅为了故障排除和查找临时解决方案而对其进行了文档记录。</em></p>
+<p>重新启动应用程序后，编译器将不会尝试编译.hotspot_compiler文件中列出的任何排除方法。在某些情况下，这可以提供临时缓解，直到诊断出崩溃的根本原因并修复错误</p>
+<p>为了验证HotSpot VM是否正确定位并处理了上述示例中显示的.hotspot_compiler文件，请在运行时查找以下日志信息。请注意，文件名分隔符是一个点，而不是斜杠。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">### Excluding compile:    java.lang.Thread::setPriority</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-GC时crash"><a href="#2-2-GC时crash" class="headerlink" title="2.2 GC时crash"></a>2.2 GC时crash</h3><p>如果在垃圾回收（GC）期间发生崩溃，则致命错误日志会报告VM_Operation正在进行中。出于本讨论的目的，假设大多数并发GC（-XX：+ UseConcMarkSweep）未使用。VM_Operation显示在日志的THREAD部分中，表示以下情况之一：</p>
+<ul>
+<li>用于分配的生成集合</li>
+<li>全集代收藏</li>
+<li>并行gc分配失败</li>
+<li>并行gc未能永久分配</li>
+<li>并行gc系统gc</li>
+</ul>
+<p>很可能日志中报告的当前线程是VMThread。 这是用于在HotSpot VM中执行特殊任务的特殊线程。 致命错误日志的以下片段显示了串行垃圾收集器中崩溃的示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">---------------  T H R E A D  ---------------</div><div class="line"></div><div class="line">Current thread (0x002cb720):  VMThread [id=3252]</div><div class="line"></div><div class="line">siginfo: ExceptionCode=0xc0000005, reading address 0x00000000</div><div class="line"></div><div class="line">Registers:</div><div class="line">EAX=0x0000000a, EBX=0x00000001, ECX=0x00289530, EDX=0x00000000</div><div class="line">ESP=0x02aefc2c, EBP=0x02aefc44, ESI=0x00289530, EDI=0x00289530</div><div class="line">EIP=0x0806d17a, EFLAGS=0x00010246</div><div class="line"></div><div class="line">Top of Stack: (sp=0x02aefc2c)</div><div class="line">0x02aefc2c:   00289530 081641e8 00000001 0806e4b8</div><div class="line">0x02aefc3c:   00000001 00000000 02aefc9c 0806e4c5</div><div class="line">0x02aefc4c:   081641e8 081641c8 00000001 00289530</div><div class="line">0x02aefc5c:   00000000 00000000 00000001 00000001</div><div class="line">0x02aefc6c:   00000000 00000000 00000000 08072a9e</div><div class="line">0x02aefc7c:   00000000 00000000 00000000 00035378</div><div class="line">0x02aefc8c:   00035378 00280d88 00280d88 147fee00</div><div class="line">0x02aefc9c:   02aefce8 0806e0f5 00000001 00289530</div><div class="line">Instructions: (pc=0x0806d17a)</div><div class="line">0x0806d16a:   15 08 83 3d c0 be 15 08 05 53 56 57 8b f1 75 0f</div><div class="line">0x0806d17a:   0f be 05 00 00 00 00 83 c0 05 a3 c0 be 15 08 8b</div><div class="line"></div><div class="line">Stack: [0x02ab0000,0x02af0000),  sp=0x02aefc2c,  free space=255k</div><div class="line"></div><div class="line">Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)</div><div class="line">V  [jvm.dll+0x6d17a]</div><div class="line">V  [jvm.dll+0x6e4c5]</div><div class="line">V  [jvm.dll+0x6e0f5]</div><div class="line">V  [jvm.dll+0x71771]</div><div class="line">V  [jvm.dll+0xfd1d3]</div><div class="line">V  [jvm.dll+0x6cd99]</div><div class="line">V  [jvm.dll+0x504bf]</div><div class="line">V  [jvm.dll+0x6cf4b]</div><div class="line">V  [jvm.dll+0x1175d5]</div><div class="line">V  [jvm.dll+0x1170a0]</div><div class="line">V  [jvm.dll+0x11728f]</div><div class="line">V  [jvm.dll+0x116fd5]</div><div class="line">C  [MSVCRT.dll+0x27fb8]</div><div class="line">C  [kernel32.dll+0x1d33b]</div><div class="line"></div><div class="line">VM_Operation (0x0373f71c): generation collection for allocation, mode:</div><div class="line"></div><div class="line"> safepoint, requested by thread 0x02db7108</div></pre></td></tr></table></figure></p>
+<p><em>注意 - 垃圾收集期间的crash并不意味着这是垃圾收集过程中的一个BUG。它还可能指向编译器或运行时错误或其他一些问题。</em></p>
+<p>如果在垃圾回收期间遇到重复崩溃，您可以尝试以下变通方法：</p>
+<ul>
+<li>切换GC配置。 例如，如果您使用的是串行收集器，请尝试使用吞吐量收集器，反之亦然；</li>
+<li>如果您使用的是HotSpot Server VM，请尝试使用HotSpot Client VM。</li>
+</ul>
+<p>如果您不确定正在使用哪个垃圾收集器，则可以使用Solaris OS和Linux上的jmap实用程序（请参阅<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/tooldescr.html#gbdid" target="_blank" rel="external">2.7 </a><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/tooldescr.html#gbdid" target="_blank" rel="external">jmap</a><a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/tooldescr.html#gbdid" target="_blank" rel="external"> Utility</a>）从核心文件获取堆信息（如果核心文件可用）。 通常，如果未在命令行中指定GC配置，则将在Windows上使用串行收集器。 在Solaris OS和Linux上，它取决于计算机配置。 如果机器至少有2GB内存且至少有2个处理器，则将使用吞吐量收集器（并行GC）。 对于较小的机器，串行收集器是默认的。选择串行收集器的选项是-XX:+UseSerialGC和选择吞吐量收集器的选项是-XX:+UseParallelGC。 如果作为解决方法，您从吞吐量收集器切换到串行收集器，那么您可能会在多处理器系统上遇到性能下降。 在诊断和解决根问题之前，这可能是可以接受的。</p>
+<h2 id="2-3-Class数据共享时crash"><a href="#2-3-Class数据共享时crash" class="headerlink" title="2.3 Class数据共享时crash"></a>2.3 Class数据共享时crash</h2><p>类数据共享是J2SE 5.0中的一项新功能。 使用Sun提供的安装程序在32位平台上安装JRE时，安装程序会将一组类从系统JAR文件加载到专用内部表示形式，并将该表示形式转储到名为共享存档的文件中。 启动VM时，共享存档将进行内存映射。这样可以节省类加载，并允许在多个VM实例之间共享与类关联的大部分元数据。 在J2SE 5.0中，仅在使用HotSpot Client VM时才启用类数据共享。 此外，只有串行垃圾收集器才支持共享。</p>
+<p>致命错误日志在日志标题中打印版本字符串。 如果启用了共享，则由文本共享指示，如以下示例所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># An unexpected error has been detected by HotSpot Virtual Machine:</div><div class="line">#</div><div class="line">#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x08083d77, pid=3572, tid=784</div><div class="line">#</div><div class="line"># Java VM: Java HotSpot(TM) Client VM (1.5-internal mixed mode, sharing)</div><div class="line"># Problematic frame:</div><div class="line"># V  [jvm.dll+0x83d77]</div></pre></td></tr></table></figure></p>
+<p>可以通过在命令行上提供-Xshare:off选项来禁用共享。 如果在禁用共享的情况下无法复制崩溃但可以在启用共享的情况下复制崩溃，则可能是您遇到此功能中的错误。在这种情况下，尽可能多地收集信息并提交错误报告。</p>
+<h2 id="3-微软C-版本的考虑"><a href="#3-微软C-版本的考虑" class="headerlink" title="3 微软C++版本的考虑"></a>3 微软C++版本的考虑</h2><p>JDK 7软件是在Windows上使用Microsoft Visual Studio 2010专业版为32位和64位平台构建的。如果遇到Java 应用程序崩溃, 并且你有使用不同版本的编译器编译的本地或JNI库, 则必须考虑运行时之间的兼容性问题。具体地说, 只有在处理多个运行时时遵循Microsoft准则时, 才会支持你的环境。例如, 如果你使用一个运行时分配内存, 则必须使用同一运行时释放它。如果使用不同的库释放资源, 而不是分配资源时所使用的库, 则可能会出现不可预知的行为或崩溃。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/08/20/JToolkit-Java问题排查工具箱/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1516,327 +2173,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/12/08/使用SonarLint进行代码检查/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/08/使用SonarLint进行代码检查/" itemprop="url">使用SonarLint编写高质量代码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-08T18:40:25+08:00">
-                2017-12-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/08/使用SonarLint进行代码检查/" class="leancloud_visitors" data-flag-title="使用SonarLint编写高质量代码">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Sonarqube是一个功能非常强大的代码质量检查、管理的工具。能够识别多种常用的编程语言，并能够通过设置不同的Rule<br>Sonar是一个代码质量管理的开源工具，它通过插件的形式能够识别常见的多种编程语言（例如Java, C#, PHP, Pythod等）代码质量问题。Sonar可以帮你分析出以下代码质量问题：<br>1.不遵循代码标准；<br>2.潜在的缺陷，比如空指针、bug；<br>3.代码重复；<br>4.注释率不足或过高；<br>5.糟糕的复杂度，比如if/循环嵌套太多、类/方法太大；<br>6.缺乏单元测试；</p>
-<p>在公司中，一般是把SonarQube部署在服务器端，当开发人员提交代码时，Jenkins触发SonarQube进行代码检查，开发人员根据代码检查结果进行问题修复。但是这样，开发人员往往只会关注被阻断的代码问题，对于Sonar提示的设计、性能方面的问题往往视而不见。<br>所幸现在SonarSource开发了SonarLint插件，可以在IDE(Intellij Idea、Eclipse)中嵌入，这样开发人员不仅能使用SonarLint中内置的代码检查规则进行代码检查，也可以连接到远端服务器拉取远端规则。有了它，我们就可以在编写代码的过程中根据SonarLint的提示编写高质量代码了。</p>
-<p>下面，将以Intellij Idea为基础介绍SonarLint插件的使用。</p>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h2><p>在Idea的Plugins界面搜索“SonarLint”，在检索结果列表页找到对应的SonarLint，点击右侧的“Install”按钮，安装完毕重启Idea后即可完成插件的安装。</p>
-<p><img src="https://farm5.staticflickr.com/4634/38195936814_d3318454b4_b.jpg" alt="安装插件"></p>
-<h2 id="2-代码检查"><a href="#2-代码检查" class="headerlink" title="2 代码检查"></a>2 代码检查</h2><p>SonarLint插件安装后，就可以使用它对Idea中的项目进行代码检查了。SonarLint能够对单个文件、整个项目、从VCS（版本控制系统，比如git、svn等）拉取的被修改文件这3类进行检查。</p>
-<p>开启SonarLint的检查有3个入口：</p>
-<p>1.Analyze-&gt;SonarLint，如下图：</p>
-<p><img src="https://farm5.staticflickr.com/4558/38195610794_c63be62dd8_b.jpg" alt=""></p>
-<p>2.在打开的文件编辑区域点击右键，在弹出的上下文菜单中选择，如下图：</p>
-<p><img src="https://farm5.staticflickr.com/4562/38875276892_7c0f79c2a4_z.jpg" alt=""></p>
-<p>此方式只能对当前文件进行检查。</p>
-<p>3.编辑区底部的Panel，这里可以在”Current file” Tab区域对当前文件进行检查，也可以在“Project files”Tab区域对文件进行全量和从VCS（版本控制系统，比如git、svn等）拉取的被修改文件进行检查，如下图：</p>
-<p><img src="https://farm5.staticflickr.com/4519/38196120834_fa47b16e02_b.jpg" alt=""></p>
-<p>执行代码检查后，在下面的SonarLint Panel区域就能显示代码检查的结果了：</p>
-<p><img src="https://farm5.staticflickr.com/4566/38024453305_b355b33948_z.jpg" alt=""></p>
-<h2 id="3-远程配置"><a href="#3-远程配置" class="headerlink" title="3 远程配置"></a>3 远程配置</h2><p>前面提到的代码检查，默认使用SonarLint内置的规则。我们也可以连接远端的SonarQube服务器，拉取服务器上配置的规则对代码进行检查，这样就能与代码提交时触发的检查规则保持一致了，具体方式如下：</p>
-<p>1.首先在下图的界面点击“+”创建新的SonarQube Server：</p>
-<p><img src="https://farm5.staticflickr.com/4557/38024453645_871bb2cd83.jpg" alt=""></p>
-<p>2.在New SonarQube Server界面中选择右侧的选项，并输入SonarQube URL，点击next：</p>
-<p><img src="https://farm5.staticflickr.com/4557/27134414809_a16b3fc406_b.jpg" alt=""></p>
-<p>3.在Authentication界面选择Login/Password，并输入用户名和密码：</p>
-<p><img src="https://farm5.staticflickr.com/4532/27134414729_f52684145d_b.jpg" alt=""></p>
-<p>验证通过后点击Finish即可完成SonarQube Server的配置。</p>
-<p>4.在SonarLint界面选择Server中配置的project，要与当前项目一致，否则可能会拉取错误的规则配置。</p>
-<p><img src="https://farm5.staticflickr.com/4739/38875276722_f5b65063f0_b.jpg" alt=""></p>
-<p>经过上面4步，你就可以通过SonarLint拉取的服务器上的代码规则进行代码检查了。Have fun:)</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2017/11/29/Sonar自定义插件开发指南/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/29/Sonar自定义插件开发指南/" itemprop="url">Sonar自定义插件开发指南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T17:13:16+08:00">
-                2017-11-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/29/Sonar自定义插件开发指南/" class="leancloud_visitors" data-flag-title="Sonar自定义插件开发指南">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-Sonar简介"><a href="#1-Sonar简介" class="headerlink" title="1 Sonar简介"></a>1 Sonar简介</h2><p>SonarQube是一个非常流行和强大的静态代码检查工具。它可以针对很多语言进行分析，比如Java、C#、JavaScript、PL/SQL等。SonarQube中默认提供了很多代码检查规则，但是有时候我们需要根据自己的需求编写规则，这篇文章会涵盖如何编写自定义规则的各个步骤。</p>
-<h2 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2 环境准备"></a>2 环境准备</h2><ul>
-<li>JDK 1.8</li>
-<li>Intellij Idea</li>
-<li>Maven 3.x或更高</li>
-<li>SonarQube LTS 5.6</li>
-<li>Sonar-runner-dist 2.4</li>
-</ul>
-<h2 id="3-开发步骤"><a href="#3-开发步骤" class="headerlink" title="3 开发步骤"></a>3 开发步骤</h2><h3 id="3-1-创建Plugin项目"><a href="#3-1-创建Plugin项目" class="headerlink" title="3.1 创建Plugin项目"></a>3.1 创建Plugin项目</h3><p> 首先创建一个SonarPlugin项目，建议从SonarSource官方github站点下载模板项目，这样不至于遗漏配置。下载的地址是：<a href="https://github.com/SonarSource/sonar-custom-plugin-example" target="_blank" rel="external">下载链接</a></p>
-<h3 id="3-2-引入Pom依赖"><a href="#3-2-引入Pom依赖" class="headerlink" title="3.2 引入Pom依赖"></a>3.2 引入Pom依赖</h3><p>将模板项目中的pom文件修改为自己项目对应的名称，比如groupId、artifactId、version、name、description，其他的不必修改。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">    &lt;groupId&gt;com.qunar.sonar&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;qunar-java&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">    &lt;packaging&gt;sonar-plugin&lt;/packaging&gt;</div><div class="line"></div><div class="line">    &lt;name&gt;Qunar SonarQube Java Rules&lt;/name&gt;</div><div class="line">    &lt;description&gt;Qunar Java Rules for SonarQube&lt;/description&gt;</div><div class="line">    &lt;inceptionYear&gt;2016&lt;/inceptionYear&gt;</div><div class="line"></div><div class="line">    &lt;properties&gt;</div><div class="line">        &lt;sonar.version&gt;6.3&lt;/sonar.version&gt; &lt;!-- this 6.3 is only required to be compliant with SonarLint and it is required</div><div class="line">			even if you just want to be compliant with SonarQube 5.6 --&gt;</div><div class="line">        &lt;java.plugin.version&gt;4.10.0.10260&lt;/java.plugin.version&gt;</div><div class="line">        &lt;sslr.version&gt;1.21&lt;/sslr.version&gt;</div><div class="line">        &lt;gson.version&gt;2.6.2&lt;/gson.version&gt;</div><div class="line">    &lt;/properties&gt;</div><div class="line"></div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;!--请不要调整下面三项依赖的顺序，避免查看依赖的类时无法查看源码--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.sonarqube&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sonar-plugin-api&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;sonar.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;provided&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.java&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;java-frontend&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;java.plugin.version&#125;&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.java&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sonar-java-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;!--&lt;type&gt;sonar-plugin&lt;/type&gt;--&gt;</div><div class="line">            &lt;version&gt;$&#123;java.plugin.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;provided&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--请不要调整上述三项依赖的顺序，避免查看依赖的类时无法查看源码--&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.sslr-squid-bridge&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sslr-squid-bridge&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;2.6.1&lt;/version&gt;</div><div class="line">            &lt;exclusions&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.codehaus.sonar.sslr&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;sslr-core&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.codehaus.sonar&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;sonar-plugin-api&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.codehaus.sonar.sslr&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;sslr-xpath&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">                &lt;exclusion&gt;</div><div class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">                    &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">                &lt;/exclusion&gt;</div><div class="line">            &lt;/exclusions&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.java&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;java-checks-testkit&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;java.plugin.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;gson&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;gson.version&#125;&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.sonarsource.sslr&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;sslr-testing-harness&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;$&#123;sslr.version&#125;&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.6.2&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.11&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.assertj&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;3.6.2&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;0.9.30&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line"></div><div class="line">    &lt;build&gt;</div><div class="line">        &lt;plugins&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.sonarsource.sonar-packaging-maven-plugin&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;sonar-packaging-maven-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;1.17&lt;/version&gt;</div><div class="line">                &lt;extensions&gt;true&lt;/extensions&gt;</div><div class="line">                &lt;configuration&gt;</div><div class="line">                    &lt;pluginKey&gt;qunar-java&lt;/pluginKey&gt;</div><div class="line">                    &lt;pluginName&gt;QunarJava&lt;/pluginName&gt;</div><div class="line">                    &lt;pluginClass&gt;com.qunar.sonar.java.JavaRulesPlugin&lt;/pluginClass&gt;</div><div class="line">                    &lt;sonarLintSupported&gt;true&lt;/sonarLintSupported&gt;</div><div class="line">                    &lt;sonarQubeMinVersion&gt;5.6&lt;/sonarQubeMinVersion&gt; &lt;!-- allow to depend on API 6.x but run on LTS --&gt;</div><div class="line">                &lt;/configuration&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line"></div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;3.6.0&lt;/version&gt;</div><div class="line">                &lt;configuration&gt;</div><div class="line">                    &lt;source&gt;1.8&lt;/source&gt;</div><div class="line">                    &lt;target&gt;1.8&lt;/target&gt;</div><div class="line">                &lt;/configuration&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line"></div><div class="line">            &lt;!-- only required to run UT - these are UT dependencies --&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;2.10&lt;/version&gt;</div><div class="line">                &lt;executions&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;id&gt;copy&lt;/id&gt;</div><div class="line">                        &lt;phase&gt;test-compile&lt;/phase&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;copy&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                        &lt;configuration&gt;</div><div class="line">                            &lt;artifactItems&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;commons-collections4&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.0&lt;/version&gt;</div><div class="line">                                    &lt;type&gt;jar&lt;/type&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;javax&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;javaee-api&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;6.0&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                                &lt;artifactItem&gt;</div><div class="line">                                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">                                    &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">                                    &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;</div><div class="line">                                &lt;/artifactItem&gt;</div><div class="line">                            &lt;/artifactItems&gt;</div><div class="line">                            &lt;outputDirectory&gt;$&#123;project.build.directory&#125;/test-jars&lt;/outputDirectory&gt;</div><div class="line">                        &lt;/configuration&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                &lt;/executions&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line">        &lt;/plugins&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line"></div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
-<h3 id="3-3-编写具体的Rule"><a href="#3-3-编写具体的Rule" class="headerlink" title="3.3 编写具体的Rule"></a>3.3 编写具体的Rule</h3><p>一个自定义规则的实现，首先在规则类前面使用@Rule注解声明规则的相关信息，比如key、name、description、priority、tag。其次要继承IssuableSubscriptionVisitor或者继承BaseTreeVisitor并实现JavaFileScanner接口，这两种实现方式存在一些差异，IssuableSubscriptionVisitor是一个抽象类，继承自SubscriptionVisitor，而SubscriptionVisitor则实现了JavaFileScanner接口；而BaseTreeVisitor则是实现了TreeVisitor接口。相比来说，JavaFileScanner更偏底层一些，直接是面向Java文件的分析，而TreeVisitor则是针对于Java文件的语法结构了，比如类、防止、赋值语句、catch块之类的了。一般情况下，推荐使用继承IssuableSubscriptionVisitor的方式，因为这个类的封装层次更高，更简便。在规则类中，你只需要重载nodesToVisit和visitNode方法就可以了。<br>nodesToVisit方法是说明该规则做检查的类型集合，比如METHOD_INVOCATION（方法调用）、CATCH（catch块）、MEMBER_SELECT（属性选择）等。比如下面的代码，就是对源码中的方法调用做规则检查。<br>visitNode是自定义规则中的核心部分，你所要实现的代码检查逻辑就是在这个方法中完成的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">import com.google.common.collect.ImmutableList;</div><div class="line">import com.qunar.sonar.java.util.QualifiedNameUtil;</div><div class="line">import org.sonar.check.Priority;</div><div class="line">import org.sonar.check.Rule;</div><div class="line">import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;</div><div class="line">import org.sonar.plugins.java.api.tree.MethodInvocationTree;</div><div class="line">import org.sonar.plugins.java.api.tree.Tree;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by fengfu on 2017/11/10.</div><div class="line"> */</div><div class="line">@Rule(</div><div class="line">        key = &quot;DisallowedFDUsageCheck&quot;,</div><div class="line">        name = &quot;Qunar Flight disallowed FD usage in InfoCenter check&quot;,</div><div class="line">        description = &quot;Some kinds of usage for FD are forbidden in Flight BU of Qunar.com.&quot;,</div><div class="line">        priority = Priority.BLOCKER,</div><div class="line">        tags = &#123;&quot;bug&quot;&#125;</div><div class="line">)</div><div class="line">public class DisallowedFDUsageCheck extends IssuableSubscriptionVisitor &#123;</div><div class="line">    private static final String[] FORBIDDEN_METHODS = &#123;</div><div class="line">            &quot;Infocenter.reloadFDData&quot;, &quot;Infocenter.getFliterDateFDData&quot;,</div><div class="line">            &quot;Infocenter.getFDData&quot;, &quot;Infocenter.getValidFDPrice&quot;,</div><div class="line">            &quot;Infocenter.getFDPrice&quot;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public List&lt;Tree.Kind&gt; nodesToVisit() &#123;</div><div class="line">        return ImmutableList.of(Tree.Kind.METHOD_INVOCATION);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void visitNode(Tree tree) &#123;</div><div class="line">        MethodInvocationTree mTree = (MethodInvocationTree)tree;</div><div class="line">        String methodName = QualifiedNameUtil.fullQualifiedName(mTree.methodSelect());</div><div class="line"></div><div class="line">        if (isForbiddenMethod(methodName))&#123;</div><div class="line">            reportIssue(tree, methodName + &quot;已被禁用，详情请查看Wiki:http://wiki.corp.qunar.com/confluence/pages/viewpage.action?pageId=182623492&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        super.visitNode(tree);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static boolean isForbiddenMethod(String methodName) &#123;</div><div class="line">        for (String name : FORBIDDEN_METHODS) &#123;</div><div class="line">            if (name.equals(methodName)) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void leaveNode(Tree tree) &#123;</div><div class="line">        super.leaveNode(tree);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>当然如果一些复杂的业务规则，可能你不得不实现JavaFileScanner接口了。如下面的代码所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">import com.qunar.sonar.java.util.QualifiedNameUtil;</div><div class="line">import org.sonar.api.utils.log.Logger;</div><div class="line">import org.sonar.api.utils.log.Loggers;</div><div class="line">import org.sonar.check.Priority;</div><div class="line">import org.sonar.check.Rule;</div><div class="line">import org.sonar.plugins.java.api.JavaFileScanner;</div><div class="line">import org.sonar.plugins.java.api.JavaFileScannerContext;</div><div class="line">import org.sonar.plugins.java.api.tree.*;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by fengfu on 2017/2/27.</div><div class="line"> */</div><div class="line">@Rule(</div><div class="line">        key = &quot;QunarFlightDisallowedClassCheck&quot;,</div><div class="line">        name = &quot;Qunar Flight disallowed class check&quot;,</div><div class="line">        description = &quot;Some classes are forbidden in Flight BU of Qunar.com.&quot;,</div><div class="line">        priority = Priority.BLOCKER,</div><div class="line">        tags = &#123;&quot;bug&quot;&#125;</div><div class="line">)</div><div class="line">public class DisallowedClassCheck extends BaseTreeVisitor implements JavaFileScanner &#123;</div><div class="line">    private static Logger logger = Loggers.get(DisallowedClassCheck.class);</div><div class="line">    private final String IMPORT_NAME = &quot;com.qunar.base.meerkat.monitor.QMonitor&quot;;</div><div class="line"></div><div class="line">    public void scanFile(JavaFileScannerContext context) &#123;</div><div class="line">        logger.info(&quot;Start to scan file &#123;&#125;&quot;, context.getFile().getName());</div><div class="line">        CompilationUnitTree cut = context.getTree();</div><div class="line"></div><div class="line">        for (ImportClauseTree importClauseTree : cut.imports())&#123;</div><div class="line">            ImportTree importTree = null;</div><div class="line">            if (importClauseTree.is(Tree.Kind.IMPORT)) &#123;</div><div class="line">                importTree = (ImportTree) importClauseTree;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if (importTree == null || importTree.isStatic()) &#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            String importName = QualifiedNameUtil.fullQualifiedName(importTree.qualifiedIdentifier());</div><div class="line"></div><div class="line">            if (IMPORT_NAME.equals(importName))&#123;</div><div class="line">                logger.error(&quot;Disallowed class &#123;&#125; found.&quot;, IMPORT_NAME);</div><div class="line">                context.reportIssue(this, importTree, IMPORT_NAME + &quot;已被禁用.&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        scan(cut);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-4-单元测试"><a href="#3-4-单元测试" class="headerlink" title="3.4 单元测试"></a>3.4 单元测试</h3><p>规则检查代码写完之后，就可以针对这个规则进行单元测试了。单元测试的方法比较简单，就是使用JUnit框架编写test case，针对特定的目标文件，调用Sonar提供的JavaCheckVerifier.verify方法进行测试，示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import com.qunar.flight.sonar.java.checks.DisallowedClassCheck;</div><div class="line">import org.junit.Test;</div><div class="line">import org.sonar.java.checks.verifier.JavaCheckVerifier;</div><div class="line"></div><div class="line">public class DisallowedClassCheckTest &#123;</div><div class="line">    @Test</div><div class="line">    public void test() &#123;</div><div class="line">        JavaCheckVerifier.verify(&quot;src/test/files/flight/DisallowedClassCase.java&quot;, new DisallowedClassCheck());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果目标文件存在问题，那么控制台会打印出问题在目标文件中的位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">java.lang.AssertionError: Unexpected at [4]</div><div class="line"></div><div class="line">	at org.sonar.java.checks.verifier.CheckVerifier.assertMultipleIssue(CheckVerifier.java:209)</div><div class="line">	at org.sonar.java.checks.verifier.CheckVerifier.checkIssues(CheckVerifier.java:181)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.scanFile(JavaCheckVerifier.java:274)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.scanFile(JavaCheckVerifier.java:256)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.scanFile(JavaCheckVerifier.java:222)</div><div class="line">	at org.sonar.java.checks.verifier.JavaCheckVerifier.verify(JavaCheckVerifier.java:105)</div><div class="line">	at com.qunar.flight.sonar.java.checks.test.DisallowedClassCheckTest.test(DisallowedClassCheckTest.java:10)</div></pre></td></tr></table></figure></p>
-<p>如果目标文件中不存在任何问题，会提示“java.lang.IllegalStateException: At least one issue expected”，意思就是目标文件中需要至少存在一个规则所要检查的问题。</p>
-<h3 id="3-5-编写RulesList"><a href="#3-5-编写RulesList" class="headerlink" title="3.5 编写RulesList"></a>3.5 编写RulesList</h3><p>单元测试完成之后，就可以往RuleList的集合中中添加自定义规则规则了。这个RuleList只是一个简单的集合类，包含了所有你需要注册到Sonar中的规则：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">import com.google.common.collect.ImmutableList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import com.qunar.flight.sonar.java.checks.DisallowedClassCheck;</div><div class="line">import com.qunar.flight.sonar.java.checks.DisallowedFDUsageCheck;</div><div class="line">import com.qunar.flight.sonar.java.checks.GuavaCacheLoaderReturnNullCheck;</div><div class="line">import org.sonar.plugins.java.api.JavaCheck;</div><div class="line"></div><div class="line">public final class RulesList &#123;</div><div class="line"></div><div class="line">  private RulesList() &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public static List&lt;Class&gt; getChecks() &#123;</div><div class="line">    return ImmutableList.&lt;Class&gt;builder().addAll(getJavaChecks()).addAll(getJavaTestChecks()).build();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 在此方法中添加需要注册的规则</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; getJavaChecks() &#123;</div><div class="line">    return ImmutableList.&lt;Class&lt;? extends JavaCheck&gt;&gt;builder()</div><div class="line">      .add(DisallowedClassCheck.class)</div><div class="line">      .add(GuavaCacheLoaderReturnNullCheck.class)</div><div class="line">      .add(DisallowedFDUsageCheck.class)</div><div class="line"></div><div class="line">      .build();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; getJavaTestChecks() &#123;</div><div class="line">    return ImmutableList.&lt;Class&lt;? extends JavaCheck&gt;&gt;builder()</div><div class="line">      .build();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-6-编写CustomRulesDefinition"><a href="#3-6-编写CustomRulesDefinition" class="headerlink" title="3.6 编写CustomRulesDefinition"></a>3.6 编写CustomRulesDefinition</h3><p>CustomRulesDefinition可以理解为自定义规则集的元数据，在这个类中，首先要声明自定义规则集的repository，另外还需要将相应的规则集加入到前面声明的repository中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div></pre></td><td class="code"><pre><div class="line">mport com.google.common.annotations.VisibleForTesting;</div><div class="line">import com.google.common.collect.Iterables;</div><div class="line">import com.google.common.io.Resources;</div><div class="line">import com.google.gson.Gson;</div><div class="line">import org.apache.commons.lang.StringUtils;</div><div class="line">import org.sonar.api.rule.RuleStatus;</div><div class="line">import org.sonar.api.rules.RuleType;</div><div class="line">import org.sonar.api.server.debt.DebtRemediationFunction;</div><div class="line">import org.sonar.api.server.rule.RulesDefinition;</div><div class="line">import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;</div><div class="line">import org.sonar.api.utils.AnnotationUtils;</div><div class="line">import org.sonar.check.Cardinality;</div><div class="line">import org.sonar.squidbridge.annotations.RuleTemplate;</div><div class="line"></div><div class="line">import javax.annotation.Nullable;</div><div class="line">import java.io.IOException;</div><div class="line">import java.net.URL;</div><div class="line">import java.nio.charset.StandardCharsets;</div><div class="line">import org.sonar.plugins.java.Java;</div><div class="line">import java.util.List;</div><div class="line">import java.util.Locale;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Declare rule metadata in server repository of rules.</div><div class="line"> * That allows to list the rules in the page &quot;Rules&quot;.</div><div class="line"> */</div><div class="line">public class JavaRulesDefinition implements RulesDefinition &#123;</div><div class="line"></div><div class="line">    // don&apos;t change that because the path is hard coded in CheckVerifier</div><div class="line">    private static final String RESOURCE_BASE_PATH = &quot;/org/sonar/l10n/java/rules/squid&quot;;</div><div class="line"></div><div class="line">    public static final String REPOSITORY_KEY = &quot;qunar-java&quot;;</div><div class="line"></div><div class="line">    private final Gson gson = new Gson();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void define(Context context) &#123;</div><div class="line">        NewRepository repository = context</div><div class="line">                .createRepository(REPOSITORY_KEY, Java.KEY)//定义Repository key</div><div class="line">                .setName(&quot;QunarJava&quot;);//定义Repository名称</div><div class="line"></div><div class="line">        List&lt;Class&gt; checks = RulesList.getChecks();//获取自定义的check列表</div><div class="line">        new RulesDefinitionAnnotationLoader().load(repository, Iterables.toArray(checks, Class.class));//获取注解信息</div><div class="line"></div><div class="line">        for (Class ruleClass : checks) &#123;</div><div class="line">            newRule(ruleClass, repository);//将规则添加到Repository中</div><div class="line">        &#125;</div><div class="line">        repository.done();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @VisibleForTesting</div><div class="line">    protected void newRule(Class&lt;?&gt; ruleClass, NewRepository repository) &#123;</div><div class="line"></div><div class="line">        org.sonar.check.Rule ruleAnnotation = AnnotationUtils.getAnnotation(ruleClass, org.sonar.check.Rule.class);</div><div class="line">        if (ruleAnnotation == null) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;No Rule annotation was found on &quot; + ruleClass);</div><div class="line">        &#125;</div><div class="line">        String ruleKey = ruleAnnotation.key();</div><div class="line">        if (StringUtils.isEmpty(ruleKey)) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;No key is defined in Rule annotation of &quot; + ruleClass);</div><div class="line">        &#125;</div><div class="line">        NewRule rule = repository.rule(ruleKey);</div><div class="line">        if (rule == null) &#123;</div><div class="line">            throw new IllegalStateException(&quot;No rule was created for &quot; + ruleClass + &quot; in &quot; + repository.key());</div><div class="line">        &#125;</div><div class="line">        ruleMetadata(ruleClass, rule);</div><div class="line"></div><div class="line">        rule.setTemplate(AnnotationUtils.getAnnotation(ruleClass, RuleTemplate.class) != null);</div><div class="line">        if (ruleAnnotation.cardinality() == Cardinality.MULTIPLE) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;Cardinality is not supported, use the RuleTemplate annotation instead for &quot; + ruleClass);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private String ruleMetadata(Class&lt;?&gt; ruleClass, NewRule rule) &#123;</div><div class="line">        String metadataKey = rule.key();</div><div class="line">        org.sonar.java.RspecKey rspecKeyAnnotation = AnnotationUtils.getAnnotation(ruleClass, org.sonar.java.RspecKey.class);</div><div class="line">        if (rspecKeyAnnotation != null) &#123;</div><div class="line">            metadataKey = rspecKeyAnnotation.value();</div><div class="line">            rule.setInternalKey(metadataKey);</div><div class="line">        &#125;</div><div class="line">        addHtmlDescription(rule, metadataKey);</div><div class="line">        addMetadata(rule, metadataKey);</div><div class="line">        return metadataKey;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void addMetadata(NewRule rule, String metadataKey) &#123;</div><div class="line">        URL resource = JavaRulesDefinition.class.getResource(RESOURCE_BASE_PATH + &quot;/&quot; + metadataKey + &quot;_java.json&quot;);</div><div class="line">        if (resource != null) &#123;</div><div class="line">            RuleMetatada metatada = gson.fromJson(readResource(resource), RuleMetatada.class);</div><div class="line">            rule.setSeverity(metatada.defaultSeverity.toUpperCase(Locale.US));</div><div class="line">            rule.setName(metatada.title);</div><div class="line">            rule.addTags(metatada.tags);</div><div class="line">            rule.setType(RuleType.valueOf(metatada.type));</div><div class="line">            rule.setStatus(RuleStatus.valueOf(metatada.status.toUpperCase(Locale.US)));</div><div class="line">            if (metatada.remediation != null) &#123;</div><div class="line">                rule.setDebtRemediationFunction(metatada.remediation.remediationFunction(rule.debtRemediationFunctions()));</div><div class="line">                rule.setGapDescription(metatada.remediation.linearDesc);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void addHtmlDescription(NewRule rule, String metadataKey) &#123;</div><div class="line">        URL resource = JavaRulesDefinition.class.getResource(RESOURCE_BASE_PATH + &quot;/&quot; + metadataKey + &quot;_java.html&quot;);</div><div class="line">        if (resource != null) &#123;</div><div class="line">            rule.setHtmlDescription(readResource(resource));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static String readResource(URL resource) &#123;</div><div class="line">        try &#123;</div><div class="line">            return Resources.toString(resource, StandardCharsets.UTF_8);</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            throw new IllegalStateException(&quot;Failed to read: &quot; + resource, e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static class RuleMetatada &#123;</div><div class="line">        String title;</div><div class="line">        String status;</div><div class="line">        @Nullable</div><div class="line">        Remediation remediation;</div><div class="line"></div><div class="line">        String type;</div><div class="line">        String[] tags;</div><div class="line">        String defaultSeverity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static class Remediation &#123;</div><div class="line">        String func;</div><div class="line">        String constantCost;</div><div class="line">        String linearDesc;</div><div class="line">        String linearOffset;</div><div class="line">        String linearFactor;</div><div class="line"></div><div class="line">        public DebtRemediationFunction remediationFunction(DebtRemediationFunctions drf) &#123;</div><div class="line">            if (func.startsWith(&quot;Constant&quot;)) &#123;</div><div class="line">                return drf.constantPerIssue(constantCost.replace(&quot;mn&quot;, &quot;min&quot;));</div><div class="line">            &#125;</div><div class="line">            if (&quot;Linear&quot;.equals(func)) &#123;</div><div class="line">                return drf.linear(linearFactor.replace(&quot;mn&quot;, &quot;min&quot;));</div><div class="line">            &#125;</div><div class="line">            return drf.linearWithOffset(linearFactor.replace(&quot;mn&quot;, &quot;min&quot;), linearOffset.replace(&quot;mn&quot;, &quot;min&quot;));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-7-编写CustomJavaFileCheckRegistrar"><a href="#3-7-编写CustomJavaFileCheckRegistrar" class="headerlink" title="3.7 编写CustomJavaFileCheckRegistrar"></a>3.7 编写CustomJavaFileCheckRegistrar</h3><p>CustomJavaFileCheckRegistrar要实现CheckRegistrar接口。CustomJavaFileCheckRegistrar类的作用是注册代码扫描时需要的规则类。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">import java.util.List;</div><div class="line">import org.sonar.plugins.java.api.CheckRegistrar;</div><div class="line">import org.sonar.plugins.java.api.JavaCheck;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Provide the &quot;checks&quot; (implementations of rules) classes that are going be executed during</div><div class="line"> * source code analysis.</div><div class="line"> *</div><div class="line"> * This class is a batch extension by implementing the &#123;@link org.sonar.plugins.java.api.CheckRegistrar&#125; interface.</div><div class="line"> */</div><div class="line">public class JavaFileCheckRegistrar implements CheckRegistrar &#123;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Register the classes that will be used to instantiate checks during analysis.</div><div class="line">   */</div><div class="line">  @Override</div><div class="line">  public void register(RegistrarContext registrarContext) &#123;</div><div class="line">    // Call to registerClassesForRepository to associate the classes with the correct repository key</div><div class="line">    registrarContext.registerClassesForRepository(JavaRulesDefinition.REPOSITORY_KEY, checkClasses(), testCheckClasses());</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Lists all the main checks provided by the plugin</div><div class="line">   */</div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; checkClasses() &#123;</div><div class="line">    return RulesList.getJavaChecks();//返回RulesList中定义的checks</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Lists all the test checks provided by the plugin</div><div class="line">   */</div><div class="line">  public static List&lt;Class&lt;? extends JavaCheck&gt;&gt; testCheckClasses() &#123;</div><div class="line">    return RulesList.getJavaTestChecks();//返回RulesList中定义的check classes</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-8-编写CustomJavaRulesPlugin"><a href="#3-8-编写CustomJavaRulesPlugin" class="headerlink" title="3.8 编写CustomJavaRulesPlugin"></a>3.8 编写CustomJavaRulesPlugin</h3><p>这个类是Sonar插件的入口，它继承了org.sonar.api.SonarPlugin类，包含了SonarQube启动时需要实例化的server扩展（CustomRulesDefinition）和代码分析时需要实例化的批量扩展（JavaFileCheckRegistrar）。</p>
-<p>这个类基本不需要修改（除包名外），按照以下内容copy一份即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import org.sonar.api.Plugin;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Entry point of your plugin containing your custom rules</div><div class="line"> */</div><div class="line">public class JavaRulesPlugin implements Plugin &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void define(Context context) &#123;</div><div class="line"></div><div class="line">    // server extensions -&gt; objects are instantiated during server startup</div><div class="line">    context.addExtension(CustomRulesDefinition.class);</div><div class="line"></div><div class="line">    // batch extensions -&gt; objects are instantiated during code analysis</div><div class="line">    context.addExtension(CustomJavaFileCheckRegistrar.class);</div><div class="line"></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>至此，一个Sonar自定义插件所需的代码工作就结束了。剩下的就是进行整合性的测试，毕竟单元测试通过不代表插件不会对现有系统造成影响，有时候插件中的错误会导致SonarQube启动失败的。</p>
-<h2 id="5-整合测试"><a href="#5-整合测试" class="headerlink" title="5 整合测试"></a>5 整合测试</h2><p>通过mvn package命令编译、打包，形成jar文件。将jar文件上传到SonarQube extensions/plugins目录下，重启SonarQube服务即可完成Sonar自定义规则插件的部署。部署结束，通过SonarQube bin目录下的脚本重启SonarQube，如果SonarQube启动成功，说明插件没问题，整合测试成功，你可以在sonar的rules模块中，搜索到自定义的规则了。</p>
-<p><img src="https://farm5.staticflickr.com/4566/38001442235_a562e60306.jpg" alt=""></p>
-<h2 id="6-启用规则"><a href="#6-启用规则" class="headerlink" title="6 启用规则"></a>6 启用规则</h2><p>插件部署到SonarQube之后，默认是不启用的，需要在SonarQube的管理界面中启用规则，才能让此规则在代码检查过程中生效。</p>
-<p><img src="https://farm5.staticflickr.com/4524/38888239671_35af64c4bf.jpg" alt=""></p>
-<p>至此，Sonar插件开发的流程就介绍完了。如前面所言，SonarQube是个强大的代码检查工具，一篇文章是无法介绍完的，尤其Sonar的语法树部分，涵盖了各种语言各种语法的方方面面，大家可以通过Sonar的<a href="https://docs.sonarqube.org/display/SONAR/" target="_blank" rel="external">官方文档</a>了解更多的细节。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1887,7 +2223,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1900,7 +2236,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
