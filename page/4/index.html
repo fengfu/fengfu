@@ -289,6 +289,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/08/23/接口文档参考模板/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/23/接口文档参考模板/" itemprop="url">接口文档参考模板</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-23T09:50:26+08:00">
+                2016-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/08/23/接口文档参考模板/" class="leancloud_visitors" data-flag-title="接口文档参考模板">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>虽然提供了在线接口参数的查看，但在和客户端对接过程中，我们作为后台开发，还是需要人工提供接口文档给客户端的，这里提供一个接口文档编写的模板，以供参考，并且以我们熟悉的?service=User.GetBaseInfo为例说明如何编写高效的文档。  </p>
+<p> <em>温馨提示：斜体字表示是注释说明</em>。  </p>
+<p>##功能说明<br><em>对接口功能的简单说明。</em><br>获取用户的基本信息。</p>
+<p>##接口URL<br><em>请求的相对链接和当前接口级参数，通常为?service=XXX.XXX + 公共接口参数。</em><br>/demo/?service=User.GetBaseInfo  </p>
+<h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a><a href="http://phalapi.oschina.mopaas.com/Public/demo/checkApiParams.php?service=User.GetBaseInfo" target="_blank" rel="external">参数说明</a></h2><p><em>对当前接口级参数的说明，建议使用在线接口参数查询工具，但以下的参数说明也是需要的。</em>  </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>名字</th>
+<th>是否必须</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>userId</td>
+<td>用户ID</td>
+<td>是</td>
+<td>表示用户的ID</td>
+<td>&amp;user_iduser_id=1</td>
+</tr>
+</tbody>
+</table>
+<p>##返回参数<br><em>对当前接口级返回参数的说明，即对{“ret”:返回状态码,”data”:”应该业务数据”,”msg”:”错误提示”}中的data部分进行说明。</em>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;ret&quot;: 200,</div><div class="line">    &quot;data&quot;: &#123;</div><div class="line">        &quot;code&quot;: 0,  //code=0表示正确获取用户信息，code=1时表示用户不存在</div><div class="line">        &quot;msg&quot;: &quot;&quot;,   //业务提示文案</div><div class="line">        &quot;info&quot;: &#123;  //仅当code=0的情况下非空且有用户信息</div><div class="line">            &quot;id&quot;: &quot;1&quot;,  //用户ID   </div><div class="line">            &quot;name&quot;: &quot;dogstar&quot;,  //用户名</div><div class="line">            &quot;from&quot;: &quot;oschina&quot;  //用户来源</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    &quot;msg&quot;: &quot;&quot;</div><div class="line">&#125;</div><div class="line">```  	  </div><div class="line"></div><div class="line">  </div><div class="line">##示例</div><div class="line"> _至少应包括成功示例，失败示例可选_     </div><div class="line">  </div><div class="line">###成功示例</div><div class="line">请求：</div></pre></td></tr></table></figure>
+<p><a href="http://phalapi.oschina.mopaas.com/Public/demo/?service=User.GetBaseInfo&amp;user_iduser_id=1" target="_blank" rel="external">http://phalapi.oschina.mopaas.com/Public/demo/?service=User.GetBaseInfo&amp;user_iduser_id=1</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">返回：</div></pre></td></tr></table></figure></p>
+<p>{<br>    “ret”: 200,<br>    “data”: {<br>        “code”: 0,<br>        “msg”: “”,<br>        “info”: {<br>            “id”: “1”,<br>            “name”: “dogstar”,<br>            “from”: “oschina”<br>        }<br>    },<br>    “msg”: “”<br>}<br>```</p>
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/08/22/晋级Review归来话答辩/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1765,146 +1925,6 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2016/04/11/浅谈软件工程师的职业发展方向/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/11/浅谈软件工程师的职业发展方向/" itemprop="url">浅谈软件工程师的职业发展方向</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-11T17:31:37+08:00">
-                2016-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/04/11/浅谈软件工程师的职业发展方向/" class="leancloud_visitors" data-flag-title="浅谈软件工程师的职业发展方向">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天在跟团队一个工作了2年多的同学做绩效面谈时，该同学问了我一个问题：自己现在比较迷茫，不知道该往哪个方向发展……</p>
-<p>相信这是很多有一定工作经验的同学都会有的困惑，很多人每隔几年(一般是3年)就会遇到瓶颈，也会面临着新的选择。这时候，他们都会看不清方向，感到迷茫。如果这个问题得不到解决，那么他的成长就会受到制约，甚至停滞不前。在工作中的表现就是比较沉默甚至消极，严重者则选择离职，寻求新的方向（其实是开始新的轮回……）。此时，如果有人能够根据他们的特点帮助他们选择适合他们的方向，或者给出建议，那么相信他会走出迷雾，豁然开朗，这样团队的稳定性会得到加强。</p>
-<p>所以今天简单总结一下软件工程师的职业发展方向，以帮助迷茫的同学早日走出混沌状态。</p>
-<h2 id="1-技术专家"><a href="#1-技术专家" class="headerlink" title="1.技术专家"></a>1.技术专家</h2><p>技术专家这个方向对于软件工程师来讲应该是比较容易实现的一个目标，因为这是外在因素影响最小的一个，我们所需要的就是专注和毅力。<br>在技术发展百花齐放、日新月异的今天，我们工作中可能会用到很多的技术，但是很多人只是把自己局限在“用”的层面上，并没有继续去深入研究和改进，更有人只是“知其然不知其所以然”，这样就失去了进一步积累的机会。<br>作家格拉德威尔在《异数》一书中指出：”人们眼中的天才之所以卓越非凡，并非天资超人一等，而是付出了持续不断的努力。1万小时的锤炼是任何人从平凡变成超凡的必要条件”。我们做个简单的算术题：如果每天工作八个小时，一周工作五天，那么成为一个领域的专家至少需要五年。<br>5年，看起来貌似时间很长，但是试想一下，如果我们借着工作的机会深入研究某个技术栈的原理，并在此基础上加以实践，那么我们只要不断地积累，最终是有机会成为这方面的专家的。在我身边就有这样的例子：以前我的团队中有个非常内向的小伙子（就叫他HX吧），刚来公司的时候各方面资质很平庸，平时寡言少语，也缺乏自信。在做一个项目时，我们采用了hbase作为系统存储。因为之前对hbase缺乏了解，所以项目过程中踩了很多的坑，于是HX同学就不停地填坑，甚至工作之外的时间都贡献了出去。2年过去了，虽然我们的项目早已结束，但是HX却从未放弃对hbase的研究，相反他经常翻看hbase的代码，并经常去hbase社区查看别人的讨论。现在HX已经成为了公司中对hbase最熟悉的人，并开始往hbase社区提交代码。在公司中他也已经小有名气，其他事业部的开发遇到hbase相关的问题也会来找他了解。虽然他现在还算不是hbase的专家，但是很明显，他现在已经度过了最难熬的时间，已经进入了收获期，只要他继续坚持下去，相信会取得更大的成绩。<br>这是身边真真切切的例子，虽然每个人的情况不完全一样，但是很多时候，我们是可以从别人的故事中找到自己的期待。</p>
-<h2 id="2-业务专家"><a href="#2-业务专家" class="headerlink" title="2.业务专家"></a>2.业务专家</h2><p>业务专家这个方向也比较好理解，我们长时间接触某一块业务，耳濡目染，久而久之也就会对这个业务比较熟悉甚至精通了。这个方向，其实我们仔细观察一下，身边也能找出很多的例子。我有一个认识了十几年的前同事，他从毕业开始就在做银行的信贷系统，现在还在做。目前他自己拥有一个几十人的开发团队，在国家开发银行驻场帮国开行做信贷系统，小日子过得很滋润。再回想自己曾经做过银行的外汇系统，最开始跟着中国银行学习业务，边学习边做系统，2年之后系统成熟了，业务熟悉了，就开始给建行做系统。但建行做外汇业务起步比较晚，于是我一个开发给银行的人讲业务，那种成就感你自己可以设想一下。<br>当然，这个方向也需要保持专注，跟上面讲的技术专家是一样的，你需要不断的积累。现在很多同学总是不停地在各个公司跳来跳去，薪水是涨上去了，但是在行业领域却没有太多的积累，从个人发展来讲，这迟早会成为一个限制因素。</p>
-<h2 id="3-技术经理"><a href="#3-技术经理" class="headerlink" title="3.技术经理"></a>3.技术经理</h2><p>我们身边有这么一类人，各方面能力都比较均衡，比如技术、沟通能力、组织能力。这样的人经过一段时间的锻炼后，可能会被任命为小组长，承担一些管理性的工作。再经过一段时间的历练，有些人可能不太适合这个方向，于是转向其他方向，剩下的做的还不错的人则继续升级，管理更大的团队，于是就成了技术经理。<br>技术经理的要求不同于前面的2个职位，保持专注就可以；而技术经理的要求就比较广泛，因为你管理的是技术团队，所以技术你不能扔；同时你管的是人，所以人际关系的相关技能你也要提升，比如沟通能力、组织能力，甚至你还要了解心理学、组织行为学等内容。这时候，全方位地充电就成了一个比较好的选择。</p>
-<h2 id="4-架构师"><a href="#4-架构师" class="headerlink" title="4.架构师"></a>4.架构师</h2><p>现在还有个名词叫“T型人才”。T型人才是指按知识结构区分出来的一种新型人才类型。用字母“T”来表示他们的知识结构特点。“—”表示有广博的知识面，“|”表示知识的深度。两者的结合，既有较深的专业知识，又有广博的知识面，这类集深与博于一身的人才。这种人才结构不仅在纵向的专业知识上具有较深的理解能力和独到见解，而且在横向上具备比较广泛的一般性知识修养。<br>我理解，架构师就是属于这种人才。他们经过长时间的技术积累，在某个方向上已经具备了比较深厚的沉淀，同时在技术体系上也得到了逐步的完善，于是成为了上天入地无所不能的架构师。<br>一般来讲，要成为T型人才，最好是先成为那道“|”，再成为那到“——”，这样根基会比较扎实。<br>所以对于要立志成为架构师的同学来说，最好先做一个技术专家，在技术专家的基础上，再扩大知识面，最终成为架构师。</p>
-<h2 id="5-CTO"><a href="#5-CTO" class="headerlink" title="5.CTO"></a>5.CTO</h2><p>CTO我还是不写了，仰望吧……</p>
-<p>喷了这么多，最后简单梳理了各个方向的能力模型，希望抛砖引玉，引发你的思考。</p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2r8UGmVXXXXXPXXXXXXXXXXXX_!!2657627814.png" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1955,7 +1975,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2010,7 +2030,7 @@ Premain-Class: io.fengfu.learning.instrument.SampleAgent
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
