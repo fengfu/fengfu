@@ -371,7 +371,8 @@
       
         
           
-            <h2 id="1-字符串拼接"><a href="#1-字符串拼接" class="headerlink" title="1.字符串拼接"></a>1.字符串拼接</h2><ol>
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>字符串处理是程序逻辑中比重比较大的部分，由此带来的资源消耗也是比较多的。在编写代码进行字符串处理时如果能使用一些高效的方法或工具，起码能够帮我们规避一些性能上的坑，避免日后补救。</p>
+<h2 id="1-字符串拼接"><a href="#1-字符串拼接" class="headerlink" title="1.字符串拼接"></a>1.字符串拼接</h2><ol>
 <li>不要用+，虽然在JDK7U40之后编译器会将”+”优化成StringBuilder的方式，但是StringBuilder初始化的时候是不会指定其初始容量的；</li>
 <li>用StringBuilder：切记要指定其初始容量，避免扩容造成的CPU和内存浪费，这里造成的浪费还是很可观的。具体内容详见：<a href="http://fengfu.io/2018/01/02/StringBuilder%E4%BD%A0%E5%BA%94%E8%AF%A5%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E4%BB%B6%E4%BA%8B%E6%83%85/">StringBuilder你应该知道的几件事情</a></li>
 <li>用Guava Joiner:对于用相同符号间隔的字符串拼接，可以使用Guava的Joiner，用起来很方便。但需要注意的是Joiner.on每次调用都会创建一个新的Joiner实例，会造成内存浪费。同时Joiner是线程安全的，所以对于相同分隔符创建的Joiner实例，公用一个单例就可以啦。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Returns a joiner which automatically places &#123;@code separator&#125; between consecutive elements.</div><div class="line"> */</div><div class="line">public static Joiner on(char separator) &#123;</div><div class="line">  return new Joiner(String.valueOf(separator));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -393,6 +394,147 @@
 <ol>
 <li>输出格式要统一，这样解析日志时就会方便很多，最起码不用去兼容五花八门的日志格式了。</li>
 </ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2019/01/01/高性能Java-目录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/01/高性能Java-目录/" itemprop="url">高性能Java-目录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-01T18:33:15+08:00">
+                2019-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/01/高性能Java-目录/" class="leancloud_visitors" data-flag-title="高性能Java-目录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>高性能Java是一个系列文章，旨在总结编码过程中容易踩到的性能的坑以及一些规避这些坑的方法、工具。<br>该系列文章计划写以下内容，文章的链接也会在文章完成后添加到本文中：</p>
+<ol>
+<li><a href="http://fengfu.io/2019/01/04/%E9%AB%98%E6%80%A7%E8%83%BDJava-String%E7%AF%87/">String</a></li>
+<li>集合</li>
+<li>缓存</li>
+<li>序列化</li>
+<li>压缩</li>
+<li>并发</li>
+<li>日志</li>
+</ol>
+<p>在编写高性能代码方面如果你有什么心得，欢迎与我沟通，共同学习，共同进步。</p>
 
           
         
@@ -2035,140 +2177,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/02/03/服务化架构-服务的限流与熔断/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/03/服务化架构-服务的限流与熔断/" itemprop="url">服务化架构-服务的限流与熔断</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-03T20:23:23+08:00">
-                2018-02-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/03/服务化架构-服务的限流与熔断/" class="leancloud_visitors" data-flag-title="服务化架构-服务的限流与熔断">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>服务的限流、熔断是保证系统高可用的两个非常重要的举措，但有人会把限流和熔断的概念混淆，在这里做一个简单的区分。</p>
-<p>为了方便说明，我们先做一个情景设定：有3个系统，A、B、C，他们之间的调用关系是这样的：A-&gt;B-&gt;C，也就是说，A是B的上游，C是B的下游。这里针对B系统做限流、熔断的说明。</p>
-<h2 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h2><p>限流是针对上游系统的请求来说的，对于B来说，如果上游A的请求量过大，那么就需要对A做限流，来保护自己不被流量冲垮。<br>关于限流，请看这篇文章：<a href="http://fengfu.io/2017/04/22/%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84-%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%99%90%E6%B5%81/">《服务的限流》</a></p>
-<h2 id="熔断"><a href="#熔断" class="headerlink" title="熔断"></a>熔断</h2><p>熔断是针对下游的系统来说的。举个栗子，如果下游C系统出问题了，服务100%超时，这时候你可以先不去请求C了，直到C恢复再去请求。这种措施就叫熔断。<br>关于熔断，请看这篇文章：<a href="http://fengfu.io/2018/02/28/%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84-%E6%9C%8D%E5%8A%A1%E7%9A%84%E7%86%94%E6%96%AD/">《服务的熔断》</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2219,7 +2227,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

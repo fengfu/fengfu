@@ -289,6 +289,214 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/02/21/Java的SPI机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/21/Java的SPI机制/" itemprop="url">Java的SPI机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-21T19:35:09+08:00">
+                2015-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/02/21/Java的SPI机制/" class="leancloud_visitors" data-flag-title="Java的SPI机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是SPI"><a href="#什么是SPI" class="headerlink" title="什么是SPI"></a>什么是SPI</h2><p>SPI是Service Provider Interface（服务提供者接口）的缩写，从字面意思也能看出，SPI是面向服务提供者的。也就是说，有人定义了接口，那么围绕该接口提供服务的第三方则针对接口提供自己的服务。说到这里，最典型的应该是我们常用的日志框架，比如common-logging、jdbc Driver。</p>
+<h2 id="SPI的优点"><a href="#SPI的优点" class="headerlink" title="SPI的优点"></a>SPI的优点</h2><p>基于SPI机制，我们可以很方便地构建出易于扩展的应用。我们使用的很多应用框架，比如dubbo，其中的extension就是基于SPI构建的。</p>
+<h2 id="Java-SPI规范"><a href="#Java-SPI规范" class="headerlink" title="Java SPI规范"></a>Java SPI规范</h2><ol>
+<li>在META-INF/services/目录下创建以接口全名命名的文件,该文件内容为接口具体实现类的全名;如我有一个实现类io.fengfu.learning.spi.HelloWorldServiceBB8Impl，实现了io.fengfu.learning.spi.HelloWorldService接口，那么就需要在META-INF/services目录下创建一个名称为io.fengfu.learning.spi.HelloWorldService的文件，文件的内容为io.fengfu.learning.spi.HelloWorldServiceBB8Impl。如果我有很多个实现类，那么只需要将实现类全名按行编写即可;</li>
+<li>接口具体实现类必须有一个不带参数的构造方法;</li>
+<li>使用ServiceLoader类动态加载META-INF中的实现类;</li>
+<li>如SPI的实现类为Jar则需要放在主程序classPath中;</li>
+</ol>
+<h2 id="SPI示例"><a href="#SPI示例" class="headerlink" title="SPI示例"></a>SPI示例</h2><p>1,定义一个接口</p>
+<pre><code>package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public interface HelloService {
+    public String sayHello(String name);
+}
+</code></pre><p>2, 实现之：</p>
+<pre><code>package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public class HelloServiceC3poImpl implements HelloService {
+    public String sayHello(String name) {
+        return &quot;Hello, &quot; + name + &quot;, I&apos;m C3po.&quot;;
+    }
+}
+
+package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public class HelloServiceR2D2Impl implements HelloService {
+    public String sayHello(String name) {
+        return &quot;Hello, &quot; + name + &quot;, I&apos;m R2D2.&quot;;
+    }
+}
+
+package io.fengfu.learning.spi;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public class HelloServiceBB8Impl implements HelloService {
+    public String sayHello(String name) {
+        return &quot;Hello, &quot; + name + &quot;, I&apos;m BB8.&quot;;
+    }
+}
+</code></pre><p>3, 在META-INF/services目录下创建io.fengfu.learning.spi.HelloService文件，在文件中添加以下内容:</p>
+<pre><code>io.fengfu.learning.spi.HelloServiceC3poImpl
+io.fengfu.learning.spi.HelloServiceR2D2Impl
+io.fengfu.learning.spi.HelloServiceBB8Impl
+</code></pre><p>4, 创建测试类：</p>
+<pre><code>package io.fengfu.learning.spi;
+
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
+/**
+ * Created by fengfu.qu on 2014/2/4.
+ */
+public class SPITest {
+    public static void main(String[] args) {
+        ServiceLoader&lt;HelloService&gt; loader = ServiceLoader.load(HelloService.class);
+        Iterator&lt;HelloService&gt; it = loader.iterator();
+        while(it.hasNext()){
+            HelloService helloSPI = it.next();
+            System.out.println(helloSPI.sayHello(&quot;Fengfu&quot;));
+        }
+    }
+}
+</code></pre><p>5, 运行，结果为：</p>
+<pre><code>Hello, Fengfu, I&apos;m C3po.
+Hello, Fengfu, I&apos;m R2D2.
+Hello, Fengfu, I&apos;m BB8.
+</code></pre><p>由此看出，3个是实现类都被运行了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2015/02/14/利特尔法则/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1012,7 +1220,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
