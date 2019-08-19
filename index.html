@@ -289,6 +289,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2019/01/12/高性能Java-集合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="宁静·致远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宁静·致远">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/12/高性能Java-集合/" itemprop="url">高性能Java-集合</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-12T11:02:30+08:00">
+                2019-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/12/高性能Java-集合/" class="leancloud_visitors" data-flag-title="高性能Java-集合">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>集合是我们在编写代码过程中常用的数据类型。在Java中，常用的集合类型有List、Map和Set。本文将对一些常用的集合类型的特点进行分析，并针对一些会影响性能的注意事项进行说明。</p>
+<h1 id="1-集合类型"><a href="#1-集合类型" class="headerlink" title="1. 集合类型"></a>1. 集合类型</h1><h2 id="1-1-List"><a href="#1-1-List" class="headerlink" title="1.1 List"></a>1.1 List</h2><h3 id="1-1-1-ArrayList"><a href="#1-1-1-ArrayList" class="headerlink" title="1.1.1 ArrayList"></a>1.1.1 ArrayList</h3><p>顾名思义，基于数组实现，同时也说明容量是确定的，非线程安全。在不指定初始化容量的情况下，默认初始化的大小是10。当增加元素并且超出容量时，会以原容量50%的尺寸进行扩容，扩容时使用Arrays.copyOf(底层使用System.arraycopy)进行数组拷贝。<br>ArrayList适用于读多写少的场景，因为基于下标访问其中的元素，所以性能比较高。但在往指定位置add或者remove指定位置的元素时，由于涉及到指定位置后面元素的移动，会对性能造成影响。越是对前面位置元素的add/remove操作，对性能造成的影响越大。</p>
+<h3 id="1-2-2-LinkedList"><a href="#1-2-2-LinkedList" class="headerlink" title="1.2.2 LinkedList"></a>1.2.2 LinkedList</h3><p>基于双向链表实现，非线程安全。既然是链表，那么容量就可以是无限的了。<br>在按下标读取链表中的元素时，需要遍历部分链表进行指针移动，这样效率就比较低下了。但在add/remove指定位置的元素时，不再需要复制移动，只需修改前后节点的指针即可，所以适用于写多读少的场景。<br>这里扩展一下：在制定线程池的队列时，我们可以用ArrayBlockingQueue，也可以用LinkedBlockingQueue。那什么时候用LinkedBlockingQueue呢？答案是并发量比较大的时候，因为队列需要频繁入栈出栈，也就是写多读少，所以基于链表原理实现的LinkedBlockingQueue就比较适合了。</p>
+<h3 id="1-2-3-CopyOnWriteArrayList"><a href="#1-2-3-CopyOnWriteArrayList" class="headerlink" title="1.2.3 CopyOnWriteArrayList"></a>1.2.3 CopyOnWriteArrayList</h3><p>线程安全的List。基于不可变对象策略，在修改时先复制出一个数组快照来修改，改好了，再让内部指针指向新数组。<br>因为对快照的修改对读操作来说不可见，所以读读之间不互斥，读写之间也不互斥，只有写写之间要加锁互斥。但复制快照的成本昂贵，典型的适合读多写少的场景。如果更新频率较高或数组较大时，还是得用Collections.synchronizedList(list)，对所有操作用加锁来保证线程安全。</p>
+<h2 id="1-2-Map"><a href="#1-2-Map" class="headerlink" title="1.2 Map"></a>1.2 Map</h2><h3 id="1-2-1-HashMap"><a href="#1-2-1-HashMap" class="headerlink" title="1.2.1 HashMap"></a>1.2.1 HashMap</h3><p>基于拉链法实现，非线程安全。HashMap底层就是一个数组结构，数组中的每一项又是一个链表。当新建一个HashMap 的时候，就会初始化一个数组。<br>当我们往HashMap中put元素的时候，先根据key的hashCode重新计算hash值，根据hash值得到这个元素在数组中的位置（即下标），如果数组该位置上已经存放有其他元素了，那么在这个位置上的元素将以链表的形式存放，新加入的元素放在链头，最先加入的放在链尾。如果数组该位置上没有元素，就直接将该元素放到此数组中的该位置上。</p>
+<p>当然，每个数组里最好只有一个元素，不用去比较。所以默认当Entry数量达到数组数量的75%时，哈希冲突已比较严重，就会成倍扩容数组，并重新分配所有原来的Entry。扩容成本不低（扩容成本、内存浪费），所以也最好有个预估值，这也就是为什么我们建议在初始化时指定初始容量的原因。<br>HashMap不是线程安全的，在JDK7及以前的版本中，在并发情况下修改HashMap容易导致死循环，JDK8以后修改了实现，虽然不会导致死循环，但在多线程情况下写依然不安全。</p>
+<h3 id="1-2-2-ConcurrentHashMap"><a href="#1-2-2-ConcurrentHashMap" class="headerlink" title="1.2.2 ConcurrentHashMap"></a>1.2.2 ConcurrentHashMap</h3><p>线程安全的HashMap。JDK5~JDJ7的实现是用分段锁实现。默认16把写锁（可以设置更多），有效分散了阻塞的概率。数据结构为Segment[]，每个Segment一把锁。Segment里面才是哈希桶数组。Key先算出它在哪个Segment里，再去算它在哪个哈希桶里。<br>也没有读锁，因为put/remove动作是个原子动作（比如put的整个过程是一个对数组元素/Entry 指针的赋值操作），读操作不会看到一个更新动作的中间状态。<br>但在JDK8里，抛弃了分段锁技术的实现，直接采用Node（继承自Map.Entry）作为table元素，采用CAS + synchronized保证并发更新的安全性，底层采用数组+链表+红黑树的存储结构。修改时，不再采用ReentrantLock加锁，直接用内置synchronized加锁，Java8的内置锁比之前版本优化了很多，相较ReentrantLock，性能不并差。获取size时，使用CounterCell内部类，用于并行计算每个bucket的元素数量。<br>使用ConcurrentHashMap时，需要注意put和putIfAbsent的差别。<br>put:与之hashMap相同，当key存在时,put同样的key将被覆盖。<br>putIfAbsent:当key不存在的时候调用put方法将key存入进map。当key存在的时候相当于return map.get(key)。</p>
+<h3 id="1-2-3-LinkedHashMap"><a href="#1-2-3-LinkedHashMap" class="headerlink" title="1.2.3 LinkedHashMap"></a>1.2.3 LinkedHashMap</h3><p>扩展HashMap，每个Entry增加双向链表，适用于写多读少的场景。</p>
+<h3 id="1-2-4-TreeMap"><a href="#1-2-4-TreeMap" class="headerlink" title="1.2.4 TreeMap"></a>1.2.4 TreeMap</h3><p>基于红黑树实现的排序Map，非线程安全。TreeMap的增删改查和统计相关的操作的时间复杂度都为 O(logn)。<br>由于TreeMap是基于红黑树的实现的排序Map，对于增删改查以及统计的时间复杂度都控制在O(logn)的级别上，相对于HashMap和LikedHashMap的统计操作的(最大的key，最小的key，大于某一个key的所有Entry等等)时间复杂度O(n)具有较高时间效率，所以TreeMap比较适合用于需要基于排序的统计功能。</p>
+<h2 id="1-3-Set"><a href="#1-3-Set" class="headerlink" title="1.3 Set"></a>1.3 Set</h2><h3 id="1-3-1-HashSet"><a href="#1-3-1-HashSet" class="headerlink" title="1.3.1 HashSet"></a>1.3.1 HashSet</h3><p>内部是HashMap，非线程安全。</p>
+<h3 id="1-3-2-LinkedHashSet"><a href="#1-3-2-LinkedHashSet" class="headerlink" title="1.3.2 LinkedHashSet"></a>1.3.2 LinkedHashSet</h3><p>内部是LinkedHashMap，非线程安全。</p>
+<h3 id="1-3-3-TreeSet"><a href="#1-3-3-TreeSet" class="headerlink" title="1.3.3 TreeSet"></a>1.3.3 TreeSet</h3><p>内部是TreeMap的SortedSet，非线程安全。</p>
+<h3 id="1-3-4-CopyOnWriteArraySet"><a href="#1-3-4-CopyOnWriteArraySet" class="headerlink" title="1.3.4 CopyOnWriteArraySet"></a>1.3.4 CopyOnWriteArraySet</h3><p>基于CopyOnWriteArrayList实现，线程安全。</p>
+<h1 id="2-一些框架"><a href="#2-一些框架" class="headerlink" title="2. 一些框架"></a>2. 一些框架</h1><h2 id="2-1-Koloboke"><a href="#2-1-Koloboke" class="headerlink" title="2.1 Koloboke"></a>2.1 Koloboke</h2><p>Koloboke是一个比较年轻的集合框架，为所有原始数据类型或对象的组合提供了HashMap和HashSet。在一些评测中，Koloboke取得了不错的成绩，号称实现最快也是存储最高效的库，但是它诞生不久并没有被广泛使用，所以存在一定的风险。</p>
+<h2 id="2-2-fastutil"><a href="#2-2-fastutil" class="headerlink" title="2.2 fastutil"></a>2.2 fastutil</h2><p>一个意大利的计算机博士开发的集合库。fastutil中的集合数据类型有10种：8种基本数据类型+Object+Reference，这意味着你能够适用int、long这种基本数据类型作为map的key，同样也意味着这能够节省很多的存储空间。</p>
+<h2 id="2-3-Goldman-Sachs-Collections"><a href="#2-3-Goldman-Sachs-Collections" class="headerlink" title="2.3 Goldman Sachs Collections"></a>2.3 Goldman Sachs Collections</h2><p>高盛集团开源的集合框架，简称gs-collections。gs-collections出现时间比较早，也取得了比较广泛的应用。在性能评测中，gs-collections仅次于Koloboke，如果你正在寻找更加稳定和成熟的库，而不那么在意性能，你可以试试gs-collections。</p>
+<h2 id="2-4-Trove"><a href="#2-4-Trove" class="headerlink" title="2.4 Trove"></a>2.4 Trove</h2><p>Trove为所有的原始数据类型、对象的组合提供了链表、栈、队列、HashSet和HashMap。Trove是一个老牌的集合框架，经过几年的迭代已经比较稳定了，目前社区已经不太活跃了。</p>
+<h2 id="2-5-hppc"><a href="#2-5-hppc" class="headerlink" title="2.5 hppc"></a>2.5 hppc</h2><p>HPPC是High Performance Primitive Collections for Java的缩写，为所有原始数据类型提供了数组列表、数组队列、哈希集合和哈希映射。虽然号称高性能，但在测评中，性能只能说一般，所以这里不再详细介绍。</p>
+<h1 id="3-一些注意事项"><a href="#3-一些注意事项" class="headerlink" title="3. 一些注意事项"></a>3. 一些注意事项</h1><h2 id="3-1-初始化容量"><a href="#3-1-初始化容量" class="headerlink" title="3.1 初始化容量"></a>3.1 初始化容量</h2><p>集合类在不容量不足的情况下会进行扩容，而扩容操作会消耗一定的资源，所以在初始化集合的时候，尽量预估集合的尺寸并指定集合的初始化容量，这样能够避免集合频繁扩容带来的资源消耗。</p>
+<h2 id="3-2-遍历"><a href="#3-2-遍历" class="headerlink" title="3.2 遍历"></a>3.2 遍历</h2><p>集合的遍历可以用for、foreach和iterator几种方式，那么这三者的速度有什么差异呢？答案是：<br>如果是ArrayList，用三种方式遍历的速度是for&gt;Iterator&gt;foreach，速度级别基本一致；这是因为ArrayList是基于索引(index)的数组，索引在数组中搜索和读取数据的时间复杂度是O(1)。<br>如果是LinkedList，则三种方式遍历的差距很大了,数据量大时越明显(一般是超过100000级别)，用for遍历的效率远远落后于foreach和Iterator，Iterator&gt;foreach&gt;&gt;&gt;for，因为LinkedList的底层实现则是一个双向循环带头节点的链表，因此LinkedList中插入或删除的时间复杂度仅为O(1)，但是获取数据的时间复杂度却是O(n)。<br>明白了两种List的区别之后，就知道，ArrayList用for循环随机读取的速度是很快的，因为ArrayList的下标是明确的，读取一个数据的时间复杂度仅为O(1)。但LinkedList若是用for来遍历效率很低，读取一个数据的时间复杂度就达到了为O(n)。而用Iterator的next()则是顺着链表节点顺序读取数据的效率就很高了。<br>综上： </p>
+<ol>
+<li>ArrayList用三种遍历方式都差得不算太多，一般都会用for或者foreach，因为Iterator写法相对复杂一些；</li>
+<li>LinkedList的话，推荐使用foreach或者Iterator(数据量越大，三者方法差别明显)。 <h2 id="3-3-排序"><a href="#3-3-排序" class="headerlink" title="3.3 排序"></a>3.3 排序</h2>使用堆排序(对于数组)或合并排序(对于双向链表)或快速排序(对于数组，但是你需要找个好的参考值)，不要使用选择排序、冒泡排序或插入排序，除非是一个非常小的数组或列表。<br>对于数组，使用java.util.Arrays.sort，是一个改进过的快速排序； 它不需要额外的内存，但是它不是稳定的(不能保证相等对象的顺序)。<br>对于ArrayList和LinkedList,他们都实现了接口java.util.List,可以使用 java.util.Collections.sort来排序，它是稳定的(保证相等对象的顺序)和平滑的(对于接近排好序的列表接近线性时间)， 但是它使用了额外的内存。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fengfu.io/2019/01/04/高性能Java-String篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -533,6 +687,7 @@
 <li>压缩</li>
 <li>并发</li>
 <li>日志</li>
+<li>IO (谢谢耳总提醒)</li>
 </ol>
 <p>在编写高性能代码方面如果你有什么心得，欢迎与我沟通，共同学习，共同进步。</p>
 
@@ -2011,172 +2166,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2018/02/28/服务化架构-服务的熔断/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宁静·致远">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/28/服务化架构-服务的熔断/" itemprop="url">服务化架构-服务的熔断</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T20:20:23+08:00">
-                2018-02-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/28/服务化架构-服务的熔断/" class="leancloud_visitors" data-flag-title="服务化架构-服务的熔断">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是熔断"><a href="#什么是熔断" class="headerlink" title="什么是熔断"></a>什么是熔断</h2><p>软件行业中的很多技术都是借鉴于工业的，熔断也不例外。熔断机制类似于工厂的保险丝/盒，当电流过大时，为了保护电器不受损，将电路熔断或者跳闸，断电后人工更换保险丝或者合闸。当然，在软件系统里面的熔断机制，其实可以实现自动熔断和恢复。</p>
-<h2 id="为什么要熔断"><a href="#为什么要熔断" class="headerlink" title="为什么要熔断"></a>为什么要熔断</h2><p>有人可能要问了，软件系统如果健壮性做得很好，需要熔断吗？<br>前面我们说过，熔断是针对下游的系统来说的。举个栗子，如果下游C系统出问题了，服务100%超时，这时候你可以先不去请求C了，直到C恢复再去请求。有人说我去请求了也没关系吧，反正请求和不请求都是失败，我干嘛要把事情搞复杂了？我又不知道C什么时候能恢复，权当去测试C的可用性了呗。</p>
-<p>嗯，你说得有道理，不过需要每个请求都要去测试吗？当然没必要，而且很多时候下游系统的超时有可能会拖垮你的系统。纳尼？这又是为啥？</p>
-<p>我们继续举例子，如果你的系统与C系统是通过同步的方式交互，那么意味着在C返回结果前，你的系统的工作线程是要阻塞在那里的，这也就会导致你的系统吞吐量的降低，毕竟线程是不能无限创建的。</p>
-<h2 id="熔断的实现"><a href="#熔断的实现" class="headerlink" title="熔断的实现"></a>熔断的实现</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>熔断的实现思路很简单，简而言之就是失败率统计，如果它在一段时间内侦测到许多类似的错误，会强迫其以后的多个调用快速失败，不再访问远程服务器，从而防止应用程序不断地尝试执行可能会失败的操作，使得应用程序继续执行而不用等待修正错误，或者浪费CPU时间去等到长时间的超时产生。熔断器也可以使应用程序能够诊断错误是否已经修正，如果已经修正，应用程序会再次尝试调用操作。</p>
-<h3 id="实现要点"><a href="#实现要点" class="headerlink" title="实现要点"></a>实现要点</h3><p>熔断器工作过程中，有3个状态：闭合、打开、半开。</p>
-<ul>
-<li><p>闭合（Closed）状态：我们需要一个调用失败的计数器，如果调用失败，则使失败次数加 1。如果最近失败次数超过了在给定时间内允许失败的阈值，则切换到断开 (Open) 状态。此时开启了一个超时时钟，当该时钟超过了该时间，则切换到半断开（Half-Open）状态。该超时时间的设定是给了系统一次机会来修正导致调用失败的错误，以回到正常工作的状态。在 Closed 状态下，错误计数器是基于时间的。在特定的时间间隔内会自动重置。这能够防止由于某次的偶然错误导致熔断器进入断开状态。也可以基于连续失败的次数。</p>
-</li>
-<li><p>打开 (Open) 状态：在该状态下，对应用程序的请求会立即返回错误响应，而不调用后端的服务。这样也许比较粗暴，有些时候，我们可以 cache 住上次成功请求，直接返回缓存（当然，这个缓存放在本地内存就好了），如果没有缓存再返回错误（缓存的机制最好用在全站一样的数据，而不是用在不同的用户间不同的数据，因为后者需要缓存的数据有可能会很多）。</p>
-</li>
-<li><p>半开（Half-Open）状态：允许应用程序一定数量的请求去调用服务。如果这些请求对服务的调用成功，那么可以认为之前导致调用失败的错误已经修正，此时熔断器切换到闭合状态 (并且将错误计数器重置)。</p>
-</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/4098122-55290c8ca6729751.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt=""></p>
-<p>如果这一定数量的请求有调用失败的情况，则认为导致之前调用失败的问题仍然存在，熔断器切回到断开状态，然后重置计时器来给系统一定的时间来修正错误。半断开状态能够有效防止正在恢复中的服务被突然而来的大量请求再次拖垮。</p>
-<h3 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h3><p>在业界，一说到熔断器，很多人很容易就会联想到Netflix开源的<a href="https://github.com/Netflix/Hystrix" target="_blank" rel="external">Hystrix</a>。是的Hyxtrix是一个非常优秀的保证系统高可用的组件，其中的熔断、舱壁(bulkhead)实现都能够帮助我们提高系统的可用性。</p>
-<h2 id="熔断的其他注意事项"><a href="#熔断的其他注意事项" class="headerlink" title="熔断的其他注意事项"></a>熔断的其他注意事项</h2><p>在实现熔断器模式的时候，以下这些因素需可能需要考虑。</p>
-<ul>
-<li><p>避免侵入代码：熔断器应该作为一种比较基础的服务组件存在于系统中，尽量避免对业务代码的侵入，从而提高系统的可维护性。所以通用、可配置化是熔断组件的基本要求。</p>
-</li>
-<li><p>状态监控：熔断器处于打开、半开状态时，应该能够在第一时间通知维护人员，让相关人员及时获知熔断器的状态，并根据其他信息决定下一步采取的措施。</p>
-</li>
-<li><p>日志记录：熔断器应该能够记录所有失败的请求，以及一些可能会尝试成功的请求，使得管理员能够监控使用熔断器保护的服务的执行情况。</p>
-</li>
-<li><p>性能考虑：熔断器的实现不应该阻塞并发的请求或者增加每次请求调用的负担。尤其是其中的对调用结果的统计，一般来说会成为一个共享的数据结构，这个会导致有锁的情况。在这种情况下，最好使用一些无锁的数据结构，或是 atomic 的原子操作。这样会带来更好的性能。</p>
-</li>
-<li><p>错误区分。要能够区分出正常的调用失败和熔断失败，这样能够针对不同的失败制定不同的策略。比如对于正常的调用失败，可以采取重试机制；而对于熔断失败，那么快速失败即可。</p>
-</li>
-<li><p>服务测试。在断开状态下，熔断器可以采用定期地 ping 一下远程的服务的健康检查接口，来判断服务是否恢复，而不是使用计时器来自动切换到半开状态。这样做的一个好处是，在服务恢复的情况下，不需要真实的用户流量就可以把状态从半开状态切回关闭状态。否则在半开状态下，即便服务已恢复了，也需要用户真实的请求来恢复，这会影响用户的真实请求。</p>
-</li>
-<li><p>手动重置：在系统中对于失败操作的恢复时间是很难确定的，提供一个手动重置功能能够使得管理员可以手动地强制将熔断器切换到闭合状态。同样的，如果受熔断器保护的服务暂时不可用的话，管理员能够强制将熔断器设置为断开状态。</p>
-</li>
-<li><p>熔断隔离：对于不同的服务，要设置不同的熔断器，使他们相互隔离，避免互相影响。</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2227,7 +2216,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
