@@ -503,7 +503,7 @@
       
         
           
-            <h1 id="Java堆外内存增长问题排查Case"><a href="#Java堆外内存增长问题排查Case" class="headerlink" title="Java堆外内存增长问题排查Case"></a>Java堆外内存增长问题排查Case</h1><p>最近排查一个线上java服务常驻内存异常高的问题，大概现象是：java堆Xmx配置了8G，但运行一段时间后常驻内存RES从5G逐渐增长到13G #补图#，导致机器开始swap从而服务整体变慢。<br>由于Xmx只配置了8G但RES常驻内存达到了13G，多出了5G堆外内存，经验上判断这里超出太多不太正常。</p>
+            <h1 id="Java堆外内存增长问题排查Case"><a href="#Java堆外内存增长问题排查Case" class="headerlink" title="Java堆外内存增长问题排查Case"></a>Java堆外内存增长问题排查Case</h1><p>文章转自:<a href="https://coldwalker.com/2018/08//troubleshooter_native_memory_increase/" target="_blank" rel="noopener">https://coldwalker.com/2018/08//troubleshooter_native_memory_increase/</a><br>最近排查一个线上java服务常驻内存异常高的问题，大概现象是：java堆Xmx配置了8G，但运行一段时间后常驻内存RES从5G逐渐增长到13G #补图#，导致机器开始swap从而服务整体变慢。<br>由于Xmx只配置了8G但RES常驻内存达到了13G，多出了5G堆外内存，经验上判断这里超出太多不太正常。</p>
 <h3 id="前情提要–JVM内存模型"><a href="#前情提要–JVM内存模型" class="headerlink" title="前情提要–JVM内存模型"></a>前情提要–JVM内存模型</h3><p>开始逐步对堆外内存进行排查，首先了解一下JVM内存模型。根据JVM规范，JVM运行时数据区共分为虚拟机栈、堆、方法区、程序计数器、本地方法栈五个部分。<br><img src="https://coldwalker.com/images/o_dc695f48-4189-4fc7-b950-ed25f6c1521708518830.jpg" alt="o_dc695f48-4189-4fc7-b950-ed25f6c1521708518830">￼</p>
 <ul>
 <li><p>虚拟机栈：每个线程有一个私有的栈，随着线程的创建而创建。栈里面存着的是一种叫“栈帧”的东西，每个方法会创建一个栈帧，栈帧中存放了局部变量表（基本数据类型和对象引用）、操作数栈、方法出口等信息。栈的大小可以固定也可以动态扩展。当栈调用深度大于JVM所允许的范围，会抛出StackOverflowError的错误，不过这个深度范围不是一个恒定的值。虚拟机栈除了上述错误外，还有另一种错误，那就是当申请不到空间时，会抛出 OutOfMemoryError。  </p>
