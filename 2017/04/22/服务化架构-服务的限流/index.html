@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="架构," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="架构,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,6 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2017/04/22/服务化架构-服务的限流/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="1. 什么是限流顾名思义，限流就是限制请求量，当用户请求量达到设定的阈值之后，对超出部分的请求进行拒绝或者延时处理。 2.为什么要限流限流是服务提供方进行自我保护的一种手段。如果对用户请求量不做限制，那么过多的请求很有可能会将服务器有限的资源消耗殆尽，最终导致服务器宕机，进而引发雪崩。所以对于高可用的系统来讲，限流是一种必不可少的手段。 3. 限流算法3.1 令牌桶(Token bucket)令牌">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://farm5.staticflickr.com/4584/38326639342_90a3a6881d.jpg">
 <meta property="og:image" content="https://farm5.staticflickr.com/4583/37643209824_71df07e1e7.jpg">
 <meta property="og:updated_time" content="2017-11-14T05:20:26.818Z">
@@ -136,7 +137,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2017/04/22/服务化架构-服务的限流/"/>
+  <link rel="canonical" href="http://fengfu.io/2017/04/22/服务化架构-服务的限流/">
 
 
 
@@ -176,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -206,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -216,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -226,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -236,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -246,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -256,7 +257,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -299,7 +300,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -382,9 +383,9 @@
 <li>当一个 n 字节的数据包到达时，消耗 n 个令牌，然后发送该数据包;</li>
 <li>如果桶中可用令牌小于 n，则该数据包将被缓存或丢弃;</li>
 </ol>
-<p><img src="https://farm5.staticflickr.com/4584/38326639342_90a3a6881d.jpg" alt=""></p>
+<p><img src="https://farm5.staticflickr.com/4584/38326639342_90a3a6881d.jpg" alt></p>
 <p>令牌桶算法的实现，可以借助于Google guava的RateLimiter实现，使用SmoothBursty模式。具体实现将在后面的blog中进行详细说明。</p>
-<h2 id="3-2-漏桶-Leaky-bucket"><a href="#3-2-漏桶-Leaky-bucket" class="headerlink" title="3.2 漏桶(Leaky bucket)"></a>3.2 漏桶(Leaky bucket)</h2><p>漏桶算法强制一个常量的输出速率而不管输入数据流的突发性,当输入空闲时，该算法不执行任何动作.就像用一个底部开了个洞的漏桶接水一样,水进入到漏桶里,桶里的水通过下面的孔以固定的速率流出,当水流入速度过大会直接溢出,可以看出漏桶算法能强行限制数据的传输速率.如下图所示:<br><img src="https://farm5.staticflickr.com/4583/37643209824_71df07e1e7.jpg" alt=""></p>
+<h2 id="3-2-漏桶-Leaky-bucket"><a href="#3-2-漏桶-Leaky-bucket" class="headerlink" title="3.2 漏桶(Leaky bucket)"></a>3.2 漏桶(Leaky bucket)</h2><p>漏桶算法强制一个常量的输出速率而不管输入数据流的突发性,当输入空闲时，该算法不执行任何动作.就像用一个底部开了个洞的漏桶接水一样,水进入到漏桶里,桶里的水通过下面的孔以固定的速率流出,当水流入速度过大会直接溢出,可以看出漏桶算法能强行限制数据的传输速率.如下图所示:<br><img src="https://farm5.staticflickr.com/4583/37643209824_71df07e1e7.jpg" alt></p>
 <p>漏桶的实现，可以使用Guava RateLimiter的SmoothWarmingUp模式实现。</p>
 <h2 id="3-3-令牌桶与漏桶算法的比较"><a href="#3-3-令牌桶与漏桶算法的比较" class="headerlink" title="3.3 令牌桶与漏桶算法的比较"></a>3.3 令牌桶与漏桶算法的比较</h2><p>令牌桶算法能够允许一定程度的流量突增，要令牌桶中存在令牌，那么就允许突发地传输数据直到达到用户配置的上限，因此它适合于具有突发特性的流量。<br>漏桶算法能够强行限制数据的传输速率，因此更适合进行平滑限流的应用场景，比如限制下载速率。</p>
 <h1 id="4-限流方式"><a href="#4-限流方式" class="headerlink" title="4. 限流方式"></a>4. 限流方式</h1><h2 id="4-1-单机限流"><a href="#4-1-单机限流" class="headerlink" title="4.1 单机限流"></a>4.1 单机限流</h2><p>单机限流一般使用在对硬件资源进行保护的场景中，避免服务器过载而宕机，引发进一步的雪崩。比如对访问量进行限流。有同学可能会问了，我评估一个集群总体的阈值，用集群限流不也可以吗？这里面存在的隐患是，如果负载均衡策略不够均衡，可能会导致部分服务器存在热点，那么那些流量仍然有可能将这台热点服务器打挂掉，从而引发雪崩。</p>
@@ -419,8 +420,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/23/服务化架构-服务降级/" rel="next" title="服务化架构-服务降级">
-                <i class="fa fa-chevron-left"></i> 服务化架构-服务降级
+              <a href="/2017/04/11/使用JRebel远程热部署Class/" rel="next" title="使用 jrebel 远程部署开发环境的 dubbo 服务">
+                <i class="fa fa-chevron-left"></i> 使用 jrebel 远程部署开发环境的 dubbo 服务
               </a>
             
           </div>
@@ -429,8 +430,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/11/使用JRebel远程热部署Class/" rel="prev" title="使用 jrebel 远程部署开发环境的 dubbo 服务">
-                使用 jrebel 远程部署开发环境的 dubbo 服务 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/23/服务化架构-服务降级/" rel="prev" title="服务化架构-服务降级">
+                服务化架构-服务降级 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -464,7 +465,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -509,7 +510,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -520,9 +521,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -533,7 +532,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -601,7 +600,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

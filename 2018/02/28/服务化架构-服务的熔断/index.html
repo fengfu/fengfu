@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="架构," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="架构,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,8 +101,9 @@
 <meta property="og:url" content="http://fengfu.io/2018/02/28/服务化架构-服务的熔断/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="什么是熔断软件行业中的很多技术都是借鉴于工业的，熔断也不例外。熔断机制类似于工厂的保险丝/盒，当电流过大时，为了保护电器不受损，将电路熔断或者跳闸，断电后人工更换保险丝或者合闸。当然，在软件系统里面的熔断机制，其实可以实现自动熔断和恢复。 为什么要熔断有人可能要问了，软件系统如果健壮性做得很好，需要熔断吗？前面我们说过，熔断是针对下游的系统来说的。举个栗子，如果下游C系统出问题了，服务100%超时">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4098122-55290c8ca6729751.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
-<meta property="og:updated_time" content="2018-03-31T03:28:04.396Z">
+<meta property="og:updated_time" content="2018-03-31T03:28:04.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务化架构-服务的熔断">
 <meta name="twitter:description" content="什么是熔断软件行业中的很多技术都是借鉴于工业的，熔断也不例外。熔断机制类似于工厂的保险丝/盒，当电流过大时，为了保护电器不受损，将电路熔断或者跳闸，断电后人工更换保险丝或者合闸。当然，在软件系统里面的熔断机制，其实可以实现自动熔断和恢复。 为什么要熔断有人可能要问了，软件系统如果健壮性做得很好，需要熔断吗？前面我们说过，熔断是针对下游的系统来说的。举个栗子，如果下游C系统出问题了，服务100%超时">
@@ -135,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2018/02/28/服务化架构-服务的熔断/"/>
+  <link rel="canonical" href="http://fengfu.io/2018/02/28/服务化架构-服务的熔断/">
 
 
 
@@ -175,7 +176,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -205,7 +206,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -215,7 +216,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -225,7 +226,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -235,7 +236,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -245,7 +246,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -255,7 +256,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -298,7 +299,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -386,9 +387,9 @@
 <li><p>半开（Half-Open）状态：允许应用程序一定数量的请求去调用服务。如果这些请求对服务的调用成功，那么可以认为之前导致调用失败的错误已经修正，此时熔断器切换到闭合状态 (并且将错误计数器重置)。</p>
 </li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/4098122-55290c8ca6729751.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4098122-55290c8ca6729751.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt></p>
 <p>如果这一定数量的请求有调用失败的情况，则认为导致之前调用失败的问题仍然存在，熔断器切回到断开状态，然后重置计时器来给系统一定的时间来修正错误。半断开状态能够有效防止正在恢复中的服务被突然而来的大量请求再次拖垮。</p>
-<h3 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h3><p>在业界，一说到熔断器，很多人很容易就会联想到Netflix开源的<a href="https://github.com/Netflix/Hystrix" target="_blank" rel="external">Hystrix</a>。是的Hyxtrix是一个非常优秀的保证系统高可用的组件，其中的熔断、舱壁(bulkhead)实现都能够帮助我们提高系统的可用性。</p>
+<h3 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h3><p>在业界，一说到熔断器，很多人很容易就会联想到Netflix开源的<a href="https://github.com/Netflix/Hystrix" target="_blank" rel="noopener">Hystrix</a>。是的Hyxtrix是一个非常优秀的保证系统高可用的组件，其中的熔断、舱壁(bulkhead)实现都能够帮助我们提高系统的可用性。</p>
 <h2 id="熔断的其他注意事项"><a href="#熔断的其他注意事项" class="headerlink" title="熔断的其他注意事项"></a>熔断的其他注意事项</h2><p>在实现熔断器模式的时候，以下这些因素需可能需要考虑。</p>
 <ul>
 <li><p>避免侵入代码：熔断器应该作为一种比较基础的服务组件存在于系统中，尽量避免对业务代码的侵入，从而提高系统的可维护性。所以通用、可配置化是熔断组件的基本要求。</p>
@@ -438,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/15/一起因限流引发的故障/" rel="next" title="一起因限流引发的故障">
-                <i class="fa fa-chevron-left"></i> 一起因限流引发的故障
+              <a href="/2018/02/03/服务化架构-服务的限流与熔断/" rel="next" title="服务化架构-服务的限流与熔断">
+                <i class="fa fa-chevron-left"></i> 服务化架构-服务的限流与熔断
               </a>
             
           </div>
@@ -448,8 +449,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/03/服务化架构-服务的限流与熔断/" rel="prev" title="服务化架构-服务的限流与熔断">
-                服务化架构-服务的限流与熔断 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/15/一起因限流引发的故障/" rel="prev" title="一起因限流引发的故障">
+                一起因限流引发的故障 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -483,7 +484,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -528,7 +529,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -539,9 +540,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -552,7 +551,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -620,7 +619,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Java," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Java,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,6 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="1.前言前一篇文章我们提到：在Java SE5中，Instrument要求在运行前利用命令行参数或者系统参数来设置代理类，在实际的运行之中，虚拟机在初始化之时（在绝大多数的 Java 类库被载入之前），instrumentation的设置已经启动，并在虚拟机中设置了回调函数，检测特定类的加载情况，并完成实际工作。也就是说，在Java SE5中，我们只能使用premain的方式实现Instrumen">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-04-12T03:07:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Instrumentation研究之动态植入">
@@ -133,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/"/>
+  <link rel="canonical" href="http://fengfu.io/2016/04/25/Java-Instrumentation研究-2/">
 
 
 
@@ -173,7 +174,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -203,7 +204,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -213,7 +214,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -223,7 +224,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -233,7 +234,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -243,7 +244,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -253,7 +254,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -296,7 +297,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -376,7 +377,7 @@
 public static void agentmain(String agentArgs);              [2]
 </code></pre><p>[1]的优先级比[2]高，将会被优先执行。</p>
 <p>跟前文提到的premain函数一样，我们可以在agentmain方法中对类进行各种操作。其中的agentArgs和Inst的用法跟premain相同。<br>与“Premain-Class”类似，我们必须在manifest文件里面设置“Agent-Class”来指定包含agentmain函数的类。<br>可是，跟premain不同的是，agentmain需要在main函数开始运行后才启动，这样的时机应该如何确定呢，这样的功能又如何实现呢？<br>在 Java SE6 文档当中，我们也许无法在java.lang.instrument包相关的文档部分看到明确的介绍，更加无法看到具体的应用agnetmain的例子。不过，在 Java SE6的新特性里面，有一个不太起眼的地方，揭示了agentmain的用法。这就是Java SE6当中提供的Attach API。</p>
-<h2 id="3-关于Attach-API"><a href="#3-关于Attach-API" class="headerlink" title="3.关于Attach API"></a>3.关于Attach API</h2><p><a href="http://docs.oracle.com/javase/7/docs/jdk/api/attach/spec/index.html" target="_blank" rel="external">Attach API</a>不是Java的标准API，而是Sun公司提供的一套扩展API，用来向目标JVM“附着”（Attach）代理工具程序的。有了它，我们可以方便地监控一个JVM，运行一个外加的代理程序。<br>Attach API很简单，只有2个主要的类，都在com.sun.tools.attach包里面：VirtualMachine代表一个Java虚拟机，也就是程序需要监控的目标虚拟机，提供了JVM枚举，Attach动作和Detach动作（Attach 动作的相反行为，从JVM 上面解除一个代理）等等 ; VirtualMachineDescriptor则是一个描述虚拟机的容器类，配合VirtualMachine类完成各种功能。</p>
+<h2 id="3-关于Attach-API"><a href="#3-关于Attach-API" class="headerlink" title="3.关于Attach API"></a>3.关于Attach API</h2><p><a href="http://docs.oracle.com/javase/7/docs/jdk/api/attach/spec/index.html" target="_blank" rel="noopener">Attach API</a>不是Java的标准API，而是Sun公司提供的一套扩展API，用来向目标JVM“附着”（Attach）代理工具程序的。有了它，我们可以方便地监控一个JVM，运行一个外加的代理程序。<br>Attach API很简单，只有2个主要的类，都在com.sun.tools.attach包里面：VirtualMachine代表一个Java虚拟机，也就是程序需要监控的目标虚拟机，提供了JVM枚举，Attach动作和Detach动作（Attach 动作的相反行为，从JVM 上面解除一个代理）等等 ; VirtualMachineDescriptor则是一个描述虚拟机的容器类，配合VirtualMachine类完成各种功能。</p>
 <h2 id="4-agentmain实现步骤"><a href="#4-agentmain实现步骤" class="headerlink" title="4.agentmain实现步骤"></a>4.agentmain实现步骤</h2><p>与Permain类似，agentmain方式同样需要提供一个agent jar，并且这个jar需要满足：</p>
 <ol>
 <li>在manifest中指定Agent-Class属性，值为代理类全路径；</li>
@@ -458,8 +459,8 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" rel="next" title="性能调优工具-Java Mission Control">
-                <i class="fa fa-chevron-left"></i> 性能调优工具-Java Mission Control
+              <a href="/2016/04/24/Java-Instrumentation研究-1/" rel="next" title="Java Instrumentation研究之premain">
+                <i class="fa fa-chevron-left"></i> Java Instrumentation研究之premain
               </a>
             
           </div>
@@ -468,8 +469,8 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/24/Java-Instrumentation研究-1/" rel="prev" title="Java Instrumentation研究之premain">
-                Java Instrumentation研究之premain <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" rel="prev" title="性能调优工具-Java Mission Control">
+                性能调优工具-Java Mission Control <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -503,7 +504,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -548,7 +549,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -559,9 +560,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -572,7 +571,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -640,7 +639,7 @@ at io.fengfu.learning.instrument.DynamicAgent.agentmain(DynamicAgent.java:14)
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Java," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Java,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,6 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="先贴一张图：  1.初始标记阶段(CMS-initial-mark)  这个阶段的主要任务是找到堆中所有的垃圾回收根节点对象，这个阶段会暂停所有的应用程序线程，即STW(Stop the world)。此阶段会打印1行日志，如下： [GC [1 CMS-initial-mark: 2905437K(4096000K)] 3134625K(5916480K), 0.2551680 secs] [Ti">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i3/2657627814/TB2HFD0qVXXXXblXpXXXXXXXXXX_!!2657627814.jpg">
 <meta property="og:updated_time" content="2017-04-12T03:07:03.000Z">
 <meta name="twitter:card" content="summary">
@@ -135,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/"/>
+  <link rel="canonical" href="http://fengfu.io/2016/06/21/JVM-垃圾回收器CMS之各阶段整理/">
 
 
 
@@ -175,7 +176,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -205,7 +206,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -215,7 +216,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -225,7 +226,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -235,7 +236,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -245,7 +246,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -255,7 +256,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -298,7 +299,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -373,7 +374,7 @@
 
       
         <p>先贴一张图：</p>
-<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2HFD0qVXXXXblXpXXXXXXXXXX_!!2657627814.jpg" alt=""></p>
+<p><img src="https://img.alicdn.com/imgextra/i3/2657627814/TB2HFD0qVXXXXblXpXXXXXXXXXX_!!2657627814.jpg" alt></p>
 <h2 id="1-初始标记阶段-CMS-initial-mark"><a href="#1-初始标记阶段-CMS-initial-mark" class="headerlink" title="1.初始标记阶段(CMS-initial-mark)"></a>1.初始标记阶段(CMS-initial-mark)</h2><p>  这个阶段的主要任务是找到堆中所有的垃圾回收根节点对象，这个阶段会暂停所有的应用程序线程，即STW(Stop the world)。此阶段会打印1行日志，如下：</p>
 <pre><code>[GC [1 CMS-initial-mark: 2905437K(4096000K)] 3134625K(5916480K), 0.2551680 secs] [Times: user=0.26 sys=0.00, real=0.25 secs]
 </code></pre><p>其中第一组数据，第一对数据标识老年代实际占用的空间大小和老年代分配的空间大小，第二对数据标识整个堆的实际使用情况和分配的堆的空间。<br>细心的人可能发现了CMS-initial-mark前面的数字“1”，这个标志代表了STW，在后面的“重新标记”阶段，你也会发现这个标志。这正好与上面图中说明的阶段是对应的。</p>
@@ -382,14 +383,14 @@
 2016-06-21T16:38:57.241+0800: 367852.178: [CMS-concurrent-mark: 2.787/3.329 secs] [Times: user=12.12 sys=0.64, real=3.33 secs]
 </code></pre><p>这个阶段会打印2行日志，第一行CMS-concurrent-mark-start标识标记阶段开始。第二行中的“2.787/3.329 secs”表示标记阶段的耗时。后面的“user=12.12”表示占用的cpu时间(此JVM运行的服务器CPU为4核)。</p>
 <h2 id="3-预清理阶段-CMS-concurrent-preclean"><a href="#3-预清理阶段-CMS-concurrent-preclean" class="headerlink" title="3.预清理阶段(CMS-concurrent-preclean)"></a>3.预清理阶段(CMS-concurrent-preclean)</h2><p>  在之前的标记阶段，标记和应用线程是并发执行的，因此有些对象的状态在标记后会发生改变。这个阶段只要是发现从新生代晋升的对象、新分配到老年代的对象以及在标记阶段被修改了的对象。<br>  这个阶段也会打印2行日志，跟标记阶段类似。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2016-06-21T16:38:57.241+0800: 367852.178: [CMS-concurrent-preclean-start]</div><div class="line">2016-06-21T16:38:57.718+0800: 367852.655: [CMS-concurrent-preclean: 0.342/0.477 secs] [Times: user=1.79 sys=0.10, real=0.48 secs]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:38:57.241+0800: 367852.178: [CMS-concurrent-preclean-start]</span><br><span class="line">2016-06-21T16:38:57.718+0800: 367852.655: [CMS-concurrent-preclean: 0.342/0.477 secs] [Times: user=1.79 sys=0.10, real=0.48 secs]</span><br></pre></td></tr></table></figure>
 <h2 id="4-重新标记阶段"><a href="#4-重新标记阶段" class="headerlink" title="4.重新标记阶段"></a>4.重新标记阶段</h2><p>  可中断预清理阶段是在JDK1.5中加入的。这个阶段是CMS中比较复杂的一个阶段，因为在这个阶段，JVM会执行很多操作。<br>  首先是CMS-concurrent-abortable-preclean，可中断的预清理。我们可能要问，既然再上一个阶段已经执行了预清理了，为什么还要再做一次？我们知道，CMS是以获取最短停顿时间为目的的GC，所以简单说进行可中断预清理的目的就是希望尽量缩短停顿的时间。<br>  可中断预清理涉及几个参数：<br>  -XX:CMSMaxAbortablePrecleanTime：当abortable-preclean阶段执行达到这个时间时才会结束<br>  -XX:CMSScheduleRemarkEdenSizeThreshold（默认2m）：控制abortable-preclean阶段什么时候开始执行，即当eden使用达到此值时，才会开始abortable-preclean阶段<br>  -XX:CMSScheduleRemarkEdenPenetratio（默认50%）：控制abortable-preclean阶段什么时候结束执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">2016-06-21T16:38:57.718+0800: 367852.656: [CMS-concurrent-abortable-preclean-start]</div><div class="line">2016-06-21T16:38:58.801+0800: 367853.738: [CMS-concurrent-abortable-preclean: 0.920/1.083 secs] [Times: user=4.06 sys=0.20, real=1.08 secs]</div><div class="line">2016-06-21T16:38:58.808+0800: 367853.746: [GC[YG occupancy: 777901 K (1820480 K)]367853.746: [Rescan (parallel) , 0.1361120 secs]367853.882: [weak refs processing, 0.0005370 secs]367853.883: [scrub string table, 0.0044130 secs] [1 CMS-remark: 3034451K(4096000K)] 3812352K(5916480K), 0.1412750 secs] [Times: user=0.54 sys=0.00, real=0.14 secs]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:38:57.718+0800: 367852.656: [CMS-concurrent-abortable-preclean-start]</span><br><span class="line">2016-06-21T16:38:58.801+0800: 367853.738: [CMS-concurrent-abortable-preclean: 0.920/1.083 secs] [Times: user=4.06 sys=0.20, real=1.08 secs]</span><br><span class="line">2016-06-21T16:38:58.808+0800: 367853.746: [GC[YG occupancy: 777901 K (1820480 K)]367853.746: [Rescan (parallel) , 0.1361120 secs]367853.882: [weak refs processing, 0.0005370 secs]367853.883: [scrub string table, 0.0044130 secs] [1 CMS-remark: 3034451K(4096000K)] 3812352K(5916480K), 0.1412750 secs] [Times: user=0.54 sys=0.00, real=0.14 secs]</span><br></pre></td></tr></table></figure>
 <p>  其次，是Rescan操作，此阶段暂停应用线程，对对象进行重新扫描并标记。通过上面的日志我们可以看到，在CMS-remark的时候有一次STW。另外，这个过程还会打印出弱引用处理、类卸载等过程的耗时。</p>
 <h2 id="5-清除阶段-CMS-concurrent-sweep"><a href="#5-清除阶段-CMS-concurrent-sweep" class="headerlink" title="5.清除阶段(CMS-concurrent-sweep)"></a>5.清除阶段(CMS-concurrent-sweep)</h2><p>  这个阶段开始进行垃圾的清理工作，此时应用线程被重新激活，回收线程与应用线程并发运行，那些无效的对象被清理掉。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2016-06-21T16:38:58.950+0800: 367853.888: [CMS-concurrent-sweep-start]</div><div class="line">2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-sweep: 5.656/6.900 secs] [Times: user=25.88 sys=1.28, real=6.90 secs]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:38:58.950+0800: 367853.888: [CMS-concurrent-sweep-start]</span><br><span class="line">2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-sweep: 5.656/6.900 secs] [Times: user=25.88 sys=1.28, real=6.90 secs]</span><br></pre></td></tr></table></figure>
 <h2 id="6-初始标记阶段-CMS-concurrent-reset"><a href="#6-初始标记阶段-CMS-concurrent-reset" class="headerlink" title="6.初始标记阶段(CMS-concurrent-reset)"></a>6.初始标记阶段(CMS-concurrent-reset)</h2><p>  这是CMS一个回收周期的最后一个阶段，在这个阶段，CMS会清除内部状态，为下次回收做准备。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-reset-start]</div><div class="line">2016-06-21T16:39:05.860+0800: 367860.798: [CMS-concurrent-reset: 0.010/0.010 secs] [Times: user=0.04 sys=0.00, real=0.01 secs]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016-06-21T16:39:05.850+0800: 367860.788: [CMS-concurrent-reset-start]</span><br><span class="line">2016-06-21T16:39:05.860+0800: 367860.798: [CMS-concurrent-reset: 0.010/0.010 secs] [Times: user=0.04 sys=0.00, real=0.01 secs]</span><br></pre></td></tr></table></figure>
 <p>  至此，一个CMS周期结束。</p>
 
       
@@ -421,8 +422,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/30/CTO、技术总监、首席架构师的区别-转/" rel="next" title="CTO、技术总监、首席架构师的区别(转)">
-                <i class="fa fa-chevron-left"></i> CTO、技术总监、首席架构师的区别(转)
+              <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" rel="next" title="性能调优工具-Java Mission Control">
+                <i class="fa fa-chevron-left"></i> 性能调优工具-Java Mission Control
               </a>
             
           </div>
@@ -431,8 +432,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/05/20/性能调优工具-Java-Mission-Control/" rel="prev" title="性能调优工具-Java Mission Control">
-                性能调优工具-Java Mission Control <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/30/CTO、技术总监、首席架构师的区别-转/" rel="prev" title="CTO、技术总监、首席架构师的区别(转)">
+                CTO、技术总监、首席架构师的区别(转) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -466,7 +467,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -511,7 +512,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -522,9 +523,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -535,7 +534,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -603,7 +602,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

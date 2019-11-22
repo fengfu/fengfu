@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Java," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Java,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,6 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="前言这篇故障从原因来看比较简单，但分享出来的原因是因为在分析故障原因的过程中忽略了一些关键因素，导致走了一些弯路，所以写出来供大家借鉴。 故障现象上周负责的系统出现了一次故障，故障的表象是部分搜索超时严重。在对监控进行排查的时候，发现有一台服务器CPU使用率有比较大的飙升，为了不影响业务，先将此服务器重启。重启后，CPU使用率恢复正常，故障恢复（见下图）。 故障原因分析过程剩下的事情就是对故障原因">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i1/2657627814/TB2oeAKaVokyKJjy1zbXXXZfVXa_!!2657627814.png">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i1/2657627814/TB2KN9XcnIlyKJjSZFMXXXvVXXa_!!2657627814.jpg">
 <meta property="og:image" content="https://img.alicdn.com/imgextra/i4/2657627814/TB2JGALa3wjyKJjSspeXXXXZXXa_!!2657627814.png">
@@ -137,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/"/>
+  <link rel="canonical" href="http://fengfu.io/2017/07/25/一个HashBasedTable引发的故障/">
 
 
 
@@ -177,7 +178,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +208,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +218,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +228,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +238,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +248,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -257,7 +258,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -300,7 +301,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -382,13 +383,13 @@
 <p><img src="https://img.alicdn.com/imgextra/i4/2657627814/TB2JGALa3wjyKJjSspeXXXXZXXa_!!2657627814.png" alt="CLOSE_WAIT监控"></p>
 <p>由于系统中使用了AsyncHttpClient组件（以下简称AHC），开始时怀疑是AHC使用不当造成的。比如如果在AHC的时候使用流处理，而在处理流的时候出现异常，很有可能导致连接不能关闭而导致CLOSE_WAIT出现。但排查代码确认我们的系统中没有使用流，此原因排除。</p>
 <p>考虑到我们的异步请求是通过继承AsyncCompletionHandler抽象类来实现异步结果的处理，于是开始确认onCompleted和onThrowable方法是不是有一些特殊处理导致连接没有关闭，但看代码也没发现有什么问题。于是“排除”了自己代码的原因。这里用双引号是因为其实并没有真正排除代码的问题，而是忽略了一处有问题的代码。这里先卖个关子。</p>
-<p>后面开始怀疑是否是AHC的bug导致，于是放狗(google)查资料，在AHC的issue讨论区也看到有人反馈CLOSE_WAIT的情况，但对方是在大访问量的情况下会导致CLOSE_WAIT出现（<a href="https://github.com/AsyncHttpClient/async-http-client/issues/1027" title="issue链接" target="_blank" rel="external">issue链接</a>），但这个issue也没有得到AHC官方确认。考虑到我们的系统QPS不是很高，所以也排除了bug的可能性。</p>
-<p>继续放狗，看到一篇博客(<a href="http://www.cnblogs.com/yuyijq/p/4431798.html" target="_blank" rel="external">链接</a>)讲netty里面的autoread特性会导致CLOSE_WAIT出现，但autoread是netty4里面的特性，我们使用的AHC依赖的是netty 3.10，这个原因也排除了。</p>
+<p>后面开始怀疑是否是AHC的bug导致，于是放狗(google)查资料，在AHC的issue讨论区也看到有人反馈CLOSE_WAIT的情况，但对方是在大访问量的情况下会导致CLOSE_WAIT出现（<a href="https://github.com/AsyncHttpClient/async-http-client/issues/1027" title="issue链接" target="_blank" rel="noopener">issue链接</a>），但这个issue也没有得到AHC官方确认。考虑到我们的系统QPS不是很高，所以也排除了bug的可能性。</p>
+<p>继续放狗，看到一篇博客(<a href="http://www.cnblogs.com/yuyijq/p/4431798.html" target="_blank" rel="noopener">链接</a>)讲netty里面的autoread特性会导致CLOSE_WAIT出现，但autoread是netty4里面的特性，我们使用的AHC依赖的是netty 3.10，这个原因也排除了。</p>
 <p>至此，线索中断，于是求助余老师。PS：上面的那博客其实就是余老师写的，😆</p>
 <p>余老师了解了情况之后，首先询问AHC是否使用的非单例（如果创建多个AsyncHttpClient实例是有可能导致大量CLOSE_WAIT的），答案是没有。<br>继续询问使用AHC的线程中是否使用了阻塞，答案是没有。<br>到这里，余老师也没给出更进一步的建议，所以继续排查。</p>
 <p>第二天已经是周末，余老师继续帮忙定位问题，在看代码时发现有个地方的缓存使用了HashBasedTable，而HashBasedTable是非线程安全的，因为它使用了HashMap实现的，于是怀疑是这个地方可能会有问题。通过查看监控，发现故障时CPU、Load是同时增长的，而且CPU使用率在25%左右，基本可以确定在当时某个线程CPU使用率达到100%（服务器是4核）。</p>
 <p>通过代码和监控的关联，可以确定这次故障的原因是因为使用了非线程安全的HashBasedTable，导致竞态条件下踩中了HashMap的坑导致当前线程CPU使用率100%，这样当前线程也就没有时间来处理后续的网络事件了，比如断开连接，最终导致大量CLOSE_WAIT以及超时出现。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Cache&lt;String, Table&lt;String,String,PackageFlightBean&gt;&gt; packageListBeanCache = CacheBuilder.from(packageListSpec).build();<span class="comment">//&lt;key,&lt;code,PackageFlightBean&gt;&gt;</span></div><div class="line"></div><div class="line"><span class="meta">@Resource</span></div><div class="line"><span class="keyword">private</span> DomesticSearchService domesticSearchService;</div><div class="line"><span class="meta">@Resource</span></div><div class="line"><span class="keyword">private</span> InterSearchService interSearchService;</div><div class="line"><span class="meta">@Resource</span></div><div class="line"><span class="keyword">private</span> PackageSearchService packageSearchService;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putPackageFlightBean</span><span class="params">(MultiQuery query,String code,PackageFlightBean packageFlightBean)</span></span>&#123;</div><div class="line">    List&lt;String&gt; codeList = splitter.splitToList(code);</div><div class="line">    <span class="keyword">if</span>(codeList.size()!=<span class="number">2</span> || packageFlightBean==<span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    String key = query.genPackageKey();</div><div class="line">    Table&lt;String,String,PackageFlightBean&gt; beanTable = packageListBeanCache.getIfPresent(key);</div><div class="line">    <span class="keyword">if</span>(beanTable==<span class="keyword">null</span>)&#123;</div><div class="line">        beanTable = HashBasedTable.create();<span class="comment">//这里使用了HashBasedTable，内部使用HashMap实现，非线程安全</span></div><div class="line">        beanTable.put(codeList.get(<span class="number">0</span>),codeList.get(<span class="number">1</span>),packageFlightBean);</div><div class="line">        packageListBeanCache.put(key,beanTable);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        beanTable.put(codeList.get(<span class="number">0</span>),codeList.get(<span class="number">1</span>),packageFlightBean);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Cache&lt;String, Table&lt;String,String,PackageFlightBean&gt;&gt; packageListBeanCache = CacheBuilder.from(packageListSpec).build();<span class="comment">//&lt;key,&lt;code,PackageFlightBean&gt;&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> DomesticSearchService domesticSearchService;</span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> InterSearchService interSearchService;</span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> PackageSearchService packageSearchService;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putPackageFlightBean</span><span class="params">(MultiQuery query,String code,PackageFlightBean packageFlightBean)</span></span>&#123;</span><br><span class="line">    List&lt;String&gt; codeList = splitter.splitToList(code);</span><br><span class="line">    <span class="keyword">if</span>(codeList.size()!=<span class="number">2</span> || packageFlightBean==<span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    String key = query.genPackageKey();</span><br><span class="line">    Table&lt;String,String,PackageFlightBean&gt; beanTable = packageListBeanCache.getIfPresent(key);</span><br><span class="line">    <span class="keyword">if</span>(beanTable==<span class="keyword">null</span>)&#123;</span><br><span class="line">        beanTable = HashBasedTable.create();<span class="comment">//这里使用了HashBasedTable，内部使用HashMap实现，非线程安全</span></span><br><span class="line">        beanTable.put(codeList.get(<span class="number">0</span>),codeList.get(<span class="number">1</span>),packageFlightBean);</span><br><span class="line">        packageListBeanCache.put(key,beanTable);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        beanTable.put(codeList.get(<span class="number">0</span>),codeList.get(<span class="number">1</span>),packageFlightBean);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这次故障原因分析的过程走了一些弯路，原因有这么几点：</p>
 <p>1.没有及时发现某个线程CPU使用率达到100%的情况：</p>
 <p>如果能及时发现这一点，那么很可能就能在第一时间反应到是死循环导致的，那么定位问题会更快一些。当然如果我们的监控系统能够发现某个线程CPU使用率100%并告警就更好了，这个建议已经反馈给OPS同学，他们在想办法做了。那么在现有的情况下，如果我们发现CPU使用率平滑持续在25%左右，那么我们也需要额外注意，因为在4核的系统中，这可能代表某个线程CPU使用率已经在100%了；</p>
@@ -425,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/27/语义化版本2-0-0/" rel="next" title="语义化版本2.0.0">
-                <i class="fa fa-chevron-left"></i> 语义化版本2.0.0
+              <a href="/2017/06/13/Linux性能分析工具/" rel="next" title="Linux性能分析工具">
+                <i class="fa fa-chevron-left"></i> Linux性能分析工具
               </a>
             
           </div>
@@ -435,8 +436,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/13/Linux性能分析工具/" rel="prev" title="Linux性能分析工具">
-                Linux性能分析工具 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/27/语义化版本2-0-0/" rel="prev" title="语义化版本2.0.0">
+                语义化版本2.0.0 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -470,7 +471,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -515,7 +516,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -526,9 +527,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -539,7 +538,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -607,7 +606,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

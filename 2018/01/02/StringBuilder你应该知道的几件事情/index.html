@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Java," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Java,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,6 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2018/01/02/StringBuilder你应该知道的几件事情/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="字符串拼接是我们在编写程序时经常要写的代码，在很多的系统中，字符串相关的处理甚至占用了系统非常多的资源，尤其是内存。因此，在一些高性能的场景中，字符串拼接使用方式不合理，往往会导致无谓的内存开销，增加GC压力。 有些同学会直接使用”+”的方式进行字符串拼接，在Jdk7u40之前，这种方式我们是不推荐使用的，因为String是不可变对象，每次对String的”+”操作都会产生一个新的String对象">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://farm5.staticflickr.com/4690/39073757202_23dcf8ee35_b.jpg">
 <meta property="og:updated_time" content="2018-01-03T10:47:37.613Z">
 <meta name="twitter:card" content="summary">
@@ -135,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2018/01/02/StringBuilder你应该知道的几件事情/"/>
+  <link rel="canonical" href="http://fengfu.io/2018/01/02/StringBuilder你应该知道的几件事情/">
 
 
 
@@ -175,7 +176,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -205,7 +206,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -215,7 +216,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -225,7 +226,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -235,7 +236,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -245,7 +246,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -255,7 +256,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -298,7 +299,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -377,7 +378,7 @@
 <p>但是，让编译器帮你优化这种方式你就可以高枕无忧了吗？答案是否定的，请看下面的内容。</p>
 <h2 id="1-new-StringBuilder-合理吗？"><a href="#1-new-StringBuilder-合理吗？" class="headerlink" title="1.new StringBuilder()合理吗？"></a>1.new StringBuilder()合理吗？</h2><p>很多时候我们使用new StringBuilder()来初始化实例，但这种方式是否合理呢？</p>
 <p>通过阅读StringBuilder的源码我们可以看到，StringBuilder的内部存储是使用char[]来实现的，char[]的初始容量是16。在进行append时，首先会检查char[]容量是否够用，如果不够，则会创建一个新的char[]，容量为原来容量的2倍，原来的char[]则会丢弃。看到这里，细心的同学可能会想了，这不是浪费了吗？是的，这就是不设置初始容量所带来的弊端，会导致一定的内存浪费。举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">String a1 = &quot;1234567890&quot;;//length 10</div><div class="line">String a2 = &quot;0123456789&quot;;//length 10</div><div class="line">String a3 = &quot;123456789&quot;;//length 9</div><div class="line">String a4 = &quot;987654321&quot;;//length 9</div><div class="line"></div><div class="line">String a5 = new StringBuilder().append(a1).append(a2).append(a3).append(a4).toString();</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String a1 = &quot;1234567890&quot;;//length 10</span><br><span class="line">String a2 = &quot;0123456789&quot;;//length 10</span><br><span class="line">String a3 = &quot;123456789&quot;;//length 9</span><br><span class="line">String a4 = &quot;987654321&quot;;//length 9</span><br><span class="line"></span><br><span class="line">String a5 = new StringBuilder().append(a1).append(a2).append(a3).append(a4).toString();</span><br></pre></td></tr></table></figure>
 <p>上面这段代码的执行共创建了几个char[]呢？答案是4个，详细过程看下面的描述。</p>
 <ol>
 <li><p>new StringBuilder()的时候，如果我们不指定StringBuilder的容量，那么会按照默认值是16创建第一个数组，我们命名为C1。在append(a1)的时候，容量是够用的；</p>
@@ -391,11 +392,11 @@
 <li><p>在toString的时候，是调用的new String(value, 0, count)。这样并不是将C3的内容直接转换成String，而是会copy出一个副本C4再根据C4创建出一个String来；这一点，建议大家仔细去看看StringBuilder的toString代码，你会发现更多的真相……</p>
 </li>
 </ol>
-<p><img src="https://farm5.staticflickr.com/4690/39073757202_23dcf8ee35_b.jpg" alt=""></p>
+<p><img src="https://farm5.staticflickr.com/4690/39073757202_23dcf8ee35_b.jpg" alt></p>
 <p>看完上面的描述，你会觉得这个过程中浪费了多少内存呢？最起码C1、C2是没用了的，也就是说浪费掉了48byte的空间。那如果你最初根据预估的字符串大小，设置了StringBuilder初始容量为38，那么就不会存在这样的浪费了，同时也会省去StringBuilder扩容的时间。</p>
 <p>所以，在使用StringBuilder的时候，还是估算一下字符串大小，乖乖的设置一个初始容量吧。</p>
 <h2 id="2-不要重复创建StringBuilder"><a href="#2-不要重复创建StringBuilder" class="headerlink" title="2.不要重复创建StringBuilder"></a>2.不要重复创建StringBuilder</h2><p>这里说的重复是指在循环中重复new StringBuilder实例。前面我们也说过，StringBuilder的扩容和toString()方法会造成大量的char[]浪费，如果你在一个循环里面创建了很多StringBuilder实例，那么可以想象浪费的内存有多大……所以在一个循环里面复用StringBuilder比较好的方式是调用StringBuilder.setLength(0)重置指针进行复用，这样最起码就能避免再次扩容的内存消耗了。</p>
-<h2 id="3-StringBuilder-toString-造成的内存浪费"><a href="#3-StringBuilder-toString-造成的内存浪费" class="headerlink" title="3.StringBuilder.toString()造成的内存浪费"></a>3.StringBuilder.toString()造成的内存浪费</h2><p>前面我们也提到过，每次StringBuilder.toString的时候，会copy一个char[]生成一个String对象，这样就相当于白白浪费了StringBuilder里面的数组。当然这里可以采用一些黑科技来避免这种浪费，比如用Unsafe这种黑科技，绕过构造函数直接给String的char[]属性赋值，示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Unsafe unsafe =</div><div class="line">long fieldOffset = Unsafe.getUnsafe();</div><div class="line">unsafe.objectFieldOffset(String.class.getDeclaredField(&quot;value&quot;));</div><div class="line">String ret = new String();</div><div class="line"></div><div class="line">unsafe.putObjectVolatile(ret, fieldOffset, char[]);//char[]为StringBuilder中的char[]</div></pre></td></tr></table></figure></p>
+<h2 id="3-StringBuilder-toString-造成的内存浪费"><a href="#3-StringBuilder-toString-造成的内存浪费" class="headerlink" title="3.StringBuilder.toString()造成的内存浪费"></a>3.StringBuilder.toString()造成的内存浪费</h2><p>前面我们也提到过，每次StringBuilder.toString的时候，会copy一个char[]生成一个String对象，这样就相当于白白浪费了StringBuilder里面的数组。当然这里可以采用一些黑科技来避免这种浪费，比如用Unsafe这种黑科技，绕过构造函数直接给String的char[]属性赋值，示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Unsafe unsafe =</span><br><span class="line">long fieldOffset = Unsafe.getUnsafe();</span><br><span class="line">unsafe.objectFieldOffset(String.class.getDeclaredField(&quot;value&quot;));</span><br><span class="line">String ret = new String();</span><br><span class="line"></span><br><span class="line">unsafe.putObjectVolatile(ret, fieldOffset, char[]);//char[]为StringBuilder中的char[]</span><br></pre></td></tr></table></figure></p>
 <p>这种方式虽然能够避免内存浪费，但也存在一定的风险，所以使用的时候还是要慎重。</p>
 <h2 id="4-StringBuilder-vs-StringBuffer"><a href="#4-StringBuilder-vs-StringBuffer" class="headerlink" title="4.StringBuilder vs StringBuffer"></a>4.StringBuilder vs StringBuffer</h2><p>StringBuffer与StringBuilder都是继承于AbstractStringBuilder，唯一的区别就是StringBuffer的函数上都有synchronized关键字。</p>
 
@@ -428,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/03/服务化架构-服务的限流与熔断/" rel="next" title="服务化架构-服务的限流与熔断">
-                <i class="fa fa-chevron-left"></i> 服务化架构-服务的限流与熔断
+              <a href="/2017/12/08/使用SonarLint进行代码检查/" rel="next" title="使用SonarLint编写高质量代码">
+                <i class="fa fa-chevron-left"></i> 使用SonarLint编写高质量代码
               </a>
             
           </div>
@@ -438,8 +439,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/12/08/使用SonarLint进行代码检查/" rel="prev" title="使用SonarLint编写高质量代码">
-                使用SonarLint编写高质量代码 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/03/服务化架构-服务的限流与熔断/" rel="prev" title="服务化架构-服务的限流与熔断">
+                服务化架构-服务的限流与熔断 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -473,7 +474,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -518,7 +519,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -529,9 +530,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -542,7 +541,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -610,7 +609,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

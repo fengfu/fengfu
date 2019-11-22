@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="性能," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="性能,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,6 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2018/06/27/重计算型应用的性能优化实践/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="系统介绍ATPCO系统是Qunar国际机票的运价系统，它通过美国ATPCO公司接收全球近500家航空公司的运价、规则数据进行计算，为上层的机票搜索系统提供运价搜索服务。系统的基础数据主要分为运价、规则、航路等数据，其中运价数据有9000万条，规则数据有1.2亿条，平均每条运价关联20条规则数据。规则数据分为Record 0/1/2/3/6/8六大类，其中Record3数据又包含Category1~">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://farm2.staticflickr.com/1801/29186903928_b456246c61_o.png">
 <meta property="og:image" content="https://farm1.staticflickr.com/842/29186903118_3f75fe5e44_o.png">
 <meta property="og:image" content="https://farm1.staticflickr.com/915/29186902638_e35dfe8085.jpg">
@@ -142,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2018/06/27/重计算型应用的性能优化实践/"/>
+  <link rel="canonical" href="http://fengfu.io/2018/06/27/重计算型应用的性能优化实践/">
 
 
 
@@ -182,7 +183,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -212,7 +213,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -222,7 +223,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -232,7 +233,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -242,7 +243,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -252,7 +253,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -262,7 +263,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -305,7 +306,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -433,8 +434,8 @@
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>上述内容就是我们在对系统优化过程中提炼的一些值得一提的点，因为篇幅的限制，还有一些较为底层的优化在这里无法展开来分享，这里讲考虑后续通过小专题的方式继续分享。针对本文的内容或相关的领域，也欢迎大家提出宝贵的意见和建议，谢谢。</p>
 <p>相关链接：</p>
 <ol>
-<li>Caffeine github：<a href="https://github.com/ben-manes/caffeine" target="_blank" rel="external">https://github.com/ben-manes/caffeine</a></li>
-<li>Caffeine原理：<a href="https://segmentfault.com/a/1190000008751999" target="_blank" rel="external">https://segmentfault.com/a/1190000008751999</a></li>
+<li>Caffeine github：<a href="https://github.com/ben-manes/caffeine" target="_blank" rel="noopener">https://github.com/ben-manes/caffeine</a></li>
+<li>Caffeine原理：<a href="https://segmentfault.com/a/1190000008751999" target="_blank" rel="noopener">https://segmentfault.com/a/1190000008751999</a></li>
 </ol>
 
       
@@ -466,8 +467,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/20/JToolkit-Java问题排查工具箱/" rel="next" title="JToolkit:Java问题排查工具箱">
-                <i class="fa fa-chevron-left"></i> JToolkit:Java问题排查工具箱
+              <a href="/2018/05/04/结束是为了更好的开始/" rel="next" title="结束是为了更好的开始">
+                <i class="fa fa-chevron-left"></i> 结束是为了更好的开始
               </a>
             
           </div>
@@ -476,8 +477,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/04/结束是为了更好的开始/" rel="prev" title="结束是为了更好的开始">
-                结束是为了更好的开始 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/20/JToolkit-Java问题排查工具箱/" rel="prev" title="JToolkit:Java问题排查工具箱">
+                JToolkit:Java问题排查工具箱 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -511,7 +512,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -556,7 +557,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -567,9 +568,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -580,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -648,7 +647,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Java," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Java,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -101,6 +101,7 @@
 <meta property="og:url" content="http://fengfu.io/2019/01/04/高性能Java-String篇/index.html">
 <meta property="og:site_name" content="宁静·致远">
 <meta property="og:description" content="前言字符串处理是程序逻辑中比重比较大的部分，由此带来的资源消耗也是比较多的。在编写代码进行字符串处理时如果能使用一些高效的方法或工具，起码能够帮我们规避一些性能上的坑，避免日后补救。 1.字符串拼接 不要用+，虽然在JDK7U40之后编译器会将”+”优化成StringBuilder的方式，但是StringBuilder初始化的时候是不会指定其初始容量的； 用StringBuilder：切记要指定其">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://live.staticflickr.com/65535/48288627357_20895e52dd_o.png">
 <meta property="og:updated_time" content="2019-08-17T03:37:33.982Z">
 <meta name="twitter:card" content="summary">
@@ -135,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2019/01/04/高性能Java-String篇/"/>
+  <link rel="canonical" href="http://fengfu.io/2019/01/04/高性能Java-String篇/">
 
 
 
@@ -175,7 +176,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">宁静·致远</span>
         <span class="logo-line-after"><i></i></span>
@@ -205,7 +206,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -215,7 +216,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -225,7 +226,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/index.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -235,7 +236,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -245,7 +246,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -255,7 +256,7 @@
         <li class="menu-item menu-item-rss">
           <a href="/atom.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             RSS
           </a>
@@ -298,7 +299,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -376,23 +377,23 @@
 <h2 id="1-字符串拼接"><a href="#1-字符串拼接" class="headerlink" title="1.字符串拼接"></a>1.字符串拼接</h2><ol>
 <li>不要用+，虽然在JDK7U40之后编译器会将”+”优化成StringBuilder的方式，但是StringBuilder初始化的时候是不会指定其初始容量的；</li>
 <li>用StringBuilder：切记要指定其初始容量，避免扩容造成的CPU和内存浪费，这里造成的浪费还是很可观的。具体内容详见：<a href="http://fengfu.io/2018/01/02/StringBuilder%E4%BD%A0%E5%BA%94%E8%AF%A5%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E4%BB%B6%E4%BA%8B%E6%83%85/">StringBuilder你应该知道的几件事情</a></li>
-<li>用Guava Joiner:对于用相同符号间隔的字符串拼接，可以使用Guava的Joiner，用起来很方便。但需要注意的是Joiner.on每次调用都会创建一个新的Joiner实例，会造成内存浪费。同时Joiner是线程安全的，所以对于相同分隔符创建的Joiner实例，公用一个单例就可以啦。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Returns a joiner which automatically places &#123;@code separator&#125; between consecutive elements.</div><div class="line"> */</div><div class="line">public static Joiner on(char separator) &#123;</div><div class="line">  return new Joiner(String.valueOf(separator));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>用Guava Joiner:对于用相同符号间隔的字符串拼接，可以使用Guava的Joiner，用起来很方便。但需要注意的是Joiner.on每次调用都会创建一个新的Joiner实例，会造成内存浪费。同时Joiner是线程安全的，所以对于相同分隔符创建的Joiner实例，公用一个单例就可以啦。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a joiner which automatically places &#123;@code separator&#125; between consecutive elements.</span><br><span class="line"> */</span><br><span class="line">public static Joiner on(char separator) &#123;</span><br><span class="line">  return new Joiner(String.valueOf(separator));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="2-字符串拆分"><a href="#2-字符串拆分" class="headerlink" title="2.字符串拆分"></a>2.字符串拆分</h2><p>如果不需要用正则表达式，用StringUtils.split代替String.split，因为原生的split方法支持正则表达式，会导致性能偏低。<br><img src="https://live.staticflickr.com/65535/48288627357_20895e52dd_o.png" alt=""></p>
-<h2 id="3-字符串替换"><a href="#3-字符串替换" class="headerlink" title="3.字符串替换"></a>3.字符串替换</h2><p>如果不需要用正则表达式，用StringUtils.replace代替String.replace，因为原生的replace方法支持正则表达式，会导致性能偏低。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * Replaces each substring of this string that matches the literal target</div><div class="line">  * sequence with the specified literal replacement sequence. The</div><div class="line">  * replacement proceeds from the beginning of the string to the end, for</div><div class="line">  * example, replacing &quot;aa&quot; with &quot;b&quot; in the string &quot;aaa&quot; will result in</div><div class="line">  * &quot;ba&quot; rather than &quot;ab&quot;.</div><div class="line">  *</div><div class="line">  * @param  target The sequence of char values to be replaced</div><div class="line">  * @param  replacement The replacement sequence of char values</div><div class="line">  * @return  The resulting string</div><div class="line">  * @since 1.5</div><div class="line">  */</div><div class="line"> public String replace(CharSequence target, CharSequence replacement) &#123;</div><div class="line">     return Pattern.compile(target.toString(), Pattern.LITERAL).matcher(</div><div class="line">             this).replaceAll(Matcher.quoteReplacement(replacement.toString()));</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="4-字符串转换"><a href="#4-字符串转换" class="headerlink" title="4.字符串转换"></a>4.字符串转换</h2><p>避免用String.format。如果你只是想要把一堆不同类型的参数转换成字符串，从性能的角度，建议你直接用StringBuilder实现。因为String.format其实也是用StringBuilder实现的，但由于它要解析format参数中的各种格式进行转换，导致性能降低。有人做过对比，String.format要比直接使用StringBuilder要慢5-30倍……话不多少，直接上代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public Formatter format(String format, Object ... args) &#123;</div><div class="line">    return format(l, format, args);</div><div class="line">&#125;</div><div class="line"></div><div class="line">public Formatter format(Locale l, String format, Object ... args) &#123;</div><div class="line">    ensureOpen();</div><div class="line"></div><div class="line">    // index of last argument referenced</div><div class="line">    int last = -1;</div><div class="line">    // last ordinary index</div><div class="line">    int lasto = -1;</div><div class="line"></div><div class="line">    FormatString[] fsa = parse(format);</div><div class="line">    for (int i = 0; i &lt; fsa.length; i++) &#123;</div><div class="line">        FormatString fs = fsa[i];</div><div class="line">        int index = fs.index();</div><div class="line">        try &#123;</div><div class="line">            switch (index) &#123;</div><div class="line">            case -2:  // fixed string, &quot;%n&quot;, or &quot;%%&quot;</div><div class="line">                fs.print(null, l);</div><div class="line">                break;</div><div class="line">            case -1:  // relative index</div><div class="line">                if (last &lt; 0 || (args != null &amp;&amp; last &gt; args.length - 1))</div><div class="line">                    throw new MissingFormatArgumentException(fs.toString());</div><div class="line">                fs.print((args == null ? null : args[last]), l);</div><div class="line">                break;</div><div class="line">            case 0:  // ordinary index</div><div class="line">                lasto++;</div><div class="line">                last = lasto;</div><div class="line">                if (args != null &amp;&amp; lasto &gt; args.length - 1)</div><div class="line">                    throw new MissingFormatArgumentException(fs.toString());</div><div class="line">                fs.print((args == null ? null : args[lasto]), l);</div><div class="line">                break;</div><div class="line">            default:  // explicit index</div><div class="line">                last = index - 1;</div><div class="line">                if (args != null &amp;&amp; last &gt; args.length - 1)</div><div class="line">                    throw new MissingFormatArgumentException(fs.toString());</div><div class="line">                fs.print((args == null ? null : args[last]), l);</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (IOException x) &#123;</div><div class="line">            lastException = x;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>上述代码用到了FormatString.print方法，那我们再来看看FormatString的实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private interface FormatString &#123;</div><div class="line">    int index();</div><div class="line">    void print(Object arg, Locale l) throws IOException;</div><div class="line">    String toString();</div><div class="line">&#125;</div><div class="line"></div><div class="line">private class FixedString implements FormatString &#123;</div><div class="line">    private String s;</div><div class="line">    FixedString(String s) &#123; this.s = s; &#125;</div><div class="line">    public int index() &#123; return -2; &#125;</div><div class="line">    public void print(Object arg, Locale l)</div><div class="line">        throws IOException &#123; a.append(s); &#125;</div><div class="line">    public String toString() &#123; return s; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>FormatString是Formater的内部接口类，而FixedString实现了FormatString接口，FixedString.print方法用到了a.append()方法，看到append方法，你有没有似曾相识的赶脚呢？我们再来看看这个a是个什么鬼。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public final class Formatter implements Closeable, Flushable &#123;</div><div class="line">    private Appendable a;</div><div class="line">    private final Locale l;</div><div class="line"></div><div class="line">    private IOException lastException;</div><div class="line"></div><div class="line">    private final char zero;</div><div class="line">    private static double scaleUp;</div><div class="line"></div><div class="line">    // 1 (sign) + 19 (max # sig digits) + 1 (&apos;.&apos;) + 1 (&apos;e&apos;) + 1 (sign)</div><div class="line">    // + 3 (max # exp digits) + 4 (error) = 30</div><div class="line">    private static final int MAX_FD_CHARS = 30;</div><div class="line"></div><div class="line">    //此处省略一些代码</div><div class="line"></div><div class="line">    private static final Appendable nonNullAppendable(Appendable a) &#123;</div><div class="line">        if (a == null)</div><div class="line">            return new StringBuilder();</div><div class="line"></div><div class="line">        return a;</div><div class="line">    &#125;</div><div class="line">    ////此处省略一万字</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="2-字符串拆分"><a href="#2-字符串拆分" class="headerlink" title="2.字符串拆分"></a>2.字符串拆分</h2><p>如果不需要用正则表达式，用StringUtils.split代替String.split，因为原生的split方法支持正则表达式，会导致性能偏低。<br><img src="https://live.staticflickr.com/65535/48288627357_20895e52dd_o.png" alt></p>
+<h2 id="3-字符串替换"><a href="#3-字符串替换" class="headerlink" title="3.字符串替换"></a>3.字符串替换</h2><p>如果不需要用正则表达式，用StringUtils.replace代替String.replace，因为原生的replace方法支持正则表达式，会导致性能偏低。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  * Replaces each substring of this string that matches the literal target</span><br><span class="line">  * sequence with the specified literal replacement sequence. The</span><br><span class="line">  * replacement proceeds from the beginning of the string to the end, for</span><br><span class="line">  * example, replacing &quot;aa&quot; with &quot;b&quot; in the string &quot;aaa&quot; will result in</span><br><span class="line">  * &quot;ba&quot; rather than &quot;ab&quot;.</span><br><span class="line">  *</span><br><span class="line">  * @param  target The sequence of char values to be replaced</span><br><span class="line">  * @param  replacement The replacement sequence of char values</span><br><span class="line">  * @return  The resulting string</span><br><span class="line">  * @since 1.5</span><br><span class="line">  */</span><br><span class="line"> public String replace(CharSequence target, CharSequence replacement) &#123;</span><br><span class="line">     return Pattern.compile(target.toString(), Pattern.LITERAL).matcher(</span><br><span class="line">             this).replaceAll(Matcher.quoteReplacement(replacement.toString()));</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-字符串转换"><a href="#4-字符串转换" class="headerlink" title="4.字符串转换"></a>4.字符串转换</h2><p>避免用String.format。如果你只是想要把一堆不同类型的参数转换成字符串，从性能的角度，建议你直接用StringBuilder实现。因为String.format其实也是用StringBuilder实现的，但由于它要解析format参数中的各种格式进行转换，导致性能降低。有人做过对比，String.format要比直接使用StringBuilder要慢5-30倍……话不多少，直接上代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public Formatter format(String format, Object ... args) &#123;</span><br><span class="line">    return format(l, format, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public Formatter format(Locale l, String format, Object ... args) &#123;</span><br><span class="line">    ensureOpen();</span><br><span class="line"></span><br><span class="line">    // index of last argument referenced</span><br><span class="line">    int last = -1;</span><br><span class="line">    // last ordinary index</span><br><span class="line">    int lasto = -1;</span><br><span class="line"></span><br><span class="line">    FormatString[] fsa = parse(format);</span><br><span class="line">    for (int i = 0; i &lt; fsa.length; i++) &#123;</span><br><span class="line">        FormatString fs = fsa[i];</span><br><span class="line">        int index = fs.index();</span><br><span class="line">        try &#123;</span><br><span class="line">            switch (index) &#123;</span><br><span class="line">            case -2:  // fixed string, &quot;%n&quot;, or &quot;%%&quot;</span><br><span class="line">                fs.print(null, l);</span><br><span class="line">                break;</span><br><span class="line">            case -1:  // relative index</span><br><span class="line">                if (last &lt; 0 || (args != null &amp;&amp; last &gt; args.length - 1))</span><br><span class="line">                    throw new MissingFormatArgumentException(fs.toString());</span><br><span class="line">                fs.print((args == null ? null : args[last]), l);</span><br><span class="line">                break;</span><br><span class="line">            case 0:  // ordinary index</span><br><span class="line">                lasto++;</span><br><span class="line">                last = lasto;</span><br><span class="line">                if (args != null &amp;&amp; lasto &gt; args.length - 1)</span><br><span class="line">                    throw new MissingFormatArgumentException(fs.toString());</span><br><span class="line">                fs.print((args == null ? null : args[lasto]), l);</span><br><span class="line">                break;</span><br><span class="line">            default:  // explicit index</span><br><span class="line">                last = index - 1;</span><br><span class="line">                if (args != null &amp;&amp; last &gt; args.length - 1)</span><br><span class="line">                    throw new MissingFormatArgumentException(fs.toString());</span><br><span class="line">                fs.print((args == null ? null : args[last]), l);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (IOException x) &#123;</span><br><span class="line">            lastException = x;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述代码用到了FormatString.print方法，那我们再来看看FormatString的实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private interface FormatString &#123;</span><br><span class="line">    int index();</span><br><span class="line">    void print(Object arg, Locale l) throws IOException;</span><br><span class="line">    String toString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private class FixedString implements FormatString &#123;</span><br><span class="line">    private String s;</span><br><span class="line">    FixedString(String s) &#123; this.s = s; &#125;</span><br><span class="line">    public int index() &#123; return -2; &#125;</span><br><span class="line">    public void print(Object arg, Locale l)</span><br><span class="line">        throws IOException &#123; a.append(s); &#125;</span><br><span class="line">    public String toString() &#123; return s; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>FormatString是Formater的内部接口类，而FixedString实现了FormatString接口，FixedString.print方法用到了a.append()方法，看到append方法，你有没有似曾相识的赶脚呢？我们再来看看这个a是个什么鬼。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public final class Formatter implements Closeable, Flushable &#123;</span><br><span class="line">    private Appendable a;</span><br><span class="line">    private final Locale l;</span><br><span class="line"></span><br><span class="line">    private IOException lastException;</span><br><span class="line"></span><br><span class="line">    private final char zero;</span><br><span class="line">    private static double scaleUp;</span><br><span class="line"></span><br><span class="line">    // 1 (sign) + 19 (max # sig digits) + 1 (&apos;.&apos;) + 1 (&apos;e&apos;) + 1 (sign)</span><br><span class="line">    // + 3 (max # exp digits) + 4 (error) = 30</span><br><span class="line">    private static final int MAX_FD_CHARS = 30;</span><br><span class="line"></span><br><span class="line">    //此处省略一些代码</span><br><span class="line"></span><br><span class="line">    private static final Appendable nonNullAppendable(Appendable a) &#123;</span><br><span class="line">        if (a == null)</span><br><span class="line">            return new StringBuilder();</span><br><span class="line"></span><br><span class="line">        return a;</span><br><span class="line">    &#125;</span><br><span class="line">    ////此处省略一万字</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>看到了吧，它还是用的StringBuilder，而且没有指定初始化容量，这样如果字符串比较长，扩容带来的资源消耗也是蛮高的。</p>
 <h2 id="5-toString-方法"><a href="#5-toString-方法" class="headerlink" title="5.toString()方法"></a>5.toString()方法</h2><p>toString方法一般是打印日志的时候使用。在这里提一下toString方法的原因是实现toString方法的方式有很多，有手写的、有用ide生成的、有用lombok生成的。这里只提2点：</p>
 <ol>
-<li>不建议使用lombok的ToString注解，因为lombok生成的toString方法是用”+”做字符串拼接的，如果打印日志频繁，这里的不必要的性能开销会比较大；<br>下面的代码是使用了lombok Data和ToString注解的源代码，我们来看看经过lombok处理之后的代码是什么样子。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package io.fengfu.learning.lombok;</div><div class="line"></div><div class="line">import lombok.Data;</div><div class="line">import lombok.ToString;</div><div class="line"></div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">@ToString</div><div class="line">@Data</div><div class="line">public class Wrapper &#123;</div><div class="line">    private String wrapperId;</div><div class="line">    private boolean isOneWay;</div><div class="line">    private String state;</div><div class="line">    private int stateCode;</div><div class="line">    private String operator;</div><div class="line">    private Date date;</div><div class="line">    private String operateTime;</div><div class="line">    private String detail;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>不建议使用lombok的ToString注解，因为lombok生成的toString方法是用”+”做字符串拼接的，如果打印日志频繁，这里的不必要的性能开销会比较大；<br>下面的代码是使用了lombok Data和ToString注解的源代码，我们来看看经过lombok处理之后的代码是什么样子。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package io.fengfu.learning.lombok;</span><br><span class="line"></span><br><span class="line">import lombok.Data;</span><br><span class="line">import lombok.ToString;</span><br><span class="line"></span><br><span class="line">import java.util.Date;</span><br><span class="line"></span><br><span class="line">@ToString</span><br><span class="line">@Data</span><br><span class="line">public class Wrapper &#123;</span><br><span class="line">    private String wrapperId;</span><br><span class="line">    private boolean isOneWay;</span><br><span class="line">    private String state;</span><br><span class="line">    private int stateCode;</span><br><span class="line">    private String operator;</span><br><span class="line">    private Date date;</span><br><span class="line">    private String operateTime;</span><br><span class="line">    private String detail;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>下面是lombok生成的代码片段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class Wrapper &#123;</div><div class="line">    private String wrapperId;</div><div class="line">    private boolean isOneWay;</div><div class="line">    private String state;</div><div class="line">    private int stateCode;</div><div class="line">    private String operator;</div><div class="line">    private Date date;</div><div class="line">    private String operateTime;</div><div class="line">    private String detail;</div><div class="line"></div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;Wrapper(wrapperId=&quot; + getWrapperId() + </div><div class="line">                &quot;, isOneWay=&quot; + isOneWay() + </div><div class="line">                &quot;, state=&quot; + getState() + </div><div class="line">                &quot;, stateCode=&quot; + getStateCode() + </div><div class="line">                &quot;, operator=&quot; + getOperator() + </div><div class="line">                &quot;, date=&quot; + getDate() + </div><div class="line">                &quot;, operateTime=&quot; + </div><div class="line">                getOperateTime() + </div><div class="line">                &quot;, detail=&quot; + </div><div class="line">                getDetail() + &quot;)&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>下面是lombok生成的代码片段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class Wrapper &#123;</span><br><span class="line">    private String wrapperId;</span><br><span class="line">    private boolean isOneWay;</span><br><span class="line">    private String state;</span><br><span class="line">    private int stateCode;</span><br><span class="line">    private String operator;</span><br><span class="line">    private Date date;</span><br><span class="line">    private String operateTime;</span><br><span class="line">    private String detail;</span><br><span class="line"></span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Wrapper(wrapperId=&quot; + getWrapperId() + </span><br><span class="line">                &quot;, isOneWay=&quot; + isOneWay() + </span><br><span class="line">                &quot;, state=&quot; + getState() + </span><br><span class="line">                &quot;, stateCode=&quot; + getStateCode() + </span><br><span class="line">                &quot;, operator=&quot; + getOperator() + </span><br><span class="line">                &quot;, date=&quot; + getDate() + </span><br><span class="line">                &quot;, operateTime=&quot; + </span><br><span class="line">                getOperateTime() + </span><br><span class="line">                &quot;, detail=&quot; + </span><br><span class="line">                getDetail() + &quot;)&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>看到了吗？是用”+”拼接的……</p>
-<ol>
+<ol start="2">
 <li>输出格式要统一，这样解析日志时就会方便很多，最起码不用去兼容五花八门的日志格式了。</li>
 </ol>
 
@@ -425,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/12/高性能Java-集合/" rel="next" title="高性能Java-集合">
-                <i class="fa fa-chevron-left"></i> 高性能Java-集合
+              <a href="/2019/01/01/高性能Java-目录/" rel="next" title="高性能Java-目录">
+                <i class="fa fa-chevron-left"></i> 高性能Java-目录
               </a>
             
           </div>
@@ -435,8 +436,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/01/01/高性能Java-目录/" rel="prev" title="高性能Java-目录">
-                高性能Java-目录 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/12/高性能Java-集合/" rel="prev" title="高性能Java-集合">
+                高性能Java-集合 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -470,7 +471,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -515,7 +516,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -526,9 +527,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="宁静·致远" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="宁静·致远">
           <p class="site-author-name" itemprop="name">宁静·致远</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -539,7 +538,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -607,7 +606,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>
