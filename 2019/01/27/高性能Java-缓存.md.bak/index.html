@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="前言字符串处理是程序逻辑中比重比较大的部分，由此带来的资源消耗也是比较多的。在编写代码进行字符串处理时如果能使用一些高效的方法或工具，起码能够帮我们规避一些性能上的坑，避免日后补救。 缓存算法LRULFU本地缓存集中式缓存缓存工具GuavaCaffeineEHCacheOSCache">
+<meta name="description" content="前言随着互联网的普及，内容信息越来越复杂，用户数和访问量越来越大，我们的应用需要支撑更多的并发量，同时我们的应用服务器和数据库服务器所做的计算也越来越多。但是往往我们的应用服务器资源是有限的，且技术变革是缓慢的，数据库每秒能接受的请求次数也是有限的（或者文件的读写也是有限的），如何能够有效利用有限的资源来提供尽可能大的吞吐量？一个有效的办法就是引入缓存，打破标准流程，每个环节中请求可以从缓存中直接">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高性能Java-缓存">
-<meta property="og:url" content="http://fengfu.io/2019/01/27/高性能Java-缓存/index.html">
+<meta property="og:url" content="http://fengfu.io/2019/01/27/高性能Java-缓存.md.bak/index.html">
 <meta property="og:site_name" content="宁静·致远">
-<meta property="og:description" content="前言字符串处理是程序逻辑中比重比较大的部分，由此带来的资源消耗也是比较多的。在编写代码进行字符串处理时如果能使用一些高效的方法或工具，起码能够帮我们规避一些性能上的坑，避免日后补救。 缓存算法LRULFU本地缓存集中式缓存缓存工具GuavaCaffeineEHCacheOSCache">
+<meta property="og:description" content="前言随着互联网的普及，内容信息越来越复杂，用户数和访问量越来越大，我们的应用需要支撑更多的并发量，同时我们的应用服务器和数据库服务器所做的计算也越来越多。但是往往我们的应用服务器资源是有限的，且技术变革是缓慢的，数据库每秒能接受的请求次数也是有限的（或者文件的读写也是有限的），如何能够有效利用有限的资源来提供尽可能大的吞吐量？一个有效的办法就是引入缓存，打破标准流程，每个环节中请求可以从缓存中直接">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-27T08:14:10.457Z">
+<meta property="og:updated_time" content="2019-11-27T11:54:55.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高性能Java-缓存">
-<meta name="twitter:description" content="前言字符串处理是程序逻辑中比重比较大的部分，由此带来的资源消耗也是比较多的。在编写代码进行字符串处理时如果能使用一些高效的方法或工具，起码能够帮我们规避一些性能上的坑，避免日后补救。 缓存算法LRULFU本地缓存集中式缓存缓存工具GuavaCaffeineEHCacheOSCache">
+<meta name="twitter:description" content="前言随着互联网的普及，内容信息越来越复杂，用户数和访问量越来越大，我们的应用需要支撑更多的并发量，同时我们的应用服务器和数据库服务器所做的计算也越来越多。但是往往我们的应用服务器资源是有限的，且技术变革是缓慢的，数据库每秒能接受的请求次数也是有限的（或者文件的读写也是有限的），如何能够有效利用有限的资源来提供尽可能大的吞吐量？一个有效的办法就是引入缓存，打破标准流程，每个环节中请求可以从缓存中直接">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://fengfu.io/2019/01/27/高性能Java-缓存/">
+  <link rel="canonical" href="http://fengfu.io/2019/01/27/高性能Java-缓存.md.bak/">
 
 
 
@@ -293,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2019/01/27/高性能Java-缓存/">
+    <link itemprop="mainEntityOfPage" href="http://fengfu.io/2019/01/27/高性能Java-缓存.md.bak/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="宁静·致远">
@@ -340,7 +340,7 @@
 
           
           
-             <span id="/2019/01/27/高性能Java-缓存/" class="leancloud_visitors" data-flag-title="高性能Java-缓存">
+             <span id="/2019/01/27/高性能Java-缓存.md.bak/" class="leancloud_visitors" data-flag-title="高性能Java-缓存">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,8 +371,32 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>字符串处理是程序逻辑中比重比较大的部分，由此带来的资源消耗也是比较多的。在编写代码进行字符串处理时如果能使用一些高效的方法或工具，起码能够帮我们规避一些性能上的坑，避免日后补救。</p>
-<h3 id="缓存算法"><a href="#缓存算法" class="headerlink" title="缓存算法"></a>缓存算法</h3><h4 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h4><h4 id="LFU"><a href="#LFU" class="headerlink" title="LFU"></a>LFU</h4><h3 id="本地缓存"><a href="#本地缓存" class="headerlink" title="本地缓存"></a>本地缓存</h3><h3 id="集中式缓存"><a href="#集中式缓存" class="headerlink" title="集中式缓存"></a>集中式缓存</h3><h3 id="缓存工具"><a href="#缓存工具" class="headerlink" title="缓存工具"></a>缓存工具</h3><h4 id="Guava"><a href="#Guava" class="headerlink" title="Guava"></a>Guava</h4><h4 id="Caffeine"><a href="#Caffeine" class="headerlink" title="Caffeine"></a>Caffeine</h4><h4 id="EHCache"><a href="#EHCache" class="headerlink" title="EHCache"></a>EHCache</h4><h4 id="OSCache"><a href="#OSCache" class="headerlink" title="OSCache"></a>OSCache</h4>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>随着互联网的普及，内容信息越来越复杂，用户数和访问量越来越大，我们的应用需要支撑更多的并发量，同时我们的应用服务器和数据库服务器所做的计算也越来越多。但是往往我们的应用服务器资源是有限的，且技术变革是缓慢的，数据库每秒能接受的请求次数也是有限的（或者文件的读写也是有限的），如何能够有效利用有限的资源来提供尽可能大的吞吐量？一个有效的办法就是引入缓存，打破标准流程，每个环节中请求可以从缓存中直接获取目标数据并返回，从而减少计算量，有效提升响应速度，让有限的资源服务更多的用户。</p>
+<h3 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h3><h4 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h4><p>First in first out，先进先出策略，最先进入缓存的数据在缓存空间不够的情况下（超出最大元素限制）会被优先被清除掉，以腾出新的空间接受新的数据。策略算法主要比较缓存元素的创建时间。在数据实效性要求场景下可选择该类策略，优先保障最新数据可用。</p>
+<h4 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h4><p>Least recently used，最近最少使用策略，无论是否过期，根据元素最后一次被使用的时间戳，清除最远使用时间戳的元素释放空间。策略算法主要比较元素最近一次被get使用时间。在热点数据场景下较适用，优先保证热点数据的有效性。</p>
+<h4 id="LFU"><a href="#LFU" class="headerlink" title="LFU"></a>LFU</h4><p>Less frequently used，最少使用策略，无论是否过期，根据元素的被使用次数判断，清除使用次数较少的元素释放空间。策略算法主要比较元素的hitCount（命中次数）。在保证高频数据有效性场景下，可选择这类策略。</p>
+<h3 id="本地缓存"><a href="#本地缓存" class="headerlink" title="本地缓存"></a>本地缓存</h3><p>指的是在应用中的缓存组件，其最大的优点是应用和cache是在同一个进程内部，请求缓存非常快速，没有过多的网络开销等，在单应用不需要集群支持或者集群情况下各节点无需互相通知的场景下使用本地缓存较合适；同时，它的缺点也是应为缓存跟应用程序耦合，多个应用程序无法直接的共享缓存，各应用或集群的各节点都需要维护自己的单独缓存，对内存是一种浪费。</p>
+<h3 id="集中式缓存"><a href="#集中式缓存" class="headerlink" title="集中式缓存"></a>集中式缓存</h3><p>指的是与应用分离的缓存组件或服务，其最大的优点是自身就是一个独立的应用，与本地应用隔离，多个应用可直接的共享缓存。</p>
+<h3 id="缓存工具"><a href="#缓存工具" class="headerlink" title="缓存工具"></a>缓存工具</h3><h4 id="Guava-cache"><a href="#Guava-cache" class="headerlink" title="Guava cache"></a>Guava cache</h4><p>Guava Cache是Google开源的Java重用工具集库Guava里的一款缓存工具，它的设计灵感来源于ConcurrentHashMap，使用多个segments方式的细粒度锁，在保证线程安全的同时，支持高并发场景需求，同时支持多种类型的缓存清理策略，包括基于容量的清理、基于时间的清理、基于引用的清理等。<br>Guava cache主要实现的缓存功能有：</p>
+<ul>
+<li>自动将entry节点加载进缓存结构中；</li>
+<li>当缓存的数据超过设置的最大值时，使用LRU算法移除；</li>
+<li>具备根据entry节点上次被访问或者写入时间计算它的过期机制；</li>
+<li>缓存的key被封装在WeakReference引用内；</li>
+<li>缓存的Value被封装在WeakReference或SoftReference引用内；</li>
+<li>统计缓存使用过程中命中率、异常率、未命中率等统计数据。</li>
+</ul>
+<p>Guava Cache基于ConcurrentHashMap的优秀设计借鉴，在高并发场景支持和线程安全上都有相应的改进策略，使用Reference引用命令，提升高并发下的数据访问速度并保持了GC的可回收，有效节省空间；同时，write链和access链的设计，能更灵活、高效的实现多种类型的缓存清理策略，包括基于容量的清理、基于时间的清理、基于引用的清理等；编程式的build生成器管理，让使用者有更多的自由度，能够根据不同场景设置合适的模式。<br>但需要注意的是，guava cache对于缓存的过期处理是在读/写的时候处理的，也就意味着它没有独立的线程去处理缓存过期，这多少会对读写性能造成影响。</p>
+<h4 id="Caffeine-cahce"><a href="#Caffeine-cahce" class="headerlink" title="Caffeine cahce"></a>Caffeine cahce</h4><h4 id="Ehcache"><a href="#Ehcache" class="headerlink" title="Ehcache"></a>Ehcache</h4><p>Ehcache是​​一个基于标准的开源缓存，可提高性能，减轻数据库负载并简化可伸缩性。它是最广泛使用的基于Java的缓存，因为它健壮、可靠、功能齐全并与其他流行的库和框架集成。Ehcache从进程内缓存扩展到混合了TB级缓存的进程内/进程外混合部署。hibernate就使用Ehcache作为其缓存组件。<br>主要特性：</p>
+<ul>
+<li>快速，针对大型高并发系统场景，Ehcache的多线程机制有相应的优化改善。</li>
+<li>简单，很小的jar包，简单配置就可直接使用，单机场景下无需过多的其他服务依赖。</li>
+<li>支持多种的缓存策略，灵活。</li>
+<li>缓存数据有两级：内存和磁盘，与一般的本地内存缓存相比，有了磁盘的* 存储空间，将可以支持更大量的数据缓存需求。</li>
+<li>具有缓存和缓存管理器的侦听接口，能更简单方便的进行缓存实例的监控管理。</li>
+<li>支持多缓存管理器实例，以及一个实例的多个缓存区域。<h4 id="OSCache"><a href="#OSCache" class="headerlink" title="OSCache"></a>OSCache</h4></li>
+</ul>
+
       
     </div>
     
@@ -542,6 +566,20 @@
 
         
         
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://kalasearch.cn/" title="卡拉搜索" target="_blank">卡拉搜索</a>
+                </li>
+              
+            </ul>
+          </div>
+        
 
         
 
@@ -558,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存算法"><span class="nav-number">2.</span> <span class="nav-text">缓存算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LRU"><span class="nav-number">2.1.</span> <span class="nav-text">LRU</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LFU"><span class="nav-number">2.2.</span> <span class="nav-text">LFU</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地缓存"><span class="nav-number">3.</span> <span class="nav-text">本地缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集中式缓存"><span class="nav-number">4.</span> <span class="nav-text">集中式缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存工具"><span class="nav-number">5.</span> <span class="nav-text">缓存工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Guava"><span class="nav-number">5.1.</span> <span class="nav-text">Guava</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Caffeine"><span class="nav-number">5.2.</span> <span class="nav-text">Caffeine</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EHCache"><span class="nav-number">5.3.</span> <span class="nav-text">EHCache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OSCache"><span class="nav-number">5.4.</span> <span class="nav-text">OSCache</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存策略"><span class="nav-number">2.</span> <span class="nav-text">缓存策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FIFO"><span class="nav-number">2.1.</span> <span class="nav-text">FIFO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LRU"><span class="nav-number">2.2.</span> <span class="nav-text">LRU</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LFU"><span class="nav-number">2.3.</span> <span class="nav-text">LFU</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地缓存"><span class="nav-number">3.</span> <span class="nav-text">本地缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集中式缓存"><span class="nav-number">4.</span> <span class="nav-text">集中式缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存工具"><span class="nav-number">5.</span> <span class="nav-text">缓存工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Guava-cache"><span class="nav-number">5.1.</span> <span class="nav-text">Guava cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Caffeine-cahce"><span class="nav-number">5.2.</span> <span class="nav-text">Caffeine cahce</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ehcache"><span class="nav-number">5.3.</span> <span class="nav-text">Ehcache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OSCache"><span class="nav-number">5.4.</span> <span class="nav-text">OSCache</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -581,7 +619,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
